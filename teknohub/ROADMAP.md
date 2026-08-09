@@ -61,7 +61,7 @@ Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans ak
 ---
 
 ## FASE 3 — Forum Tech & AI
-Status: 🟡 In Progress (Forum Core ✅ 100%, Komunitas ❌ belum dikerjakan)
+Status: ✅ Tuntas (100%) — Forum Core + Komunitas
 
 ### Forum Core
 - [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
@@ -76,12 +76,12 @@ Status: 🟡 In Progress (Forum Core ✅ 100%, Komunitas ❌ belum dikerjakan)
 - [x] Tag system (tags text[] + GIN index, TagSelector maks 5, filter tag)
 
 ### Komunitas
-- [ ] Reputation/karma system
-- [ ] User badges
-- [ ] Follow user/thread
-- [ ] Notifikasi real-time (Supabase Realtime)
-- [ ] Moderasi: report, ban
-- [ ] Search dalam forum
+- [x] Reputation/karma system (trigger +10 vote, +50 solved; UserBadge tampil)
+- [x] User badges (Member/Active/Contributor/Expert by reputation, UserBadge.tsx)
+- [x] Follow user/thread (follows table, FollowButton, trigger notif)
+- [x] Notifikasi real-time (notifications table + trigger reply/follow, NotificationBell navbar, Supabase Realtime-ready)
+- [x] Moderasi: report, ban (reports table, ReportButton, /admin/moderation, ban 30 hari)
+- [x] Search dalam forum (ilike title+content, search box /forum)
 
 ---
 
