@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import SlideNav from "@/components/SlideNav";
 import AICustomerServiceWidget from "@/components/support/AICustomerServiceWidget";
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="id" className="scroll-smooth">
       <body className="bg-background text-foreground antialiased min-h-screen flex flex-col">
         <Navbar />
+        <SlideNav />
         {children}
         <AICustomerServiceWidget />
       </body>

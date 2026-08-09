@@ -15,13 +15,13 @@ export default function NavbarSearch() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex-1 max-w-md">
+    <form onSubmit={handleSubmit} className="relative flex-1 max-w-xl">
       <input
         type="text"
         value={term}
         onChange={(e) => setTerm(e.target.value)}
-        placeholder="Cari produk..."
-        className="w-full px-4 py-2 pl-10 text-sm bg-surface-2 border border-slate-300 rounded-xl text-foreground placeholder:text-slate-500 focus:ring-accent/40 focus:border-accent focus:outline-none transition"
+        placeholder="Cari produk elektronik, komponen PC, atau topik forum..."
+        className="w-full px-4 py-2 pl-10 text-xs bg-surface border border-slate-300 rounded-full text-foreground placeholder:text-slate-500 focus:ring-accent/40 focus:border-accent focus:outline-none transition shadow-sm"
       />
       <svg
         className="absolute left-3 top-2.5 w-4 h-4 text-slate-500"

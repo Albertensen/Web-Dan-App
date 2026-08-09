@@ -63,6 +63,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hide scrollbar (slide nav horizontal) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 body {
   font-family: var(--font-body);
   letter-spacing: -0.015em;

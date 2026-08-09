@@ -8,7 +8,6 @@ import { useCartStore, selectTotalItems } from "@/store/cartStore";
 
 const NAV_LINKS = [
   { href: "/products", label: "Store" },
-  { href: "/builder", label: "AI PC Builder" },
   { href: "/forum", label: "Forum Komunitas" },
 ];
 
@@ -40,7 +39,20 @@ export default function Navbar() {
         </nav>
 
         {/* Right actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 shrink-0">
+          <Link
+            href="/builder-3d"
+            className="hidden sm:inline-block bg-foreground hover:bg-accent text-white px-4 py-2 rounded-full text-xs font-medium transition shadow-sm"
+          >
+            AI 3D Builder
+          </Link>
+          <Link
+            href="/login"
+            className="w-8 h-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs text-foreground hover:bg-accent hover:text-white transition"
+            aria-label="Akun"
+          >
+            AZ
+          </Link>
           <Link href="/cart" className="relative text-foreground hover:text-accent transition" aria-label="Keranjang">
             <span className="text-lg">🛒</span>
             {cartCount > 0 && (
@@ -50,12 +62,6 @@ export default function Navbar() {
             )}
           </Link>
           <NotificationBell />
-          <Link
-            href="/login"
-            className="hidden sm:inline-block bg-accent hover:bg-accent-secondary text-white px-4 py-2 rounded-full text-xs font-medium transition shadow-sm"
-          >
-            Masuk
-          </Link>
 
           {/* Hamburger */}
           <button
