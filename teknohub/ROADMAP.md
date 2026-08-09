@@ -33,6 +33,52 @@ Status: ✅ Selesai
 
 ---
 
+## FASE 1B — Autentikasi & Akun Pengguna
+Status: 🔵 In Progress
+
+### Halaman Login
+- [ ] Halaman /login — dark premium design sesuai DESIGN.md
+- [ ] Form email + password dengan validasi Zod
+- [ ] Tombol "Lanjutkan dengan Google" (OAuth)
+- [ ] Toggle show/hide password
+- [ ] Link "Lupa password?" → /forgot-password
+- [ ] Link "Belum punya akun? Daftar" → /register
+- [ ] Error state (email tidak terdaftar, password salah)
+- [ ] Loading state saat submit
+- [ ] Redirect ke halaman sebelumnya setelah login berhasil
+
+### Halaman Daftar (Register)
+- [ ] Halaman /register — konsisten dengan halaman login
+- [ ] Form: username, email, password, konfirmasi password
+- [ ] Validasi Zod (email valid, password min 8 char, username min 3 char)
+- [ ] Tombol "Daftar dengan Google" (OAuth — auto-fill profil)
+- [ ] Checkbox persetujuan syarat & ketentuan
+- [ ] Error state (email sudah terdaftar, username sudah dipakai)
+- [ ] Loading state saat submit
+- [ ] Redirect ke halaman onboarding / homepage setelah daftar berhasil
+
+### Halaman Lupa Password
+- [ ] Halaman /forgot-password — form input email
+- [ ] Kirim magic link reset password via Supabase Auth
+- [ ] Halaman /reset-password — form password baru + konfirmasi
+- [ ] Validasi token reset (expired / invalid)
+- [ ] Success state setelah reset berhasil
+
+### Halaman Profil Pengguna
+- [ ] Halaman /profile — tampilkan info user (avatar, username, email, reputasi forum)
+- [ ] Edit profil: upload avatar ke Supabase Storage, ubah username, bio
+- [ ] Tab: Pesanan Saya, Build Tersimpan, Thread Forum, Pengaturan
+- [ ] Halaman /profile/settings — ubah password, notifikasi, hapus akun
+
+### Protected Routes & UX Auth
+- [ ] Middleware proteksi route (cart, checkout, builder saved, forum post, profile)
+- [ ] Redirect ke /login dengan pesan "Silakan login untuk melanjutkan"
+- [ ] Persistent login session (NextAuth JWT strategy)
+- [ ] Logout dari semua device
+- [ ] User avatar + dropdown menu di Navbar setelah login
+
+---
+
 ## FASE 2 — E-Commerce
 Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans akun)
 
