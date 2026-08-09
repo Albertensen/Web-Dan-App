@@ -34,7 +34,7 @@ Status: ✅ Selesai
 ---
 
 ## FASE 1B — Autentikasi & Akun Pengguna
-Status: 🔵 In Progress
+Status: ✅ Tuntas
 
 ### Halaman Login
 - [x] Halaman /login — dark premium design sesuai DESIGN.md
