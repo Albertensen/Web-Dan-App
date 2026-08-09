@@ -19,7 +19,7 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 | 6 — Launch | ⏳ Belum dimulai |
 
 ## Fase 4 — Fitur AI Baru
-- [ ] **Interactive AI PC Builder Chat + Live Summary Sync** (di `/builder`) — konsultasi rakit PC via chat, rekomendasi AI sinkron ke ringkasan build real-time
-- [ ] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS dengan knowledge base toko (lama rakit, garansi, pengiriman, pembayaran, status pesanan)
+- [x] **Interactive AI PC Builder Chat + Live Summary Sync** (di `/builder`) — konsultasi rakit PC via chat, rekomendasi AI sinkron ke ringkasan build real-time
+- [x] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS dengan knowledge base toko (lama rakit, garansi, pengiriman, pembayaran, status pesanan)
 
 Detail lengkap: lihat `ROADMAP.md`.
