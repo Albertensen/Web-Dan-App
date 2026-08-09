@@ -6,12 +6,18 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category") || undefined;
   const search = searchParams.get("search") || undefined;
 
+  // Parent kategori "komponen" = semua sub-komponen
+  const COMPONENT_CHILDREN = ["cpu", "gpu", "ram", "storage", "motherboard", "psu", "case", "cooler"];
+
   let query = supabase
     .from("products")
     .select("name, slug, price, stock, image_url, category, brand, description")
     .eq("is_active", true);
 
-  if (category) query = query.eq("category", category);
+  if (category) {
+    const cats = category === "komponen" ? COMPONENT_CHILDREN : [category];
+    query = query.in("category", cats);
+  }
   if (search) query = query.ilike("name", `%${search}%`);
 
   const { data, error } = await query.order("created_at", { ascending: false }).limit(50);

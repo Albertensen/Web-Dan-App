@@ -1,10 +1,37 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase/client";
 import AddToCartButton from "@/components/AddToCartButton";
 
 interface ProductProps {
   params: {
     slug: string;
+  };
+}
+
+export async function generateMetadata({ params }: ProductProps): Promise<Metadata> {
+  const { data: product } = await supabase
+    .from("products")
+    .select("name, description, image_url, price")
+    .eq("slug", params.slug)
+    .eq("is_active", true)
+    .single();
+
+  if (!product) {
+    return { title: "Produk Tidak Ditemukan — TeknoHub" };
+  }
+
+  const price = new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(Number(product.price));
+
+  return {
+    title: `${product.name} — TeknoHub`,
+    description: product.description?.slice(0, 155) ?? `${product.name} harga ${price} di TeknoHub.`,
+    openGraph: {
+      title: product.name,
+      description: product.description?.slice(0, 155) ?? `${product.name} di TeknoHub.`,
+      type: "website",
+      images: product.image_url ? [{ url: product.image_url, alt: product.name }] : undefined,
+    },
   };
 }
 

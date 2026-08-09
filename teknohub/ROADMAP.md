@@ -42,9 +42,11 @@ Status: 🟢 In Progress (Midtrans pending akun)
 - [x] Halaman detail produk
 - [x] Admin panel: CRUD produk (admin/products + API admin)
 - [x] Upload gambar ke Supabase Storage (bucket product-images, signed URL)
-- [ ] Kategori expand: Laptop, HP, Monitor, Komponen PC, Aksesoris (12 kategori sudah di DB — UI expand menyusul)
+- [x] UI Sub-kategori expand (nested filter: Komponen PC → 8 chip, API expand parent)
+- [x] Search produk instant di navbar (NavbarSearch → /products?search=)
+- [x] SEO: dynamic OG meta (products/[slug]) + sitemap.ts (static + 15 produk)
 - [ ] Search produk (Algolia/Meilisearch) — basic ilike sudah jalan
-- [ ] SEO: meta tags, OG image, sitemap
+- [ ] SEO lanjut: OG image generator — dynamic meta + sitemap sudah live
 
 ### Cart & Checkout
 - [x] Tambah ke keranjang (Zustand persist, AddToCartButton)

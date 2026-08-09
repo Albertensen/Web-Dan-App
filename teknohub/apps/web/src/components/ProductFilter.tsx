@@ -1,22 +1,48 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 interface ProductFilterProps {
   initialCategory?: string;
   initialSearch?: string;
 }
 
-const CATEGORIES = [
+interface CategoryNode {
+  value: string;
+  label: string;
+  children?: CategoryNode[];
+}
+
+// Hierarki kategori: parent → child (sub-kategori)
+const CATEGORY_TREE: CategoryNode[] = [
   { value: "", label: "Semua" },
   { value: "laptop", label: "Laptop" },
-  { value: "smartphone", label: "Smartphone" },
+  { value: "smartphone", label: "HP" },
   { value: "monitor", label: "Monitor" },
-  { value: "gpu", label: "GPU" },
-  { value: "cpu", label: "CPU" },
-  { value: "ram", label: "RAM" },
+  {
+    value: "komponen",
+    label: "Komponen PC",
+    children: [
+      { value: "cpu", label: "CPU" },
+      { value: "gpu", label: "GPU" },
+      { value: "ram", label: "RAM" },
+      { value: "storage", label: "Storage" },
+      { value: "motherboard", label: "Motherboard" },
+      { value: "psu", label: "PSU" },
+      { value: "case", label: "Casing" },
+      { value: "cooler", label: "Cooler" },
+    ],
+  },
+  { value: "aksesoris", label: "Aksesoris" },
 ];
+
+const PARENT_LOOKUP: Record<string, string> = {};
+for (const node of CATEGORY_TREE) {
+  for (const child of node.children ?? []) {
+    PARENT_LOOKUP[child.value] = node.value;
+  }
+}
 
 export default function ProductFilter({ initialCategory = "", initialSearch = "" }: ProductFilterProps) {
   const router = useRouter();
@@ -24,16 +50,21 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
   const [active, setActive] = useState(initialCategory);
   const [term, setTerm] = useState(initialSearch);
 
-  const applyFilters = useCallback(
-    (category: string, search: string) => {
-      const params = new URLSearchParams();
-      if (category) params.set("category", category);
-      if (search) params.set("search", search);
-      const qs = params.toString();
-      router.push(qs ? `?${qs}` : "?");
-    },
-    [router]
-  );
+  // sync URL → state (browser back/forward, link langsung)
+  useEffect(() => {
+    const cat = searchParams.get("category") || "";
+    const s = searchParams.get("search") || "";
+    setActive(cat);
+    setTerm(s);
+  }, [searchParams]);
+
+  const applyFilters = (category: string, search: string) => {
+    const params = new URLSearchParams();
+    if (category) params.set("category", category);
+    if (search) params.set("search", search);
+    const qs = params.toString();
+    router.push(qs ? `?${qs}` : "?");
+  };
 
   const handleCategory = (cat: string) => {
     setActive(cat);
@@ -41,38 +72,62 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTerm(e.target.value);
-    applyFilters(active, e.target.value);
+    const v = e.target.value;
+    setTerm(v);
+    applyFilters(active, v);
   };
 
-  // sync with browser back/forward
-  useState(() => {
-    const cat = searchParams.get("category") || "";
-    const s = searchParams.get("search") || "";
-    setActive(cat);
-    setTerm(s);
-  });
+  const activeParent = PARENT_LOOKUP[active] ?? (active === "komponen" ? "komponen" : "");
 
   return (
     <div className="space-y-6">
       <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
         <h2 className="text-xl font-semibold mb-4 text-white">Filter Produk</h2>
 
-        <div className="flex flex-wrap gap-3 mb-6">
-          {CATEGORIES.map((cat) => (
+        {/* Level 1: parent kategori */}
+        <div className="flex flex-wrap gap-3 mb-4">
+          {CATEGORY_TREE.map((node) => (
             <button
-              key={cat.value}
-              onClick={() => handleCategory(cat.value)}
+              key={node.value}
+              onClick={() => {
+                // parent tanpa children → langsung pilih; parent dgn children → tampilkan children
+                if (!node.children) {
+                  handleCategory(node.value);
+                } else {
+                  // toggle: pilih parent (semua komponen) atau buka sub-kategori
+                  setActive(node.value);
+                  applyFilters(node.value, term);
+                }
+              }}
               className={`px-4 py-2 rounded-full text-sm transition duration-150 ${
-                active === cat.value
+                active === node.value || activeParent === node.value
                   ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md"
                   : "bg-slate-700 hover:bg-slate-600 text-slate-300"
               }`}
             >
-              {cat.label}
+              {node.label}
             </button>
           ))}
         </div>
+
+        {/* Level 2: sub-kategori (hanya tampil saat parent aktif) */}
+        {activeParent === "komponen" && (
+          <div className="flex flex-wrap gap-2 mb-4 pl-2 border-l-2 border-blue-500/30">
+            {CATEGORY_TREE.find((n) => n.value === "komponen")?.children?.map((child) => (
+              <button
+                key={child.value}
+                onClick={() => handleCategory(child.value)}
+                className={`px-3 py-1.5 rounded-full text-xs transition duration-150 ${
+                  active === child.value
+                    ? "bg-blue-500/30 text-blue-200 border border-blue-500/50"
+                    : "bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700"
+                }`}
+              >
+                {child.label}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div>
           <label htmlFor="search" className="block text-sm font-medium mb-2 text-slate-300">
