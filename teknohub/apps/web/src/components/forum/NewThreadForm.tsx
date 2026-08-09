@@ -1,5 +1,7 @@
 "use client"
 import { useState } from "react"
+import TagSelector from "./TagSelector"
+import TipTapEditor from "./TipTapEditor"
 
 interface CategoryOption {
   slug: string
@@ -14,6 +16,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
   const [title, setTitle] = useState("")
   const [category, setCategory] = useState(categories[0]?.slug ?? "")
   const [content, setContent] = useState("")
+  const [tags, setTags] = useState<string[]>([])
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
 
@@ -21,11 +24,12 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
     e.preventDefault()
     setError("")
 
+    const plainContent = content.replace(/<[^>]*>/g, "").trim()
     if (title.trim().length < 5) {
       setError("Judul minimal 5 karakter")
       return
     }
-    if (content.trim().length < 10) {
+    if (plainContent.length < 10) {
       setError("Konten minimal 10 karakter")
       return
     }
@@ -37,7 +41,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ title, category_slug: category, content }),
+        body: JSON.stringify({ title, category_slug: category, content, tags }),
       })
 
       if (!res.ok) {
@@ -87,17 +91,10 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
 
       <div>
         <label htmlFor="content" className="block text-sm font-medium text-slate-300 mb-1">Konten</label>
-        <textarea
-          id="content"
-          name="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={8}
-          placeholder="Tulis detail pertanyaan atau topik diskusi..."
-          className="w-full p-3 border border-slate-600 rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition duration-150 resize-none placeholder-slate-500"
-          required
-        ></textarea>
+        <TipTapEditor value={content} onChange={setContent} placeholder="Tulis detail pertanyaan atau topik diskusi..." />
       </div>
+
+      <TagSelector value={tags} onChange={setTags} />
 
       <button
         type="submit"

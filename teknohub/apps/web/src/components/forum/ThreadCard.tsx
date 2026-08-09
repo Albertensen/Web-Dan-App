@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TagBadge from "./TagBadge";
 
 interface ThreadProps {
   id: string;
@@ -11,6 +12,7 @@ interface ThreadProps {
   view_count: number;
   last_reply_at: string | null;
   is_pinned: boolean;
+  tags: string[] | null;
   created_at: string;
 }
 
@@ -35,6 +37,14 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
         <h3 className="text-xl font-semibold text-slate-100 line-clamp-2 mb-4 hover:text-blue-400 transition cursor-pointer">
           {thread.title}
         </h3>
+
+        {thread.tags && thread.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {thread.tags.map((tag) => (
+              <TagBadge key={tag} tag={tag} href={`/forum?tag=${encodeURIComponent(tag)}`} />
+            ))}
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-400 pt-2 border-t border-slate-800/50">
           {/* Category Badge */}

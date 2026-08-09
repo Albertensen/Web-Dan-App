@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import { supabase } from "@/lib/supabase/client";
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
@@ -30,6 +32,10 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
     .eq("thread_id", id)
     .order("created_at", { ascending: true });
 
+  const session = await getServerSession(authOptions);
+  const currentUserId = session?.user?.id ?? undefined;
+  const threadAuthorId = (thread.author_id as string) ?? undefined;
+
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-slate-200 p-4 sm:p-8">
       {/* Breadcrumb */}
@@ -55,9 +61,10 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
             </div>
           </header>
 
-          <div className="text-slate-300 whitespace-pre-wrap mb-8 p-4 bg-[#12121a] rounded-lg border border-slate-700/50">
-            {thread.content}
-          </div>
+          <div
+            className="prose prose-invert max-w-none text-slate-300 mb-8 p-4 bg-[#12121a] rounded-lg border border-slate-700/50"
+            dangerouslySetInnerHTML={{ __html: thread.content }}
+          />
 
           <div className="mb-10 flex justify-center">
             <VoteControl threadId={thread.id} />
@@ -65,7 +72,12 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
         </div>
 
         <div className="mt-8">
-          <ReplySection threadId={thread.id} initialReplies={replies ?? []} />
+          <ReplySection
+            threadId={thread.id}
+            initialReplies={replies ?? []}
+            currentUserId={currentUserId}
+            threadAuthorId={threadAuthorId}
+          />
         </div>
       </div>
     </div>

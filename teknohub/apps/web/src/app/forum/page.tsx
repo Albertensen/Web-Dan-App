@@ -5,6 +5,7 @@ interface ForumPageProps {
   searchParams: {
     category?: string;
     sort?: string;
+    tag?: string;
   };
 }
 
@@ -20,8 +21,9 @@ const CATEGORIES = [
 export default async function ForumPage({ searchParams }: ForumPageProps) {
   const category = searchParams.category || "";
   const sort = searchParams.sort || "latest";
+  const tag = searchParams.tag || "";
 
-  const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/forum/threads?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/forum/threads?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}&tag=${encodeURIComponent(tag)}`;
 
   let threads: ThreadProps[] = [];
   try {
@@ -75,6 +77,19 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           </Link>
         ))}
       </div>
+
+      {/* Tag filter */}
+      {tag && (
+        <div className="flex items-center gap-2 mb-6 text-sm">
+          <span className="text-slate-500">Filter tag:</span>
+          <Link
+            href="/forum"
+            className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/50"
+          >
+            #{tag} ✕
+          </Link>
+        </div>
+      )}
 
       {/* Sort */}
       <div className="flex gap-2 mb-8 text-sm">

@@ -1,5 +1,7 @@
 "use client"
 import { useState } from "react"
+import SolutionButton from "./SolutionButton"
+import TipTapEditor from "./TipTapEditor"
 
 interface Reply {
   id: string;
@@ -12,9 +14,11 @@ interface Reply {
 interface ReplySectionProps {
   threadId: string;
   initialReplies: Reply[];
+  currentUserId?: string;
+  threadAuthorId?: string;
 }
 
-export default function ReplySection({ threadId, initialReplies }: ReplySectionProps) {
+export default function ReplySection({ threadId, initialReplies, currentUserId, threadAuthorId }: ReplySectionProps) {
   const [content, setContent] = useState("")
   const [replies, setReplies] = useState<Reply[]>(initialReplies)
   const [submitting, setSubmitting] = useState(false)
@@ -24,7 +28,8 @@ export default function ReplySection({ threadId, initialReplies }: ReplySectionP
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
-    if (content.trim() === "") {
+    const plain = content.replace(/<[^>]*>/g, "").trim()
+    if (plain === "") {
       setError("Balasan tidak boleh kosong")
       return
     }
@@ -63,7 +68,10 @@ export default function ReplySection({ threadId, initialReplies }: ReplySectionP
         <div className="space-y-4">
           {replies.map((reply) => (
             <div key={reply.id} className="glow-card p-4 mb-4 bg-[#1a1a20] border border-slate-800 rounded-xl shadow-lg">
-              <div className="text-slate-200 mb-1 whitespace-pre-wrap">{reply.content}</div>
+              <div
+                className="prose prose-invert max-w-none text-slate-200 mb-1 text-sm"
+                dangerouslySetInnerHTML={{ __html: reply.content }}
+              />
               {reply.is_solution && (
                 <span className="inline-flex items-center px-3 py-1 text-xs font-medium bg-green-600/20 text-green-400 rounded-full border border-green-700 mb-2">
                   ✅ Solusi
@@ -75,6 +83,13 @@ export default function ReplySection({ threadId, initialReplies }: ReplySectionP
                   <span className="mx-2">•</span>
                   {formatDate(reply.created_at)}
                 </span>
+                {currentUserId && currentUserId === threadAuthorId && (
+                  <SolutionButton
+                    replyId={reply.id}
+                    isSolution={reply.is_solution}
+                    onMarked={() => setReplies(replies.map((r) => (r.id === reply.id ? { ...r, is_solution: true } : r)))}
+                  />
+                )}
               </div>
             </div>
           ))}
@@ -82,13 +97,7 @@ export default function ReplySection({ threadId, initialReplies }: ReplySectionP
       )}
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-        <textarea
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          rows={4}
-          placeholder="Tulis balasan Anda di sini..."
-          className="w-full p-3 bg-[#0a0a0f] border border-slate-700 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-white resize-none"
-        />
+        <TipTapEditor value={content} onChange={setContent} placeholder="Tulis balasan Anda di sini..." />
         {error && <p className="text-red-400 text-sm">{error}</p>}
         <button
           type="submit"
