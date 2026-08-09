@@ -8,7 +8,7 @@ Stack: Next.js 14 + Expo + Supabase + Midtrans + Hermes AI + Playwright
 ---
 
 ## FASE 1 — Foundation
-Status: 🔵 In Progress
+Status: ✅ Selesai
 
 ### Setup Awal
 - [x] Init monorepo teknohub/ (Next.js + packages + supabase)
@@ -34,7 +34,7 @@ Status: 🔵 In Progress
 ---
 
 ## FASE 2 — E-Commerce
-Status: 🟢 In Progress (Midtrans pending akun)
+Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans akun)
 
 ### Katalog Produk
 - [x] Seed 15 produk + types (migration 003, 6 kategori)
@@ -61,7 +61,7 @@ Status: 🟢 In Progress (Midtrans pending akun)
 ---
 
 ## FASE 3 — Forum Tech & AI
-Status: 🟢 In Progress
+Status: 🟡 In Progress (3 core item sisa: TipTap, mark solution, tag system)
 
 ### Forum Core
 - [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
@@ -86,29 +86,29 @@ Status: 🟢 In Progress
 ---
 
 ## FASE 4 — PC Builder AI ⭐ (Fitur Utama)
-Status: ⏳ Belum dimulai
+Status: 🟢 In Progress (UI wizard + rekomendasi AI + seed 34 komponen done)
 
 ### Data Pipeline
 - [ ] Playwright scraper Tokopedia (CPU, GPU, RAM, SSD, Mobo, PSU, Case, Cooler)
 - [ ] Playwright scraper Shopee
-- [ ] Database komponen dengan normalized specs
-- [ ] Price history tracking
+- [x] Database komponen dengan normalized specs (34 komponen, migration 004)
+- [x] Price history tracking (component_prices, 34 harga official seed)
 - [ ] Cron job update harga tiap 6 jam
-- [ ] API endpoint GET /api/components
+- [x] API endpoint GET /api/components (filter type/socket, harga terbaru)
 
 ### PC Builder UI
-- [ ] Wizard: pilih use case + input budget
-- [ ] Komponen selector real-time dari database
-- [ ] Compatibility checker (socket, form factor, power)
+- [x] Wizard: pilih use case + input budget (slider 3jt-50jt)
+- [x] Komponen selector real-time dari database (alokasi budget per use case)
+- [x] Compatibility checker (socket CPU↔mobo, RAM DDR4/DDR5↔mobo socket)
 - [ ] Build comparison view
 - [ ] Saved builds per user
 
 ### AI Agent
-- [ ] Bottleneck algorithm (CPU tier vs GPU tier)
-- [ ] Budget allocation formula per use case
+- [x] Bottleneck algorithm (CPU tier vs GPU tier, warning imbalance)
+- [x] Budget allocation formula per use case (gaming/productivity/content-creator/budget)
 - [ ] System prompt + tools untuk AI agent
 - [ ] Endpoint POST /api/pc-builder/recommend (streaming SSE)
-- [ ] Output 3 build recommendation + reasoning bahasa Indonesia
+- [x] Output 3 build recommendation + reasoning bahasa Indonesia
 - [ ] Link langsung ke Tokopedia/Shopee
 
 ### Quote System

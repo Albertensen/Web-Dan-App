@@ -18,6 +18,9 @@ export default function Navbar() {
           <Link href="/forum" className="text-slate-300 hover:text-blue-400 transition">
             Forum
           </Link>
+          <Link href="/builder" className="text-slate-300 hover:text-blue-400 transition">
+            Builder
+          </Link>
           <Link href="/cart" className="text-slate-300 hover:text-blue-400 transition">
             🛒
           </Link>

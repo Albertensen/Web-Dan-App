@@ -1,0 +1,186 @@
+"use client";
+
+import { useState } from "react";
+
+interface BuildPart {
+  id: string;
+  name: string;
+  type: string;
+  price: number;
+}
+
+interface RecommendResult {
+  useCase: string;
+  budget: number;
+  build: Record<string, string | null>;
+  total: number;
+  within_budget: boolean;
+  bottleneck: string | null;
+  compatibility_issues: string[];
+  parts: BuildPart[];
+}
+
+const USE_CASES = [
+  { value: "gaming", label: "🎮 Gaming", desc: "FPS tinggi, 1440p/4K" },
+  { value: "productivity", label: "💼 Productivity", desc: "Office, coding, multitask" },
+  { value: "content-creator", label: "🎬 Content Creator", desc: "Video editing, streaming, 3D" },
+  { value: "budget", label: "💰 Budget", desc: "Hemat, value terbaik" },
+];
+
+const TYPE_LABEL: Record<string, string> = {
+  cpu: "CPU", gpu: "GPU", ram: "RAM", storage: "Storage",
+  motherboard: "Motherboard", psu: "PSU", case: "Casing", cooler: "Cooler",
+};
+
+function formatIDR(n: number) {
+  return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+}
+
+export default function PcBuilder() {
+  const [useCase, setUseCase] = useState("gaming");
+  const [budget, setBudget] = useState(15000000);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<RecommendResult | null>(null);
+  const [error, setError] = useState("");
+
+  const recommend = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/pc-builder/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ useCase, budget }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || "Terjadi kesalahan");
+      } else {
+        setResult(data);
+      }
+    } catch {
+      setError("Gagal terhubung ke server");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto">
+      <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
+        <h2 className="text-xl font-semibold mb-4 text-white">Rakit PC dengan AI</h2>
+
+        {/* Step 1: use case */}
+        <label className="block text-sm font-medium mb-2 text-slate-300">Pilih kebutuhan</label>
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {USE_CASES.map((uc) => (
+            <button
+              key={uc.value}
+              onClick={() => setUseCase(uc.value)}
+              className={`p-3 rounded-xl border text-left transition ${
+                useCase === uc.value
+                  ? "border-blue-500 bg-blue-500/10 text-white"
+                  : "border-slate-700 bg-slate-800 hover:border-slate-600"
+              }`}
+            >
+              <div className="font-medium">{uc.label}</div>
+              <div className="text-xs text-slate-400">{uc.desc}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Step 2: budget */}
+        <label className="block text-sm font-medium mb-2 text-slate-300">
+          Budget: <span className="text-blue-400">{formatIDR(budget)}</span>
+        </label>
+        <input
+          type="range"
+          min={3000000}
+          max={50000000}
+          step={1000000}
+          value={budget}
+          onChange={(e) => setBudget(Number(e.target.value))}
+          className="w-full mb-6 accent-blue-500"
+        />
+
+        <button
+          onClick={recommend}
+          disabled={loading}
+          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+        >
+          {loading ? "Menghitung..." : "🚀 Buat Rekomendasi"}
+        </button>
+
+        {error && <p className="mt-4 text-red-400 text-sm">{error}</p>}
+      </div>
+
+      {result && (
+        <div className="mt-8 space-y-4">
+          {/* Build summary */}
+          <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-white">Build Rekomendasi</h3>
+              <span
+                className={`px-3 py-1 rounded-full text-xs font-medium ${
+                  result.within_budget
+                    ? "bg-emerald-500/20 text-emerald-300"
+                    : "bg-amber-500/20 text-amber-300"
+                }`}
+              >
+                {result.within_budget ? "✓ Dalam budget" : "⚠ Melebihi budget"}
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              {result.parts.map((p) => (
+                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-slate-700/50 last:border-0">
+                  <span className="text-slate-400">{TYPE_LABEL[p.type] ?? p.type}</span>
+                  <span className="text-slate-200">{p.name}</span>
+                  <span className="text-slate-300 font-medium">{formatIDR(p.price)}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-between mt-4 pt-3 border-t border-slate-600">
+              <span className="font-semibold text-white">Total</span>
+              <span className={`font-bold ${result.within_budget ? "text-emerald-400" : "text-amber-400"}`}>
+                {formatIDR(result.total)}
+              </span>
+            </div>
+          </div>
+
+          {/* AI analysis */}
+          <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
+            <h4 className="font-semibold text-white mb-3">Analisis AI</h4>
+            {result.bottleneck ? (
+              <div className="flex gap-2 text-sm mb-3">
+                <span>⚠️</span>
+                <p className="text-amber-300">{result.bottleneck}</p>
+              </div>
+            ) : (
+              <div className="flex gap-2 text-sm mb-3">
+                <span>✅</span>
+                <p className="text-emerald-300">CPU dan GPU seimbang — tidak ada bottleneck signifikan.</p>
+              </div>
+            )}
+            {result.compatibility_issues.length > 0 ? (
+              <div className="flex gap-2 text-sm">
+                <span>🔧</span>
+                <ul className="text-red-300 space-y-1">
+                  {result.compatibility_issues.map((iss, i) => (
+                    <li key={i}>{iss}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="flex gap-2 text-sm">
+                <span>✅</span>
+                <p className="text-emerald-300">Semua komponen kompatibel.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
