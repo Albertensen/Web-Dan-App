@@ -10,3 +10,20 @@
 - `docs(teknohub): add ROADMAP.md — 6 fase (F0 done, F1 in progress)` (`624b20b`)
 - `docs(teknohub): ROADMAP detail 6 fase + env vars + keputusan teknis` (`780d4d1`)
 - `docs: tambah ROADMAP.md dan CHANGELOG.md` — changelog tracking dimulai
+- `feat: TeknoHub monorepo initial setup - Next.js 14, SQL schema, homepage` (`374d9b0`)
+
+## [2026-08-09] — Fase 1: Foundation Setup
+
+### Added
+- Monorepo teknohub/ dengan Next.js 14 App Router
+- Homepage dark theme dengan 3 hero card (E-Commerce, Forum, PC Builder)
+- SQL schema lengkap: 13 tabel + indexes + RLS policies + seed data
+- .env.example, turbo.json, next.config.mjs, vercel.json
+- TeknoHub.md di Obsidian dengan fase progress + next actions
+
+### Status Checklist (di ROADMAP.md):
+- [x] Init monorepo teknohub/
+- [x] Homepage profesional
+- [x] SQL schema lengkap
+- [x] npm run dev jalan
+- [x] Push ke GitHub

@@ -14,7 +14,7 @@ Status: 🔵 In Progress
 - [x] Init monorepo teknohub/ (Next.js + packages + supabase)
 - [x] Homepage profesional (dark theme, 3 hero card)
 - [x] Semua route placeholder dibuat
-- [x] SQL schema lengkap (6 tabel inti — perlu expand ke 12)
+- [x] SQL schema lengkap (13 tabel + indexes + RLS policies + seed data)
 - [x] .env.example + turbo.json + next.config.mjs (Next 14 tak dukung .ts)
 - [x] npm run dev jalan di localhost:3000
 
