@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { supabase } from "@/lib/supabase/client";
 import AddToCartButton from "@/components/AddToCartButton";
-import ThreadCard, { type ThreadProps } from "@/components/forum/ThreadCard";
+import ProductReviews from "@/components/ProductReviews";
 
 interface ProductProps {
   params: {
@@ -55,36 +55,6 @@ export default async function ProductPage({ params }: ProductProps) {
     currency: "IDR",
     maximumFractionDigits: 0,
   }).format(Number(product.price));
-
-  // Ulasan: thread komunitas yang menyebut produk ini (by title search) — real data
-  let reviews: ThreadProps[] = [];
-  try {
-    const { data: found } = await supabase
-      .from("threads")
-      .select("*")
-      .ilike("title", `%${product.name.split(" ")[0]}%`)
-      .order("created_at", { ascending: false })
-      .limit(3);
-    if (found && found.length > 0) {
-      reviews = found.map((t) => ({
-        id: t.id,
-        title: t.title,
-        category_name: null,
-        category_slug: null,
-        author_username: null,
-        author_avatar: null,
-        author_reputation: null,
-        reply_count: t.reply_count ?? 0,
-        view_count: t.view_count ?? 0,
-        last_reply_at: t.last_reply_at,
-        is_pinned: t.is_pinned ?? false,
-        tags: null,
-        created_at: t.created_at,
-      }));
-    }
-  } catch {
-    // silent — tanpa ulasan
-  }
 
   return (
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
@@ -146,23 +116,10 @@ export default async function ProductPage({ params }: ProductProps) {
             />
           </div>
 
-          {/* Ulasan produk dari komunitas */}
+          {/* Ulasan & diskusi produk (tier-based) */}
           <div className="pt-6 border-t border-slate-300">
-            <h2 className="text-xl font-semibold mb-4 text-muted">Ulasan &amp; Diskusi Produk</h2>
-            {reviews.length > 0 ? (
-              <div className="space-y-4">
-                {reviews.map((r) => (
-                  <ThreadCard key={r.id} thread={r} />
-                ))}
-              </div>
-            ) : (
-              <div className="p-6 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
-                <p className="text-sm text-muted">Belum ada ulasan untuk produk ini.</p>
-                <p className="text-xs text-tertiary mt-1">
-                  Diskusikan di forum komunitas untuk berbagi pengalaman!
-                </p>
-              </div>
-            )}
+            <h2 className="text-xl font-semibold mb-4 text-muted">Review &amp; Diskusi Produk</h2>
+            <ProductReviews productId={product.id} />
           </div>
         </div>
       </div>
