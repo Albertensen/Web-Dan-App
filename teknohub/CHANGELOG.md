@@ -16,6 +16,7 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 
 ### Notes
 - npm audit: 5 high vuln (glob via eslint-config-next, postcss via next) — butuh next@16 major bump (breaking), di-skip; di-track di ROADMAP
+- Rate limiter in-memory Map: bekerja penuh di single-instance (dev/lokal), tapi Vercel serverless Hobby bisa beda instance per request → rate limit tidak ketat di prod. Upgrade: Upstash Redis (`@upstash/ratelimit`) utk shared state. Checkbox rate limiting tetap dicentang (implementasi ada), catatan di ROADMAP
 
 ## [2026-08-09] — Fase 6A & 6B: Responsive Design + Security (docs)
 
