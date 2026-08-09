@@ -2,67 +2,215 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   TEKNOHUB DESIGN TOKENS — Shopify System (DESIGN.md)
+   Cinematic dark-first. Pill buttons. Thin-weight display.
+   ============================================================ */
+
 :root {
   color-scheme: dark;
+
+  /* Canvas */
+  --color-background: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #1e2c31;
+  --color-surface-glass: rgba(255, 255, 255, 0.03);
+
+  /* Accent (aloe / pistachio mint) */
+  --color-accent: #c1fbd4;
+  --color-accent-secondary: #d4f9e0;
+  --color-accent-dim: rgba(193, 251, 212, 0.12);
+
+  /* Text */
+  --color-text-primary: #ffffff;
+  --color-text-muted: #a1a1aa;
+  --color-text-tertiary: #71717a;
+
+  /* Borders */
+  --color-border: #1e2c31;
+  --color-border-soft: rgba(255, 255, 255, 0.08);
+
+  /* Link cool tones (footer) */
+  --color-link-cool: #9dabad;
+  --color-link-cool-2: #9797a2;
+
+  /* Glow */
+  --color-glow: rgba(193, 251, 212, 0.22);
+  --color-glow-wide: rgba(193, 251, 212, 0.1);
+
+  /* Typography */
+  --font-display: "Inter Display", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Radius */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Spacing base */
+  --space-unit: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #000000;
+    --color-surface: #0a0a0a;
+    --color-text-primary: #ffffff;
+  }
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss03";
 }
 
-/* Premium glow cards */
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+}
+
+/* Scrollbar (WebKit) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-2);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+/* Glow card — border + soft accent glow, intensif on hover */
 .glow-card {
   position: relative;
   overflow: hidden;
-  border-radius: 1rem;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 20px var(--color-glow);
   transition:
     transform 0.25s ease,
     border-color 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.glow-card::before {
-  content: "";
-  position: absolute;
-  inset: -50%;
-  background: radial-gradient(circle at center, var(--glow, rgba(59, 130, 246, 0.35)) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+    box-shadow 0.3s ease;
 }
 
 .glow-card:hover {
-  transform: translateY(-4px);
+  box-shadow:
+    0 0 40px var(--color-glow),
+    0 0 80px var(--color-glow-wide);
   border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+  transform: translateY(-4px);
 }
 
-.glow-card:hover::before {
-  opacity: 1;
+/* Glass surface — backdrop blur */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glow-cyan {
-  --glow: rgba(34, 211, 238, 0.3);
-}
-.glow-violet {
-  --glow: rgba(139, 92, 246, 0.3);
-}
-.glow-emerald {
-  --glow: rgba(52, 211, 153, 0.3);
-}
-
-/* Gradient text */
-.text-gradient {
-  background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399);
+/* Gradient accent text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
   -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+/* Neon border */
+.neon-border {
+  border: 1px solid var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+}
+
+/* Shimmer skeleton */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    var(--color-border) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--color-glow);
+  }
+  50% {
+    box-shadow:
+      0 0 40px var(--color-glow),
+      0 0 80px var(--color-glow-wide);
+  }
+}
+
+@keyframes cardLift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-4px);
+  }
+}
+
+/* Utility animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+.animate-glow-pulse {
+  animation: glowPulse 2s infinite;
+}
+.animate-card-lift:hover {
+  animation: cardLift 0.2s ease forwards;
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import { useCartStore } from "@/store/cartStore";
 
 interface Product {
+  id: string;
   name: string;
   slug: string;
   price: number;
@@ -11,82 +12,99 @@ interface Product {
   image_url: string | null;
   category: string;
   brand: string | null;
+  original_price?: number | null;
 }
 
 interface ProductCardProps {
   product: Product;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const formattedPrice = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    maximumFractionDigits: 0,
-  }).format(product.price);
+const PLACEHOLDER_EMOJI: Record<string, string> = {
+  laptop: "💻",
+  smartphone: "📱",
+  monitor: "🖥️",
+  gpu: "🎮",
+  cpu: "🧠",
+  ram: "💾",
+};
 
-  const renderImageContent = () => {
-    if (product.image_url) {
-      return <img src={product.image_url} alt={product.name} className="w-full h-48 object-cover" />;
-    } else {
-      // Placeholder emoji per kategori (deterministik, hindari hydrate mismatch)
-      const placeholderEmoji =
-        product.category === "laptop" ? "💻"
-        : product.category === "smartphone" ? "📱"
-        : product.category === "monitor" ? "🖥️"
-        : product.category === "gpu" ? "🎮"
-        : product.category === "cpu" ? "🧠"
-        : product.category === "ram" ? "💾"
-        : "🛒";
+const CATEGORY_LABEL: Record<string, string> = {
+  laptop: "Laptop",
+  smartphone: "Smartphone",
+  monitor: "Monitor",
+  gpu: "GPU",
+  cpu: "CPU",
+  ram: "RAM",
+};
 
-      return (
-        <div className="bg-slate-800 flex items-center justify-center h-48 text-5xl">
-          {placeholderEmoji}
-        </div>
-      );
-    }
-  };
+export default function ProductCard({ product }: ProductCardProps) {
+  const addItem = useCartStore((s) => s.add);
 
-  const StockBadge = () => {
-    if (product.stock > 0) {
-      return <span className="text-emerald-400 font-medium">Stok: {product.stock}</span>;
-    }
-    return <span className="text-red-400 font-medium">Habis</span>;
-  };
+  const fmt = (n: number) =>
+    new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+
+  const hasDiscount = product.original_price && product.original_price > product.price;
 
   return (
-    <Link href={`/products/${product.slug}`} className="block group transform transition duration-300 hover:scale-[1.02] hover:shadow-xl">
-      <div className="glow-card bg-[#1a1a22] rounded-xl overflow-hidden shadow-lg border border-slate-700 flex flex-col">
-        {/* Image Area */}
-        <div className="w-full h-48 relative">
-          {renderImageContent()}
+    <div className="glow-card group flex flex-col overflow-hidden animate-card-lift">
+      {/* Image — 4:3 + overlay gradient on hover */}
+      <div className="relative aspect-[4/3] overflow-hidden">
+        {product.image_url ? (
+          <img
+            src={product.image_url}
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-6xl bg-surface-2/40">
+            {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
+          </div>
+        )}
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Category pill */}
+        <span className="absolute top-3 left-3 px-3 py-1 rounded-full neon-border bg-black/60 text-[11px] font-medium tracking-wide">
+          {CATEGORY_LABEL[product.category] ?? product.category}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col flex-1">
+        {product.brand && (
+          <p className="text-xs text-muted mb-1 uppercase tracking-wider">{product.brand}</p>
+        )}
+        <h3 className="text-base font-medium text-foreground line-clamp-2 mb-3 min-h-[2.5rem]">
+          {product.name}
+        </h3>
+
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="font-display text-xl gradient-text font-medium">{fmt(product.price)}</span>
+          {hasDiscount && (
+            <span className="text-xs text-tertiary line-through">{fmt(product.original_price!)}</span>
+          )}
         </div>
 
-        {/* Content Area */}
-        <div className="p-5 flex flex-col justify-between flex-grow">
-          <div>
-            {/* Name */}
-            <h3 className="text-lg font-semibold text-slate-200 line-clamp-1 mb-1">{product.name}</h3>
+        <p className={`text-xs mb-4 ${product.stock > 0 ? "text-accent" : "text-red-400"}`}>
+          {product.stock > 0 ? `Stok: ${product.stock}` : "Habis"}
+        </p>
 
-            {/* Brand */}
-            {product.brand && (
-              <p className="text-xs text-slate-400 mb-3">Brand: {product.brand}</p>
-            )}
-
-            {/* Price and Stock */}
-            <div className="flex justify-between items-center mb-4 pt-2 border-t border-slate-800">
-              <span className="text-xl font-bold text-emerald-300">{formattedPrice}</span>
-              <StockBadge />
-            </div>
-          </div>
-
-          {/* Button */}
-          <button className="w-full py-2 rounded-lg text-white transition duration-150 bg-gradient-to-r from-blue-500 to-violet-500 hover:from-blue-600 hover:to-violet-600">
+        <div className="flex gap-2 mt-auto">
+          <Link
+            href={`/products/${product.slug}`}
+            className="flex-1 text-center px-4 py-2.5 rounded-full border border-border text-sm font-medium text-foreground hover:border-accent hover:text-accent transition-colors"
+          >
             Lihat Detail
+          </Link>
+          <button
+            onClick={() => addItem(product)}
+            className="px-4 py-2.5 rounded-full bg-accent text-black text-sm font-medium hover:opacity-90 transition-opacity"
+            aria-label="Tambah ke keranjang"
+          >
+            🛒
           </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
-};
-
-export default ProductCard;
+}

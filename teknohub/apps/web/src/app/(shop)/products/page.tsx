@@ -28,25 +28,30 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-200 p-4 sm:p-8">
-      <header className="mb-10 border-b border-slate-700 pb-4">
-        <h1 className="text-3xl font-bold text-white">Katalog Produk</h1>
+    <div className="min-h-screen bg-background text-foreground p-4 sm:p-8">
+      <header className="mb-8 border-b border-border pb-5">
+        <h1 className="font-display font-extralight text-3xl sm:text-4xl">
+          Katalog <span className="gradient-text">Produk</span>
+        </h1>
       </header>
 
-      <Suspense fallback={<div>Loading filters...</div>}>
-        <ProductFilter initialCategory={category} initialSearch={search} />
-      </Suspense>
+      {/* Sticky search/filter */}
+      <div className="sticky top-16 z-30 glass-surface rounded-xl px-4 py-3 mb-8">
+        <Suspense fallback={<div className="text-muted text-sm">Memuat filter...</div>}>
+          <ProductFilter initialCategory={category} initialSearch={search} />
+        </Suspense>
+      </div>
 
       {products.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((p) => (
             <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       ) : (
-        <div className="p-8 bg-slate-800/50 border border-dashed border-slate-600 rounded-xl text-center mt-8">
-          <p className="text-lg font-medium text-slate-400">Produk tidak ditemukan</p>
-          <p className="text-sm text-slate-500 mt-1">Coba ubah filter atau kata kunci pencarian Anda.</p>
+        <div className="p-8 bg-surface border border-dashed border-border rounded-xl text-center">
+          <p className="text-lg font-medium text-muted">Produk tidak ditemukan</p>
+          <p className="text-sm text-tertiary mt-1">Coba ubah filter atau kata kunci pencarian Anda.</p>
         </div>
       )}
     </div>
