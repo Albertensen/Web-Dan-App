@@ -3,11 +3,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { createClient } from "@supabase/supabase-js";
 
-// Service role client (server-only) untuk insert produk
-const serviceClient = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// Service role client (server-only) — lazy init, butuh env saat runtime
+function getServiceClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) {
+    throw new Error("supabaseKey is required");
+  }
+  return createClient(url, key);
+}
 
 interface ProductInput {
   name: string;
@@ -29,7 +33,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { data: profile } = await serviceClient
+  const { data: profile } = await getServiceClient()
     .from("profiles")
     .select("role")
     .eq("id", session.user.id)
@@ -50,7 +54,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Data produk tidak valid" }, { status: 400 });
   }
 
-  const { data, error } = await serviceClient
+  const { data, error } = await getServiceClient()
     .from("products")
     .insert({
       name: body.name,
