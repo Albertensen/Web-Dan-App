@@ -82,8 +82,8 @@ export default async function Home() {
       <section id="marketplace">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Katalog Produk Terlaris</h1>
-            <p className="text-xs text-muted">Pilihan hardware dan perangkat elektronik tervalidasi.</p>
+            <h1 className="text-2xl font-bold tracking-tight">Katalog Produk Unggulan</h1>
+            <p className="text-xs text-muted">Perangkat elektronik &amp; hardware dengan standar performa tertinggi.</p>
           </div>
           {/* Filter kategori pills */}
           <div className="flex gap-2 text-xs overflow-x-auto no-scrollbar pb-1">
@@ -101,8 +101,8 @@ export default async function Home() {
 
         {/* Grid produk kompak */}
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {products.slice(0, 10).map((p) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.slice(0, 8).map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>
@@ -178,7 +178,7 @@ export default async function Home() {
 
       {/* ================= FOOTER ================= */}
       <footer className="border-t border-slate-400/50 py-12 px-6 mt-16 text-center text-muted text-[11px] font-medium tracking-wide">
-        <p>© 2026 Tekno Zone. Marketplace Front-View &amp; Slide-to-Forum Ecosystem.</p>
+        <p>© 2026 Tekno Zone. Apple-Style Product Cards &amp; Zoom Interaction.</p>
       </footer>
     </main>
   );

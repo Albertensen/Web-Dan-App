@@ -12,6 +12,7 @@ interface Product {
   image_url: string | null;
   category: string;
   brand: string | null;
+  description?: string | null;
   original_price?: number | null;
 }
 
@@ -44,61 +45,65 @@ export default function ProductCard({ product }: ProductCardProps) {
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
   const hasDiscount = product.original_price && product.original_price > product.price;
+  const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
 
   return (
-    <div className="bg-surface border border-slate-300 rounded-[2.5rem] overflow-hidden flex flex-col hover:border-accent transition duration-300 shadow-sm group">
-      {/* Image — 4:3 + overlay on hover */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        {product.image_url ? (
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl bg-surface-2/60">
-            {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
-          </div>
-        )}
-        {/* Category pill */}
-        <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[11px] font-medium tracking-wide">
-          {CATEGORY_LABEL[product.category] ?? product.category}
+    <div className="bg-surface border border-slate-300 rounded-[2rem] p-5 flex flex-col justify-between hover:border-accent transition duration-300 shadow-sm group">
+      <div>
+        {/* Gambar full + hover zoom (scale-110 halus) */}
+        <div className="h-56 rounded-[1.5rem] mb-5 overflow-hidden flex items-center justify-center relative bg-surface-2/80">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none" />
+          {product.image_url ? (
+            <img
+              src={product.image_url}
+              alt={product.name}
+              className="w-full h-full object-cover z-0 group-hover:scale-110 transition duration-500 ease-out"
+            />
+          ) : (
+            <span className="text-6xl z-0 group-hover:scale-110 transition duration-500 ease-out">
+              {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
+            </span>
+          )}
+        </div>
+
+        {/* Kategori */}
+        <span className="text-[10px] text-accent font-semibold uppercase tracking-wider block mb-1">
+          {product.brand ? `${product.brand} / ` : ""}
+          {catLabel}
         </span>
+
+        {/* Nama */}
+        <h3 className="text-lg font-bold tracking-tight text-foreground mb-1 line-clamp-2">{product.name}</h3>
+
+        {/* Deskripsi singkat */}
+        {product.description && (
+          <p className="text-xs text-muted leading-relaxed mb-4 line-clamp-2">{product.description}</p>
+        )}
       </div>
 
-      {/* Content */}
-      <div className="p-6 flex flex-col flex-1">
-        {product.brand && (
-          <p className="text-[11px] text-muted font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
-        )}
-        <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-3 tracking-tight min-h-[2.5rem]">
-          {product.name}
-        </h3>
-
-        <div className="flex items-baseline gap-2 mb-2">
-          <span className="text-base font-semibold text-foreground">{fmt(product.price)}</span>
+      <div>
+        {/* Harga */}
+        <div className="flex items-baseline gap-2 mb-3">
+          <span className="text-sm font-semibold text-foreground">{fmt(product.price)}</span>
           {hasDiscount && (
             <span className="text-xs text-tertiary line-through">{fmt(product.original_price!)}</span>
           )}
         </div>
 
-        <p className={`text-xs mb-4 ${product.stock > 0 ? "text-accent" : "text-red-500"}`}>
-          {product.stock > 0 ? `Stok: ${product.stock}` : "Habis"}
-        </p>
-
-        <div className="flex gap-2 mt-auto">
+        {/* 2 tombol pill berdampingan */}
+        <div className="flex gap-2">
           <Link
             href={`/products/${product.slug}`}
-            className="flex-1 text-center px-4 py-2.5 rounded-full border border-slate-400 text-sm font-medium text-foreground hover:border-accent hover:text-accent transition-colors"
+            className="flex-1 text-center bg-surface-2 hover:bg-accent hover:text-white text-foreground py-2 rounded-full text-xs font-medium transition"
           >
-            Lihat Detail
+            Detail
           </Link>
           <button
             onClick={() => addItem(product)}
-            className="px-4 py-2.5 rounded-full bg-accent text-white text-sm font-medium hover:bg-black transition"
-            aria-label="Tambah ke keranjang"
+            className="flex-1 bg-accent text-white hover:bg-accent-secondary py-2 rounded-full text-xs font-medium transition disabled:opacity-50"
+            disabled={product.stock <= 0}
           >
-            🛒
+            Beli
           </button>
         </div>
       </div>
