@@ -33,9 +33,8 @@ export default function Navbar() {
 
         <NavbarSearch />
 
-        {/* Area kanan: cart + auth + tentang */}
-        <div className="flex flex-col items-end shrink-0">
-          <div className="flex items-center gap-2.5">
+        {/* Area kanan: cart + auth */}
+        <div className="flex items-center gap-2.5 shrink-0">
             {/* Cart SVG — ikon lebih rapi */}
             <Link
               href="/cart"
@@ -84,14 +83,6 @@ export default function Navbar() {
             >
               {mobileOpen ? "✕" : "☰"}
             </button>
-          </div>
-          {/* Tentang TeknoZone di bawah Masuk/Daftar */}
-          <Link
-            href="/#tentang"
-            className="text-[10px] font-semibold text-muted tracking-wide hover:text-accent transition mt-0.5"
-          >
-            Tentang TeknoZone
-          </Link>
         </div>
       </div>
 

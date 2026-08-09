@@ -31,6 +31,13 @@ export default function SlideNav() {
             </Link>
           );
         })}
+        {/* Tentang TeknoZone — rata kanan sebaris dgn tab */}
+        <Link
+          href="/#tentang"
+          className="ml-auto shrink-0 text-sm font-semibold text-muted hover:text-accent transition"
+        >
+          Tentang TeknoZone
+        </Link>
       </div>
     </div>
   );
