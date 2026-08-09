@@ -25,11 +25,11 @@ Status: 🔵 In Progress
 - [ ] Deploy pertama berhasil (URL live)
 
 ### Database & Auth
-- [ ] Buat Supabase project
-- [ ] Run SQL migration di Supabase
+- [x] Buat Supabase project
+- [x] Run SQL migration di Supabase (14 tabel + RLS + seed via Management API)
 - [ ] Setup NextAuth + Google OAuth
 - [ ] Login/register flow berfungsi
-- [ ] RLS policies aktif dan ditest
+- [x] RLS policies aktif dan ditest (6/6 PASS)
 
 ---
 
