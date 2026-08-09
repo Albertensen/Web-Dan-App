@@ -1,0 +1,81 @@
+import { supabase } from "@/lib/supabase/client";
+import AdminProductForm from "@/components/admin/AdminProductForm";
+
+export const metadata = {
+  title: "Admin Produk — TeknoHub",
+};
+
+export const dynamic = "force-dynamic";
+
+const formatIDR = (n: number) =>
+  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+
+export default async function AdminProductsPage() {
+  const { data: products, error } = await supabase
+    .from("products")
+    .select("id, name, category, brand, price, stock, image_url, slug")
+    .order("created_at", { ascending: false });
+
+  return (
+    <main className="flex-1 px-6 py-8 max-w-6xl mx-auto w-full">
+      <h1 className="text-3xl font-bold mb-2">Admin Produk</h1>
+      <p className="text-slate-400 mb-8">Kelola katalog produk TeknoHub</p>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2">
+          <h2 className="text-xl font-bold text-slate-100 mb-4">Daftar Produk ({products?.length ?? 0})</h2>
+          {error || !products || products.length === 0 ? (
+            <div className="p-8 bg-slate-800/50 border border-dashed border-slate-600 rounded-xl text-center">
+              <p className="text-slate-400">Belum ada produk</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto glow-card">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="text-left text-slate-400 border-b border-slate-700">
+                    <th className="p-3">Produk</th>
+                    <th className="p-3">Kategori</th>
+                    <th className="p-3 text-right">Harga</th>
+                    <th className="p-3 text-center">Stok</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((p) => (
+                    <tr key={p.id} className="border-b border-slate-800/50 hover:bg-slate-800/30">
+                      <td className="p-3">
+                        <div className="flex items-center gap-3">
+                          {p.image_url ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={p.image_url} alt={p.name} className="w-10 h-10 object-cover rounded-lg" />
+                          ) : (
+                            <span className="w-10 h-10 bg-slate-700 rounded-lg flex items-center justify-center text-sm">📦</span>
+                          )}
+                          <div>
+                            <p className="font-medium text-slate-100">{p.name}</p>
+                            <p className="text-xs text-slate-500">{p.brand} · {p.slug}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-3 text-slate-300">{p.category}</td>
+                      <td className="p-3 text-right text-slate-100 font-medium">{formatIDR(Number(p.price))}</td>
+                      <td className={`p-3 text-center ${Number(p.stock) <= 5 ? "text-amber-400" : "text-slate-300"}`}>
+                        {p.stock}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h2 className="text-xl font-bold text-slate-100 mb-4">Tambah Produk</h2>
+          <div className="glow-card p-5">
+            <AdminProductForm />
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
