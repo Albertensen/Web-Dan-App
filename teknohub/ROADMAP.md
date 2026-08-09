@@ -110,6 +110,8 @@ Status: 🟢 In Progress (core + saved + compare + SSE done; sisa: scraper, cron
 - [x] Endpoint POST /api/pc-builder/recommend (streaming SSE ?stream=1)
 - [x] Output 3 build recommendation + reasoning bahasa Indonesia
 - [ ] Link langsung ke Tokopedia/Shopee (kolom marketplace_url siap, isi data)
+- [ ] **Interactive AI PC Builder Chat + Live Summary Sync** (di /builder) — chat konsultasi rakit PC, rekomendasi AI sync ke ringkasan build real-time
+- [ ] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS knowledge base toko, floating di pojok kanan bawah
 
 ### Quote System
 - [ ] Form request penawaran resmi
