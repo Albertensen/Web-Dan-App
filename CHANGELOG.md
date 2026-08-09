@@ -27,3 +27,12 @@
 - [x] SQL schema lengkap
 - [x] npm run dev jalan
 - [x] Push ke GitHub
+
+## [2026-08-09] — Fase 2: E-Commerce Core
+
+### Added
+- Seed 15 produk elektronik (6 kategori) via migration 003
+- API GET `/api/products` — filter category + search
+- UI: ProductCard, ProductFilter, products listing + detail page
+- Zustand cartStore (persist) + cart page
+- Alur kerja baru: Hermes pseudocode → Gemma 4 E4B → Ruflo write/git

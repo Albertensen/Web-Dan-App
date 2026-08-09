@@ -34,20 +34,21 @@ Status: 🔵 In Progress
 ---
 
 ## FASE 2 — E-Commerce
-Status: ⏳ Belum dimulai
+Status: 🟢 In Progress
 
 ### Katalog Produk
-- [ ] Halaman listing produk + filter + sort
-- [ ] Halaman detail produk
-- [ ] Kategori: Laptop, HP, Monitor, Komponen PC, Aksesoris
+- [x] Seed 15 produk + types (migration 003, 6 kategori)
+- [x] Halaman listing produk + filter kategori + search
+- [x] Halaman detail produk
+- [ ] Kategori: Laptop, HP, Monitor, Komponen PC, Aksesoris (expand)
 - [ ] Search produk (Algolia/Meilisearch)
 - [ ] Admin panel: CRUD produk
 - [ ] Upload gambar ke Supabase Storage
 - [ ] SEO: meta tags, OG image, sitemap
 
 ### Cart & Checkout
-- [ ] Tambah ke keranjang (sync web ↔ mobile)
-- [ ] Halaman cart
+- [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
+- [x] Halaman cart (qty stepper, total)
 - [ ] Checkout: alamat → pengiriman → payment
 - [ ] Integrasi Midtrans payment gateway
 - [ ] Order confirmation
