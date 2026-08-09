@@ -66,7 +66,8 @@ Status: 🟢 In Progress
 - [x] Upvote/downvote UI (VoteControl, reputation trigger +10)
 - [x] Reputation/karma system (trigger: +50 solved reply, kunci thread)
 - [ ] Buat thread (rich text editor TipTap)
-- [ ] Reply & nested replies (API)
+- [x] Form buat thread (NewThreadForm, /forum/new)
+- [x] Form balasan + list (ReplySection)
 - [ ] Mark as solution (API)
 - [ ] Tag system
 
