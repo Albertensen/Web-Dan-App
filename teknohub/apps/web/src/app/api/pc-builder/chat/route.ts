@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase/client";
+import { rateLimit } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -111,6 +112,11 @@ async function ruleBasedReply(text: string) {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 15 POST/menit per IP
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+  if (!rateLimit(ip, { limit: 15, windowSec: 60 })) {
+    return NextResponse.json({ error: "Terlalu banyak request. Coba lagi nanti." }, { status: 429 });
+  }
   const body = await request.json().catch(() => null);
   const message = String(body?.message ?? "").trim();
 

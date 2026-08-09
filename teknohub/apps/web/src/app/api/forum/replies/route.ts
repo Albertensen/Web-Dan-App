@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth-options"
 import { supabase } from "@/lib/supabase/client"
+import { sanitizeHtml } from "@/lib/sanitize"
 
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
@@ -11,7 +12,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json().catch(() => null)
   const threadId = String(body?.thread_id ?? "")
-  const content = String(body?.content ?? "")
+  const content = sanitizeHtml(String(body?.content ?? ""))
   const plain = content.replace(/<[^>]*>/g, "").trim()
 
   if (!threadId) {

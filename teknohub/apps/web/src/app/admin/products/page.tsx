@@ -30,10 +30,10 @@ export default async function AdminProductsPage() {
             </div>
           ) : (
             <div className="overflow-x-auto glow-card">
-              <table className="w-full text-sm">
+              <table className="w-full text-sm min-w-[640px]">
                 <thead>
                   <tr className="text-left text-tertiary border-b border-slate-300">
-                    <th className="p-3">Produk</th>
+                    <th className="p-3 sticky left-0 bg-surface z-10">Produk</th>
                     <th className="p-3">Kategori</th>
                     <th className="p-3 text-right">Harga</th>
                     <th className="p-3 text-center">Stok</th>
@@ -42,7 +42,7 @@ export default async function AdminProductsPage() {
                 <tbody>
                   {products.map((p) => (
                     <tr key={p.id} className="border-b border-slate-300/50 hover:bg-surface-2/50">
-                      <td className="p-3">
+                      <td className="p-3 sticky left-0 bg-surface z-10">
                         <div className="flex items-center gap-3">
                           {p.image_url ? (
                             // eslint-disable-next-line @next/next/no-img-element

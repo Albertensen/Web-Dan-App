@@ -4,13 +4,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import NavbarSearch from "./NavbarSearch";
+import MobileDrawer from "./MobileDrawer";
 import { useCartStore, selectTotalItems } from "@/store/cartStore";
 import UserDropdown from "./auth/UserDropdown";
-
-const NAV_LINKS = [
-  { href: "/products", label: "Store" },
-  { href: "/forum", label: "Forum Komunitas" },
-];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -36,7 +32,7 @@ export default function Navbar() {
 
         <NavbarSearch />
 
-        {/* Area kanan: cart + auth */}
+        {/* Area kanan: cart + auth (auth hidden di mobile — di drawer) */}
         <div className="flex items-center gap-2.5 shrink-0">
             {/* Cart SVG — ikon lebih rapi */}
             <Link
@@ -64,9 +60,11 @@ export default function Navbar() {
               )}
             </Link>
             {status === "authenticated" ? (
-              <UserDropdown />
+              <div className="hidden md:block">
+                <UserDropdown />
+              </div>
             ) : (
-              <>
+              <div className="hidden md:flex items-center gap-2.5">
                 {/* Masuk */}
                 <Link
                   href="/login"
@@ -81,7 +79,7 @@ export default function Navbar() {
                 >
                   Daftar
                 </Link>
-              </>
+              </div>
             )}
 
             {/* Hamburger */}
@@ -95,35 +93,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer */}
-      {mobileOpen && (
-        <div className="md:hidden backdrop-blur-xl bg-background/90 border-t border-slate-400/50 px-6 py-4 flex flex-col gap-3 text-sm">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={() => setMobileOpen(false)}
-              className="text-muted hover:text-accent transition"
-            >
-              {l.label}
-            </Link>
-          ))}
-          <Link
-            href="/builder-3d"
-            onClick={() => setMobileOpen(false)}
-            className="text-muted hover:text-accent transition"
-          >
-            AI 3D PC Builder
-          </Link>
-          <Link
-            href="/login"
-            onClick={() => setMobileOpen(false)}
-            className="bg-accent text-white px-4 py-2 rounded-full text-center text-xs font-medium"
-          >
-            Masuk
-          </Link>
-        </div>
-      )}
+      {/* Mobile drawer (slide-in) */}
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </header>
   );
 }

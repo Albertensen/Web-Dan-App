@@ -235,14 +235,14 @@ Status: ⏳ Belum dimulai
 Status: 🔵 In Progress
 
 ### Layout & Navigation
-- [ ] Navbar mobile: hamburger menu + drawer slide-in
+- [x] Navbar mobile: hamburger menu + drawer slide-in
 - [ ] Navbar dropdown user: touch-friendly di mobile
 - [ ] Footer: stack vertical di mobile
-- [ ] Semua padding/margin dikecilkan di mobile (px-4 → px-3)
+- [x] Semua padding/margin dikecilkan di mobile (px-4 → px-3)
 
 ### Halaman E-Commerce
 - [ ] Homepage hero: font size dikecilkan di mobile, CTA stack vertical
-- [ ] Product grid: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
+- [x] Product grid: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
 - [ ] Product detail: image full-width di mobile, info di bawah
 - [ ] Cart: layout stack vertical di mobile
 - [ ] Checkout form: single column di mobile
@@ -251,7 +251,7 @@ Status: 🔵 In Progress
 - [ ] Thread listing: full-width card di mobile
 - [ ] Thread detail: sidebar disembunyikan di mobile
 - [ ] Reply form: full-width di mobile
-- [ ] Tag selector: horizontal scroll di mobile
+- [x] Tag selector: horizontal scroll di mobile
 
 ### PC Builder
 - [ ] Wizard: step 1 kolom di mobile (bukan side-by-side)
@@ -260,14 +260,14 @@ Status: 🔵 In Progress
 - [ ] Build comparison: scroll horizontal di mobile
 
 ### Admin Panel
-- [ ] Admin table: horizontal scroll + sticky first column di mobile
+- [x] Admin table: horizontal scroll + sticky first column di mobile
 - [ ] Admin form: single column di mobile
 
 ### Assets & Performance
 - [ ] Semua <img> diganti next/image dengan sizes prop yang benar
-- [ ] Lazy loading gambar produk
+- [x] Lazy loading gambar produk
 - [ ] Font subset: hanya karakter Latin yang diload
-- [ ] Viewport meta tag benar di layout.tsx
+- [x] Viewport meta tag benar di layout.tsx
 
 ---
 
@@ -275,22 +275,22 @@ Status: 🔵 In Progress
 Status: ⏳ Belum dimulai
 
 ### HTTP Security Headers
-- [ ] next.config.ts: tambah Content-Security-Policy (CSP)
-- [ ] X-Frame-Options: DENY
-- [ ] X-Content-Type-Options: nosniff
-- [ ] Referrer-Policy: strict-origin-when-cross-origin
-- [ ] Permissions-Policy: camera=(), microphone=(), geolocation=()
+- [x] next.config.ts: tambah Content-Security-Policy (CSP)
+- [x] X-Frame-Options: DENY
+- [x] X-Content-Type-Options: nosniff
+- [x] Referrer-Policy: strict-origin-when-cross-origin
+- [x] Permissions-Policy: camera=(), microphone=(), geolocation=()
 - [ ] Strict-Transport-Security (HSTS) via Vercel
 
 ### API Route Security
-- [ ] Rate limiting semua API routes (upstash/ratelimit atau custom middleware)
-- [ ] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
-- [ ] Auth check wajib di semua route yang butuh login (tidak boleh ada route admin tanpa cek role)
+- [x] Rate limiting semua API routes (upstash/ratelimit atau custom middleware)
+- [x] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
+- [x] Auth check wajib di semua route yang butuh login (tidak boleh ada route admin tanpa cek role)
 - [ ] Audit semua route: pastikan tidak ada yang bisa diakses tanpa autentikasi
 
 ### Input Validation & Sanitization
 - [ ] Semua input user divalidasi dengan Zod sebelum masuk DB
-- [ ] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify atau sanitize-html)
+- [x] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify atau sanitize-html)
 - [ ] File upload: validasi MIME type + ukuran di server (bukan hanya client)
 - [ ] Cegah path traversal di file upload ke Supabase Storage
 
@@ -311,7 +311,7 @@ Status: ⏳ Belum dimulai
 ### Environment & Secrets Audit
 - [ ] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit
 - [ ] Vercel env: semua secret di production env (tidak ada yang hardcode)
-- [ ] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
+- [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
 - [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
 
 ### Dependency Security

@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { rateLimit } from "@/lib/rateLimit";
 
 // Paksa runtime — jangan di-cache
 export const dynamic = "force-dynamic";
+
+const ip = (req: Request) =>
+  req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown";
 
 /** Admin client Supabase (service role) — bypass RLS untuk create user */
 function adminClient() {
@@ -14,6 +18,10 @@ function adminClient() {
 }
 
 export async function POST(req: Request) {
+  // Rate limit: 5 request/menit per IP (brute force protection)
+  if (!rateLimit(ip(req), { limit: 5, windowSec: 60 })) {
+    return NextResponse.json({ error: "Terlalu banyak percobaan. Coba lagi nanti." }, { status: 429 });
+  }
   try {
     const body = await req.json();
     // Schema register penuh (terms wajib), tapi API cuma butuh 3 field —

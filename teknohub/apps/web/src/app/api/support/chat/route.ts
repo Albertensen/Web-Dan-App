@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { supabase } from "@/lib/supabase/client";
+import { rateLimit } from "@/lib/rateLimit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;
@@ -24,6 +25,11 @@ const KB = [
 const KB_DEFAULT = "Terima kasih sudah menghubungi TeknoHub CS 🤖. Pertanyaan: lama rakit, garansi, pengiriman, pembayaran, status pesanan, atau harga? Ketik pertanyaanmu, atau hubungi admin untuk bantuan lebih lanjut.";
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 20 POST/menit per IP
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+  if (!rateLimit(ip, { limit: 20, windowSec: 60 })) {
+    return NextResponse.json({ error: "Terlalu banyak pesan. Coba lagi nanti." }, { status: 429 });
+  }
   const body = await request.json().catch(() => null);
   const message = String(body?.message ?? "").trim();
 

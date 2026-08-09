@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth-options"
 import { supabase } from "@/lib/supabase/client"
+import { rateLimit } from "@/lib/rateLimit"
+import { sanitizeHtml } from "@/lib/sanitize"
+
+const ip = (req: NextRequest) =>
+  req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "unknown"
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -39,6 +44,10 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  // Rate limit: 10 POST/menit per IP
+  if (!rateLimit(ip(request), { limit: 10, windowSec: 60 })) {
+    return NextResponse.json({ error: "Terlalu banyak request. Coba lagi nanti." }, { status: 429 })
+  }
   const session = await getServerSession(authOptions)
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -46,7 +55,7 @@ export async function POST(request: NextRequest) {
 
   const body = await request.json().catch(() => null)
   const title = String(body?.title ?? "").trim()
-  const content = String(body?.content ?? "")
+  const content = sanitizeHtml(String(body?.content ?? ""))
   const categorySlug = String(body?.category_slug ?? "")
   const plainContent = content.replace(/<[^>]*>/g, "").trim()
   const rawTags = Array.isArray(body?.tags) ? body.tags : []

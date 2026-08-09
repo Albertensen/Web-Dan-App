@@ -2,6 +2,21 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Fase 6A & 6B: Responsive Design + Security
+
+### Added
+- Mobile navbar dengan hamburger drawer (MobileDrawer slide-in + overlay backdrop)
+- Product grid responsive (2→3→4 kolom), lazy loading gambar produk
+- Forum kategori pills horizontal scroll di mobile
+- Admin table: horizontal scroll + sticky first column
+- HTTP Security Headers (CSP, X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy)
+- Rate limiting: auth register (5/min), forum threads (10/min), support chat (20/min), pc-builder chat (15/min)
+- Input sanitizer (whitelist HTML) untuk TipTap output — threads & replies
+- API auth audit: semua route sensitif punya getServerSession + role check (admin/moderator)
+
+### Notes
+- npm audit: 5 high vuln (glob via eslint-config-next, postcss via next) — butuh next@16 major bump (breaking), di-skip; di-track di ROADMAP
+
 ## [2026-08-09] — Fase 6A & 6B: Responsive Design + Security (docs)
 
 ### Added
