@@ -86,7 +86,7 @@ Status: ✅ Tuntas (100%) — Forum Core + Komunitas
 ---
 
 ## FASE 4 — PC Builder AI ⭐ (Fitur Utama)
-Status: 🟢 In Progress (UI wizard + rekomendasi AI + seed 34 komponen done)
+Status: 🟢 In Progress (core + saved + compare + SSE done; sisa: scraper, cron harga, quote, AI agent prompt)
 
 ### Data Pipeline
 - [ ] Playwright scraper Tokopedia (CPU, GPU, RAM, SSD, Mobo, PSU, Case, Cooler)
@@ -100,16 +100,16 @@ Status: 🟢 In Progress (UI wizard + rekomendasi AI + seed 34 komponen done)
 - [x] Wizard: pilih use case + input budget (slider 3jt-50jt)
 - [x] Komponen selector real-time dari database (alokasi budget per use case)
 - [x] Compatibility checker (socket CPU↔mobo, RAM DDR4/DDR5↔mobo socket)
-- [ ] Build comparison view
-- [ ] Saved builds per user
+- [x] Build comparison view (/builder/compare, 3 build side-by-side)
+- [x] Saved builds per user (/builder/saved, SaveBuildButton, detail /builder/[slug])
 
 ### AI Agent
 - [x] Bottleneck algorithm (CPU tier vs GPU tier, warning imbalance)
 - [x] Budget allocation formula per use case (gaming/productivity/content-creator/budget)
 - [ ] System prompt + tools untuk AI agent
-- [ ] Endpoint POST /api/pc-builder/recommend (streaming SSE)
+- [x] Endpoint POST /api/pc-builder/recommend (streaming SSE ?stream=1)
 - [x] Output 3 build recommendation + reasoning bahasa Indonesia
-- [ ] Link langsung ke Tokopedia/Shopee
+- [ ] Link langsung ke Tokopedia/Shopee (kolom marketplace_url siap, isi data)
 
 ### Quote System
 - [ ] Form request penawaran resmi
