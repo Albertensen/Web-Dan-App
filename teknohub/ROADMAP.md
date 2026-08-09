@@ -49,22 +49,25 @@ Status: 🟢 In Progress
 ### Cart & Checkout
 - [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
 - [x] Halaman cart (qty stepper, total)
-- [ ] Checkout: alamat → pengiriman → payment
-- [ ] Integrasi Midtrans payment gateway
+- [x] Checkout form (zod alamat, pilih kurir, Midtrans Snap inject)
+- [ ] Integrasi Midtrans payment gateway (token API)
 - [ ] Order confirmation
 - [ ] Riwayat pesanan
 
 ---
 
 ## FASE 3 — Forum Tech & AI
-Status: ⏳ Belum dimulai
+Status: 🟢 In Progress
 
 ### Forum Core
-- [ ] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli
+- [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
+- [x] Listing thread + filter kategori + sort (latest/popular)
+- [x] Thread detail + reply section UI
+- [x] Upvote/downvote UI (VoteControl, reputation trigger +10)
+- [x] Reputation/karma system (trigger: +50 solved reply, kunci thread)
 - [ ] Buat thread (rich text editor TipTap)
-- [ ] Reply & nested replies
-- [ ] Upvote/downvote
-- [ ] Mark as solution
+- [ ] Reply & nested replies (API)
+- [ ] Mark as solution (API)
 - [ ] Tag system
 
 ### Komunitas

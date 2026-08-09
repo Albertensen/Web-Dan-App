@@ -36,3 +36,15 @@
 - UI: ProductCard, ProductFilter, products listing + detail page
 - Zustand cartStore (persist) + cart page
 - Alur kerja baru: Hermes pseudocode → Gemma 4 E4B → Ruflo write/git
+
+## [2026-08-09] — Fase 2 Sisa + Fase 3 Forum
+
+### Added (Sisa Fase 2)
+- CheckoutForm: zod validasi alamat, pilih kurir, Midtrans Snap inject
+- Zod schema alamat pengiriman (checkout.ts)
+
+### Added (Fase 3 Forum)
+- Migration 004: thread_details view + reputation triggers (+10 upvote, +50 solved reply, kunci thread)
+- API GET /api/forum/threads (filter category, sort latest/popular)
+- UI: ThreadCard, VoteControl, forum home + thread detail
+- Fix: route group (forum) → folder forum/ (URL /forum)
