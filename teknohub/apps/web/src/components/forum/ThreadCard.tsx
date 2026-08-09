@@ -1,5 +1,6 @@
 import Link from "next/link";
 import TagBadge from "./TagBadge";
+import { UserBadge } from "./UserBadge";
 
 interface ThreadProps {
   id: string;
@@ -8,6 +9,7 @@ interface ThreadProps {
   category_slug: string | null;
   author_username: string | null;
   author_avatar: string | null;
+  author_reputation: number | null;
   reply_count: number;
   view_count: number;
   last_reply_at: string | null;
@@ -62,6 +64,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
               <img src={thread.author_avatar} alt={`${thread.author_username}'s avatar`} className="w-6 h-6 object-cover rounded" />
             )}
             <span>{thread.author_username || "Anonim"}</span>
+            <UserBadge reputation={thread.author_reputation} />
           </div>
 
           {/* Counts */}

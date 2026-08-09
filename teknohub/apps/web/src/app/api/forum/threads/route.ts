@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
   const category = searchParams.get("category")
   const sort = searchParams.get("sort")
   const tag = searchParams.get("tag")
+  const search = searchParams.get("search")
 
   if (category) {
     query = query.eq("category_slug", category)
@@ -16,6 +17,10 @@ export async function GET(request: NextRequest) {
 
   if (tag) {
     query = query.contains("tags", [tag])
+  }
+
+  if (search) {
+    query = query.or(`title.ilike.%${search}%,content.ilike.%${search}%`)
   }
 
   if (sort === "popular") {

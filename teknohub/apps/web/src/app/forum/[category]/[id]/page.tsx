@@ -5,6 +5,9 @@ import { authOptions } from "@/lib/auth-options";
 import { supabase } from "@/lib/supabase/client";
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
+import FollowButton from "@/components/forum/FollowButton";
+import ReportButton from "@/components/forum/ReportButton";
+import { UserBadge } from "@/components/forum/UserBadge";
 
 interface ThreadDetailProps {
   params: { category: string; id: string };
@@ -54,6 +57,7 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
               <span>
                 Oleh: <span className="font-medium text-blue-400">{thread.author_username}</span>
+                <UserBadge reputation={thread.author_reputation} />
               </span>
               <span>👁 {thread.view_count}</span>
               <span>💬 {thread.reply_count}</span>
@@ -66,8 +70,14 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
             dangerouslySetInnerHTML={{ __html: thread.content }}
           />
 
-          <div className="mb-10 flex justify-center">
+          <div className="mb-10 flex justify-center gap-4 items-center">
             <VoteControl threadId={thread.id} />
+            {currentUserId && (
+              <>
+                <FollowButton targetType="thread" targetId={thread.id} />
+                <ReportButton targetType="thread" targetId={thread.id} />
+              </>
+            )}
           </div>
         </div>
 

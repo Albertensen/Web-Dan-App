@@ -6,6 +6,7 @@ interface ForumPageProps {
     category?: string;
     sort?: string;
     tag?: string;
+    search?: string;
   };
 }
 
@@ -22,8 +23,9 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
   const category = searchParams.category || "";
   const sort = searchParams.sort || "latest";
   const tag = searchParams.tag || "";
+  const search = searchParams.search || "";
 
-  const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/forum/threads?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}&tag=${encodeURIComponent(tag)}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/forum/threads?category=${encodeURIComponent(category)}&sort=${encodeURIComponent(sort)}&tag=${encodeURIComponent(tag)}&search=${encodeURIComponent(search)}`;
 
   let threads: ThreadProps[] = [];
   try {
@@ -50,6 +52,23 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           + Buat Thread
         </Link>
       </div>
+
+      {/* Search forum */}
+      <form action="/forum" method="GET" className="mb-6 flex gap-2">
+        <input
+          type="text"
+          name="search"
+          defaultValue={search}
+          placeholder="Cari thread di forum..."
+          className="flex-1 px-4 py-2 bg-[#12121a] border border-slate-700 rounded-lg text-slate-200 text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-slate-500"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-300 hover:border-blue-500/50 hover:text-blue-400 transition"
+        >
+          Cari
+        </button>
+      </form>
 
       {/* Kategori pills */}
       <div className="flex flex-wrap gap-2 mb-6">

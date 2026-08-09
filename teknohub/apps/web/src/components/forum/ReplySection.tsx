@@ -2,6 +2,7 @@
 import { useState } from "react"
 import SolutionButton from "./SolutionButton"
 import TipTapEditor from "./TipTapEditor"
+import ReportButton from "./ReportButton"
 
 interface Reply {
   id: string;
@@ -89,6 +90,9 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
                     isSolution={reply.is_solution}
                     onMarked={() => setReplies(replies.map((r) => (r.id === reply.id ? { ...r, is_solution: true } : r)))}
                   />
+                )}
+                {currentUserId && (
+                  <ReportButton targetType="reply" targetId={reply.id} />
                 )}
               </div>
             </div>

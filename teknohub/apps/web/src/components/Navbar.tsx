@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NavbarSearch from "./NavbarSearch";
+import NotificationBell from "./forum/NotificationBell";
 
 export default function Navbar() {
   return (
@@ -24,6 +25,7 @@ export default function Navbar() {
           <Link href="/cart" className="text-slate-300 hover:text-blue-400 transition">
             🛒
           </Link>
+          <NotificationBell />
           <Link href="/login" className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 text-white font-medium hover:opacity-90 transition-opacity">
             Masuk
           </Link>
