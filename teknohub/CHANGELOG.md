@@ -2,6 +2,16 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Marketplace Front-View & Slide-to-Forum (Tekno Zone)
+
+### Changed
+- Homepage: hero dihapus → **marketplace direct view** (grid produk kompak 2-5 kolom, fetch real dari `/api/products`)
+- **Slide nav** sticky di bawah header: Marketplace & Store / Forum Komunitas & Reputasi (anchor slide) / AI 3D PC Builder (halaman terpisah)
+- Search bar pill + filter kategori pills langsung terlihat di atas halaman utama
+- AI PC Builder section dipisah ke halaman `/builder-3d` (placeholder 3D exploded view, Three.js di masa depan)
+- Navbar: search pill lebar, tombol AI 3D Builder, avatar, menu ramping (Store/Forum)
+- Konsistensi warna: iceBg #CBD5E1, cardClean #F8FAFC + border-slate-300, chromeAccent #0B1F45
+
 ## [2026-08-09] — Tekno Zone Rebrand (Apple-inspired Ice Slate & Midnight Navy)
 
 ### Changed
