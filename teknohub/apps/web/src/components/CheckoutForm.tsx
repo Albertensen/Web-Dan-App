@@ -93,7 +93,7 @@ export default function CheckoutForm() {
   };
 
   const inputCls = (hasError: boolean) =>
-    `w-full p-3 border ${hasError ? "border-red-500" : "border-slate-600"} rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition duration-150`;
+    `w-full p-3 border ${hasError ? "border-red-500" : "border-slate-300"} rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150`;
 
   const field = (
     name: keyof FormState,
@@ -102,7 +102,7 @@ export default function CheckoutForm() {
     placeholder = ""
   ) => (
     <div>
-      <label htmlFor={name} className="block text-sm font-medium text-slate-300 mb-1">
+      <label htmlFor={name} className="block text-sm font-medium text-muted mb-1">
         {label}
       </label>
       <input
@@ -127,7 +127,7 @@ export default function CheckoutForm() {
       {field("postal_code", "Kode Pos", "text", "12345")}
 
       <div>
-        <label htmlFor="courier" className="block text-sm font-medium text-slate-300 mb-1">
+        <label htmlFor="courier" className="block text-sm font-medium text-muted mb-1">
           Kurir
         </label>
         <select
@@ -147,7 +147,7 @@ export default function CheckoutForm() {
       </div>
 
       <div>
-        <label htmlFor="notes" className="block text-sm font-medium text-slate-300 mb-1">
+        <label htmlFor="notes" className="block text-sm font-medium text-muted mb-1">
           Catatan (opsional)
         </label>
         <textarea
@@ -168,7 +168,7 @@ export default function CheckoutForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {submitting ? "Memproses..." : "Bayar Sekarang"}
       </button>

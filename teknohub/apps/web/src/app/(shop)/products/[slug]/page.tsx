@@ -56,21 +56,21 @@ export default async function ProductPage({ params }: ProductProps) {
   }).format(Number(product.price));
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-200 p-4 sm:p-8">
+    <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
       {/* Breadcrumb */}
-      <div className="mb-10 flex items-center space-x-3 text-sm text-slate-400">
-        <span className="hover:text-blue-400">Beranda</span>
+      <div className="mb-10 flex items-center space-x-3 text-sm text-tertiary">
+        <span className="hover:text-accent">Beranda</span>
         <span>/</span>
-        <span className="hover:text-blue-400">Produk</span>
+        <span className="hover:text-accent">Produk</span>
         <span>/</span>
-        <span className="font-medium text-slate-200">{product.name}</span>
+        <span className="font-medium text-foreground">{product.name}</span>
       </div>
 
       {/* Main Product Grid */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Left Column: Image/Placeholder */}
         <div className="col-span-1 flex justify-center items-start">
-          <div className="w-full max-w-md aspect-[4/5] bg-slate-800 rounded-xl shadow-2xl p-6 flex items-center justify-center">
+          <div className="w-full max-w-md aspect-[4/5] bg-surface-2 rounded-xl shadow-2xl p-6 flex items-center justify-center">
             {product.image_url ? (
               <img src={product.image_url} alt={product.name} className="w-full h-full object-cover rounded-xl" />
             ) : (
@@ -84,8 +84,8 @@ export default async function ProductPage({ params }: ProductProps) {
           <h1 className="text-4xl font-extrabold text-slate-50">{product.name}</h1>
 
           <div className="flex items-baseline space-x-3">
-            <p className="text-lg text-blue-400 font-medium">Brand: {product.brand || "Unknown"}</p>
-            <span className="text-5xl font-extrabold text-slate-200">{formattedPrice}</span>
+            <p className="text-lg text-accent font-medium">Brand: {product.brand || "Unknown"}</p>
+            <span className="text-5xl font-extrabold text-foreground">{formattedPrice}</span>
           </div>
 
           <div
@@ -98,9 +98,9 @@ export default async function ProductPage({ params }: ProductProps) {
             Stok: {product.stock}
           </div>
 
-          <div className="pt-4 border-t border-slate-700">
-            <h2 className="text-xl font-semibold mb-3 text-slate-300">Deskripsi Produk</h2>
-            <p className="text-slate-400 leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
+          <div className="pt-4 border-t border-slate-300">
+            <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
+            <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
           </div>
 
           <div className="pt-6">

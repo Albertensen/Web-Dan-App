@@ -59,18 +59,18 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b pb-2 border-slate-700">
+      <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b pb-2 border-slate-300">
         Balasan ({replies.length})
       </h2>
 
       {replies.length === 0 ? (
-        <p className="text-slate-400 text-sm mb-6">Belum ada balasan. Jadilah yang pertama!</p>
+        <p className="text-tertiary text-sm mb-6">Belum ada balasan. Jadilah yang pertama!</p>
       ) : (
         <div className="space-y-4">
           {replies.map((reply) => (
-            <div key={reply.id} className="glow-card p-4 mb-4 bg-[#1a1a20] border border-slate-800 rounded-xl shadow-lg">
+            <div key={reply.id} className="glow-card p-4 mb-4 bg-surface border border-slate-300 rounded-xl shadow-lg">
               <div
-                className="prose prose-invert max-w-none text-slate-200 mb-1 text-sm"
+                className="prose max-w-none text-foreground mb-1 text-sm"
                 dangerouslySetInnerHTML={{ __html: reply.content }}
               />
               {reply.is_solution && (
@@ -78,9 +78,9 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
                   ✅ Solusi
                 </span>
               )}
-              <div className="flex justify-between items-center text-sm mt-3 pt-3 border-t border-slate-800">
-                <span className="text-slate-400">
-                  <span className="font-medium text-blue-400">User {reply.author_id.slice(-4)}</span>
+              <div className="flex justify-between items-center text-sm mt-3 pt-3 border-t border-slate-300">
+                <span className="text-tertiary">
+                  <span className="font-medium text-accent">User {reply.author_id.slice(-4)}</span>
                   <span className="mx-2">•</span>
                   {formatDate(reply.created_at)}
                 </span>
@@ -106,7 +106,7 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
         <button
           type="submit"
           disabled={submitting}
-          className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-violet-500 hover:from-blue-600 hover:to-violet-600 text-white font-semibold rounded-lg transition duration-300 disabled:opacity-50"
+          className="w-full py-2 px-4 bg-accent hover:bg-accent-secondary text-white font-semibold rounded-lg transition duration-300 disabled:opacity-50"
         >
           {submitting ? "Mengirim..." : "Kirim Balasan"}
         </button>

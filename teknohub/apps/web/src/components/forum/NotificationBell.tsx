@@ -70,7 +70,7 @@ export default function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-2 text-slate-300 hover:text-blue-400 transition"
+        className="relative p-2 text-muted hover:text-accent transition"
         aria-label="Notifikasi"
       >
         🔔
@@ -82,11 +82,11 @@ export default function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-[#14141c] border border-slate-700 rounded-xl shadow-2xl z-50">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700">
-            <span className="text-sm font-semibold text-slate-200">Notifikasi</span>
+        <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-surface border border-slate-300 rounded-xl shadow-2xl z-50">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-slate-300">
+            <span className="text-sm font-semibold text-foreground">Notifikasi</span>
             {unread > 0 && (
-              <button onClick={markAll} className="text-xs text-blue-400 hover:text-blue-300">
+              <button onClick={markAll} className="text-xs text-accent hover:text-accent">
                 Tandai semua dibaca
               </button>
             )}
@@ -102,15 +102,15 @@ export default function NotificationBell() {
                 key={n.id}
                 href={n.link ?? "#"}
                 onClick={() => setOpen(false)}
-                className={`block px-4 py-3 border-b border-slate-800/50 hover:bg-slate-800/40 transition ${
+                className={`block px-4 py-3 border-b border-slate-300/50 hover:bg-surface-2/60 transition ${
                   n.is_read ? "opacity-60" : ""
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-sm font-medium text-slate-200">{n.title}</span>
+                  <span className="text-sm font-medium text-foreground">{n.title}</span>
                   <span className="text-[10px] text-slate-500 flex-shrink-0">{formatTime(n.created_at)}</span>
                 </div>
-                {n.body && <p className="text-xs text-slate-400 mt-1 line-clamp-2">{n.body}</p>}
+                {n.body && <p className="text-xs text-tertiary mt-1 line-clamp-2">{n.body}</p>}
               </Link>
             ))
           )}

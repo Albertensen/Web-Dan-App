@@ -39,11 +39,11 @@ function relativeTime(iso: string): string {
 
 const CATEGORY_COLORS: Record<string, string> = {
   Hardware: "bg-accent-dim text-accent border-accent/30",
-  AI: "bg-violet-100 text-violet-700 border-violet-300",
-  Mobile: "bg-blue-100 text-blue-700 border-blue-300",
-  Gaming: "bg-emerald-100 text-emerald-700 border-emerald-300",
-  DIY: "bg-amber-100 text-amber-700 border-amber-300",
-  "Jual Beli": "bg-pink-100 text-pink-700 border-pink-300",
+  AI: "bg-slate-200 text-slate-700 border-slate-400",
+  Mobile: "bg-slate-200 text-slate-700 border-slate-400",
+  Gaming: "bg-slate-200 text-slate-700 border-slate-400",
+  DIY: "bg-slate-200 text-slate-700 border-slate-400",
+  "Jual Beli": "bg-slate-200 text-slate-700 border-slate-400",
 };
 
 export default function ThreadCard({ thread }: ThreadCardProps) {

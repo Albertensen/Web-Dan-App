@@ -40,7 +40,7 @@ export default function SolutionButton({ replyId, isSolution, onMarked }: Soluti
         className={`px-3 py-1.5 text-xs font-medium rounded-full border transition ${
           isSolution
             ? "bg-green-600/20 text-green-400 border-green-700 cursor-default"
-            : "bg-slate-800 text-slate-300 border-slate-700 hover:border-green-600 hover:text-green-400"
+            : "bg-surface-2 text-muted border-slate-300 hover:border-green-600 hover:text-green-400"
         } disabled:opacity-50`}
       >
         {isSolution ? "✅ Solusi" : loading ? "Menandai..." : "✓ Tandai Solusi"}

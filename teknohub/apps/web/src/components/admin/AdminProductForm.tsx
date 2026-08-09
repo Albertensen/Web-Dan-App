@@ -17,7 +17,7 @@ const CATEGORIES = [
   "aksesoris",
 ];
 
-const inputCls = "w-full p-3 border border-slate-600 rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition duration-150";
+const inputCls = "w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150";
 
 export default function AdminProductForm() {
   const [name, setName] = useState("");
@@ -93,16 +93,16 @@ export default function AdminProductForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">Nama Produk</label>
+        <label className="block text-sm font-medium text-muted mb-1">Nama Produk</label>
         <input value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} placeholder="RTX 5090 Gaming OC" />
       </div>
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">Slug (kosongkan = auto)</label>
+        <label className="block text-sm font-medium text-muted mb-1">Slug (kosongkan = auto)</label>
         <input value={slug} onChange={(e) => setSlug(e.target.value)} className={inputCls} placeholder="rtx-5090-gaming-oc" />
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1">Kategori</label>
+          <label className="block text-sm font-medium text-muted mb-1">Kategori</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputCls}>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -110,31 +110,31 @@ export default function AdminProductForm() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1">Brand</label>
+          <label className="block text-sm font-medium text-muted mb-1">Brand</label>
           <input value={brand} onChange={(e) => setBrand(e.target.value)} className={inputCls} placeholder="ASUS" />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1">Harga (IDR)</label>
+          <label className="block text-sm font-medium text-muted mb-1">Harga (IDR)</label>
           <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" required className={inputCls} placeholder="15000000" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-300 mb-1">Stok</label>
+          <label className="block text-sm font-medium text-muted mb-1">Stok</label>
           <input value={stock} onChange={(e) => setStock(e.target.value)} type="number" className={inputCls} />
         </div>
       </div>
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">Deskripsi</label>
+        <label className="block text-sm font-medium text-muted mb-1">Deskripsi</label>
         <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={3} className={inputCls} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-slate-300 mb-1">Gambar Produk</label>
+        <label className="block text-sm font-medium text-muted mb-1">Gambar Produk</label>
         <input
           type="file"
           accept="image/png,image/jpeg,image/webp"
           onChange={(e) => setImage(e.target.files?.[0] ?? null)}
-          className="w-full text-sm text-slate-400 file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-slate-700 file:text-slate-200 hover:file:bg-slate-600"
+          className="w-full text-sm text-tertiary file:mr-3 file:px-3 file:py-2 file:rounded-lg file:border-0 file:bg-surface-2 file:text-foreground hover:file:bg-surface-2"
         />
       </div>
 
@@ -144,7 +144,7 @@ export default function AdminProductForm() {
       <button
         type="submit"
         disabled={uploading}
-        className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {uploading ? "Uploading..." : "Tambah Produk"}
       </button>

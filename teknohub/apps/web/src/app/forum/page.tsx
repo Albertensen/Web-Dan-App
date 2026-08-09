@@ -43,11 +43,11 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold mb-2">Forum Tech & AI</h1>
-          <p className="text-slate-400">Diskusi hardware, AI, gaming, dan DIY</p>
+          <p className="text-tertiary">Diskusi hardware, AI, gaming, dan DIY</p>
         </div>
         <Link
           href="/forum/new"
-          className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold text-sm hover:opacity-90 transition-opacity"
+          className="px-4 py-2 rounded-xl bg-accent font-semibold text-sm hover:opacity-90 transition-opacity"
         >
           + Buat Thread
         </Link>
@@ -60,11 +60,11 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           name="search"
           defaultValue={search}
           placeholder="Cari thread di forum..."
-          className="flex-1 px-4 py-2 bg-[#12121a] border border-slate-700 rounded-lg text-slate-200 text-sm focus:ring-blue-500 focus:border-blue-500 placeholder-slate-500"
+          className="flex-1 px-4 py-2 bg-surface-2 border border-slate-300 rounded-lg text-foreground text-sm focus:ring-accent/40 focus:border-accent placeholder:text-tertiary"
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-300 hover:border-blue-500/50 hover:text-blue-400 transition"
+          className="px-4 py-2 bg-surface-2 border border-slate-300 rounded-lg text-sm text-muted hover:border-accent hover:text-accent transition"
         >
           Cari
         </button>
@@ -76,8 +76,8 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           href="/forum"
           className={`px-4 py-2 rounded-full text-sm transition ${
             !category
-              ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white"
-              : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+              ? "bg-accent text-white"
+              : "bg-surface-2 text-muted hover:bg-surface-2"
           }`}
         >
           Semua
@@ -88,8 +88,8 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
             href={`/forum?category=${c.slug}`}
             className={`px-4 py-2 rounded-full text-sm transition ${
               category === c.slug
-                ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white"
-                : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                ? "bg-accent text-white"
+                : "bg-surface-2 text-muted hover:bg-surface-2"
             }`}
           >
             {c.label}
@@ -103,7 +103,7 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           <span className="text-slate-500">Filter tag:</span>
           <Link
             href="/forum"
-            className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/50"
+            className="px-3 py-1 rounded-full bg-accent-dim text-accent border border-accent/30"
           >
             #{tag} ✕
           </Link>
@@ -114,14 +114,14 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
       <div className="flex gap-2 mb-8 text-sm">
         <Link
           href={category ? `/forum?category=${category}&sort=latest` : "/forum?sort=latest"}
-          className={sort === "latest" ? "text-blue-400 font-semibold" : "text-slate-400 hover:text-blue-400"}
+          className={sort === "latest" ? "text-accent font-semibold" : "text-tertiary hover:text-accent"}
         >
           Terbaru
         </Link>
         <span className="text-slate-600">|</span>
         <Link
           href={category ? `/forum?category=${category}&sort=popular` : "/forum?sort=popular"}
-          className={sort === "popular" ? "text-blue-400 font-semibold" : "text-slate-400 hover:text-blue-400"}
+          className={sort === "popular" ? "text-accent font-semibold" : "text-tertiary hover:text-accent"}
         >
           Populer
         </Link>
@@ -135,8 +135,8 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           ))}
         </div>
       ) : (
-        <div className="p-8 bg-slate-800/50 border border-dashed border-slate-600 rounded-xl text-center">
-          <p className="text-lg font-medium text-slate-400">Belum ada thread</p>
+        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
+          <p className="text-lg font-medium text-tertiary">Belum ada thread</p>
           <p className="text-sm text-slate-500 mt-1">
             Jadilah yang pertama memulai diskusi!
           </p>

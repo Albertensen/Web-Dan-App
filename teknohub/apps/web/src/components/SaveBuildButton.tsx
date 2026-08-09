@@ -52,7 +52,7 @@ export default function SaveBuildButton({ parts, buildType }: SaveBuildButtonPro
     <div>
       <button
         onClick={() => setShowForm(!showForm)}
-        className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:border-blue-500/50 hover:text-blue-400 transition"
+        className="px-3 py-1.5 text-xs font-medium rounded-lg bg-surface-2 text-muted border border-slate-300 hover:border-accent hover:text-accent transition"
       >
         💾 Simpan Build
       </button>
@@ -62,12 +62,12 @@ export default function SaveBuildButton({ parts, buildType }: SaveBuildButtonPro
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Nama build (opsional)"
-            className="flex-1 px-3 py-1.5 text-sm bg-[#0a0a0f] border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500"
+            className="flex-1 px-3 py-1.5 text-sm bg-surface border border-slate-300 rounded-lg text-foreground placeholder:text-tertiary"
           />
           <button
             onClick={save}
             disabled={saving}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 text-white disabled:opacity-50"
+            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-accent text-white disabled:opacity-50"
           >
             {saving ? "..." : "Simpan"}
           </button>

@@ -71,9 +71,9 @@ export default function BuildCompare() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700 mb-6">
-        <h2 className="text-xl font-semibold mb-4 text-white">Bandingkan Build</h2>
-        <p className="text-sm text-slate-400 mb-4">
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300 mb-6">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Bandingkan Build</h2>
+        <p className="text-sm text-tertiary mb-4">
           Tambahkan hingga 3 build rekomendasi untuk dibandingkan komponen per komponen.
         </p>
         <div className="flex gap-2 mb-3">
@@ -81,12 +81,12 @@ export default function BuildCompare() {
             value={label}
             onChange={(e) => setLabel(e.target.value)}
             placeholder={`Label build ${builds.length + 1} (opsional)`}
-            className="flex-1 px-4 py-2 bg-[#0a0a0f] border border-slate-700 rounded-lg text-slate-200 text-sm placeholder-slate-500"
+            className="flex-1 px-4 py-2 bg-surface border border-slate-300 rounded-lg text-foreground text-sm placeholder:text-tertiary"
           />
           <button
             onClick={addBuild}
             disabled={loading || builds.length >= 3}
-            className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 text-white font-medium text-sm hover:opacity-90 disabled:opacity-50 transition"
+            className="px-4 py-2 rounded-lg bg-accent text-white font-medium text-sm hover:opacity-90 disabled:opacity-50 transition"
           >
             {loading ? "..." : `+ Tambah Build ${builds.length + 1}`}
           </button>
@@ -95,15 +95,15 @@ export default function BuildCompare() {
       </div>
 
       {builds.length > 0 && (
-        <div className="bg-slate-800/50 rounded-xl shadow-lg border border-slate-700 overflow-x-auto">
+        <div className="bg-surface-2/60 rounded-xl shadow-lg border border-slate-300 overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-700">
-                <th className="text-left p-4 text-slate-400 font-medium">Komponen</th>
+              <tr className="border-b border-slate-300">
+                <th className="text-left p-4 text-tertiary font-medium">Komponen</th>
                 {builds.map((b, i) => (
                   <th key={i} className="p-4 text-left">
-                    <div className="text-white font-semibold">{b.label}</div>
-                    <div className="text-xs text-slate-400 font-normal">{fmt(b.total)}</div>
+                    <div className="text-foreground font-semibold">{b.label}</div>
+                    <div className="text-xs text-tertiary font-normal">{fmt(b.total)}</div>
                     <button onClick={() => removeBuild(i)} className="text-xs text-red-400 hover:text-red-300 mt-1">
                       ✕ Hapus
                     </button>
@@ -113,12 +113,12 @@ export default function BuildCompare() {
             </thead>
             <tbody>
               {allTypes.map((type) => (
-                <tr key={type} className="border-b border-slate-800">
-                  <td className="p-4 text-slate-400 font-medium whitespace-nowrap">{TYPE_LABEL[type] ?? type}</td>
+                <tr key={type} className="border-b border-slate-300">
+                  <td className="p-4 text-tertiary font-medium whitespace-nowrap">{TYPE_LABEL[type] ?? type}</td>
                   {builds.map((b, i) => {
                     const part = b.parts.find((p) => p.type === type);
                     return (
-                      <td key={i} className="p-4 text-slate-200">
+                      <td key={i} className="p-4 text-foreground">
                         {part ? (
                           <>
                             <div>{part.name}</div>
@@ -133,9 +133,9 @@ export default function BuildCompare() {
                 </tr>
               ))}
               <tr>
-                <td className="p-4 text-slate-400 font-medium">Total</td>
+                <td className="p-4 text-tertiary font-medium">Total</td>
                 {builds.map((b, i) => (
-                  <td key={i} className="p-4 font-bold text-blue-400">{fmt(b.total)}</td>
+                  <td key={i} className="p-4 font-bold text-accent">{fmt(b.total)}</td>
                 ))}
               </tr>
             </tbody>

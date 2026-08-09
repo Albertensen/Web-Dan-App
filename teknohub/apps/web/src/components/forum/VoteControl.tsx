@@ -39,7 +39,7 @@ const VoteControl: React.FC<VoteControlProps> = ({ threadId, initialVotes = 0 })
       <button
         onClick={() => handleVote(1)}
         className={`text-xl p-2 rounded transition-colors ${
-          userVote === 1 ? "text-blue-400" : "text-slate-500 hover:text-blue-400"
+          userVote === 1 ? "text-accent" : "text-slate-500 hover:text-accent"
         }`}
         aria-label="Upvote"
       >
@@ -47,7 +47,7 @@ const VoteControl: React.FC<VoteControlProps> = ({ threadId, initialVotes = 0 })
       </button>
 
       {/* Vote Count */}
-      <span className="text-sm font-semibold text-slate-200">
+      <span className="text-sm font-semibold text-foreground">
         {votes}
       </span>
 

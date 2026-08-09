@@ -50,14 +50,14 @@ export default function PCBuilderChatInterface() {
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
   return (
-    <div className="border border-slate-700 rounded-xl bg-[#12121a] overflow-hidden">
+    <div className="border border-slate-300 rounded-xl bg-surface-2 overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setChatOpen(!chatOpen)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-slate-800/70 hover:bg-slate-800 transition"
+        className="w-full flex items-center justify-between px-4 py-3 bg-surface-2/70 hover:bg-surface-2 transition"
       >
-        <span className="font-semibold text-slate-200">🤖 Konsultasi Rakit PC (AI)</span>
-        <span className="text-slate-400 text-sm">{chatOpen ? "▲" : "▼"}</span>
+        <span className="font-semibold text-foreground">🤖 Konsultasi Rakit PC (AI)</span>
+        <span className="text-tertiary text-sm">{chatOpen ? "▲" : "▼"}</span>
       </button>
 
       {chatOpen && (
@@ -73,7 +73,7 @@ export default function PCBuilderChatInterface() {
                     <button
                       key={q}
                       onClick={() => { setInput(q); send(); }}
-                      className="px-3 py-1.5 text-xs rounded-full bg-slate-800 border border-slate-700 text-slate-300 hover:border-blue-500/50 hover:text-blue-400 transition"
+                      className="px-3 py-1.5 text-xs rounded-full bg-surface-2 border border-slate-300 text-muted hover:border-accent hover:text-accent transition"
                     >
                       {q}
                     </button>
@@ -87,7 +87,7 @@ export default function PCBuilderChatInterface() {
                   className={`max-w-[85%] px-3 py-2 rounded-lg text-sm whitespace-pre-wrap ${
                     m.role === "user"
                       ? "bg-blue-500/20 text-blue-100 border border-blue-500/30"
-                      : "bg-slate-800 text-slate-200 border border-slate-700"
+                      : "bg-surface-2 text-foreground border border-slate-300"
                   }`}
                 >
                   {m.content}
@@ -96,7 +96,7 @@ export default function PCBuilderChatInterface() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="px-3 py-2 rounded-lg text-sm bg-slate-800 text-slate-400 border border-slate-700">
+                <div className="px-3 py-2 rounded-lg text-sm bg-surface-2 text-tertiary border border-slate-300">
                   Mengetik...
                 </div>
               </div>
@@ -106,9 +106,9 @@ export default function PCBuilderChatInterface() {
 
           {/* Live summary sync */}
           {summary && (
-            <div className="border-t border-slate-700 bg-slate-800/40 px-4 py-3">
+            <div className="border-t border-slate-300 bg-surface-2/60 px-4 py-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-blue-300">📋 Ringkasan Build (Live)</span>
+                <span className="text-xs font-semibold text-accent">📋 Ringkasan Build (Live)</span>
                 <button
                   onClick={() => setSummary(null)}
                   className="text-xs text-slate-500 hover:text-red-400"
@@ -119,31 +119,31 @@ export default function PCBuilderChatInterface() {
               <div className="space-y-1 max-h-32 overflow-y-auto">
                 {summary.parts.map((p) => (
                   <div key={p.id} className="flex justify-between text-xs">
-                    <span className="text-slate-400">{p.name}</span>
-                    <span className="text-slate-300">{fmt(p.price)}</span>
+                    <span className="text-tertiary">{p.name}</span>
+                    <span className="text-muted">{fmt(p.price)}</span>
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-2 pt-2 border-t border-slate-700">
-                <span className="text-xs text-slate-400">Total</span>
-                <span className="text-xs font-bold text-blue-400">{fmt(summary.total)}</span>
+              <div className="flex justify-between mt-2 pt-2 border-t border-slate-300">
+                <span className="text-xs text-tertiary">Total</span>
+                <span className="text-xs font-bold text-accent">{fmt(summary.total)}</span>
               </div>
             </div>
           )}
 
           {/* Input */}
-          <div className="flex gap-2 p-3 border-t border-slate-700">
+          <div className="flex gap-2 p-3 border-t border-slate-300">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
               placeholder="Tanya AI soal rakit PC..."
-              className="flex-1 px-3 py-2 text-sm bg-[#0a0a0f] border border-slate-700 rounded-lg text-slate-200 placeholder-slate-500 focus:border-blue-500"
+              className="flex-1 px-3 py-2 text-sm bg-surface border border-slate-300 rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
             />
             <button
               onClick={send}
               disabled={loading || !input.trim()}
-              className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-violet-500 text-white text-sm font-medium disabled:opacity-50 hover:opacity-90 transition"
+              className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-medium disabled:opacity-50 hover:opacity-90 transition"
             >
               Kirim
             </button>

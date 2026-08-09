@@ -54,8 +54,8 @@ export default function FollowButton({ targetType, targetId }: FollowButtonProps
         disabled={loading}
         className={`px-3 py-1.5 rounded-full text-xs font-medium border transition disabled:opacity-50 ${
           following
-            ? "bg-slate-800 text-slate-300 border-slate-600"
-            : "bg-blue-500/20 text-blue-300 border-blue-500/50 hover:bg-blue-500/30"
+            ? "bg-surface-2 text-muted border-slate-300"
+            : "bg-accent-dim text-accent border-accent/30 hover:bg-accent/20"
         }`}
       >
         {loading ? "..." : following ? "✓ Mengikuti" : "+ Follow"}

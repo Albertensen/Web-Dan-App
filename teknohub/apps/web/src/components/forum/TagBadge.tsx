@@ -4,7 +4,7 @@ interface TagBadgeProps {
 }
 
 export default function TagBadge({ tag, href }: TagBadgeProps) {
-  const cls = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-800 text-blue-300 border border-slate-700 hover:border-blue-500/50 transition";
+  const cls = "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-2 text-accent border border-slate-300 hover:border-accent transition";
 
   if (href) {
     return (

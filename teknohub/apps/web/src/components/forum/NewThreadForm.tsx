@@ -56,30 +56,30 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto p-8 bg-[#1a1a20] rounded-xl shadow-2xl border border-slate-700">
+    <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto p-8 bg-surface rounded-xl shadow-2xl border border-slate-300">
       {error && <p className="text-red-400 text-sm p-3 bg-red-900/30 rounded-lg">{error}</p>}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-slate-300 mb-1">Judul Thread</label>
+        <label htmlFor="title" className="block text-sm font-medium text-muted mb-1">Judul Thread</label>
         <input
           id="title"
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Contoh: Rekomendasi GPU budget 3 juta"
-          className="w-full p-3 border border-slate-600 rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition duration-150 placeholder-slate-500"
+          className="w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150 placeholder:text-tertiary"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-slate-300 mb-1">Kategori</label>
+        <label htmlFor="category" className="block text-sm font-medium text-muted mb-1">Kategori</label>
         <select
           id="category"
           name="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="w-full p-3 border border-slate-600 rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition duration-150 appearance-none cursor-pointer"
+          className="w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150 appearance-none cursor-pointer"
         >
           {categories.map((c) => (
             <option key={c.slug} value={c.slug}>
@@ -90,7 +90,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
       </div>
 
       <div>
-        <label htmlFor="content" className="block text-sm font-medium text-slate-300 mb-1">Konten</label>
+        <label htmlFor="content" className="block text-sm font-medium text-muted mb-1">Konten</label>
         <TipTapEditor value={content} onChange={setContent} placeholder="Tulis detail pertanyaan atau topik diskusi..." />
       </div>
 
@@ -99,7 +99,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 shadow-lg shadow-blue-500/30"
+        className="w-full py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 shadow-lg shadow-accent/20"
       >
         {submitting ? "Membuat..." : "Buat Thread"}
       </button>

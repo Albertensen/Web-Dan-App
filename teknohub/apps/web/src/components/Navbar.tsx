@@ -52,7 +52,7 @@ export default function Navbar() {
           <NotificationBell />
           <Link
             href="/login"
-            className="hidden sm:inline-block bg-foreground hover:bg-accent text-white px-4 py-2 rounded-full text-xs font-medium transition shadow-sm"
+            className="hidden sm:inline-block bg-accent hover:bg-accent-secondary text-white px-4 py-2 rounded-full text-xs font-medium transition shadow-sm"
           >
             Masuk
           </Link>

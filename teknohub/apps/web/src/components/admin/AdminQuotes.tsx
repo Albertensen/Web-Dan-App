@@ -81,8 +81,8 @@ export default function AdminQuotes() {
             onClick={() => setStatus(s)}
             className={`px-4 py-1.5 rounded-full text-sm transition ${
               status === s
-                ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white"
-                : "bg-slate-800 text-slate-300 hover:bg-slate-700"
+                ? "bg-accent text-white"
+                : "bg-surface-2 text-muted hover:bg-surface-2"
             }`}
           >
             {s}
@@ -95,28 +95,28 @@ export default function AdminQuotes() {
       {loading ? (
         <p className="text-slate-500">Memuat...</p>
       ) : quotes.length === 0 ? (
-        <div className="p-8 bg-slate-800/40 border border-dashed border-slate-700 rounded-xl text-center">
-          <p className="text-slate-400">Tidak ada quote berstatus {status}</p>
+        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
+          <p className="text-tertiary">Tidak ada quote berstatus {status}</p>
         </div>
       ) : (
         <div className="space-y-4">
           {quotes.map((q) => (
-            <div key={q.id} className="p-4 bg-[#14141c] border border-slate-700 rounded-xl">
+            <div key={q.id} className="p-4 bg-surface border border-slate-300 rounded-xl">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-slate-200">
+                <span className="text-sm font-medium text-foreground">
                   {q.user?.username ?? "User"} <span className="text-slate-500">•</span>{" "}
-                  <span className="text-slate-400">{new Date(q.created_at).toLocaleString("id-ID", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
+                  <span className="text-tertiary">{new Date(q.created_at).toLocaleString("id-ID", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
                 </span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/30">
+                <span className="text-xs px-2 py-0.5 rounded-full bg-accent-dim text-accent border border-accent/30">
                   {q.status}
                 </span>
               </div>
 
-              <p className="text-sm text-slate-300 mb-2 whitespace-pre-wrap bg-[#0a0a0f] p-3 rounded-lg border border-slate-800">
+              <p className="text-sm text-muted mb-2 whitespace-pre-wrap bg-surface p-3 rounded-lg border border-slate-300">
                 {q.ai_draft}
               </p>
-              <p className="text-sm text-slate-400 mb-3">
-                Total: <span className="font-semibold text-blue-400">{fmt(q.total_price)}</span>
+              <p className="text-sm text-tertiary mb-3">
+                Total: <span className="font-semibold text-accent">{fmt(q.total_price)}</span>
               </p>
 
               <textarea
@@ -124,20 +124,20 @@ export default function AdminQuotes() {
                 onChange={(e) => setDrafts((d) => ({ ...d, [q.id]: e.target.value }))}
                 rows={2}
                 placeholder="Penawaran final (jika dikirim)..."
-                className="w-full p-2 text-sm bg-[#0a0a0f] border border-slate-700 rounded-lg text-white resize-none mb-3 placeholder-slate-500"
+                className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg text-foreground resize-none mb-3 placeholder:text-tertiary"
               />
 
               <div className="flex gap-2">
                 <button
                   onClick={() => act(q.id, "send")}
                   disabled={busyId === q.id}
-                  className="px-3 py-1.5 text-xs rounded-lg bg-blue-500/15 text-blue-300 border border-blue-500/40 hover:bg-blue-500/25 disabled:opacity-50"
+                  className="px-3 py-1.5 text-xs rounded-lg bg-blue-500/15 text-accent border border-blue-500/40 hover:bg-blue-500/25 disabled:opacity-50"
                 >
                   Kirim Penawaran
                 </button>
                 <a
                   href={`/api/admin/quotes/${q.id}/pdf`}
-                  className="px-3 py-1.5 text-xs rounded-lg bg-violet-500/15 text-violet-300 border border-violet-500/40 hover:bg-violet-500/25 inline-block"
+                  className="px-3 py-1.5 text-xs rounded-lg bg-accent-dim text-accent border border-accent/30 hover:bg-accent/20 inline-block"
                 >
                   📄 Download Invoice PDF
                 </a>

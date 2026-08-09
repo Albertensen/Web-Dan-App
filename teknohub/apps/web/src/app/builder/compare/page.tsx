@@ -9,7 +9,7 @@ export default function ComparePage() {
   return (
     <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
       <h1 className="text-3xl font-bold mb-2">Bandingkan Build</h1>
-      <p className="text-slate-400 mb-8">Rekomendasi AI untuk gaming, productivity, dan content creator — berdampingan.</p>
+      <p className="text-tertiary mb-8">Rekomendasi AI untuk gaming, productivity, dan content creator — berdampingan.</p>
       <BuildCompare />
     </main>
   );

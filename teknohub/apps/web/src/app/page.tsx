@@ -67,7 +67,7 @@ const reviews = [
   },
   {
     badge: "⭐ Silver Member",
-    badgeCls: "bg-slate-600",
+    badgeCls: "bg-surface-2",
     meta: "• 2 Transaksi Sukses",
     evidence: "Verified Evidence Attached",
     title: "Kendala Pengiriman Kurir (Ada Bukti Foto Dus Penyok)",
@@ -197,28 +197,28 @@ export default function Home() {
               Mulai Konsultasi →
             </a>
           </div>
-          <div className="bg-foreground text-white p-8 rounded-[2.5rem] shadow-xl border border-slate-700">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+          <div className="bg-surface p-8 rounded-[2.5rem] shadow-xl border border-slate-300">
+            <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
               <span className="text-xs font-medium flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> AI Assistant Online
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> AI Assistant Online
               </span>
-              <span className="text-[11px] text-slate-400">TeknoZone Intelligence</span>
+              <span className="text-[11px] text-tertiary">TeknoZone Intelligence</span>
             </div>
-            <div className="space-y-4 text-xs text-slate-300 mb-6">
-              <div className="bg-white/5 p-4 rounded-2xl">
+            <div className="space-y-4 text-xs text-muted mb-6">
+              <div className="bg-surface-2 p-4 rounded-2xl">
                 Halo! Ada yang bisa saya bantu untuk spesifikasi rakit PC atau pengecekan komponen hari ini?
               </div>
               <div className="bg-accent text-white p-4 rounded-2xl ml-auto max-w-[80%]">
                 Tolong carikan rakitan PC gaming dan editing budget 15 jutaan aman tanpa bottleneck.
               </div>
-              <div className="bg-white/5 p-4 rounded-2xl">
+              <div className="bg-surface-2 p-4 rounded-2xl">
                 Siap! Berdasarkan data stok e-commerce kami, kombinasi RTX 4060 dan i5-13400F sangat optimal. Daya aman (550W PSU).
               </div>
             </div>
             <div className="flex gap-2">
               <a
                 href="/builder"
-                className="w-full bg-white/10 border border-white/20 rounded-full px-5 py-3 text-xs text-white text-center hover:border-accent transition"
+                className="w-full bg-accent text-white px-5 py-3 rounded-full text-xs font-medium text-center hover:bg-accent-secondary transition shadow-sm"
               >
                 Buka AI PC Builder
               </a>

@@ -21,7 +21,7 @@ export default function NavbarSearch() {
         value={term}
         onChange={(e) => setTerm(e.target.value)}
         placeholder="Cari produk..."
-        className="w-full px-4 py-2 pl-10 text-sm bg-[#12121a] border border-slate-700 rounded-xl text-slate-200 placeholder:text-slate-500 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition"
+        className="w-full px-4 py-2 pl-10 text-sm bg-surface-2 border border-slate-300 rounded-xl text-foreground placeholder:text-slate-500 focus:ring-accent/40 focus:border-accent focus:outline-none transition"
       />
       <svg
         className="absolute left-3 top-2.5 w-4 h-4 text-slate-500"

@@ -74,30 +74,30 @@ export default function ModerationPanel() {
       {loading ? (
         <p className="text-slate-500">Memuat...</p>
       ) : reports.length === 0 ? (
-        <div className="p-8 bg-slate-800/40 border border-dashed border-slate-700 rounded-xl text-center">
-          <p className="text-slate-400">Tidak ada laporan {busyId ? "" : "terbuka"}</p>
+        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
+          <p className="text-tertiary">Tidak ada laporan {busyId ? "" : "terbuka"}</p>
         </div>
       ) : (
         <div className="space-y-3">
           {reports.map((r) => (
-            <div key={r.id} className="p-4 bg-[#14141c] border border-slate-700 rounded-xl">
+            <div key={r.id} className="p-4 bg-surface border border-slate-300 rounded-xl">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-300 border border-red-500/30">
                   {r.target_type}
                 </span>
                 <span className="text-xs text-slate-500">{fmt(r.created_at)}</span>
               </div>
-              <p className="text-sm text-slate-300 mb-1">
+              <p className="text-sm text-muted mb-1">
                 <span className="text-slate-500">Target:</span> {r.target_id}
               </p>
-              <p className="text-sm text-slate-400 mb-3">
+              <p className="text-sm text-tertiary mb-3">
                 <span className="text-slate-500">Alasan:</span> {r.reason}
               </p>
               <div className="flex gap-2">
                 <button
                   onClick={() => act(r.id, "dismiss")}
                   disabled={busyId === r.id}
-                  className="px-3 py-1.5 text-xs rounded-lg bg-slate-800 text-slate-300 border border-slate-700 hover:border-slate-600 disabled:opacity-50"
+                  className="px-3 py-1.5 text-xs rounded-lg bg-surface-2 text-muted border border-slate-300 hover:border-slate-300 disabled:opacity-50"
                 >
                   Tolak laporan
                 </button>

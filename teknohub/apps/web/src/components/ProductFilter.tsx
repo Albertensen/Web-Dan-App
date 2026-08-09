@@ -81,8 +81,8 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
 
   return (
     <div className="space-y-6">
-      <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
-        <h2 className="text-xl font-semibold mb-4 text-white">Filter Produk</h2>
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Filter Produk</h2>
 
         {/* Level 1: parent kategori */}
         <div className="flex flex-wrap gap-3 mb-4">
@@ -101,8 +101,8 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
               }}
               className={`px-4 py-2 rounded-full text-sm transition duration-150 ${
                 active === node.value || activeParent === node.value
-                  ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md"
-                  : "bg-slate-700 hover:bg-slate-600 text-slate-300"
+                  ? "bg-accent text-white shadow-md"
+                  : "bg-surface-2 hover:bg-surface-2 text-muted"
               }`}
             >
               {node.label}
@@ -119,8 +119,8 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
                 onClick={() => handleCategory(child.value)}
                 className={`px-3 py-1.5 rounded-full text-xs transition duration-150 ${
                   active === child.value
-                    ? "bg-blue-500/30 text-blue-200 border border-blue-500/50"
-                    : "bg-slate-800 hover:bg-slate-700 text-slate-400 border border-slate-700"
+                    ? "bg-accent-dim text-accent border border-accent/40"
+                    : "bg-surface-2 hover:bg-surface-2/60 text-tertiary border border-slate-300"
                 }`}
               >
                 {child.label}
@@ -130,7 +130,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
         )}
 
         <div>
-          <label htmlFor="search" className="block text-sm font-medium mb-2 text-slate-300">
+          <label htmlFor="search" className="block text-sm font-medium mb-2 text-muted">
             Cari Produk:
           </label>
           <input
@@ -139,7 +139,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
             placeholder="Masukkan nama produk..."
             value={term}
             onChange={handleSearch}
-            className="w-full p-3 border border-slate-600 rounded-lg bg-[#1a1a20] text-slate-200 focus:ring-blue-500 focus:border-blue-500 transition"
+            className="w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition"
           />
         </div>
       </div>

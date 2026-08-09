@@ -107,11 +107,11 @@ export default function PcBuilder() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
-        <h2 className="text-xl font-semibold mb-4 text-white">Rakit PC dengan AI</h2>
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+        <h2 className="text-xl font-semibold mb-4 text-foreground">Rakit PC dengan AI</h2>
 
         {/* Step 1: use case */}
-        <label className="block text-sm font-medium mb-2 text-slate-300">Pilih kebutuhan</label>
+        <label className="block text-sm font-medium mb-2 text-muted">Pilih kebutuhan</label>
         <div className="grid grid-cols-2 gap-3 mb-6">
           {USE_CASES.map((uc) => (
             <button
@@ -119,19 +119,19 @@ export default function PcBuilder() {
               onClick={() => setUseCase(uc.value)}
               className={`p-3 rounded-xl border text-left transition ${
                 useCase === uc.value
-                  ? "border-blue-500 bg-blue-500/10 text-white"
-                  : "border-slate-700 bg-slate-800 hover:border-slate-600"
+                  ? "border-accent bg-accent-dim text-accent"
+                  : "border-slate-300 bg-surface-2 hover:border-slate-300"
               }`}
             >
               <div className="font-medium">{uc.label}</div>
-              <div className="text-xs text-slate-400">{uc.desc}</div>
+              <div className="text-xs text-tertiary">{uc.desc}</div>
             </button>
           ))}
         </div>
 
         {/* Step 2: budget */}
-        <label className="block text-sm font-medium mb-2 text-slate-300">
-          Budget: <span className="text-blue-400">{formatIDR(budget)}</span>
+        <label className="block text-sm font-medium mb-2 text-muted">
+          Budget: <span className="text-accent">{formatIDR(budget)}</span>
         </label>
         <input
           type="range"
@@ -140,13 +140,13 @@ export default function PcBuilder() {
           step={1000000}
           value={budget}
           onChange={(e) => setBudget(Number(e.target.value))}
-          className="w-full mb-6 accent-blue-500"
+          className="w-full mb-6 accent-accent"
         />
 
         <button
           onClick={recommend}
           disabled={loading}
-          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full px-6 py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {loading ? "Menghitung..." : "🚀 Buat Rekomendasi"}
         </button>
@@ -157,9 +157,9 @@ export default function PcBuilder() {
       {result && (
         <div className="mt-8 space-y-4">
           {/* Build summary */}
-          <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
+          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-white">Build Rekomendasi</h3>
+              <h3 className="text-lg font-semibold text-foreground">Build Rekomendasi</h3>
               <span
                 className={`px-3 py-1 rounded-full text-xs font-medium ${
                   result.within_budget
@@ -173,16 +173,16 @@ export default function PcBuilder() {
 
             <div className="space-y-2">
               {result.parts.map((p) => (
-                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-slate-700/50 last:border-0">
-                  <span className="text-slate-400">{TYPE_LABEL[p.type] ?? p.type}</span>
-                  <span className="text-slate-200">{p.name}</span>
-                  <span className="text-slate-300 font-medium">{formatIDR(p.price)}</span>
+                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-slate-300/50 last:border-0">
+                  <span className="text-tertiary">{TYPE_LABEL[p.type] ?? p.type}</span>
+                  <span className="text-foreground">{p.name}</span>
+                  <span className="text-muted font-medium">{formatIDR(p.price)}</span>
                 </div>
               ))}
             </div>
 
-            <div className="flex justify-between mt-4 pt-3 border-t border-slate-600">
-              <span className="font-semibold text-white">Total</span>
+            <div className="flex justify-between mt-4 pt-3 border-t border-slate-300">
+              <span className="font-semibold text-foreground">Total</span>
               <span className={`font-bold ${result.within_budget ? "text-emerald-400" : "text-amber-400"}`}>
                 {formatIDR(result.total)}
               </span>
@@ -195,8 +195,8 @@ export default function PcBuilder() {
           </div>
 
           {/* AI analysis */}
-          <div className="bg-slate-800/50 p-6 rounded-xl shadow-lg border border-slate-700">
-            <h4 className="font-semibold text-white mb-3">Analisis AI</h4>
+          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+            <h4 className="font-semibold text-foreground mb-3">Analisis AI</h4>
             {result.bottleneck ? (
               <div className="flex gap-2 text-sm mb-3">
                 <span>⚠️</span>

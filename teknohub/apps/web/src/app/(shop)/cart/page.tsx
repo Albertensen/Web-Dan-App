@@ -19,10 +19,10 @@ export default function CartPage() {
         <div className="text-center">
           <div className="text-6xl mb-4">🛒</div>
           <h1 className="text-2xl font-bold mb-2">Keranjang Kosong</h1>
-          <p className="text-slate-400 mb-6">Belum ada produk di keranjang kamu.</p>
+          <p className="text-tertiary mb-6">Belum ada produk di keranjang kamu.</p>
           <Link
             href="/products"
-            className="inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity"
+            className="inline-block px-6 py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity"
           >
             Lihat Produk
           </Link>
@@ -41,7 +41,7 @@ export default function CartPage() {
             key={item.id}
             className="glow-card p-4 flex items-center gap-4"
           >
-            <div className="w-20 h-20 bg-slate-800 rounded-xl flex items-center justify-center text-3xl shrink-0">
+            <div className="w-20 h-20 bg-surface-2 rounded-xl flex items-center justify-center text-3xl shrink-0">
               {item.image_url ? (
                 <img src={item.image_url} alt={item.name} className="w-full h-full object-cover rounded-xl" />
               ) : (
@@ -50,23 +50,23 @@ export default function CartPage() {
             </div>
 
             <div className="flex-1 min-w-0">
-              <Link href={`/products/${item.slug}`} className="font-semibold line-clamp-1 hover:text-blue-400">
+              <Link href={`/products/${item.slug}`} className="font-semibold line-clamp-1 hover:text-accent">
                 {item.name}
               </Link>
-              <p className="text-sm text-slate-400">{formatIDR(item.price)}</p>
+              <p className="text-sm text-tertiary">{formatIDR(item.price)}</p>
             </div>
 
             <div className="flex items-center gap-2">
               <button
                 onClick={() => updateQty(item.id, item.quantity - 1)}
-                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 font-bold"
+                className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/60 font-bold"
               >
                 −
               </button>
               <span className="w-8 text-center">{item.quantity}</span>
               <button
                 onClick={() => updateQty(item.id, item.quantity + 1)}
-                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 font-bold"
+                className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/60 font-bold"
               >
                 +
               </button>
@@ -87,14 +87,14 @@ export default function CartPage() {
 
       <div className="mt-8 glow-card p-6 flex items-center justify-between">
         <div>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-tertiary">
             Total ({totalItems} item)
           </p>
           <p className="text-2xl font-bold">{formatIDR(totalPrice)}</p>
         </div>
         <Link
           href="/checkout"
-          className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity"
+          className="px-8 py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity"
         >
           Checkout
         </Link>

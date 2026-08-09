@@ -40,23 +40,23 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
   const threadAuthorId = (thread.author_id as string) ?? undefined;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-200 p-4 sm:p-8">
+    <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
       {/* Breadcrumb */}
-      <div className="text-sm text-slate-400 mb-6 flex items-center gap-2">
-        <Link href="/forum" className="hover:text-blue-400">
+      <div className="text-sm text-tertiary mb-6 flex items-center gap-2">
+        <Link href="/forum" className="hover:text-accent">
           Forum
         </Link>
         <span>/</span>
-        <span className="font-medium text-slate-200">{thread.category_name || category}</span>
+        <span className="font-medium text-foreground">{thread.category_name || category}</span>
       </div>
 
       <div className="max-w-3xl mx-auto">
         <div className="glow-card p-6 sm:p-8">
-          <header className="mb-8 pb-4 border-b border-slate-700">
-            <h1 className="text-3xl font-bold text-white mb-2">{thread.title}</h1>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
+          <header className="mb-8 pb-4 border-b border-slate-300">
+            <h1 className="text-3xl font-bold text-foreground mb-2">{thread.title}</h1>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-tertiary">
               <span>
-                Oleh: <span className="font-medium text-blue-400">{thread.author_username}</span>
+                Oleh: <span className="font-medium text-accent">{thread.author_username}</span>
                 <UserBadge reputation={thread.author_reputation} />
               </span>
               <span>👁 {thread.view_count}</span>
@@ -66,7 +66,7 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
           </header>
 
           <div
-            className="prose prose-invert max-w-none text-slate-300 mb-8 p-4 bg-[#12121a] rounded-lg border border-slate-700/50"
+            className="prose max-w-none text-muted mb-8 p-4 bg-surface-2 rounded-lg border border-slate-300/50"
             dangerouslySetInnerHTML={{ __html: thread.content }}
           />
 
