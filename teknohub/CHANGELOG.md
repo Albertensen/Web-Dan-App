@@ -2,6 +2,24 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Fase 1B: Autentikasi & Profil Pengguna
+
+### Added
+- Halaman /login — split layout premium (branding TeknoZone kiri + form kanan), validasi Zod, toggle show/hide password, Google OAuth, link lupa password & daftar
+- Halaman /register — form username/email/password/konfirmasi, password strength bar, checkbox T&C, Google OAuth, auto-login setelah daftar
+- Halaman /forgot-password & /reset-password — Supabase Auth flow (resetPasswordForEmail + setSession token)
+- Halaman /profile — header avatar + badge tier, statistik (pesanan/build/thread/reputasi), edit profil (username + bio)
+- API /api/auth/register (Supabase admin createUser) & /api/user/profile (GET + PATCH)
+- Navbar auth state — UserDropdown (Profil/Pesanan/Keranjang/Keluar) setelah login, tombol Masuk/Daftar saat logout
+- Middleware proteksi route /cart, /checkout, /profile, /orders → redirect /login?callbackUrl=
+- NextAuth CredentialsProvider — login email/password via Supabase signInWithPassword
+- Seed user auth via admin client (service role) — admin@teknohub.id + 13 user review (silver1-9, gold1-3, diamond1)
+
+### Fixed
+- Register API validasi manual (zod full schema menolak payload tanpa terms)
+- Review re-seed (135) ke user id GoTrue baru setelah auth.users SQL insert dihapus
+- Reputasi tier di-set ulang via migration 010b (update by username)
+
 ## [2026-08-09] — Apple Store Product Cards (Tekno Zone Marketplace)
 
 ### Changed

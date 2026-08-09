@@ -37,45 +37,45 @@ Status: ✅ Selesai
 Status: 🔵 In Progress
 
 ### Halaman Login
-- [ ] Halaman /login — dark premium design sesuai DESIGN.md
-- [ ] Form email + password dengan validasi Zod
-- [ ] Tombol "Lanjutkan dengan Google" (OAuth)
-- [ ] Toggle show/hide password
-- [ ] Link "Lupa password?" → /forgot-password
-- [ ] Link "Belum punya akun? Daftar" → /register
-- [ ] Error state (email tidak terdaftar, password salah)
-- [ ] Loading state saat submit
-- [ ] Redirect ke halaman sebelumnya setelah login berhasil
+- [x] Halaman /login — dark premium design sesuai DESIGN.md
+- [x] Form email + password dengan validasi Zod
+- [x] Tombol "Lanjutkan dengan Google" (OAuth)
+- [x] Toggle show/hide password
+- [x] Link "Lupa password?" → /forgot-password
+- [x] Link "Belum punya akun? Daftar" → /register
+- [x] Error state (email tidak terdaftar, password salah)
+- [x] Loading state saat submit
+- [x] Redirect ke halaman sebelumnya setelah login berhasil
 
 ### Halaman Daftar (Register)
-- [ ] Halaman /register — konsisten dengan halaman login
-- [ ] Form: username, email, password, konfirmasi password
-- [ ] Validasi Zod (email valid, password min 8 char, username min 3 char)
-- [ ] Tombol "Daftar dengan Google" (OAuth — auto-fill profil)
-- [ ] Checkbox persetujuan syarat & ketentuan
-- [ ] Error state (email sudah terdaftar, username sudah dipakai)
-- [ ] Loading state saat submit
-- [ ] Redirect ke halaman onboarding / homepage setelah daftar berhasil
+- [x] Halaman /register — konsisten dengan halaman login
+- [x] Form: username, email, password, konfirmasi password
+- [x] Validasi Zod (email valid, password min 8 char, username min 3 char)
+- [x] Tombol "Daftar dengan Google" (OAuth — auto-fill profil)
+- [x] Checkbox persetujuan syarat & ketentuan
+- [x] Error state (email sudah terdaftar, username sudah dipakai)
+- [x] Loading state saat submit
+- [x] Redirect ke halaman onboarding / homepage setelah daftar berhasil
 
 ### Halaman Lupa Password
-- [ ] Halaman /forgot-password — form input email
-- [ ] Kirim magic link reset password via Supabase Auth
-- [ ] Halaman /reset-password — form password baru + konfirmasi
-- [ ] Validasi token reset (expired / invalid)
-- [ ] Success state setelah reset berhasil
+- [x] Halaman /forgot-password — form input email
+- [x] Kirim magic link reset password via Supabase Auth
+- [x] Halaman /reset-password — form password baru + konfirmasi
+- [x] Validasi token reset (expired / invalid)
+- [x] Success state setelah reset berhasil
 
 ### Halaman Profil Pengguna
-- [ ] Halaman /profile — tampilkan info user (avatar, username, email, reputasi forum)
-- [ ] Edit profil: upload avatar ke Supabase Storage, ubah username, bio
-- [ ] Tab: Pesanan Saya, Build Tersimpan, Thread Forum, Pengaturan
-- [ ] Halaman /profile/settings — ubah password, notifikasi, hapus akun
+- [x] Halaman /profile — tampilkan info user (avatar, username, email, reputasi forum)
+- [x] Edit profil: upload avatar ke Supabase Storage, ubah username, bio
+- [x] Tab: Pesanan Saya, Build Tersimpan, Thread Forum, Pengaturan
+- [x] Halaman /profile/settings — ubah password, notifikasi, hapus akun
 
 ### Protected Routes & UX Auth
-- [ ] Middleware proteksi route (cart, checkout, builder saved, forum post, profile)
-- [ ] Redirect ke /login dengan pesan "Silakan login untuk melanjutkan"
-- [ ] Persistent login session (NextAuth JWT strategy)
-- [ ] Logout dari semua device
-- [ ] User avatar + dropdown menu di Navbar setelah login
+- [x] Middleware proteksi route (cart, checkout, builder saved, forum post, profile)
+- [x] Redirect ke /login dengan pesan "Silakan login untuk melanjutkan"
+- [x] Persistent login session (NextAuth JWT strategy)
+- [x] Logout dari semua device
+- [x] User avatar + dropdown menu di Navbar setelah login
 
 ---
 

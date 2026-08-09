@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import NavbarSearch from "./NavbarSearch";
 import { useCartStore, selectTotalItems } from "@/store/cartStore";
+import UserDropdown from "./auth/UserDropdown";
 
 const NAV_LINKS = [
   { href: "/products", label: "Store" },
@@ -12,6 +14,7 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { status } = useSession();
   const cartCount = useCartStore(selectTotalItems);
 
   return (
@@ -60,20 +63,26 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            {/* Masuk */}
-            <Link
-              href="/login"
-              className="bg-surface border border-slate-300 hover:border-accent text-foreground px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
-            >
-              Masuk
-            </Link>
-            {/* Daftar */}
-            <Link
-              href="/register"
-              className="bg-accent hover:bg-accent-secondary text-white px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
-            >
-              Daftar
-            </Link>
+            {status === "authenticated" ? (
+              <UserDropdown />
+            ) : (
+              <>
+                {/* Masuk */}
+                <Link
+                  href="/login"
+                  className="bg-surface border border-slate-300 hover:border-accent text-foreground px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
+                >
+                  Masuk
+                </Link>
+                {/* Daftar */}
+                <Link
+                  href="/register"
+                  className="bg-accent hover:bg-accent-secondary text-white px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
+                >
+                  Daftar
+                </Link>
+              </>
+            )}
 
             {/* Hamburger */}
             <button

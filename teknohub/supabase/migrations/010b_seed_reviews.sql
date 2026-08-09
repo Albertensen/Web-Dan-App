@@ -1,66 +1,42 @@
 -- ============================================================
 -- TeknoHub — Migration 010b: Seed Product Reviews (per produk)
 -- Pattern: 5 Silver (rating 4-5), 3 Gold (rating 3-5), 1 Diamond (5)
+-- User id diambil dari profiles (hasil trigger handle_new_user)
 -- ============================================================
 
--- Review utk 15 produk seed (003). Map: slug -> 9 review (5S + 3G + 1D)
--- Silver users: 0000...001-009, Gold: ...010-012, Diamond: ...013
-do $$
-declare
-  p record;
-  r record;
-  revs text[];
-begin
-  for p in
-    select id, slug from public.products where slug in (
-      'rog-strix-g16','legion-5-pro','nitro-v15','galaxy-s24-ultra','iphone-15-pro',
-      'redmi-note-13','lg-ultragear-27','samsung-odyssey-g5','msi-g274qpf','rtx-4070-super',
-      'rx-7800-xt','ryzen-7-7800x3d','core-i7-14700k','corsair-vengeance-32gb-ddr5','kingston-fury-16gb-ddr5'
-    )
-  loop
-    -- 5 review Silver (rating 4-5)
-    for i in 1..5 loop
-      insert into public.product_reviews (product_id, user_id, rating, comment)
-      select p.id, ('00000000-0000-4000-a001-00000000000' || i)::uuid,
-             case when i % 2 = 0 then 4 else 5 end,
-             case i
-               when 1 then 'Packing rapi, barang original. Recommended seller!'
-               when 2 then 'Produk sesuai deskripsi, pengiriman agak lama tapi aman.'
-               when 3 then 'Kualitas bagus untuk harga segini. Puas!'
-               when 4 then 'Fungsinya oke, tapi garansi agak ribet diklaim.'
-               when 5 then 'Mantap! Barang sesuai foto, fast response seller.'
-             end
-      on conflict (product_id, user_id) do nothing;
-    end loop;
-    -- 3 review Gold (rating 3-5)
-    for i in 10..12 loop
-      insert into public.product_reviews (product_id, user_id, rating, comment)
-      select p.id, ('00000000-0000-4000-a001-0000000000' || i)::uuid,
-             case i
-               when 10 then 4
-               when 11 then 5
-               else 3
-             end,
-             case i
-               when 10 then 'Sudah beli 3x di sini, kualitas konsisten. Good!'
-               when 11 then 'Produk premium, performa sesuai ekspektasi. Top tier!'
-               else 'Bagus, tapi harga naik turun. Pantau sebelum beli.'
-             end
-      on conflict (product_id, user_id) do nothing;
-    end loop;
-    -- 1 review Diamond (5)
-    insert into public.product_reviews (product_id, user_id, rating, comment)
-    select p.id, '00000000-0000-4000-a001-000000000013'::uuid, 5,
-           'Trusted seller, garansi resmi, support purna jual cepat. Saya pelanggan lama, tidak pernah kecewa.'
-    on conflict (product_id, user_id) do nothing;
-  end loop;
-end $$;
+-- 1) Set reputasi tier utk user seed (username dari user_metadata)
+update public.profiles set reputation = v.rep from (values
+  ('silver1', 5), ('silver2', 3), ('silver3', 7), ('silver4', 2),
+  ('silver5', 9), ('silver6', 4), ('silver7', 6), ('silver8', 8),
+  ('silver9', 1), ('gold1', 25), ('gold2', 40), ('gold3', 15),
+  ('diamond1', 80)
+) as v(username, rep) where public.profiles.username = v.username;
 
--- Verifikasi
-select count(*) as total_reviews from public.product_reviews;
-select p.slug,
-       count(*) filter (where pr.rating >= 4) as reviews_4plus
-from public.product_reviews pr
-join public.products p on p.id = pr.product_id
-group by p.slug
-order by p.slug;
+-- 2) Hapus review orphan (profil user tidak ada)
+delete from public.product_reviews pr
+where not exists (select 1 from public.profiles p where p.id = pr.user_id);
+
+-- 3) Seed 9 review per produk (15 produk = 135 review)
+-- Silver: silver1=5, silver2=4, silver3=5, silver4=4, silver5=5
+-- Gold:   gold1=4,   gold2=5,   gold3=3
+-- Diamond: diamond1=5
+insert into public.product_reviews (product_id, user_id, rating, comment)
+select
+  p.id as product_id,
+  u.id as user_id,
+  v.rating,
+  v.comment
+from public.products p
+cross join (values
+  ('silver1', 5, 'Packing rapi, barang original. Recommended seller!'),
+  ('silver2', 4, 'Produk sesuai deskripsi, pengiriman agak lama tapi aman.'),
+  ('silver3', 5, 'Kualitas bagus untuk harga segini. Puas!'),
+  ('silver4', 4, 'Fungsinya oke, tapi garansi agak ribet diklaim.'),
+  ('silver5', 5, 'Mantap! Barang sesuai foto, fast response seller.'),
+  ('gold1', 4, 'Sudah beli 3x di sini, kualitas konsisten. Good!'),
+  ('gold2', 5, 'Produk premium, performa sesuai ekspektasi. Top tier!'),
+  ('gold3', 3, 'Bagus, tapi harga naik turun. Pantau sebelum beli.'),
+  ('diamond1', 5, 'Trusted seller, garansi resmi, support purna jual cepat. Saya pelanggan lama, tidak pernah kecewa.')
+) as v(username, rating, comment)
+join public.profiles u on u.username = v.username
+on conflict (product_id, user_id) do nothing;
