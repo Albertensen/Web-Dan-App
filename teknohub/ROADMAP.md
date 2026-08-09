@@ -231,6 +231,96 @@ Status: ⏳ Belum dimulai
 
 ---
 
+## FASE 6A — Responsive Design (Mobile-First)
+Status: 🔵 In Progress
+
+### Layout & Navigation
+- [ ] Navbar mobile: hamburger menu + drawer slide-in
+- [ ] Navbar dropdown user: touch-friendly di mobile
+- [ ] Footer: stack vertical di mobile
+- [ ] Semua padding/margin dikecilkan di mobile (px-4 → px-3)
+
+### Halaman E-Commerce
+- [ ] Homepage hero: font size dikecilkan di mobile, CTA stack vertical
+- [ ] Product grid: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
+- [ ] Product detail: image full-width di mobile, info di bawah
+- [ ] Cart: layout stack vertical di mobile
+- [ ] Checkout form: single column di mobile
+
+### Forum
+- [ ] Thread listing: full-width card di mobile
+- [ ] Thread detail: sidebar disembunyikan di mobile
+- [ ] Reply form: full-width di mobile
+- [ ] Tag selector: horizontal scroll di mobile
+
+### PC Builder
+- [ ] Wizard: step 1 kolom di mobile (bukan side-by-side)
+- [ ] AI Chat + Build Summary: stack vertical di mobile (chat di atas, summary di bawah)
+- [ ] Slider budget: touch-friendly, label visible di mobile
+- [ ] Build comparison: scroll horizontal di mobile
+
+### Admin Panel
+- [ ] Admin table: horizontal scroll + sticky first column di mobile
+- [ ] Admin form: single column di mobile
+
+### Assets & Performance
+- [ ] Semua <img> diganti next/image dengan sizes prop yang benar
+- [ ] Lazy loading gambar produk
+- [ ] Font subset: hanya karakter Latin yang diload
+- [ ] Viewport meta tag benar di layout.tsx
+
+---
+
+## FASE 6B — Security Hardening
+Status: ⏳ Belum dimulai
+
+### HTTP Security Headers
+- [ ] next.config.ts: tambah Content-Security-Policy (CSP)
+- [ ] X-Frame-Options: DENY
+- [ ] X-Content-Type-Options: nosniff
+- [ ] Referrer-Policy: strict-origin-when-cross-origin
+- [ ] Permissions-Policy: camera=(), microphone=(), geolocation=()
+- [ ] Strict-Transport-Security (HSTS) via Vercel
+
+### API Route Security
+- [ ] Rate limiting semua API routes (upstash/ratelimit atau custom middleware)
+- [ ] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
+- [ ] Auth check wajib di semua route yang butuh login (tidak boleh ada route admin tanpa cek role)
+- [ ] Audit semua route: pastikan tidak ada yang bisa diakses tanpa autentikasi
+
+### Input Validation & Sanitization
+- [ ] Semua input user divalidasi dengan Zod sebelum masuk DB
+- [ ] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify atau sanitize-html)
+- [ ] File upload: validasi MIME type + ukuran di server (bukan hanya client)
+- [ ] Cegah path traversal di file upload ke Supabase Storage
+
+### Supabase RLS Audit
+- [ ] Audit semua tabel: pastikan RLS ON dan policies benar
+- [ ] Test: user biasa tidak bisa baca data user lain
+- [ ] Test: user biasa tidak bisa update/delete data orang lain
+- [ ] Test: admin-only tables tidak bisa diakses user biasa
+- [ ] Service role key TIDAK pernah terekspos ke client-side
+
+### Autentikasi & Session
+- [ ] NEXTAUTH_SECRET minimal 32 karakter (sudah ada, verify)
+- [ ] Session cookie: httpOnly, secure, sameSite=strict
+- [ ] JWT expiry: access token 1 jam, refresh token 7 hari
+- [ ] Brute force protection di /api/auth/signin (rate limit 5x per menit)
+- [ ] Password minimum 8 karakter + 1 angka (validasi Zod sudah ada, verify)
+
+### Environment & Secrets Audit
+- [ ] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit
+- [ ] Vercel env: semua secret di production env (tidak ada yang hardcode)
+- [ ] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
+- [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
+
+### Dependency Security
+- [ ] npm audit — fix semua critical + high vulnerability
+- [ ] Update dependencies ke versi aman terbaru
+- [ ] Hapus package yang tidak terpakai dari package.json
+
+---
+
 ## Environment Variables yang Dibutuhkan
 
 | Variable | Deskripsi |

@@ -2,6 +2,12 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Fase 6A & 6B: Responsive Design + Security (docs)
+
+### Added
+- ROADMAP: Fase 6A Responsive Design (Mobile-First) — 26 item (navbar drawer, grid responsive, forum/builder/admin mobile, assets)
+- ROADMAP: Fase 6B Security Hardening — 30 item (headers, rate limit, sanitization, RLS audit, env/secrets audit, npm audit)
+
 ## [2026-08-09] — Fase 1B: Autentikasi & Profil Pengguna
 
 ### Added
