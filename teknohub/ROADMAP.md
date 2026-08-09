@@ -34,25 +34,27 @@ Status: 🔵 In Progress
 ---
 
 ## FASE 2 — E-Commerce
-Status: 🟢 In Progress
+Status: 🟢 In Progress (Midtrans pending akun)
 
 ### Katalog Produk
 - [x] Seed 15 produk + types (migration 003, 6 kategori)
 - [x] Halaman listing produk + filter kategori + search
 - [x] Halaman detail produk
-- [ ] Kategori: Laptop, HP, Monitor, Komponen PC, Aksesoris (expand)
-- [ ] Search produk (Algolia/Meilisearch)
-- [ ] Admin panel: CRUD produk
-- [ ] Upload gambar ke Supabase Storage
+- [x] Admin panel: CRUD produk (admin/products + API admin)
+- [x] Upload gambar ke Supabase Storage (bucket product-images, signed URL)
+- [ ] Kategori expand: Laptop, HP, Monitor, Komponen PC, Aksesoris (12 kategori sudah di DB — UI expand menyusul)
+- [ ] Search produk (Algolia/Meilisearch) — basic ilike sudah jalan
 - [ ] SEO: meta tags, OG image, sitemap
 
 ### Cart & Checkout
 - [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
 - [x] Halaman cart (qty stepper, total)
 - [x] Checkout form (zod alamat, pilih kurir, Midtrans Snap inject)
-- [ ] Integrasi Midtrans payment gateway (token API)
-- [ ] Order confirmation
-- [ ] Riwayat pesanan
+- [x] API checkout: create order + order_items + kurangi stock + snap token
+- [x] API webhook Midtrans: verify signature + update status paid (pending akun — mock token aktif)
+- [x] Riwayat pesanan (/orders, status badge, total IDR)
+- [x] Order confirmation (snap token flow, mock saat Midtrans pending)
+- [ ] Integrasi Midtrans asli (butuh akun + server/client key dari dashboard.sandbox.midtrans.com) — feature pending, user belum punya akun
 
 ---
 
