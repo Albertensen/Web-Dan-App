@@ -61,7 +61,7 @@ Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans ak
 ---
 
 ## FASE 3 — Forum Tech & AI
-Status: ✅ Tuntas (100%)
+Status: 🟡 In Progress (Forum Core ✅ 100%, Komunitas ❌ belum dikerjakan)
 
 ### Forum Core
 - [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
