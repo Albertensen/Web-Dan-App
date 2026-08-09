@@ -135,6 +135,12 @@ export default function AdminQuotes() {
                 >
                   Kirim Penawaran
                 </button>
+                <a
+                  href={`/api/admin/quotes/${q.id}/pdf`}
+                  className="px-3 py-1.5 text-xs rounded-lg bg-violet-500/15 text-violet-300 border border-violet-500/40 hover:bg-violet-500/25 inline-block"
+                >
+                  📄 Download Invoice PDF
+                </a>
                 <button
                   onClick={() => act(q.id, "accept")}
                   disabled={busyId === q.id}

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { runScraper } from "../../../../../scripts/scraper/componentScraper";
+import { runCamofoxScraper } from "../../../../../scripts/scraper/camofoxScraper";
+import { runScraper as runBasicScraper } from "../../../../../scripts/scraper/componentScraper";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -19,8 +20,14 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const report = await runScraper({ supabaseUrl, supabaseKey });
-    return NextResponse.json({ ok: true, report });
+    let report;
+    // Prioritaskan Camofox (anti-bot). Jika Camofox URL reachable → pakai, else basic.
+    try {
+      report = await runCamofoxScraper({ supabaseUrl, supabaseKey });
+    } catch {
+      report = await runBasicScraper({ supabaseUrl, supabaseKey });
+    }
+    return NextResponse.json({ ok: true, engine: "camofox", report });
   } catch (err) {
     return NextResponse.json(
       { ok: false, error: err instanceof Error ? err.message : "unknown" },
