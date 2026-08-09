@@ -61,7 +61,7 @@ Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans ak
 ---
 
 ## FASE 3 — Forum Tech & AI
-Status: 🟡 In Progress (3 core item sisa: TipTap, mark solution, tag system)
+Status: ✅ Tuntas (100%)
 
 ### Forum Core
 - [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
@@ -69,11 +69,11 @@ Status: 🟡 In Progress (3 core item sisa: TipTap, mark solution, tag system)
 - [x] Thread detail + reply section UI
 - [x] Upvote/downvote UI (VoteControl, reputation trigger +10)
 - [x] Reputation/karma system (trigger: +50 solved reply, kunci thread)
-- [ ] Buat thread (rich text editor TipTap)
+- [x] Buat thread (rich text editor TipTap)
 - [x] Form buat thread (NewThreadForm, /forum/new)
 - [x] Form balasan + list (ReplySection)
-- [ ] Mark as solution (API)
-- [ ] Tag system
+- [x] Mark as solution (API owner-only, trigger +50 reputation, lock thread)
+- [x] Tag system (tags text[] + GIN index, TagSelector maks 5, filter tag)
 
 ### Komunitas
 - [ ] Reputation/karma system
