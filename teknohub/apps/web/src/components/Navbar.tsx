@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import NavbarSearch from "./NavbarSearch";
-import NotificationBell from "./forum/NotificationBell";
 import { useCartStore, selectTotalItems } from "@/store/cartStore";
 
 const NAV_LINKS = [
@@ -34,17 +33,27 @@ export default function Navbar() {
 
         <NavbarSearch />
 
-        {/* Area kanan: cart + auth */}
+        {/* Area kanan: cart + auth + tentang */}
         <div className="flex flex-col items-end shrink-0">
           <div className="flex items-center gap-2.5">
-            {/* Cart SVG */}
+            {/* Cart SVG — ikon lebih rapi */}
             <Link
               href="/cart"
               className="w-9 h-9 rounded-full bg-surface border border-slate-300 flex items-center justify-center text-accent hover:border-accent transition shadow-sm relative"
               title="Keranjang Belanja"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 2.354l6 6c.63.63 1.707.184 1.707-.707V13H7z" />
+              <svg
+                className="w-[18px] h-[18px]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.8}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="9" cy="21" r="1.5" />
+                <circle cx="19" cy="21" r="1.5" />
+                <path d="M2.5 3h2l2.4 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22.5 7H6.1" />
               </svg>
               {cartCount > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-accent text-white text-[10px] font-bold flex items-center justify-center">
@@ -66,7 +75,6 @@ export default function Navbar() {
             >
               Daftar
             </Link>
-            <NotificationBell />
 
             {/* Hamburger */}
             <button
@@ -77,6 +85,13 @@ export default function Navbar() {
               {mobileOpen ? "✕" : "☰"}
             </button>
           </div>
+          {/* Tentang TeknoZone di bawah Masuk/Daftar */}
+          <Link
+            href="/#tentang"
+            className="text-[10px] font-semibold text-muted tracking-wide hover:text-accent transition mt-0.5"
+          >
+            Tentang TeknoZone
+          </Link>
         </div>
       </div>
 

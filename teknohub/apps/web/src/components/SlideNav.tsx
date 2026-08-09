@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 
 const SLIDE_LINKS = [
   { href: "/#marketplace", label: "Marketplace & Store", anchor: "marketplace" },
-  { href: "/#forum-slide", label: "Forum Komunitas & Reputasi", anchor: "forum-slide" },
-  { href: "/#tentang", label: "Tentang TeknoZone", anchor: "tentang" },
+  { href: "/#forum-slide", label: "Forum Komunitas", anchor: "forum-slide" },
 ];
 
 export default function SlideNav() {

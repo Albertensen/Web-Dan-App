@@ -42,7 +42,7 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
     <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Forum Tech & AI</h1>
+          <h1 className="text-3xl font-bold mb-2">Forum Komunitas</h1>
           <p className="text-tertiary">Diskusi hardware, AI, gaming, dan DIY</p>
         </div>
         <Link
