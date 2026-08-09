@@ -1,4 +1,5 @@
 import PcBuilder from "@/components/PcBuilder";
+import PCBuilderChatInterface from "@/components/builder/PCBuilderChatInterface";
 
 export const metadata = {
   title: "PC Builder AI — TeknoHub",
@@ -14,7 +15,14 @@ export default function BuilderPage() {
           Masukkan kebutuhan dan budget — AI akan merakit PC optimal untukmu, lengkap dengan analisis bottleneck & kompatibilitas.
         </p>
       </div>
-      <PcBuilder />
+      <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
+        <div>
+          <PcBuilder />
+        </div>
+        <div className="lg:sticky lg:top-24 self-start">
+          <PCBuilderChatInterface />
+        </div>
+      </div>
     </div>
   );
 }

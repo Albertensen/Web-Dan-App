@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import SaveBuildButton from "./SaveBuildButton";
+import RequestQuoteModal from "./builder/RequestQuoteModal";
 
 interface BuildPart {
   id: string;
@@ -187,8 +188,9 @@ export default function PcBuilder() {
               </span>
             </div>
 
-            <div className="mt-4 flex justify-end">
+            <div className="mt-4 flex justify-end gap-2">
               <SaveBuildButton parts={result.parts} buildType={result.useCase} />
+              <RequestQuoteModal />
             </div>
           </div>
 

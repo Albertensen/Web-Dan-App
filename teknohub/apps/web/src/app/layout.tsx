@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import AICustomerServiceWidget from "@/components/support/AICustomerServiceWidget";
 
 export const metadata: Metadata = {
   title: "TeknoHub — E-Commerce, Forum, & PC Builder AI",
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className="bg-[#0a0a0f] text-slate-200 antialiased min-h-screen flex flex-col">
         <Navbar />
         {children}
+        <AICustomerServiceWidget />
       </body>
     </html>
   );
