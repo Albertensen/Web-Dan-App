@@ -36,8 +36,18 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
 
   return (
     <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
-      <h1 className="text-3xl font-bold mb-2">Forum Tech & AI</h1>
-      <p className="text-slate-400 mb-8">Diskusi hardware, AI, gaming, dan DIY</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Forum Tech & AI</h1>
+          <p className="text-slate-400">Diskusi hardware, AI, gaming, dan DIY</p>
+        </div>
+        <Link
+          href="/forum/new"
+          className="px-4 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold text-sm hover:opacity-90 transition-opacity"
+        >
+          + Buat Thread
+        </Link>
+      </div>
 
       {/* Kategori pills */}
       <div className="flex flex-wrap gap-2 mb-6">
