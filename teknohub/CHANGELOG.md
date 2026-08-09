@@ -2,6 +2,16 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Tekno Zone Rebrand (Apple-inspired Ice Slate & Midnight Navy)
+
+### Changed
+- Brand: TeknoHub → **Tekno Zone** (light-first, Apple minimalist aesthetic)
+- Design tokens: iceBg `#CBD5E1` background, cardClean `#F8FAFC` cards, chromeAccent `#0B1F45` navy buttons/accents, techDark `#0F172A` text, subGray `#334155` muted
+- Typography: SF Pro Display/Inter stack, `-0.015em` tracking, bold tight headings
+- Homepage: hero "Inovasi di setiap komponen pilihan", Store 3 featured (Ultrabook/AI Engine Station/Peripherals), AI Builder dark consultation panel, Forum reputation tiers (Silver/Gold/Diamond anti-fake review) + Verified Evidence
+- Navbar: transparent backdrop-blur-xl, navy dot logo, Store/AI PC Builder/Forum menu
+- ProductCard/ThreadCard: clean surface cards, rounded-[2.5rem], navy accents
+
 ## [2026-08-09] — Design System Upgrade (awesome-design-md Shopify)
 
 ### Changed
