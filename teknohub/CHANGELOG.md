@@ -2,6 +2,15 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-09] — Apple Store Product Cards (Tekno Zone Marketplace)
+
+### Changed
+- ProductCard ala Apple Store: gambar full atas `rounded-[1.5rem]`, **hover zoom** `group-hover:scale-110` (500ms ease-out), gradient overlay
+- Kategori + nama + deskripsi singkat (line-clamp-2) + harga + 2 tombol pill berdampingan (Detail outline / Beli navy, `rounded-full`)
+- Homepage: grid 4 kolom (8 produk unggulan), judul "Katalog Produk Unggulan"
+- Struktur dipertahankan: marketplace direct view (tanpa hero), SlideNav slide-to-forum, `/builder-3d` terpisah
+- Palet konsisten: iceBg #CBD5E1 / cardClean #F8FAFC + border-slate-300 / chromeAccent #0B1F45
+
 ## [2026-08-09] — Marketplace Front-View & Slide-to-Forum (Tekno Zone)
 
 ### Changed
