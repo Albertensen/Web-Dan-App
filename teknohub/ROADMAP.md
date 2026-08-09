@@ -272,7 +272,7 @@ Status: 🔵 In Progress
 ---
 
 ## FASE 6B — Security Hardening
-Status: ⏳ Belum dimulai
+Status: 🟡 Sebagian
 
 ### HTTP Security Headers
 - [x] next.config.ts: tambah Content-Security-Policy (CSP)
@@ -336,6 +336,10 @@ Status: ⏳ Belum dimulai
 | NEXT_PUBLIC_APP_URL | URL app (localhost / production) |
 
 ---
+
+## Catatan Sesi
+
+- **2026-08-09**: Fase 1B auth tuntas (a183ba6); Fase 6A/6B sebagian (0ab97ca, d0163e6) — 17 item baru dicentang, 58 sisa. Snapshot lengkap di Obsidian: [[TeknoHub-Status]].
 
 ## Catatan
 
