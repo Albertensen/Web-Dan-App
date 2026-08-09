@@ -14,7 +14,7 @@ export default function BuilderBanner() {
             Interactive 3D Technology
           </span>
           <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
-            AI 3D PC Builder Experience.
+            RAKIT PC MUDAH DENGAN BANTUAN AGENT AI
           </h2>
           <p className="text-slate-300 text-xs md:text-sm leading-relaxed mb-6">
             Simulasikan perakitan komponen PC secara 3D interaktif. AI Agent kami mengecek

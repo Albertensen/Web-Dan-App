@@ -139,7 +139,7 @@ export default async function Home() {
               </p>
             </div>
             <div className="bg-surface-2/60 rounded-2xl p-4">
-              <div className="font-bold text-sm text-foreground mb-1">🤖 AI 3D Builder</div>
+              <div className="font-bold text-sm text-foreground mb-1">🤖 Build PC with Agent AI</div>
               <p className="text-[11px] text-muted leading-relaxed">
                 Simulasi perakitan 3D interaktif dengan cek kompatibilitas daya &amp; anti-bottleneck.
               </p>
