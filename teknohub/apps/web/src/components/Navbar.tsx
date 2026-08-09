@@ -22,6 +22,12 @@ export default function Navbar() {
           <Link href="/builder" className="text-slate-300 hover:text-blue-400 transition">
             Builder
           </Link>
+          <Link href="/builder/compare" className="text-slate-300 hover:text-blue-400 transition">
+            Bandingkan
+          </Link>
+          <Link href="/builder/saved" className="text-slate-300 hover:text-blue-400 transition">
+            Build Saya
+          </Link>
           <Link href="/cart" className="text-slate-300 hover:text-blue-400 transition">
             🛒
           </Link>

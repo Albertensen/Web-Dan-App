@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  return NextResponse.json({
+  const result = {
     useCase,
     budget,
     build: {
@@ -145,5 +145,40 @@ export async function POST(request: NextRequest) {
     bottleneck,
     compatibility_issues: issues,
     parts: parts.map((p) => ({ id: p.id, name: p.name, type: p.component_type, price: p.price })),
-  });
+  };
+
+  // Mode streaming SSE (?stream=1) — event analysis → parts → complete
+  if (request.nextUrl.searchParams.get("stream") === "1") {
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        const send = (event: string, data: unknown) => {
+          controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+        };
+        send("analysis", {
+          useCase,
+          budget,
+          allocation,
+          bottleneck,
+          compatibility_issues: issues,
+        });
+        setTimeout(() => {
+          send("parts", { parts: result.parts, total });
+          setTimeout(() => {
+            send("complete", { within_budget: result.within_budget });
+            controller.close();
+          }, 300);
+        }, 300);
+      },
+    });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
+      },
+    });
+  }
+
+  return NextResponse.json(result);
 }

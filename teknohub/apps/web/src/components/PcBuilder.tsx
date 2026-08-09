@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import SaveBuildButton from "./SaveBuildButton";
 
 interface BuildPart {
   id: string;
@@ -47,16 +48,54 @@ export default function PcBuilder() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/pc-builder/recommend", {
+      const res = await fetch("/api/pc-builder/recommend?stream=1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ useCase, budget }),
       });
-      const data = await res.json();
-      if (!res.ok) {
+      if (!res.ok || !res.body) {
+        const data = await res.json().catch(() => ({}));
         setError(data.error || "Terjadi kesalahan");
-      } else {
-        setResult(data);
+        setLoading(false);
+        return;
+      }
+
+      // Baca SSE stream
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let analysisData: { bottleneck: string | null; compatibility_issues: string[] } | null = null;
+      let partsData: { parts: BuildPart[]; total: number } | null = null;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const events = buffer.split("\n\n");
+        buffer = events.pop() ?? "";
+        for (const ev of events) {
+          const lines = ev.split("\n");
+          const dataLine = lines.find((l) => l.startsWith("data: "));
+          if (!dataLine) continue;
+          const payload = JSON.parse(dataLine.slice(6));
+          if (payload.bottleneck !== undefined || payload.compatibility_issues) {
+            analysisData = payload;
+          }
+          if (payload.parts) {
+            partsData = payload;
+          }
+        }
+      }
+      if (partsData) {
+        setResult({
+          useCase,
+          budget,
+          build: {},
+          total: partsData.total,
+          within_budget: partsData.total <= budget,
+          bottleneck: analysisData?.bottleneck ?? null,
+          compatibility_issues: analysisData?.compatibility_issues ?? [],
+          parts: partsData.parts,
+        });
       }
     } catch {
       setError("Gagal terhubung ke server");
@@ -146,6 +185,10 @@ export default function PcBuilder() {
               <span className={`font-bold ${result.within_budget ? "text-emerald-400" : "text-amber-400"}`}>
                 {formatIDR(result.total)}
               </span>
+            </div>
+
+            <div className="mt-4 flex justify-end">
+              <SaveBuildButton parts={result.parts} buildType={result.useCase} />
             </div>
           </div>
 
