@@ -121,6 +121,24 @@ Status: ✅ Tuntas (100%) — core, saved, compare, SSE, chat AI, CS widget, quo
 
 ---
 
+## DESIGN SYSTEM — Shopify (awesome-design-md)
+Status: ✅ Terpasang & diterapkan
+
+- [x] DESIGN.md terinstall (npx getdesign add shopify) di apps/web
+- [x] Design token: CSS Custom Properties di globals.css (background/surface/accent/text/border/glow)
+- [x] Utility classes: glow-card, glass-surface, gradient-text, neon-border, shimmer
+- [x] Animations: fadeInUp, glowPulse, cardLift, shimmer (keyframes + tailwind extend)
+- [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl
+- [x] Homepage hero monumental (font extralight, gradient-text, animated mesh)
+- [x] Navbar glassmorphism + cart badge live + mobile drawer
+- [x] ProductCard premium (4:3 image, neon pill, gradient price, add-to-cart)
+- [x] Products page (token colors, sticky glass filter)
+- [x] ThreadCard upgrade (category color pills, relative time)
+- [x] Builder page pakai token (glow-card via PcBuilder)
+- [ ] Halaman lain menyusul (detail produk, forum detail, checkout, admin) — inkremental
+
+---
+
 ## FASE 5 — Mobile App
 Status: ⏳ Belum dimulai
 

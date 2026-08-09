@@ -4,6 +4,7 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 
 ## Stack
 - **Frontend**: Next.js 14, TailwindCSS, Zustand, TipTap
+- **Design**: awesome-design-md Shopify (DESIGN.md — cinematic dark, neon mint accent, monumental typography)
 - **Backend**: Next.js API routes, Supabase (Postgres, Auth, Storage, Realtime)
 - **AI**: Ollama lokal (Gemma 4 E4B), algoritma bottleneck + alokasi budget
 - **Deploy**: Vercel (`teknohub-omega.vercel.app`), Supabase Cloud
