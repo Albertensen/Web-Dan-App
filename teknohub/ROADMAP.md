@@ -20,9 +20,9 @@ Status: 🔵 In Progress
 
 ### GitHub & Deploy
 - [x] Git push fase 1 ke main
-- [ ] Connect repo ke Vercel (rebahan account)
-- [ ] Set env variables di Vercel
-- [ ] Deploy pertama berhasil (URL live)
+- [x] Connect repo ke Vercel (rebahan account)
+- [x] Set env variables di Vercel (6 vars: Supabase URL/anon, APP_URL, APP_NAME, NEXTAUTH_SECRET, NEXTAUTH_URL)
+- [x] Deploy pertama berhasil (https://teknohub-omega.vercel.app)
 
 ### Database & Auth
 - [x] Buat Supabase project
