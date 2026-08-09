@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import BuilderBanner from "@/components/BuilderBanner";
 
 // Halaman dinamis — fetch produk real per request (bukan static build)
 export const dynamic = "force-dynamic";
@@ -78,6 +79,9 @@ export default async function Home() {
 
   return (
     <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
+      {/* ================= BANNER AI 3D PC BUILDER ================= */}
+      <BuilderBanner />
+
       {/* ================= MARKETPLACE (Direct View) ================= */}
       <section id="marketplace">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -114,10 +118,10 @@ export default async function Home() {
       </section>
 
       {/* ================= FORUM & REPUTASI (Slide) ================= */}
-      <section id="forum-slide" className="pt-8 border-t border-slate-400/50">
+      <section id="forum-slide" className="pt-8 border-t-2 border-slate-400">
         <div className="mb-6">
           <span className="text-[11px] uppercase font-semibold text-accent tracking-widest block mb-1">
-            Slide Terhubung Otomatis
+            Community Hub
           </span>
           <h2 className="text-2xl font-bold tracking-tight">Forum Komunitas &amp; Sistem Reputasi</h2>
           <p className="text-xs text-muted">
@@ -178,7 +182,7 @@ export default async function Home() {
 
       {/* ================= FOOTER ================= */}
       <footer className="border-t border-slate-400/50 py-12 px-6 mt-16 text-center text-muted text-[11px] font-medium tracking-wide">
-        <p>© 2026 Tekno Zone. Apple-Style Product Cards &amp; Zoom Interaction.</p>
+        <p>© 2026 Tekno Zone. Marketplace, Auth Header, Cart &amp; eBay Banner Integration.</p>
       </footer>
     </main>
   );

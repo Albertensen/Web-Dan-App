@@ -20,6 +20,7 @@
   --color-accent: #0b1f45; /* chromeAccent */
   --color-accent-secondary: #1e3a6e; /* lighter navy hover */
   --color-accent-dim: rgba(11, 31, 69, 0.1);
+  --color-zone-blue: #2563eb; /* zoneBlue — logo "Zone" */
 
   /* Text */
   --color-text-primary: #0f172a; /* techDark */

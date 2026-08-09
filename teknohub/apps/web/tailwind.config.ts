@@ -17,6 +17,7 @@ const config: Config = {
         accent: "var(--color-accent)",
         "accent-secondary": "var(--color-accent-secondary)",
         "accent-dim": "var(--color-accent-dim)",
+        "zone-blue": "var(--color-zone-blue)",
         muted: "var(--color-text-muted)",
         tertiary: "var(--color-text-tertiary)",
         border: "var(--color-border)",
