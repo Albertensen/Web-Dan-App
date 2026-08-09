@@ -30,13 +30,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <div className="min-h-screen bg-background text-foreground p-4 sm:p-8">
       <header className="mb-8 border-b border-border pb-5">
-        <h1 className="font-display font-extralight text-3xl sm:text-4xl">
-          Katalog <span className="gradient-text">Produk</span>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          Katalog <span className="text-accent">Produk</span>
         </h1>
       </header>
 
       {/* Sticky search/filter */}
-      <div className="sticky top-16 z-30 glass-surface rounded-xl px-4 py-3 mb-8">
+      <div className="sticky top-16 z-30 backdrop-blur-xl bg-background/80 border border-border/50 rounded-xl px-4 py-3 mb-8">
         <Suspense fallback={<div className="text-muted text-sm">Memuat filter...</div>}>
           <ProductFilter initialCategory={category} initialSearch={search} />
         </Suspense>
@@ -49,7 +49,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           ))}
         </div>
       ) : (
-        <div className="p-8 bg-surface border border-dashed border-border rounded-xl text-center">
+        <div className="p-8 bg-surface border border-dashed border-border rounded-2xl text-center">
           <p className="text-lg font-medium text-muted">Produk tidak ditemukan</p>
           <p className="text-sm text-tertiary mt-1">Coba ubah filter atau kata kunci pencarian Anda.</p>
         </div>

@@ -20,19 +20,18 @@ const config: Config = {
         muted: "var(--color-text-muted)",
         tertiary: "var(--color-text-tertiary)",
         border: "var(--color-border)",
-        "link-cool": "var(--color-link-cool)",
         glow: "var(--color-glow)",
       },
       fontFamily: {
-        sans: ["var(--font-body)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ["var(--font-body)", "-apple-system", "BlinkMacSystemFont", '"SF Pro Display"', '"SF Pro Text"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "-apple-system", "BlinkMacSystemFont", '"SF Pro Display"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       boxShadow: {
         "glow-sm": "0 0 8px var(--color-glow)",
-        "glow-md": "0 0 20px var(--color-glow)",
-        "glow-lg": "0 0 40px var(--color-glow)",
-        "glow-xl": "0 0 40px var(--color-glow), 0 0 80px var(--color-glow-wide)",
+        "glow-md": "0 4px 16px -4px var(--color-glow)",
+        "glow-lg": "0 8px 24px -8px var(--color-glow)",
+        "glow-xl": "0 12px 32px -8px var(--color-glow), 0 0 40px var(--color-glow-wide)",
       },
       keyframes: {
         fadeInUp: {

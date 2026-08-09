@@ -46,8 +46,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.original_price && product.original_price > product.price;
 
   return (
-    <div className="glow-card group flex flex-col overflow-hidden animate-card-lift">
-      {/* Image — 4:3 + overlay gradient on hover */}
+    <div className="bg-surface border border-slate-300 rounded-[2.5rem] overflow-hidden flex flex-col hover:border-accent transition duration-300 shadow-sm group">
+      {/* Image — 4:3 + overlay on hover */}
       <div className="relative aspect-[4/3] overflow-hidden">
         {product.image_url ? (
           <img
@@ -56,49 +56,46 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl bg-surface-2/40">
+          <div className="w-full h-full flex items-center justify-center text-6xl bg-surface-2/60">
             {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
           </div>
         )}
-        {/* Overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
         {/* Category pill */}
-        <span className="absolute top-3 left-3 px-3 py-1 rounded-full neon-border bg-black/60 text-[11px] font-medium tracking-wide">
+        <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[11px] font-medium tracking-wide">
           {CATEGORY_LABEL[product.category] ?? product.category}
         </span>
       </div>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
+      <div className="p-6 flex flex-col flex-1">
         {product.brand && (
-          <p className="text-xs text-muted mb-1 uppercase tracking-wider">{product.brand}</p>
+          <p className="text-[11px] text-muted font-semibold uppercase tracking-wider mb-1">{product.brand}</p>
         )}
-        <h3 className="text-base font-medium text-foreground line-clamp-2 mb-3 min-h-[2.5rem]">
+        <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-3 tracking-tight min-h-[2.5rem]">
           {product.name}
         </h3>
 
         <div className="flex items-baseline gap-2 mb-2">
-          <span className="font-display text-xl gradient-text font-medium">{fmt(product.price)}</span>
+          <span className="text-base font-semibold text-foreground">{fmt(product.price)}</span>
           {hasDiscount && (
             <span className="text-xs text-tertiary line-through">{fmt(product.original_price!)}</span>
           )}
         </div>
 
-        <p className={`text-xs mb-4 ${product.stock > 0 ? "text-accent" : "text-red-400"}`}>
+        <p className={`text-xs mb-4 ${product.stock > 0 ? "text-accent" : "text-red-500"}`}>
           {product.stock > 0 ? `Stok: ${product.stock}` : "Habis"}
         </p>
 
         <div className="flex gap-2 mt-auto">
           <Link
             href={`/products/${product.slug}`}
-            className="flex-1 text-center px-4 py-2.5 rounded-full border border-border text-sm font-medium text-foreground hover:border-accent hover:text-accent transition-colors"
+            className="flex-1 text-center px-4 py-2.5 rounded-full border border-slate-400 text-sm font-medium text-foreground hover:border-accent hover:text-accent transition-colors"
           >
             Lihat Detail
           </Link>
           <button
             onClick={() => addItem(product)}
-            className="px-4 py-2.5 rounded-full bg-accent text-black text-sm font-medium hover:opacity-90 transition-opacity"
+            className="px-4 py-2.5 rounded-full bg-accent text-white text-sm font-medium hover:bg-black transition"
             aria-label="Tambah ke keranjang"
           >
             🛒

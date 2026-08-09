@@ -39,11 +39,11 @@ function relativeTime(iso: string): string {
 
 const CATEGORY_COLORS: Record<string, string> = {
   Hardware: "bg-accent-dim text-accent border-accent/30",
-  AI: "bg-violet-500/15 text-violet-300 border-violet-500/30",
-  Mobile: "bg-blue-500/15 text-blue-300 border-blue-500/30",
-  Gaming: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
-  DIY: "bg-amber-500/15 text-amber-300 border-amber-500/30",
-  "Jual Beli": "bg-pink-500/15 text-pink-300 border-pink-500/30",
+  AI: "bg-violet-100 text-violet-700 border-violet-300",
+  Mobile: "bg-blue-100 text-blue-700 border-blue-300",
+  Gaming: "bg-emerald-100 text-emerald-700 border-emerald-300",
+  DIY: "bg-amber-100 text-amber-700 border-amber-300",
+  "Jual Beli": "bg-pink-100 text-pink-700 border-pink-300",
 };
 
 export default function ThreadCard({ thread }: ThreadCardProps) {
@@ -51,14 +51,14 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
 
   return (
     <Link href={`/forum/${thread.category_slug}/${thread.id}`} className="block">
-      <div className="glow-card p-5 animate-card-lift">
+      <div className="bg-surface border border-slate-300 rounded-2xl p-5 shadow-sm hover:border-accent transition duration-300 hover:shadow-md">
         {thread.is_pinned && (
-          <div className="mb-3 inline-block px-3 py-1 text-xs font-medium rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30">
+          <div className="mb-3 inline-block px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700 border border-amber-300">
             📌 Disematkan
           </div>
         )}
 
-        <h3 className="text-xl font-medium text-foreground line-clamp-2 mb-4 hover:text-accent transition-colors cursor-pointer">
+        <h3 className="text-lg font-bold text-foreground line-clamp-2 mb-4 tracking-tight hover:text-accent transition-colors cursor-pointer">
           {thread.title}
         </h3>
 
@@ -70,7 +70,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
           </div>
         )}
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted pt-2 border-t border-border">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted pt-2 border-t border-slate-200">
           {/* Category Badge */}
           {thread.category_name && thread.category_slug ? (
             <span className={`flex items-center gap-1 text-xs font-medium px-2.5 py-0.5 rounded-full border ${catClass}`}>

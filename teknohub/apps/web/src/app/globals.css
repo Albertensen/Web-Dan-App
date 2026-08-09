@@ -3,44 +3,40 @@
 @tailwind utilities;
 
 /* ============================================================
-   TEKNOHUB DESIGN TOKENS — Shopify System (DESIGN.md)
-   Cinematic dark-first. Pill buttons. Thin-weight display.
+   TEKNO ZONE DESIGN TOKENS — Apple-inspired Ice Slate & Midnight Navy
+   Light-first. Clean surfaces. Tight tracking typography.
    ============================================================ */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
   /* Canvas */
-  --color-background: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-2: #1e2c31;
-  --color-surface-glass: rgba(255, 255, 255, 0.03);
+  --color-background: #cbd5e1; /* iceBg — ice slate */
+  --color-surface: #f8fafc; /* cardClean — clean white-grey */
+  --color-surface-2: #e2e8f0; /* slate-200 — image placeholders */
+  --color-surface-glass: rgba(248, 250, 252, 0.8);
 
-  /* Accent (aloe / pistachio mint) */
-  --color-accent: #c1fbd4;
-  --color-accent-secondary: #d4f9e0;
-  --color-accent-dim: rgba(193, 251, 212, 0.12);
+  /* Accent (Midnight Navy) */
+  --color-accent: #0b1f45; /* chromeAccent */
+  --color-accent-secondary: #1e3a6e; /* lighter navy hover */
+  --color-accent-dim: rgba(11, 31, 69, 0.1);
 
   /* Text */
-  --color-text-primary: #ffffff;
-  --color-text-muted: #a1a1aa;
-  --color-text-tertiary: #71717a;
+  --color-text-primary: #0f172a; /* techDark */
+  --color-text-muted: #334155; /* subGray */
+  --color-text-tertiary: #64748b; /* slate-500 */
 
   /* Borders */
-  --color-border: #1e2c31;
-  --color-border-soft: rgba(255, 255, 255, 0.08);
+  --color-border: #cbd5e1; /* slate-300/400 */
+  --color-border-soft: rgba(100, 116, 139, 0.25);
 
-  /* Link cool tones (footer) */
-  --color-link-cool: #9dabad;
-  --color-link-cool-2: #9797a2;
-
-  /* Glow */
-  --color-glow: rgba(193, 251, 212, 0.22);
-  --color-glow-wide: rgba(193, 251, 212, 0.1);
+  /* Glow — navy tint */
+  --color-glow: rgba(11, 31, 69, 0.12);
+  --color-glow-wide: rgba(11, 31, 69, 0.06);
 
   /* Typography */
-  --font-display: "Inter Display", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
   --radius-sm: 5px;
@@ -55,9 +51,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #000000;
-    --color-surface: #0a0a0a;
-    --color-text-primary: #ffffff;
+    color-scheme: light;
   }
 }
 
@@ -71,15 +65,15 @@ html {
 
 body {
   font-family: var(--font-body);
+  letter-spacing: -0.015em;
   background-color: var(--color-background);
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: "ss03";
 }
 
 ::selection {
-  background: var(--color-accent-dim);
-  color: var(--color-accent);
+  background: var(--color-accent);
+  color: #ffffff;
 }
 
 /* Scrollbar (WebKit) */
@@ -91,25 +85,25 @@ body {
   background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-surface-2);
+  background: var(--color-text-tertiary);
   border-radius: var(--radius-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-tertiary);
+  background: var(--color-accent);
 }
 
 /* ============================================================
-   UTILITY CLASSES
+   UTILITY CLASSES — light-adapted
    ============================================================ */
 
-/* Glow card — border + soft accent glow, intensif on hover */
+/* Glow card — clean surface + soft navy shadow */
 .glow-card {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-lg);
+  border-radius: 2.5rem;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  box-shadow: 0 0 20px var(--color-glow);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   transition:
     transform 0.25s ease,
     border-color 0.25s ease,
@@ -117,22 +111,20 @@ body {
 }
 
 .glow-card:hover {
-  box-shadow:
-    0 0 40px var(--color-glow),
-    0 0 80px var(--color-glow-wide);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: var(--color-accent);
+  box-shadow: 0 8px 24px -8px var(--color-glow);
   transform: translateY(-4px);
 }
 
-/* Glass surface — backdrop blur */
+/* Glass surface — navbar blur */
 .glass-surface {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(203, 213, 225, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(100, 116, 139, 0.25);
 }
 
-/* Gradient accent text */
+/* Gradient accent text — navy gradient */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
   -webkit-background-clip: text;
@@ -141,10 +133,10 @@ body {
   color: transparent;
 }
 
-/* Neon border */
+/* Neon border — navy */
 .neon-border {
   border: 1px solid var(--color-accent);
-  box-shadow: 0 0 8px var(--color-accent);
+  box-shadow: 0 0 8px var(--color-glow);
 }
 
 /* Shimmer skeleton */
@@ -152,7 +144,7 @@ body {
   background: linear-gradient(
     90deg,
     var(--color-surface) 25%,
-    var(--color-border) 50%,
+    var(--color-border-soft) 50%,
     var(--color-surface) 75%
   );
   background-size: 200% 100%;
