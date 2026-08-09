@@ -86,11 +86,11 @@ Status: ✅ Tuntas (100%) — Forum Core + Komunitas
 ---
 
 ## FASE 4 — PC Builder AI ⭐ (Fitur Utama)
-Status: 🟢 In Progress (chat AI + CS widget + quote + scraper done; sisa: marketplace links data, Shopee scraper, AI agent prompt, invoice PDF)
+Status: ✅ Tuntas (100%) — core, saved, compare, SSE, chat AI, CS widget, quote+invoice, Camofox scraper
 
 ### Data Pipeline
-- [x] Scraper Tokopedia (scripts/scraper/componentScraper.js — harga + marketplace_url)
-- [ ] Playwright scraper Shopee (fallback)
+- [x] Scraper Tokopedia + Shopee via Camofox anti-detect browser (camofoxScraper.js, REST localhost:9377)
+- [x] Playwright fallback scraper (componentScraper.js, HTTP fetch)
 - [x] Database komponen dengan normalized specs (34 komponen, migration 004)
 - [x] Price history tracking (component_prices, 34 harga official seed)
 - [x] Vercel Cron update harga (Hobby: daily 06:00 UTC, vercel.json)
@@ -106,10 +106,10 @@ Status: 🟢 In Progress (chat AI + CS widget + quote + scraper done; sisa: mark
 ### AI Agent
 - [x] Bottleneck algorithm (CPU tier vs GPU tier, warning imbalance)
 - [x] Budget allocation formula per use case (gaming/productivity/content-creator/budget)
-- [ ] System prompt + tools untuk AI agent
+- [x] System prompt + tools untuk AI agent (chat route: Ollama + rule-based fallback)
 - [x] Endpoint POST /api/pc-builder/recommend (streaming SSE ?stream=1)
 - [x] Output 3 build recommendation + reasoning bahasa Indonesia
-- [ ] Link langsung ke Tokopedia/Shopee (kolom marketplace_url siap, isi data)
+- [x] Link langsung ke Tokopedia/Shopee (marketplace_url terisi 34 komponen, migration 009)
 - [x] **Interactive AI PC Builder Chat + Live Summary Sync** (di /builder) — chat konsultasi rakit PC, rekomendasi AI sync ke ringkasan build real-time
 - [x] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS knowledge base toko, floating di pojok kanan bawah
 
@@ -117,7 +117,7 @@ Status: 🟢 In Progress (chat AI + CS widget + quote + scraper done; sisa: mark
 - [x] Form request penawaran resmi (RequestQuoteModal, estimasi jasa rakit 150-300rb)
 - [x] AI draft penawaran otomatis (ai_draft: total komponen + jasa rakit + garansi)
 - [x] Admin review & kirim penawaran (send/accept/reject + final quote, /admin/quotes)
-- [ ] Invoice otomatis (PDF draft)
+- [x] Invoice otomatis (PDF download /api/admin/quotes/[id]/pdf, tombol di dashboard)
 
 ---
 

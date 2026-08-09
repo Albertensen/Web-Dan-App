@@ -14,12 +14,14 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 | 1 — Foundation | ✅ Selesai |
 | 2 — E-Commerce | 🟢 Hampir tuntas (opsional: Algolia/OG-image; blokir: Midtrans akun) |
 | 3 — Forum Tech & AI | ✅ Tuntas (Core + Komunitas) |
-| 4 — PC Builder AI ⭐ | 🟢 In Progress |
+| 4 — PC Builder AI ⭐ | ✅ Tuntas (100%) |
 | 5 — Mobile App | ⏳ Belum dimulai |
 | 6 — Launch | ⏳ Belum dimulai |
 
-## Fase 4 — Fitur AI Baru
+## Fase 4 — Fitur AI
 - [x] **Interactive AI PC Builder Chat + Live Summary Sync** (di `/builder`) — konsultasi rakit PC via chat, rekomendasi AI sinkron ke ringkasan build real-time
 - [x] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS dengan knowledge base toko (lama rakit, garansi, pengiriman, pembayaran, status pesanan)
+- [x] **Quote System** — request penawaran, admin review, invoice PDF
+- [x] **Camofox anti-detect scraper** — Tokopedia + Shopee (harga + marketplace_url), cron daily
 
 Detail lengkap: lihat `ROADMAP.md`.
