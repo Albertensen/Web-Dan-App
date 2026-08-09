@@ -180,6 +180,41 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ================= TENTANG TEKNOZONE ================= */}
+      <section id="tentang" className="pt-8 border-t-2 border-slate-400">
+        <div className="bg-surface border border-slate-300 rounded-3xl p-8 shadow-sm">
+          <span className="text-[11px] uppercase font-semibold text-accent tracking-widest block mb-2">
+            About Us
+          </span>
+          <h2 className="text-2xl font-bold tracking-tight mb-3">Tentang TeknoZone</h2>
+          <p className="text-xs text-muted leading-relaxed max-w-3xl mb-6">
+            TeknoZone adalah pusat hardware &amp; komunitas terpercaya — satu ekosistem untuk
+            belanja elektronik, konsultasi rakit PC dengan AI agent, dan forum teknologi dengan
+            sistem reputasi transparan berbasis tier transaksi.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-surface-2/60 rounded-2xl p-4">
+              <div className="font-bold text-sm text-foreground mb-1">🛒 Marketplace</div>
+              <p className="text-[11px] text-muted leading-relaxed">
+                Katalog produk elektronik &amp; hardware tervalidasi dengan harga kompetitif.
+              </p>
+            </div>
+            <div className="bg-surface-2/60 rounded-2xl p-4">
+              <div className="font-bold text-sm text-foreground mb-1">🤖 AI 3D Builder</div>
+              <p className="text-[11px] text-muted leading-relaxed">
+                Simulasi perakitan 3D interaktif dengan cek kompatibilitas daya &amp; anti-bottleneck.
+              </p>
+            </div>
+            <div className="bg-surface-2/60 rounded-2xl p-4">
+              <div className="font-bold text-sm text-foreground mb-1">💬 Komunitas</div>
+              <p className="text-[11px] text-muted leading-relaxed">
+                Forum dengan tier reputasi (Silver, Gold, Diamond) anti-fake review.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ================= FOOTER ================= */}
       <footer className="border-t border-slate-400/50 py-12 px-6 mt-16 text-center text-muted text-[11px] font-medium tracking-wide">
         <p>© 2026 Tekno Zone. Marketplace, Auth Header, Cart &amp; eBay Banner Integration.</p>

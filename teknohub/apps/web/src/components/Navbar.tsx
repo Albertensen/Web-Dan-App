@@ -18,20 +18,25 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/90 border-b border-slate-400/50">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
-        {/* Logo 2 warna */}
-        <Link href="/" className="text-2xl font-extrabold tracking-tight flex items-center gap-2.5 shrink-0">
-          <span className="w-3.5 h-3.5 bg-zone-blue rounded-full" />
-          <span>
-            <span className="text-accent">Tekno</span>
-            <span className="text-zone-blue">Zone</span>
+        {/* Logo 2 warna + tagline di bawahnya */}
+        <div className="flex flex-col shrink-0">
+          <Link href="/" className="text-2xl font-extrabold tracking-tight flex items-center gap-2.5">
+            <span className="w-3.5 h-3.5 bg-zone-blue rounded-full" />
+            <span>
+              <span className="text-accent">Tekno</span>
+              <span className="text-zone-blue">Zone</span>
+            </span>
+          </Link>
+          <span className="text-[10px] font-semibold text-muted tracking-wide mt-0.5">
+            Pusat Hardware &amp; Komunitas Terpercaya
           </span>
-        </Link>
+        </div>
 
         <NavbarSearch />
 
-        {/* Area kanan: cart + auth + tagline */}
+        {/* Area kanan: cart + auth */}
         <div className="flex flex-col items-end shrink-0">
-          <div className="flex items-center gap-2.5 mb-1">
+          <div className="flex items-center gap-2.5">
             {/* Cart SVG */}
             <Link
               href="/cart"
@@ -72,10 +77,6 @@ export default function Navbar() {
               {mobileOpen ? "✕" : "☰"}
             </button>
           </div>
-          {/* Tagline */}
-          <span className="text-[10px] font-semibold text-muted tracking-wide">
-            Pusat Hardware &amp; Komunitas Terpercaya
-          </span>
         </div>
       </div>
 

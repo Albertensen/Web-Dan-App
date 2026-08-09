@@ -4,8 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SLIDE_LINKS = [
-  { href: "/#marketplace", label: "Marketplace & Store", active: "/" },
-  { href: "/#forum-slide", label: "Forum Komunitas & Reputasi", active: "/" },
+  { href: "/#marketplace", label: "Marketplace & Store", anchor: "marketplace" },
+  { href: "/#forum-slide", label: "Forum Komunitas & Reputasi", anchor: "forum-slide" },
+  { href: "/#tentang", label: "Tentang TeknoZone", anchor: "tentang" },
 ];
 
 export default function SlideNav() {
@@ -15,17 +16,16 @@ export default function SlideNav() {
     <div className="sticky top-20 z-40 bg-background/95 border-b-2 border-slate-400 backdrop-blur-md shadow-sm">
       <div className="max-w-7xl mx-auto px-6 flex items-center gap-10 overflow-x-auto no-scrollbar py-3 text-sm font-bold">
         {SLIDE_LINKS.map((l) => {
-          const isActive = pathname === "/" || pathname.startsWith("/#");
+          const isHome = pathname === "/" || pathname.startsWith("/#");
+          const isActive = isHome && l.anchor === "marketplace";
           return (
             <Link
               key={l.href}
               href={l.href}
               className={`shrink-0 pb-1.5 border-b-4 transition ${
-                isActive && l.href.includes("marketplace")
+                isActive
                   ? "text-accent border-accent"
-                  : isActive && l.href.includes("forum-slide")
-                    ? "text-muted border-transparent hover:text-accent hover:border-slate-500"
-                    : "text-muted border-transparent hover:text-accent hover:border-slate-500"
+                  : "text-muted border-transparent hover:text-accent hover:border-slate-500"
               }`}
             >
               {l.label}
