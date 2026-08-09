@@ -1,0 +1,104 @@
+"use client";
+
+import Link from "next/link";
+import { useCartStore, selectTotalItems, selectTotalPrice } from "@/store/cartStore";
+
+const formatIDR = (n: number) =>
+  new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+
+export default function CartPage() {
+  const items = useCartStore((s) => s.items);
+  const updateQty = useCartStore((s) => s.updateQty);
+  const remove = useCartStore((s) => s.remove);
+  const totalItems = useCartStore(selectTotalItems);
+  const totalPrice = useCartStore(selectTotalPrice);
+
+  if (items.length === 0) {
+    return (
+      <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
+        <div className="text-center">
+          <div className="text-6xl mb-4">🛒</div>
+          <h1 className="text-2xl font-bold mb-2">Keranjang Kosong</h1>
+          <p className="text-slate-400 mb-6">Belum ada produk di keranjang kamu.</p>
+          <Link
+            href="/products"
+            className="inline-block px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity"
+          >
+            Lihat Produk
+          </Link>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">
+      <h1 className="text-3xl font-bold mb-8">Keranjang Belanja</h1>
+
+      <div className="space-y-4">
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="glow-card p-4 flex items-center gap-4"
+          >
+            <div className="w-20 h-20 bg-slate-800 rounded-xl flex items-center justify-center text-3xl shrink-0">
+              {item.image_url ? (
+                <img src={item.image_url} alt={item.name} className="w-full h-full object-cover rounded-xl" />
+              ) : (
+                "🖥️"
+              )}
+            </div>
+
+            <div className="flex-1 min-w-0">
+              <Link href={`/products/${item.slug}`} className="font-semibold line-clamp-1 hover:text-blue-400">
+                {item.name}
+              </Link>
+              <p className="text-sm text-slate-400">{formatIDR(item.price)}</p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => updateQty(item.id, item.quantity - 1)}
+                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 font-bold"
+              >
+                −
+              </button>
+              <span className="w-8 text-center">{item.quantity}</span>
+              <button
+                onClick={() => updateQty(item.id, item.quantity + 1)}
+                className="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 font-bold"
+              >
+                +
+              </button>
+            </div>
+
+            <div className="text-right w-32">
+              <p className="font-semibold">{formatIDR(item.price * item.quantity)}</p>
+              <button
+                onClick={() => remove(item.id)}
+                className="text-xs text-red-400 hover:text-red-300 mt-1"
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 glow-card p-6 flex items-center justify-between">
+        <div>
+          <p className="text-sm text-slate-400">
+            Total ({totalItems} item)
+          </p>
+          <p className="text-2xl font-bold">{formatIDR(totalPrice)}</p>
+        </div>
+        <Link
+          href="/checkout"
+          className="px-8 py-3 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 font-semibold hover:opacity-90 transition-opacity"
+        >
+          Checkout
+        </Link>
+      </div>
+    </main>
+  );
+}
