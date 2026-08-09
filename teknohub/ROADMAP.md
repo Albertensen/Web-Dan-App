@@ -27,8 +27,8 @@ Status: 🔵 In Progress
 ### Database & Auth
 - [x] Buat Supabase project
 - [x] Run SQL migration di Supabase (14 tabel + RLS + seed via Management API)
-- [ ] Setup NextAuth + Google OAuth
-- [ ] Login/register flow berfungsi
+- [x] Setup NextAuth + Google OAuth (credentials aktif di Vercel + dev)
+- [x] Login/register flow berfungsi (provider google live, callback verified)
 - [x] RLS policies aktif dan ditest (6/6 PASS)
 
 ---
