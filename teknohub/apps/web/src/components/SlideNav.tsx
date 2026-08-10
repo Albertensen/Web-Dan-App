@@ -12,7 +12,7 @@ export default function SlideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-20 z-40 bg-background/95 border-b-2 border-slate-400 backdrop-blur-md shadow-sm">
+    <div className="sticky top-20 z-40 bg-background/90 border-b border-border-soft backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 flex items-center gap-10 overflow-x-auto no-scrollbar py-3 text-sm font-bold">
         {SLIDE_LINKS.map((l) => {
           const isHome = pathname === "/" || pathname.startsWith("/#");
@@ -31,13 +31,15 @@ export default function SlideNav() {
             </Link>
           );
         })}
-        {/* Tentang TeknoZone — rata kanan sebaris dgn tab */}
-        <Link
-          href="/#tentang"
-          className="ml-auto shrink-0 text-sm font-semibold text-muted hover:text-accent transition"
-        >
-          Tentang TeknoZone
-        </Link>
+        {/* Tentang TeknoZone — hanya di homepage (anchor #tentang) */}
+        {pathname === "/" && (
+          <Link
+            href="/#tentang"
+            className="ml-auto shrink-0 text-sm font-semibold text-muted hover:text-accent transition"
+          >
+            Tentang TeknoZone
+          </Link>
+        )}
       </div>
     </div>
   );

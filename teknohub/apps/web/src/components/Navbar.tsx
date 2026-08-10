@@ -14,7 +14,7 @@ export default function Navbar() {
   const cartCount = useCartStore(selectTotalItems);
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/90 border-b border-slate-400/50">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border-soft">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         {/* Logo 2 warna + tagline di bawahnya */}
         <div className="flex flex-col shrink-0">
@@ -34,13 +34,6 @@ export default function Navbar() {
 
         {/* Area kanan: cart + auth (auth hidden di mobile — di drawer) */}
         <div className="flex items-center gap-2.5 shrink-0">
-            {/* PC Builder — desktop nav */}
-            <Link
-              href="/builder"
-              className="hidden md:block text-foreground hover:text-accent transition text-sm font-semibold"
-            >
-              PC Builder AI
-            </Link>
             {/* Cart SVG — ikon lebih rapi */}
             <Link
               href="/cart"
