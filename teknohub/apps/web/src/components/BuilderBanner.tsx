@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-/** Banner promosi AI 3D PC Builder — seluruh area klikable ke /builder-3d */
+/** Banner promosi AI 3D PC Builder — seluruh area klikable ke /builder */
 export default function BuilderBanner() {
   return (
     <section>
