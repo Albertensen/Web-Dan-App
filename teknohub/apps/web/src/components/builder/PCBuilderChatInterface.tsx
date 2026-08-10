@@ -35,8 +35,8 @@ export default function PCBuilderChatInterface() {
     setToast("✅ Build Rekomendasi diperbarui!");
   };
 
-  const send = async () => {
-    const text = input.trim();
+  const send = async (preset?: string) => {
+    const text = (preset ?? input).trim();
     if (!text || loading) return;
     setInput("");
     setError("");
@@ -151,7 +151,7 @@ export default function PCBuilderChatInterface() {
                   {["Rakit PC gaming 15jt", "PC buat edit video 20jt", "PC hemat 5jt"].map((q) => (
                     <button
                       key={q}
-                      onClick={() => { setInput(q); send(); }}
+                      onClick={() => send(q)}
                       className="px-3 py-1.5 text-xs rounded-full bg-surface-2 border border-slate-300 text-muted hover:border-accent hover:text-accent transition"
                     >
                       {q}
@@ -221,8 +221,8 @@ export default function PCBuilderChatInterface() {
               className="flex-1 px-3 py-2 text-sm bg-surface border border-slate-300 rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
             />
             <button
-              onClick={send}
-              disabled={loading || !input.trim()}
+              onClick={() => send()}
+                            disabled={loading || !input.trim()}
               className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-medium disabled:opacity-50 hover:opacity-90 transition"
             >
               Kirim
