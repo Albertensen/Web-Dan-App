@@ -292,6 +292,42 @@ Status: 🟡 Sebagian
 
 ---
 
+---
+
+## FASE 6D — UI Overhaul & Polish
+Status: 🔵 In Progress
+
+### Homepage
+- [ ] Forum preview: tampilkan 3 thread terbaru dari DB (SSR)
+- [ ] Stats section: jumlah produk, user terdaftar, thread forum (count dari DB)
+- [ ] Footer copyright: perbaiki teks jadi proper
+- [ ] Category filter lengkap: Semua, Laptop, GPU, Processor, Smartphone, Monitor, Storage, Peripherals
+
+### Navbar & Navigation
+- [ ] Fix link /builder-3d → /builder di mobile drawer dan semua tempat
+- [ ] Tambah "PC Builder" di desktop nav links
+- [ ] Konsistensi semua internal link
+
+### PC Builder Page — 3D Visual Experience
+- [ ] Redesign total halaman /builder dengan visual 3D futuristik
+- [ ] Animated particle field (canvas/Three.js atau pure CSS)
+- [ ] Neon grid perspektif sebagai background
+- [ ] Floating spec bars (CPU%, GPU%, RAM%) animasi masuk dari bawah
+- [ ] Glassmorphism card untuk form pilih komponen
+- [ ] AI Chat tetap di sisi kanan dengan design premium
+- [ ] Build summary card dengan glow effect dan animasi total harga
+
+### Product Pages
+- [ ] Related products section di /products/[slug]
+- [ ] Product image fallback yang menarik (bukan emoji)
+- [ ] Breadcrumb navigation
+
+### Empty States
+- [ ] /cart empty state: ilustrasi + CTA "Mulai Belanja"
+- [ ] /orders empty state: ilustrasi + CTA
+- [ ] /forum empty state yang menarik
+
+---
 ## FASE 8 — Testing & QA
 Status: ⏳ Belum dimulai
 
