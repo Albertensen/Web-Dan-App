@@ -2,6 +2,14 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-10] — Builder AI ↔ Build Summary Sync
+
+### Fixed
+- AI Chat recommendation sekarang ter-sync otomatis ke Build Summary
+- User konfirmasi "ok/setuju" → Build Summary langsung terupdate
+- Card rekomendasi muncul di chat bubble dengan tombol Terapkan/Lewati
+- Quote/penawaran otomatis menggunakan Build Summary sebagai basis data
+
 ## [2026-08-10] — Fase 6D: UI Overhaul
 
 ### Added
