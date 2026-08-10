@@ -42,14 +42,17 @@ export default async function OrdersPage() {
       <p className="text-tertiary mb-8">Semua transaksi kamu di TeknoHub</p>
 
       {!orders || orders.length === 0 ? (
-        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
-          <p className="text-lg font-medium text-tertiary">Belum ada pesanan</p>
-          <p className="text-sm text-slate-500 mt-1">Yuk belanja dulu!</p>
+        <div className="flex flex-col items-center justify-center py-20 gap-5">
+          <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-slate-300">
+            📦
+          </div>
+          <h2 className="text-2xl font-bold tracking-tight">Belum ada pesanan</h2>
+          <p className="text-muted text-sm">Pesananmu akan muncul di sini setelah checkout</p>
           <Link
             href="/products"
-            className="inline-block mt-4 px-4 py-2 rounded-xl bg-accent font-semibold text-sm hover:opacity-90 transition-opacity"
+            className="bg-accent text-white px-8 py-3 rounded-full font-semibold hover:bg-accent-secondary transition shadow-sm"
           >
-            Lihat Produk
+            Lihat Produk →
           </Link>
         </div>
       ) : (

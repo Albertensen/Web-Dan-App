@@ -6,7 +6,7 @@ import ThreadCard, { type ThreadProps } from "@/components/forum/ThreadCard";
 // Halaman dinamis — fetch produk real per request (bukan static build)
 export const dynamic = "force-dynamic";
 
-const FEATURED_CATEGORIES = ["Semua", "GPU", "Processor", "Laptop"];
+const FEATURED_CATEGORIES = ["Semua", "Laptop", "GPU", "Processor", "Smartphone", "Monitor", "Storage", "Peripherals"];
 
 interface Product {
   id: string;
@@ -84,6 +84,26 @@ export default async function Home() {
             <p className="text-sm text-muted">Produk belum tersedia. Cek kembali nanti.</p>
           </div>
         )}
+      </section>
+
+      {/* ================= STATS / SOCIAL PROOF ================= */}
+      <section className="pt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
+            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">
+              {products.length}+
+            </div>
+            <p className="text-xs font-semibold text-muted">Produk Terkurasi</p>
+          </div>
+          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
+            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">5.000+</div>
+            <p className="text-xs font-semibold text-muted">Member Terdaftar</p>
+          </div>
+          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
+            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">24/7</div>
+            <p className="text-xs font-semibold text-muted">AI Support</p>
+          </div>
+        </div>
       </section>
 
       {/* ================= FORUM KOMUNITAS (Slide) ================= */}
@@ -182,7 +202,7 @@ export default async function Home() {
                 </div>
               </div>
               <div className="pt-6 border-t border-slate-400/50 text-center text-muted text-[11px] font-medium tracking-wide">
-                <p>© 2026 Tekno Zone. Marketplace, Auth Header, Cart &amp; eBay Banner Integration.</p>
+                <p>© 2026 TeknoZone. Platform Hardware &amp; Komunitas Terpercaya Indonesia.</p>
               </div>
             </footer>
     </main>

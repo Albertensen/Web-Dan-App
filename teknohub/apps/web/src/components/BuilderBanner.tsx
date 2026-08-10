@@ -5,7 +5,7 @@ export default function BuilderBanner() {
   return (
     <section>
       <Link
-        href="/builder-3d"
+        href="/builder"
         className="block group relative bg-gradient-to-r from-slate-900 via-accent to-blue-950 text-white rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-xl border border-slate-700 hover:scale-[1.01] transition duration-300"
       >
         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition" />

@@ -15,22 +15,24 @@ export default function CartPage() {
   const totalPrice = useCartStore(selectTotalPrice);
 
   if (items.length === 0) {
-    return (
-      <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🛒</div>
-          <h1 className="text-2xl font-bold mb-2">Keranjang Kosong</h1>
-          <p className="text-tertiary mb-6">Belum ada produk di keranjang kamu.</p>
-          <Link
-            href="/products"
-            className="inline-block px-6 py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity"
-          >
-            Lihat Produk
-          </Link>
-        </div>
-      </main>
-    );
-  }
+      return (
+        <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
+          <div className="flex flex-col items-center justify-center gap-5 text-center">
+            <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-slate-300">
+              🛒
+            </div>
+            <h2 className="text-2xl font-bold tracking-tight">Keranjangmu kosong</h2>
+            <p className="text-muted text-sm">Temukan produk terbaik di katalog kami</p>
+            <Link
+              href="/products"
+              className="bg-accent hover:bg-accent-secondary text-white px-8 py-3 rounded-full font-semibold transition shadow-sm"
+            >
+              Mulai Belanja →
+            </Link>
+          </div>
+        </main>
+      );
+    }
 
   return (
     <main className="flex-1 px-6 py-8 max-w-5xl mx-auto w-full">

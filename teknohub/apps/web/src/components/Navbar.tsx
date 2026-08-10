@@ -34,6 +34,13 @@ export default function Navbar() {
 
         {/* Area kanan: cart + auth (auth hidden di mobile — di drawer) */}
         <div className="flex items-center gap-2.5 shrink-0">
+            {/* PC Builder — desktop nav */}
+            <Link
+              href="/builder"
+              className="hidden md:block text-foreground hover:text-accent transition text-sm font-semibold"
+            >
+              PC Builder AI
+            </Link>
             {/* Cart SVG — ikon lebih rapi */}
             <Link
               href="/cart"

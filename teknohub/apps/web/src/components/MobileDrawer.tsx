@@ -11,7 +11,7 @@ interface MobileDrawerProps {
 const NAV_LINKS = [
   { href: "/products", label: "Store" },
   { href: "/forum", label: "Forum Komunitas" },
-  { href: "/builder-3d", label: "AI 3D PC Builder" },
+  { href: "/builder", label: "AI 3D PC Builder" },
 ];
 
 /** Drawer slide-in dari kiri utk mobile (<768px) — dgn overlay backdrop */
