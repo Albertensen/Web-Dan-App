@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
+import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
 
 interface BuildPart {
   id: string;
@@ -34,6 +36,17 @@ const TYPE_LABEL: Record<string, string> = {
   motherboard: "Motherboard", psu: "PSU", case: "Casing", cooler: "Cooler",
 };
 
+const COMP_TYPE_LABELS: [keyof SelectedComponents, string][] = [
+  ["cpu", "CPU"],
+  ["gpu", "GPU"],
+  ["ram", "RAM"],
+  ["storage", "Storage"],
+  ["psu", "PSU"],
+  ["motherboard", "Motherboard"],
+  ["casing", "Casing"],
+  ["cooler", "Cooler"],
+];
+
 function formatIDR(n: number) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 }
@@ -44,6 +57,20 @@ export default function PcBuilder() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<RecommendResult | null>(null);
   const [error, setError] = useState("");
+  // Store: single source of truth (sync dari AI chat / recommend button)
+  const { selectedComponents, totalEstimasi, applyRecommendation, updateBudget } = useBuilderStore();
+
+  const hasAnyComponent = Object.values(selectedComponents).some(Boolean);
+
+  // parts utk SaveBuildButton dari store
+  const partsFromStore = COMP_TYPE_LABELS
+    .filter(([key]) => selectedComponents[key])
+    .map(([key]) => ({
+      id: `ai-${key}`,
+      name: selectedComponents[key] ?? "",
+      type: key,
+      price: 0,
+    }));
 
   const recommend = async () => {
     setLoading(true);
@@ -87,6 +114,21 @@ export default function PcBuilder() {
         }
       }
       if (partsData) {
+        const rec: RecommendedBuild = {};
+        const byType: Record<string, BuildPart> = {};
+        for (const p of partsData.parts) byType[p.type] = p;
+        if (byType.cpu) rec.cpu = byType.cpu.name;
+        if (byType.gpu) rec.gpu = byType.gpu.name;
+        if (byType.ram) rec.ram = byType.ram.name;
+        if (byType.storage) rec.storage = byType.storage.name;
+        if (byType.psu) rec.psu = byType.psu.name;
+        if (byType.motherboard) rec.motherboard = byType.motherboard.name;
+        if (byType.case) rec.casing = byType.case.name;
+        if (byType.cooler) rec.cooler = byType.cooler.name;
+        rec.totalEstimasi = partsData.total;
+        // Sync ke store — single source of truth
+        applyRecommendation(rec);
+        updateBudget(budget);
         setResult({
           useCase,
           budget,
@@ -139,7 +181,7 @@ export default function PcBuilder() {
           max={50000000}
           step={1000000}
           value={budget}
-          onChange={(e) => setBudget(Number(e.target.value))}
+          onChange={(e) => { setBudget(Number(e.target.value)); updateBudget(Number(e.target.value)); }}
           className="w-full mb-6 accent-accent"
         />
 
@@ -156,7 +198,7 @@ export default function PcBuilder() {
 
       {result && (
         <div className="mt-8 space-y-4">
-          {/* Build summary */}
+          {/* Build summary (lokal — dari tombol Rekomendasi) */}
           <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-foreground">Build Rekomendasi</h3>
@@ -226,6 +268,53 @@ export default function PcBuilder() {
           </div>
         </div>
       )}
+
+      {/* ===== Build Summary — single source of truth (store, sync dari AI chat) ===== */}
+      <div className="mt-8 bg-slate-900/70 border border-cyan-500/20 rounded-2xl p-6 shadow-[0_0_40px_rgba(0,200,255,0.05)]">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            🤖 Build Summary
+            {hasAnyComponent && (
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                DIREKOMENDASIKAN AI
+              </span>
+            )}
+          </h3>
+          {hasAnyComponent && (
+            <Link href="/quotes" className="text-xs text-cyan-300 hover:text-cyan-200 underline underline-offset-2">
+              Minta Penawaran →
+            </Link>
+          )}
+        </div>
+
+        {!hasAnyComponent ? (
+          <p className="text-sm text-slate-400">
+            Mulai chat dengan AI untuk mendapat rekomendasi build — atau klik{" "}
+            <span className="text-cyan-300 font-medium">🚀 Buat Rekomendasi</span>.
+          </p>
+        ) : (
+          <>
+            <div className="space-y-2">
+              {COMP_TYPE_LABELS.map(([key, label]) =>
+                selectedComponents[key] ? (
+                  <div key={key} className="flex justify-between text-sm py-1.5 border-b border-slate-800 last:border-0">
+                    <span className="text-slate-400">{label}</span>
+                    <span className="text-slate-200">{selectedComponents[key]}</span>
+                  </div>
+                ) : null
+              )}
+            </div>
+            <div className="flex justify-between mt-4 pt-3 border-t border-slate-800">
+              <span className="font-semibold text-white">Total Estimasi</span>
+              <span className="font-bold text-cyan-300">{formatIDR(totalEstimasi)}</span>
+            </div>
+            <div className="mt-4 flex gap-2">
+              <SaveBuildButton parts={partsFromStore} buildType={useCase} />
+              <RequestQuoteModal buildTitle="Build Rekomendasi AI" />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

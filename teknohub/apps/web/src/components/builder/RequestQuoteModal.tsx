@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useBuilderStore } from "@/store/builderStore";
 
 interface RequestQuoteModalProps {
   buildId?: string;
@@ -14,6 +15,7 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const { selectedComponents, totalEstimasi, budgetTarget } = useBuilderStore();
 
   const submit = async () => {
     setLoading(true);
@@ -22,7 +24,13 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
       const res = await fetch("/api/pc-builder/quotes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ build_id: buildId, note }),
+        body: JSON.stringify({
+          build_id: buildId,
+          note,
+          components: selectedComponents,
+          totalEstimasi,
+          budgetTarget,
+        }),
       });
       const json = await res.json();
       if (!res.ok) {

@@ -108,6 +108,20 @@ async function ruleBasedReply(text: string) {
       useCase,
       budget,
     },
+    recommendation: {
+      cpu: build.cpu?.name,
+      gpu: build.gpu?.name,
+      ram: build.ram?.name,
+      storage: build.storage?.name,
+      psu: build.psu?.name,
+      motherboard: build.motherboard?.name,
+      casing: build.case?.name,
+      cooler: build.cooler?.name,
+      totalEstimasi: total,
+      alasan: `Kombinasi optimal untuk ${label[useCase]} dengan budget Rp ${new Intl.NumberFormat("id-ID").format(budget)}`,
+    },
+    hasRecommendation: true,
+    awaitingConfirmation: true,
   };
 }
 
@@ -136,7 +150,10 @@ export async function POST(request: NextRequest) {
           {
             role: "system",
             content:
-              "Kamu adalah asisten rakit PC TeknoHub. Jawab singkat dalam Bahasa Indonesia. Jika user minta rekomendasi build, sebutkan komponen + perkiraan harga. Gunakan format: NAMA KOMPONEN (harga).",
+              "Kamu adalah asisten rakit PC TeknoHub. Jawab singkat dalam Bahasa Indonesia. " +
+              "Jika user menanyakan atau meminta rekomendasi build PC, SELALU berikan nama komponen " +
+              "spesifik yang real dan ada di pasaran Indonesia (CPU, GPU, RAM, Storage, PSU, Motherboard, Casing, Cooler) " +
+              "dalam format: NAMA KOMPONEN (harga). Jika user belum menyebut budget, tanyakan dulu budget-nya.",
           },
           { role: "user", content: message },
         ],
@@ -148,7 +165,27 @@ export async function POST(request: NextRequest) {
       const json = await ollamaRes.json();
       const reply = String(json?.message?.content ?? "").trim();
       if (reply) {
-        return NextResponse.json({ reply });
+        // Parse komponen dari reply (format "NAMA (harga)") utk recommendation
+        const lines = reply.split("\n").map((l) => l.trim()).filter(Boolean);
+        const comp = (key: string) => {
+          const line = lines.find((l) => l.toLowerCase().includes(key));
+          return line ? line.replace(/^[-•]\s*/, "").replace(/\s*\(.*\)\s*$/, "").trim() : undefined;
+        };
+        return NextResponse.json({
+          reply,
+          recommendation: {
+            cpu: comp("cpu") ?? comp("processor"),
+            gpu: comp("gpu") ?? comp("rtx") ?? comp("radeon"),
+            ram: comp("ram"),
+            storage: comp("storage") ?? comp("ssd") ?? comp("nvme"),
+            psu: comp("psu") ?? comp("power"),
+            motherboard: comp("motherboard") ?? comp("b650") ?? comp("b760"),
+            casing: comp("casing") ?? comp("case"),
+            cooler: comp("cooler") ?? comp("pendingin"),
+          },
+          hasRecommendation: /cpu|processor|gpu|rtx|ram|ssd|nvme|psu|motherboard|casing|cooler/i.test(reply),
+          awaitingConfirmation: /cpu|processor|gpu|rtx|ram|ssd|nvme|psu|motherboard|casing|cooler/i.test(reply),
+        });
       }
     }
   } catch {
