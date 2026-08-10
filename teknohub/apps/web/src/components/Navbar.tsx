@@ -59,7 +59,11 @@ export default function Navbar() {
                 </span>
               )}
             </Link>
-            {status === "authenticated" ? (
+
+            {/* Auth: skeleton saat loading (FIX BUG 1 — cegah FOUC) */}
+            {status === "loading" ? (
+              <div className="hidden md:block w-40 h-9 rounded-full animate-pulse bg-slate-200" />
+            ) : status === "authenticated" ? (
               <div className="hidden md:block">
                 <UserDropdown />
               </div>
@@ -85,7 +89,7 @@ export default function Navbar() {
             {/* Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden text-foreground hover:text-accent transition"
+              className="md:hidden text-foreground hover:text-accent transition w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-200/60"
               aria-label="Menu"
             >
               {mobileOpen ? "✕" : "☰"}

@@ -15,7 +15,7 @@ export default function NavbarSearch() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="relative flex-1 max-w-xl">
+    <form onSubmit={handleSubmit} className="relative flex-1 max-w-xl min-w-0 hidden sm:block">
       <input
         type="text"
         value={term}
