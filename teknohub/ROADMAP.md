@@ -7,6 +7,41 @@ Stack: Next.js 14 + Expo + Supabase + Midtrans + Hermes AI + Playwright
 
 ---
 
+## Keputusan Teknis yang Sudah Diputuskan
+
+| Keputusan | Pilihan | Alasan |
+|-----------|---------|--------|
+| Frontend web | Next.js 14 App Router | SSR, SEO, file-based routing |
+| Mobile | Expo React Native | 1 codebase → Android + iOS |
+| Database | Supabase PostgreSQL | Auth + Realtime + Storage built-in |
+| Payment | Midtrans | Payment gateway Indonesia terpopuler |
+| Scraping | Playwright | Handle SPA/JS-rendered pages |
+| AI Agent | Hermes + Gemma 4 E4B | Pintar untuk planning, gratis untuk coding |
+| Repo struktur | Monorepo (turborepo) | Share types antara web dan mobile |
+| Auth | NextAuth + Supabase | OAuth Google + email |
+| Styling | Tailwind + shadcn/ui | Konsisten dan cepat |
+| State | Zustand | Ringan, tidak boilerplate |
+
+---
+
+## DESIGN SYSTEM — Shopify (awesome-design-md)
+Status: ✅ Terpasang & diterapkan
+
+- [x] DESIGN.md terinstall (npx getdesign add shopify) di apps/web
+- [x] Design token: CSS Custom Properties di globals.css (background/surface/accent/text/border/glow)
+- [x] Utility classes: glow-card, glass-surface, gradient-text, neon-border, shimmer
+- [x] Animations: fadeInUp, glowPulse, cardLift, shimmer (keyframes + tailwind extend)
+- [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl
+- [x] Homepage hero monumental (font extralight, gradient-text, animated mesh)
+- [x] Navbar glassmorphism + cart badge live + mobile drawer
+- [x] ProductCard premium (4:3 image, neon pill, gradient price, add-to-cart)
+- [x] Products page (token colors, sticky glass filter)
+- [x] ThreadCard upgrade (category color pills, relative time)
+- [x] Builder page pakai token (glow-card via PcBuilder)
+- [ ] Halaman lain menyusul (detail produk, forum detail, checkout, admin) — inkremental
+
+---
+
 ## FASE 1 — Foundation
 Status: ✅ Selesai
 
@@ -33,7 +68,7 @@ Status: ✅ Selesai
 
 ---
 
-## FASE 1B — Autentikasi & Akun Pengguna
+## FASE 2 — Autentikasi & Akun Pengguna
 Status: ✅ Tuntas
 
 ### Halaman Login
@@ -79,7 +114,7 @@ Status: ✅ Tuntas
 
 ---
 
-## FASE 2 — E-Commerce
+## FASE 3 — E-Commerce
 Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans akun)
 
 ### Katalog Produk
@@ -106,7 +141,7 @@ Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans ak
 
 ---
 
-## FASE 3 — Forum Tech & AI
+## FASE 4 — Forum Tech & AI
 Status: ✅ Tuntas (100%) — Forum Core + Komunitas
 
 ### Forum Core
@@ -131,7 +166,7 @@ Status: ✅ Tuntas (100%) — Forum Core + Komunitas
 
 ---
 
-## FASE 4 — PC Builder AI ⭐ (Fitur Utama)
+## FASE 5 — PC Builder AI ⭐ (Fitur Utama)
 Status: ✅ Tuntas (100%) — core, saved, compare, SSE, chat AI, CS widget, quote+invoice, Camofox scraper
 
 ### Data Pipeline
@@ -167,42 +202,7 @@ Status: ✅ Tuntas (100%) — core, saved, compare, SSE, chat AI, CS widget, quo
 
 ---
 
-## DESIGN SYSTEM — Shopify (awesome-design-md)
-Status: ✅ Terpasang & diterapkan
-
-- [x] DESIGN.md terinstall (npx getdesign add shopify) di apps/web
-- [x] Design token: CSS Custom Properties di globals.css (background/surface/accent/text/border/glow)
-- [x] Utility classes: glow-card, glass-surface, gradient-text, neon-border, shimmer
-- [x] Animations: fadeInUp, glowPulse, cardLift, shimmer (keyframes + tailwind extend)
-- [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl
-- [x] Homepage hero monumental (font extralight, gradient-text, animated mesh)
-- [x] Navbar glassmorphism + cart badge live + mobile drawer
-- [x] ProductCard premium (4:3 image, neon pill, gradient price, add-to-cart)
-- [x] Products page (token colors, sticky glass filter)
-- [x] ThreadCard upgrade (category color pills, relative time)
-- [x] Builder page pakai token (glow-card via PcBuilder)
-- [ ] Halaman lain menyusul (detail produk, forum detail, checkout, admin) — inkremental
-
----
-
-## Keputusan Teknis yang Sudah Diputuskan
-
-| Keputusan | Pilihan | Alasan |
-|-----------|---------|--------|
-| Frontend web | Next.js 14 App Router | SSR, SEO, file-based routing |
-| Mobile | Expo React Native | 1 codebase → Android + iOS |
-| Database | Supabase PostgreSQL | Auth + Realtime + Storage built-in |
-| Payment | Midtrans | Payment gateway Indonesia terpopuler |
-| Scraping | Playwright | Handle SPA/JS-rendered pages |
-| AI Agent | Hermes + Gemma 4 E4B | Pintar untuk planning, gratis untuk coding |
-| Repo struktur | Monorepo (turborepo) | Share types antara web dan mobile |
-| Auth | NextAuth + Supabase | OAuth Google + email |
-| Styling | Tailwind + shadcn/ui | Konsisten dan cepat |
-| State | Zustand | Ringan, tidak boilerplate |
-
----
-
-## FASE 6A — Responsive Design (Mobile-First)
+## FASE 6 — Responsive Design (Mobile-First)
 Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 
 ### Layout & Navigation
@@ -242,7 +242,7 @@ Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 
 ---
 
-## FASE 6B — Security Hardening
+## FASE 7 — Security Hardening
 Status: 🟡 Sebagian
 
 ### HTTP Security Headers
@@ -292,7 +292,7 @@ Status: 🟡 Sebagian
 
 ---
 
-## FASE 6C — Testing & QA
+## FASE 8 — Testing & QA
 Status: ⏳ Belum dimulai
 
 ### Unit & Integration Test
@@ -326,8 +326,8 @@ Status: ⏳ Belum dimulai
 
 ---
 
-## FASE 5 — Mobile App
-Status: ⏳ Belum dimulai (dikerjakan SETELAH Fase 6A/6B/6C)
+## FASE 9 — Mobile App
+Status: ⏳ Belum dimulai (dikerjakan SETELAH Fase 6/7/8)
 
 - [ ] Init Expo React Native di apps/mobile
 - [ ] Shared types dari packages/shared
@@ -342,7 +342,7 @@ Status: ⏳ Belum dimulai (dikerjakan SETELAH Fase 6A/6B/6C)
 
 ---
 
-## FASE 6 — Launch
+## FASE 10 — Launch
 Status: ⏳ Belum dimulai
 
 - [ ] Beta testing 20-50 user
@@ -373,9 +373,9 @@ Status: ⏳ Belum dimulai
 
 ## Catatan Sesi
 
-- **2026-08-09**: Fase 1B auth tuntas (a183ba6); Fase 6A/6B sebagian (0ab97ca, d0163e6) — 17 item baru dicentang, 58 sisa. Snapshot lengkap di Obsidian: [[TeknoHub-Status]].
+- **2026-08-09**: Fase 2 (Auth) tuntas (a183ba6); Fase 6 (Responsive) & 7 (Security) sebagian (0ab97ca, d0163e6) — 17 item dicentang, 58 sisa. Urutan kerja: **6 (responsif browser) → 7 (security) → 8 (testing) → 9 (mobile) → 10 (launch)**. Snapshot: [[TeknoHub-Status]].
 
 ## Catatan
 
 - `next.config.ts` di checklist asli → diganti `.mjs`: Next.js 14 tidak mendukung config TypeScript (fitur Next 15)
-- schema.sql saat ini 6 tabel inti (profiles, products, forum_categories, forum_threads, forum_replies, pc_builds) — akan di-expand ke 12 tabel sesuai kebutuhan Fase 2-4 (orders, order_items, addresses, component_prices, price_history, quotes, notifications, dll)
+- schema.sql saat ini 6 tabel inti (profiles, products, forum_categories, forum_threads, forum_replies, pc_builds) — akan di-expand ke 12 tabel sesuai kebutuhan Fase 3-5 (orders, order_items, addresses, component_prices, price_history, quotes, notifications, dll)
