@@ -185,35 +185,6 @@ Status: ✅ Terpasang & diterapkan
 
 ---
 
-## FASE 5 — Mobile App
-Status: ⏳ Belum dimulai
-
-- [ ] Init Expo React Native di apps/mobile
-- [ ] Shared types dari packages/shared
-- [ ] Tab navigation: Home, Shop, Forum, PC Builder, Profile
-- [ ] E-commerce di mobile
-- [ ] Forum di mobile
-- [ ] PC Builder di mobile
-- [ ] Push notification (Expo Notifications)
-- [ ] Deep linking web ↔ mobile
-- [ ] Submit Google Play Store
-- [ ] Submit Apple App Store
-
----
-
-## FASE 6 — Launch
-Status: ⏳ Belum dimulai
-
-- [ ] Beta testing 20-50 user
-- [ ] Load testing
-- [ ] Core Web Vitals optimization
-- [ ] Redis caching untuk harga komponen
-- [ ] Monitoring: Sentry + Vercel Analytics
-- [ ] Seed konten: 20 produk, 10 thread forum, 5 build showcase
-- [ ] Public launch
-
----
-
 ## Keputusan Teknis yang Sudah Diputuskan
 
 | Keputusan | Pilihan | Alasan |
@@ -318,6 +289,69 @@ Status: 🟡 Sebagian
 - [ ] npm audit — fix semua critical + high vulnerability
 - [ ] Update dependencies ke versi aman terbaru
 - [ ] Hapus package yang tidak terpakai dari package.json
+
+---
+
+## FASE 6C — Testing & QA
+Status: ⏳ Belum dimulai
+
+### Unit & Integration Test
+- [ ] Setup Vitest + React Testing Library di apps/web
+- [ ] Unit test: validasi Zod (login, register, review, thread)
+- [ ] Unit test: sanitizer HTML (strip script/onclick/javascript:)
+- [ ] Unit test: rate limiter (window reset, limit exact)
+- [ ] Integration test: API forum (auth required, validasi konten)
+- [ ] Integration test: API user profile (GET/PATCH, auth check)
+
+### E2E & Visual Test
+- [ ] Setup Playwright di apps/web
+- [ ] E2E: flow login → profile → edit → logout
+- [ ] E2E: flow register → auto-login → logout
+- [ ] E2E: flow produk → cart → checkout (mock payment)
+- [ ] E2E: flow forum buat thread + reply
+- [ ] Visual: mobile viewport 390px semua halaman utama
+- [ ] Visual: tablet 768px, desktop 1280px
+
+### Performance & Reliability
+- [ ] Lighthouse: score >= 90 (mobile + desktop)
+- [ ] Core Web Vitals: LCP < 2.5s, CLS < 0.1, INP < 200ms
+- [ ] Load test dasar: 50 concurrent request API products
+- [ ] Error boundary + fallback UI tiap halaman
+
+### Launch Readiness
+- [ ] SEO: meta description + OG image tiap halaman
+- [ ] Sitemap.xml valid & ter-submit
+- [ ] 404 page custom
+- [ ] Smoke test semua route utama sebelum deploy prod
+
+---
+
+## FASE 5 — Mobile App
+Status: ⏳ Belum dimulai (dikerjakan SETELAH Fase 6A/6B/6C)
+
+- [ ] Init Expo React Native di apps/mobile
+- [ ] Shared types dari packages/shared
+- [ ] Tab navigation: Home, Shop, Forum, PC Builder, Profile
+- [ ] E-commerce di mobile
+- [ ] Forum di mobile
+- [ ] PC Builder di mobile
+- [ ] Push notification (Expo Notifications)
+- [ ] Deep linking web ↔ mobile
+- [ ] Submit Google Play Store
+- [ ] Submit Apple App Store
+
+---
+
+## FASE 6 — Launch
+Status: ⏳ Belum dimulai
+
+- [ ] Beta testing 20-50 user
+- [ ] Load testing
+- [ ] Core Web Vitals optimization
+- [ ] Redis caching untuk harga komponen
+- [ ] Monitoring: Sentry + Vercel Analytics
+- [ ] Seed konten: 20 produk, 10 thread forum, 5 build showcase
+- [ ] Public launch
 
 ---
 

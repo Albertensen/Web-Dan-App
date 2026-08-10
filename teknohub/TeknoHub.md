@@ -5,7 +5,8 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 ## Stack
 - **Frontend**: Next.js 14, TailwindCSS, Zustand, TipTap
 - **Design**: Tekno Zone — light Apple ice slate (#CBD5E1 bg, #F8FAFC card, navy #0B1F45 accent, #2563EB zone-blue), SF Pro/Inter, card rounded-[2.5rem]
-- **Backend**: Next.js API routes, Supabase (Postgres, Auth, Storage, Realtime)
+- **Backend**: Next.js API routes, Supabase (Postgres, Auth, Storage, Realtime)
+
 - **Auth**: NextAuth (Credentials + Google OAuth) → Supabase signInWithPassword; admin createUser utk seed
 - **AI**: Ollama lokal (Gemma 4 E4B), algoritma bottleneck + alokasi budget
 - **Deploy**: Vercel (`teknohub-omega.vercel.app`), Supabase Cloud
@@ -15,13 +16,16 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 |---|---|
 | 1 — Foundation | ✅ Selesai |
 | 2 — E-Commerce | 🟢 Hampir tuntas (opsional: Algolia/OG-image; blokir: Midtrans akun) |
-| 3 — Forum Tech & AI | ✅ Tuntas (Core + Komunitas) |
+| 3 — Forum Tech & AI | ✅ Tuntas (Core + Komunitas) |
+
 | 1B — Autentikasi & Profil | ✅ Tuntas (login/register/forgot-password/reset/profile, Google OAuth, middleware proteksi) |
 | 4 — PC Builder AI ⭐ | ✅ Tuntas (100%) |
-| 6A — Responsive Design | 🟢 Sebagian (navbar drawer, grid responsive, forum pills, admin table, lazy img) |
-| 6B — Security Hardening | 🟢 Sebagian (headers, rate limit in-memory, sanitizer, auth audit) |
+| 6A — Responsive Design | 🟢 Sebagian (navbar drawer, grid responsive, forum pills, admin table, lazy img) |
+
+| 6B — Security Hardening | 🟢 Sebagian (headers, rate limit in-memory, sanitizer, auth audit) |
+
 | 5 — Mobile App | ⏳ Belum dimulai |
-| 6 — Launch | ⏳ Belum dimulai |
+| 6 — Launch | ⏳ Belum dimulai (setelah 5) |
 
 ## Fase 4 — Fitur AI
 - [x] **Interactive AI PC Builder Chat + Live Summary Sync** (di `/builder`) — konsultasi rakit PC via chat, rekomendasi AI sinkron ke ringkasan build real-time
@@ -49,6 +53,6 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 - [ ] Sisa: npm audit fix (butuh next@16 major), RLS audit penuh, rotate key, file upload MIME check
 
 ## Catatan Sesi
-- **2026-08-09**: Fase 1B tuntas + Fase 6A/6B sebagian (commit a183ba6, 98b39c5, 0ab97ca, d0163e6). User offline besok — lanjut dari sisa checklist ROADMAP.
+- **2026-08-09**: Fase 1B tuntas + Fase 6A/6B sebagian. Urutan kerja baru: **6A (responsif browser) → 6B (security) → 6C (testing) → 5 (mobile app) → 6 (launch)**. Sisa checklist ROADMAP.
 
 Detail lengkap: lihat `ROADMAP.md`.
