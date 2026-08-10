@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabase/client";
+import Image from "next/image";
 import AdminProductForm from "@/components/admin/AdminProductForm";
 
 export const metadata = {
@@ -23,7 +24,7 @@ export default async function AdminProductsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <h2 className="text-xl font-bold text-slate-100 mb-4">Daftar Produk ({products?.length ?? 0})</h2>
+          <h2 className="text-xl font-bold text-foreground mb-4">Daftar Produk ({products?.length ?? 0})</h2>
           {error || !products || products.length === 0 ? (
             <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
               <p className="text-tertiary">Belum ada produk</p>
@@ -45,19 +46,18 @@ export default async function AdminProductsPage() {
                       <td className="p-3 sticky left-0 bg-surface z-10">
                         <div className="flex items-center gap-3">
                           {p.image_url ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={p.image_url} alt={p.name} className="w-10 h-10 object-cover rounded-lg" />
-                          ) : (
+                                                      <Image src={p.image_url} alt={p.name} width={40} height={40} sizes="40px" className="w-10 h-10 object-cover rounded-lg" />
+                                                    ) : (
                             <span className="w-10 h-10 bg-surface-2 rounded-lg flex items-center justify-center text-sm">📦</span>
                           )}
                           <div>
-                            <p className="font-medium text-slate-100">{p.name}</p>
+                            <p className="font-medium text-foreground">{p.name}</p>
                             <p className="text-xs text-slate-500">{p.brand} · {p.slug}</p>
                           </div>
                         </div>
                       </td>
                       <td className="p-3 text-muted">{p.category}</td>
-                      <td className="p-3 text-right text-slate-100 font-medium">{formatIDR(Number(p.price))}</td>
+                      <td className="p-3 text-right text-foreground font-medium">{formatIDR(Number(p.price))}</td>
                       <td className={`p-3 text-center ${Number(p.stock) <= 5 ? "text-amber-400" : "text-muted"}`}>
                         {p.stock}
                       </td>
@@ -70,7 +70,7 @@ export default async function AdminProductsPage() {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-slate-100 mb-4">Tambah Produk</h2>
+          <h2 className="text-xl font-bold text-foreground mb-4">Tambah Produk</h2>
           <div className="glow-card p-5">
             <AdminProductForm />
           </div>

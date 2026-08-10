@@ -13,15 +13,17 @@ export default function BuilderBanner() {
           <span className="bg-white/10 text-emerald-400 font-semibold tracking-widest text-[10px] px-3.5 py-1.5 rounded-full uppercase border border-white/10 inline-block mb-4">
             Interactive 3D Technology
           </span>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-white">
             RAKIT PC MUDAH DENGAN BANTUAN AGENT AI
           </h2>
           <p className="text-slate-300 text-xs md:text-sm leading-relaxed mb-6">
             Simulasikan perakitan komponen PC secara 3D interaktif. AI Agent kami mengecek
             kompatibilitas daya dan mencegah bottleneck secara real-time.
           </p>
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-white group-hover:translate-x-1 transition">
-            <span>Mulai Merakit Sekarang &rarr;</span>
+          <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
+            <span className="inline-flex items-center justify-center gap-2 text-xs font-bold text-white bg-white/10 hover:bg-white/20 border border-white/20 px-5 py-3 rounded-full transition group-hover:translate-x-1">
+              Mulai Merakit Sekarang &rarr;
+            </span>
           </div>
         </div>
       </Link>

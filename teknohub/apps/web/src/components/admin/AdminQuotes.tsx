@@ -71,7 +71,7 @@ export default function AdminQuotes() {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-2xl font-bold text-slate-100 mb-6">Review Penawaran Rakit</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">Review Penawaran Rakit</h1>
 
       {/* Status tabs */}
       <div className="flex gap-2 mb-6 flex-wrap">

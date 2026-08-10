@@ -43,7 +43,7 @@ export default function SavedBuilds() {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-slate-100">Build Saya</h1>
+        <h1 className="text-2xl font-bold text-foreground">Build Saya</h1>
         <Link href="/builder" className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-medium hover:opacity-90">
           + Buat Build Baru
         </Link>

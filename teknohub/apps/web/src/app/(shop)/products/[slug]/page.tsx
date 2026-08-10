@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import Image from "next/image";
 import { supabase } from "@/lib/supabase/client";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductReviews from "@/components/ProductReviews";
@@ -68,13 +69,20 @@ export default async function ProductPage({ params }: ProductProps) {
       </div>
 
       {/* Main Product Grid */}
-      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Left Column: Image/Placeholder */}
         <div className="col-span-1 flex justify-center items-start">
           <div className="w-full max-w-md aspect-[4/5] bg-surface-2 rounded-xl shadow-2xl p-6 flex items-center justify-center">
             {product.image_url ? (
-              <img src={product.image_url} alt={product.name} className="w-full h-full object-cover rounded-xl" />
-            ) : (
+                          <Image
+                            src={product.image_url}
+                            alt={product.name}
+                            width={800}
+                            height={1000}
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                            className="w-full h-full object-cover rounded-xl"
+                          />
+                        ) : (
               <div className="text-slate-500 text-8xl">🖥️</div>
             )}
           </div>
@@ -82,12 +90,12 @@ export default async function ProductPage({ params }: ProductProps) {
 
         {/* Right Column: Details and CTA */}
         <div className="col-span-1 space-y-6">
-          <h1 className="text-4xl font-extrabold text-slate-50">{product.name}</h1>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground">{product.name}</h1>
 
-          <div className="flex items-baseline space-x-3">
-            <p className="text-lg text-accent font-medium">Brand: {product.brand || "Unknown"}</p>
-            <span className="text-5xl font-extrabold text-foreground">{formattedPrice}</span>
-          </div>
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <p className="text-sm sm:text-lg text-accent font-medium">Brand: {product.brand || "Unknown"}</p>
+                      <span className="text-3xl sm:text-5xl font-extrabold text-foreground">{formattedPrice}</span>
+                    </div>
 
           <div
             className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-medium ${

@@ -59,7 +59,7 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h2 className="text-2xl font-bold text-slate-100 mb-6 border-b pb-2 border-slate-300">
+      <h2 className="text-2xl font-bold text-foreground mb-6 border-b pb-2 border-slate-300">
         Balasan ({replies.length})
       </h2>
 

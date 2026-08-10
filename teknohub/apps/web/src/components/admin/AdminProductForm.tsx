@@ -100,9 +100,9 @@ export default function AdminProductForm() {
         <label className="block text-sm font-medium text-muted mb-1">Slug (kosongkan = auto)</label>
         <input value={slug} onChange={(e) => setSlug(e.target.value)} className={inputCls} placeholder="rtx-5090-gaming-oc" />
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-muted mb-1">Kategori</label>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-muted mb-1">Kategori</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputCls}>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -114,9 +114,9 @@ export default function AdminProductForm() {
           <input value={brand} onChange={(e) => setBrand(e.target.value)} className={inputCls} placeholder="ASUS" />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-muted mb-1">Harga (IDR)</label>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-muted mb-1">Harga (IDR)</label>
           <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" required className={inputCls} placeholder="15000000" />
         </div>
         <div>

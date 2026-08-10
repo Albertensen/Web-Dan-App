@@ -53,11 +53,11 @@ export default async function Home() {
 
       {/* ================= MARKETPLACE (Direct View) ================= */}
       <section id="marketplace">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">Katalog Produk Unggulan</h1>
-            <p className="text-xs text-muted">Perangkat elektronik &amp; hardware dengan standar performa tertinggi.</p>
-          </div>
+        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Katalog Produk Unggulan</h1>
+                    <p className="text-xs text-muted">Perangkat elektronik &amp; hardware dengan standar performa tertinggi.</p>
+                  </div>
           {/* Filter kategori pills */}
           <div className="flex gap-2 text-xs overflow-x-auto no-scrollbar pb-1">
             {FEATURED_CATEGORIES.map((c) => (
@@ -155,9 +155,36 @@ export default async function Home() {
       </section>
 
       {/* ================= FOOTER ================= */}
-      <footer className="border-t border-slate-400/50 py-12 px-6 mt-16 text-center text-muted text-[11px] font-medium tracking-wide">
-        <p>© 2026 Tekno Zone. Marketplace, Auth Header, Cart &amp; eBay Banner Integration.</p>
-      </footer>
+            <footer className="border-t-2 border-slate-400/60 mt-16 pt-10 pb-8 px-4 sm:px-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+                <div>
+                  <h3 className="text-sm font-bold text-foreground mb-3">Tekno Zone</h3>
+                  <p className="text-xs text-muted leading-relaxed max-w-xs">
+                    Belanja elektronik, diskusi tech &amp; AI, dan rakit PC dengan AI Agent — satu ekosistem.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground mb-3">Menu</h3>
+                  <ul className="space-y-2 text-xs text-muted">
+                    <li><Link href="/products" className="hover:text-accent transition">Produk</Link></li>
+                    <li><Link href="/forum" className="hover:text-accent transition">Forum</Link></li>
+                    <li><Link href="/builder" className="hover:text-accent transition">PC Builder AI</Link></li>
+                    <li><Link href="/cart" className="hover:text-accent transition">Keranjang</Link></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-foreground mb-3">Akun</h3>
+                  <ul className="space-y-2 text-xs text-muted">
+                    <li><Link href="/profile" className="hover:text-accent transition">Profil</Link></li>
+                    <li><Link href="/orders" className="hover:text-accent transition">Pesanan</Link></li>
+                    <li><Link href="/login" className="hover:text-accent transition">Masuk</Link></li>
+                  </ul>
+                </div>
+              </div>
+              <div className="pt-6 border-t border-slate-400/50 text-center text-muted text-[11px] font-medium tracking-wide">
+                <p>© 2026 Tekno Zone. Marketplace, Auth Header, Cart &amp; eBay Banner Integration.</p>
+              </div>
+            </footer>
     </main>
   );
 }

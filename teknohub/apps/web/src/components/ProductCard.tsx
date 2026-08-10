@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
 
 interface Product {
@@ -54,14 +55,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="h-56 rounded-[1.5rem] mb-5 overflow-hidden flex items-center justify-center relative bg-surface-2/80">
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none" />
           {product.image_url ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={product.image_url}
-              alt={product.name}
-              loading="lazy"
-              className="w-full h-full object-cover z-0 group-hover:scale-110 transition duration-500 ease-out"
-            />
-          ) : (
+                      <Image
+                        src={product.image_url}
+                        alt={product.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover z-0 group-hover:scale-110 transition duration-500 ease-out"
+                      />
+                    ) : (
             <span className="text-6xl z-0 group-hover:scale-110 transition duration-500 ease-out">
               {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
             </span>

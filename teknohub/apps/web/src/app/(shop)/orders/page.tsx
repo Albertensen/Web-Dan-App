@@ -66,7 +66,7 @@ export default async function OrdersPage() {
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-tertiary">{formatDate(order.created_at)}</span>
-                <span className="font-semibold text-slate-100">{formatIDR(Number(order.total_amount))}</span>
+                <span className="font-semibold text-foreground">{formatIDR(Number(order.total_amount))}</span>
               </div>
             </div>
           ))}

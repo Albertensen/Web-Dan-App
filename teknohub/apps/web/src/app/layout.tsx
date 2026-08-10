@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SlideNav from "@/components/SlideNav";
 import Providers from "@/components/Providers";
 import AICustomerServiceWidget from "@/components/support/AICustomerServiceWidget";
+
+// Font Latin-only (auto-subset next/font) — ukuran payload kecil, self-hosted
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: "Tekno Zone — E-Commerce, AI Builder & Komunitas",
@@ -25,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className="scroll-smooth">
+    <html lang="id" className={`scroll-smooth ${inter.variable}`}>
       <body className="bg-background text-foreground antialiased min-h-screen flex flex-col">
         <Providers>
           <Navbar />

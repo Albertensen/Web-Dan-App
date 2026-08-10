@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function UserDropdown() {
@@ -30,10 +31,12 @@ export default function UserDropdown() {
         aria-expanded={open}
       >
         {session.user.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={session.user.image}
             alt={name}
+            width={32}
+            height={32}
+            sizes="32px"
             className="w-8 h-8 rounded-full object-cover border border-border"
           />
         ) : (

@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface Profile {
   username: string | null;
   full_name: string | null;
@@ -21,10 +23,12 @@ export default function ProfileHeader({ profile }: { profile: Profile }) {
   return (
     <div className="bg-surface-2/60 border border-border rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5">
       {profile.avatar_url ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+        <Image
           src={profile.avatar_url}
           alt={profile.username ?? "avatar"}
+          width={80}
+          height={80}
+          sizes="80px"
           className="w-20 h-20 rounded-full object-cover border-2 border-border"
         />
       ) : (

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import TagBadge from "./TagBadge";
 import { UserBadge } from "./UserBadge";
 
@@ -80,12 +81,12 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
 
           {/* Author */}
           <div className="flex items-center gap-2 text-xs">
-            {!thread.author_avatar ? (
+            {thread.author_avatar ? (
+              <Image src={thread.author_avatar} alt={`${thread.author_username}'s avatar`} width={24} height={24} sizes="24px" className="w-6 h-6 object-cover rounded-full" />
+            ) : (
               <span className="w-6 h-6 bg-surface-2 rounded-full flex items-center justify-center text-xs text-accent">
                 {thread.author_username?.[0]?.toUpperCase() || "?"}
               </span>
-            ) : (
-              <img src={thread.author_avatar} alt={`${thread.author_username}'s avatar`} className="w-6 h-6 object-cover rounded-full" />
             )}
             <span className="text-foreground">{thread.author_username || "Anonim"}</span>
             <UserBadge reputation={thread.author_reputation} />

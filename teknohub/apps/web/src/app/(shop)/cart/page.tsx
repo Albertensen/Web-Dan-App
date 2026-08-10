@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useCartStore, selectTotalItems, selectTotalPrice } from "@/store/cartStore";
 
 const formatIDR = (n: number) =>
@@ -37,14 +38,18 @@ export default function CartPage() {
 
       <div className="space-y-4">
         {items.map((item) => (
-          <div
-            key={item.id}
-            className="glow-card p-4 flex items-center gap-4"
-          >
+          <div className="flex flex-wrap items-start gap-4 sm:flex-nowrap" key={item.id}>
             <div className="w-20 h-20 bg-surface-2 rounded-xl flex items-center justify-center text-3xl shrink-0">
               {item.image_url ? (
-                <img src={item.image_url} alt={item.name} className="w-full h-full object-cover rounded-xl" />
-              ) : (
+                              <Image
+                                src={item.image_url}
+                                alt={item.name}
+                                width={160}
+                                height={160}
+                                sizes="80px"
+                                className="w-full h-full object-cover rounded-xl"
+                              />
+                            ) : (
                 "🖥️"
               )}
             </div>
@@ -85,7 +90,7 @@ export default function CartPage() {
         ))}
       </div>
 
-      <div className="mt-8 glow-card p-6 flex items-center justify-between">
+      <div className="mt-8 glow-card p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <p className="text-sm text-tertiary">
             Total ({totalItems} item)

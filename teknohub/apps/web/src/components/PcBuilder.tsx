@@ -112,7 +112,7 @@ export default function PcBuilder() {
 
         {/* Step 1: use case */}
         <label className="block text-sm font-medium mb-2 text-muted">Pilih kebutuhan</label>
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {USE_CASES.map((uc) => (
             <button
               key={uc.value}
