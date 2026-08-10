@@ -232,41 +232,41 @@ Status: ⏳ Belum dimulai
 ---
 
 ## FASE 6A — Responsive Design (Mobile-First)
-Status: 🔵 In Progress
+Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 
 ### Layout & Navigation
 - [x] Navbar mobile: hamburger menu + drawer slide-in
-- [ ] Navbar dropdown user: touch-friendly di mobile
-- [ ] Footer: stack vertical di mobile
+- [x] Navbar dropdown user: touch-friendly di mobile
+- [x] Footer: stack vertical di mobile
 - [x] Semua padding/margin dikecilkan di mobile (px-4 → px-3)
 
 ### Halaman E-Commerce
-- [ ] Homepage hero: font size dikecilkan di mobile, CTA stack vertical
+- [x] Homepage hero: font size dikecilkan di mobile, CTA stack vertical
 - [x] Product grid: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
-- [ ] Product detail: image full-width di mobile, info di bawah
-- [ ] Cart: layout stack vertical di mobile
-- [ ] Checkout form: single column di mobile
+- [x] Product detail: image full-width di mobile, info di bawah
+- [x] Cart: layout stack vertical di mobile
+- [x] Checkout form: single column di mobile
 
 ### Forum
-- [ ] Thread listing: full-width card di mobile
-- [ ] Thread detail: sidebar disembunyikan di mobile
-- [ ] Reply form: full-width di mobile
+- [x] Thread listing: full-width card di mobile
+- [x] Thread detail: sidebar disembunyikan di mobile
+- [x] Reply form: full-width di mobile
 - [x] Tag selector: horizontal scroll di mobile
 
 ### PC Builder
-- [ ] Wizard: step 1 kolom di mobile (bukan side-by-side)
-- [ ] AI Chat + Build Summary: stack vertical di mobile (chat di atas, summary di bawah)
-- [ ] Slider budget: touch-friendly, label visible di mobile
-- [ ] Build comparison: scroll horizontal di mobile
+- [x] Wizard: step 1 kolom di mobile (bukan side-by-side)
+- [x] AI Chat + Build Summary: stack vertical di mobile (chat di atas, summary di bawah)
+- [x] Slider budget: touch-friendly, label visible di mobile
+- [x] Build comparison: scroll horizontal di mobile
 
 ### Admin Panel
 - [x] Admin table: horizontal scroll + sticky first column di mobile
-- [ ] Admin form: single column di mobile
+- [x] Admin form: single column di mobile
 
 ### Assets & Performance
-- [ ] Semua <img> diganti next/image dengan sizes prop yang benar
+- [x] Semua <img> diganti next/image dengan sizes prop yang benar
 - [x] Lazy loading gambar produk
-- [ ] Font subset: hanya karakter Latin yang diload
+- [x] Font subset: hanya karakter Latin yang diload
 - [x] Viewport meta tag benar di layout.tsx
 
 ---
