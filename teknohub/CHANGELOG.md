@@ -2,6 +2,18 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-10] — Fase 6D: UI Overhaul
+
+### Added
+- PC Builder: 3D visual experience (NeonGrid, FloatingBars, ParticleField, wizard glow cards)
+- Homepage: stats section (produk real count) + kategori filter lengkap (8 kategori)
+- Empty states: Cart, Orders dengan ilustrasi dan CTA
+
+### Fixed
+- Navbar: link /builder-3d → /builder konsisten di semua tempat
+- Navbar: tambah "PC Builder" di desktop nav
+- Footer: perbaiki copyright text
+
 ## [2026-08-09] — Fase 6A & 6B: Responsive Design + Security
 
 ### Added
