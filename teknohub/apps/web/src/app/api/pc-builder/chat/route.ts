@@ -16,7 +16,7 @@ interface ComponentRow {
 }
 
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "gemma4:e4b";
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "ornith:9b";
 
 // Rule-based fallback: parse intent dari pesan, panggil /recommend
 async function ruleBasedReply(text: string) {

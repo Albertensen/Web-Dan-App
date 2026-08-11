@@ -17,7 +17,7 @@
 | Nama | URL / Path |
 |------|-----------|
 | Hermes API | http://localhost:20128/v1 |
-| Ollama (Gemma 4 E4B) | http://localhost:11434/v1 |
+| Ollama (Ornith 9B) | http://localhost:11434/v1 |
 | RuVocal UI | http://localhost:3000 (default) |
 | MCP Bridge (Ruflo) | http://127.0.0.1:3100/mcp |
 | Ruflo Adapter | C:\Users\Administrator\hermes-ruflo\src\server-http.js |
@@ -42,6 +42,6 @@ cd C:\Users\Administrator\dev-workspace && git add . && git commit -m "sync" && 
 C:\Users\Administrator\ruflo\src\ruvocal\.env.local
 ```env
 OPENAI_BASE_URL=http://localhost:20128/v1
-MODELS=[{"id":"COMBO-UTAMA","supportsTools":true,"name":"Hermes"},{"id":"gemma4:e4b","supportsTools":false,"name":"Gemma 4 E4B (Gratis)"}]
+MODELS=[{"id":"COMBO-UTAMA","supportsTools":true,"name":"Hermes"},{"id":"ornith:9b","supportsTools":false,"name":"Ornith 9B (Gratis)"}]
 MCP_SERVERS=[{"name":"ruflo","url":"http://localhost:3100/mcp"}]
 ```

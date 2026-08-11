@@ -23,7 +23,7 @@
 - Download & install dari https://ollama.com
 - Pull model yang digunakan:
   ```
-  ollama pull gemma4:e4b
+  ollama pull ornith:9b
   ```
 - Jalankan service: `ollama serve` (berjalan di localhost:11434)
 - Catatan: jika GPU VRAM < 8GB, model bisa dijalankan dengan offload CPU.
@@ -58,7 +58,7 @@ GOOGLE_CLIENT_SECRET=GOCSPX-xxxxx
 MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxx
 MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxx
 OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=gemma4:e4b
+OLLAMA_MODEL=ornith:9b
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 NEXT_PUBLIC_APP_NAME=TeknoZone
 ```

@@ -1,11 +1,14 @@
-# ⚡ Aturan Gemma 4 E4B — Batasan & Best Practice
+# ⚡ Aturan Ornith 9B — Batasan & Best Practice
+
+> Migrasi dari Gemma 4 E4B → Ornith 9B (2026-08-12). Ornith lebih kuat di koding/agentic (SWE-bench 69.4), setengah ukuran (5.6GB vs 9.6GB). Kelemahan: TIDAK multimodal (teks saja).
 
 ## Profil Model
 
-- Model   : Gemma 4 E4B (edge-optimized, ~3GB)
+- Model   : Ornith 1.0 9B (DeepReinforce, MIT)
 - URL     : http://localhost:11434/v1
-- Model ID: gemma4:e4b
-- Fitur   : Teks + Gambar (multimodal!) + 128K context
+- Model ID: ornith:9b
+- Fitur   : Agentic coding, self-scaffolding, 262K context, Q4_K_M
+- Kecepatan: ~3.7 tok/s (offload CPU, GTX 960M 2GB VRAM)
 
 ## Yang Bisa Dikerjakan (GRATIS)
 
@@ -14,12 +17,12 @@
 ✅ Menduplikasi pola yang sudah ada (ganti nama entity)
 ✅ Perbaikan CSS/Tailwind yang spesifik dan terisolasi
 ✅ Unit test untuk fungsi sederhana (pure function)
-✅ Analisis screenshot UI → saran CSS konkret (MANFAATKAN INI!)
 ✅ Konversi pseudocode Hermes → kode nyata
 ✅ Format/prettify kode
 ✅ Buat boilerplate berulang
+✅ Agentic task: tool-calling, scaffold kode, terminal tasks (Terminal-Bench 43.1)
 
-## Yang TIDAK Boleh Diberikan ke Gemma
+## Yang TIDAK Boleh Diberikan ke Ornith
 
 ❌ Rancang arsitektur dari nol
 ❌ Debug masalah yang melibatkan banyak file
@@ -27,8 +30,9 @@
 ❌ Algoritma kompleks
 ❌ Security review
 ❌ Analisis error yang butuh reasoning panjang
+❌ Analisis gambar/screenshot (bukan multimodal — pakai Hermes)
 
-## Aturan Prompt untuk Gemma
+## Aturan Prompt untuk Ornith
 
 1. Maksimal konteks: 100 baris
 2. Satu request = satu fungsi atau satu komponen
@@ -36,7 +40,7 @@
 4. Jika output salah 1x → mulai prompt baru yang lebih spesifik (jangan minta iterasi)
 5. Berikan contoh output yang diinginkan jika bisa
 
-## Template Prompt Gemma (Copy-Paste)
+## Template Prompt Ornith (Copy-Paste)
 
 ### Fungsi Baru:
 ```
@@ -62,11 +66,4 @@ Tambahkan JSDoc pada fungsi di kode ini.
 Bahasa deskripsi: Indonesia.
 JANGAN ubah logika kode.
 [paste kode]
-```
-
-### Analisis Screenshot:
-```
-[lampirkan screenshot]
-Identifikasi: elemen UI, masalah visual, saran CSS/Tailwind konkret.
-Jangan buat kode dulu, hanya analisis.
 ```

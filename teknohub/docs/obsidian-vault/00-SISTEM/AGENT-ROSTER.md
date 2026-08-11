@@ -12,17 +12,17 @@ Gunakan untuk:
 - Membuat blueprint → pseudocode untuk didelegasikan ke Gemma
 - Mengatur alur kerja dan delegasi
 
-## Gemma 4 E4B via Ollama
+## Ornith 9B via Ollama
 
-**Model:** gemma4:e4b | **URL:** http://localhost:11434 | **Biaya:** GRATIS
+**Model:** ornith:9b | **URL:** http://localhost:11434 | **Biaya:** GRATIS
 
-Gunakan untuk (lihat detail di GEMMA-RULES.md):
+Gunakan untuk (lihat detail di ORNITH-RULES.md):
 - Snippet Writer: fungsi/komponen pendek
 - Commenter: tambah JSDoc
 - Boilerplate Maker: duplikasi pola
 - CSS Fixer: perbaikan Tailwind terisolasi
 - Test Writer: unit test sederhana
-- Visual Reader: analisis screenshot (multimodal!)
+- Agentic coding: SWE-bench 69.4, self-scaffolding (lebih kuat dari Gemma 4 E4B di tugas koding)
 
 ## Ruflo (333 Tools via MCP)
 
@@ -43,7 +43,7 @@ Tugas masuk
     ↓
 Bisa dikerjakan Ruflo saja? → YA → Gunakan Ruflo (0 token)
     ↓ TIDAK
-Bisa dikerjakan Gemma? → YA → Gunakan Gemma (gratis)
+Bisa dikerjakan Ornith? → YA → Gunakan Ornith (gratis)
     ↓ TIDAK / Gemma gagal 2x
 Gunakan Hermes (token berbayar)
 ```

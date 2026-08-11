@@ -12,3 +12,4 @@ build/
 
 .vercel
 run_00*.py
+.turbo/

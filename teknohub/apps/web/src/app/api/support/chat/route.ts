@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 
 const OLLAMA_URL = process.env.OLLAMA_URL || "http://localhost:11434";
-const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "gemma4:e4b";
+const OLLAMA_MODEL = process.env.OLLAMA_MODEL || "ornith:9b";
 
 // Knowledge base toko
 const KB = [
