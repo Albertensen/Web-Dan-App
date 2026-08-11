@@ -7,48 +7,63 @@
    Light-first. Clean surfaces. Tight tracking typography.
    ============================================================ */
 
+
+/* ============================================================
+   TEKNOHUB DESIGN TOKENS — Shopify Inspired (awesome-design-md)
+   Dual-track: canvas-night (marketing) & canvas-cream (transactional)
+   ============================================================ */
 :root {
   color-scheme: light;
 
   /* Canvas */
-  --color-background: #cbd5e1; /* iceBg — ice slate */
-  --color-surface: #f8fafc; /* cardClean — clean white-grey */
-  --color-surface-2: #e2e8f0; /* slate-200 — image placeholders */
-  --color-surface-glass: rgba(248, 250, 252, 0.8);
+  --color-background: #ffffff; /* canvas-light */
+  --color-surface: #fbfbf5; /* canvas-cream */
+  --color-surface-2: #fbfbf5; /* same as surface-2? using cream */
+  --color-surface-glass: rgba(251, 251, 245, 0.8);
 
-  /* Accent (Midnight Navy) */
-  --color-accent: #0b1f45; /* chromeAccent */
-  --color-accent-secondary: #1e3a6e; /* lighter navy hover */
-  --color-accent-dim: rgba(11, 31, 69, 0.1);
-  --color-zone-blue: #2563eb; /* zoneBlue — logo "Zone" */
+  /* Accent (use pistachio-10 as accent green) */
+  --color-accent: #d4f9e0; /* pistachio-10 */
+  --color-accent-secondary: #b2e8c9; /* lighter */
+  --color-accent-dim: rgba(212, 249, 224, 0.1);
+  --color-zone-blue: #2563eb; /* keep zoneBlue from original? maybe not */
 
   /* Text */
-  --color-text-primary: #0f172a; /* techDark */
-  --color-text-muted: #334155; /* subGray */
-  --color-text-tertiary: #64748b; /* slate-500 */
+  --color-text-primary: #000000; /* ink */
+  --color-text-muted: #64748b; /* slate-500 as fallback, maybe shade-50? */
+  --color-text-tertiary: #71717a; /* shade-50 */
 
   /* Borders */
-  --color-border: #cbd5e1; /* slate-300/400 */
-  --color-border-soft: rgba(100, 116, 139, 0.25);
+  --color-border: #e4e4e7; /* hairline-light */
+  --color-border-soft: rgba(228, 228, 231, 0.25);
 
-  /* Glow — navy tint */
-  --color-glow: rgba(11, 31, 69, 0.12);
-  --color-glow-wide: rgba(11, 31, 69, 0.06);
+  /* Glow — using pistachio-10 tint */
+  --color-glow: rgba(212, 249, 224, 0.12);
+  --color-glow-wide: rgba(212, 249, 224, 0.06);
 
-  /* Typography */
-  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-inter), -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  /* Typography — keep Inter as body, Neue Haas Grotesk Display for display */
+  --font-display: "Neue Haas Grotesk Display", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
-  --radius-sm: 5px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 20px;
+  --radius-sm: 4px; /* xs */
+  --radius-md: 5px; /* sm */
+  --radius-lg: 8px; /* md */
+  --radius-xl: 12px; /* lg */
+  --radius-xl2: 20px; /* xl */
   --radius-pill: 9999px;
 
   /* Spacing base */
-  --space-unit: 8px;
+  --space-unit: 4px; /* xxs */
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-xxl: 32px;
+  --space-huge: 64px;
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
