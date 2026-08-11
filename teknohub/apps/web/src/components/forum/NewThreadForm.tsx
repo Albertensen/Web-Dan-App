@@ -99,7 +99,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 shadow-lg shadow-accent/20"
+        className="w-full py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 shadow-lg shadow-accent/20"
       >
         {submitting ? "Membuat..." : "Buat Thread"}
       </button>

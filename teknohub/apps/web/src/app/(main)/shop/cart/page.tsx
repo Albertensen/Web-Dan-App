@@ -101,7 +101,7 @@ export default function CartPage() {
         </div>
         <Link
           href="/checkout"
-          className="px-8 py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity"
+          className="px-8 py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity"
         >
           Checkout
         </Link>

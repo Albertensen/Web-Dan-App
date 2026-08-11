@@ -47,7 +47,7 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
         </div>
         <Link
           href="/forum/new"
-          className="px-4 py-2 rounded-xl bg-accent font-semibold text-sm hover:opacity-90 transition-opacity"
+          className="px-4 py-2 rounded-xl bg-accent text-white font-semibold text-sm hover:opacity-90 transition-opacity"
         >
           + Buat Thread
         </Link>

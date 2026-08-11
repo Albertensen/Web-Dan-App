@@ -9,6 +9,8 @@ import FollowButton from "@/components/forum/FollowButton";
 import ReportButton from "@/components/forum/ReportButton";
 import { UserBadge } from "@/components/forum/UserBadge";
 
+export const dynamic = "force-dynamic";
+
 interface ThreadDetailProps {
   params: { category: string; id: string };
 }

@@ -168,7 +168,7 @@ export default function CheckoutForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="w-full py-3 rounded-xl bg-accent font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+        className="w-full py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
       >
         {submitting ? "Memproses..." : "Bayar Sekarang"}
       </button>

@@ -5,6 +5,8 @@ import { supabase } from "@/lib/supabase/client";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductReviews from "@/components/ProductReviews";
 
+export const dynamic = "force-dynamic";
+
 interface ProductProps {
   params: {
     slug: string;
