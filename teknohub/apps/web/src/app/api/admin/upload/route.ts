@@ -28,10 +28,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { path } = (await request.json()) as { path?: string; contentType?: string };
+  const { path, contentType } = (await request.json()) as { path?: string; contentType?: string };
 
-  if (!path || !path.startsWith("products/")) {
+  // Validasi path: hanya di dalam products/, tanpa traversal (.. / .), tanpa leading slash
+  if (
+    !path ||
+    !path.startsWith("products/") ||
+    path.includes("..") ||
+    path.startsWith("/") ||
+    path.includes("\\")
+  ) {
     return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
+  }
+
+  // Validasi MIME type server-side: hanya gambar (cek prefix, bukan extension)
+  if (contentType && !contentType.startsWith("image/")) {
+    return NextResponse.json({ error: "Hanya file gambar yang diizinkan" }, { status: 400 });
   }
 
   const { data, error } = await getServiceClient().storage
