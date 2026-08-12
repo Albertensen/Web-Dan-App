@@ -25,13 +25,16 @@ Stack: Next.js 14 + Expo + Supabase + Midtrans + Hermes AI + Playwright
 ---
 
 ## DESIGN SYSTEM — Shopify (awesome-design-md)
-Status: ✅ Terpasang & diterapkan
+Status: ✅ Terintegrasi (globals.css + tailwind.config.ts)
 
-- [x] DESIGN.md terinstall (npx getdesign add shopify) di apps/web
-- [x] Design token: CSS Custom Properties di globals.css (background/surface/accent/text/border/glow)
-- [x] Utility classes: glow-card, glass-surface, gradient-text, neon-border, shimmer
+- [x] DESIGN.md dari awesome-design-md/shopify/DESIGN.md diterapkan ke globals.css (tokens: color, typography, radius, spacing, glow, gap)
+- [x] CSS Custom Properties: canvas-night, canvas-cream, ink, pistachio-10, aloe-10, shade-*, hairline-*, border, glow
+- [x] Typography: Neue Haas Grotesk Display (display) + Inter Variable (body) via CSS vars
+- [x] Radius: xs/sm/md/lg/xl/pill via CSS vars
+- [x] Spacing: xxs/xs/sm/md/lg/xl/xxl/huge via CSS vars
+- [x] Utility classes: glow-card, glass-surface, gradient-text, neon-border, shimmer (di globals.css @layer utilities)
 - [x] Animations: fadeInUp, glowPulse, cardLift, shimmer (keyframes + tailwind extend)
-- [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl
+- [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl, animation, keyframes
 - [x] Homepage hero monumental (font extralight, gradient-text, animated mesh)
 - [x] Navbar glassmorphism + cart badge live + mobile drawer
 - [x] ProductCard premium (4:3 image, neon pill, gradient price, add-to-cart)

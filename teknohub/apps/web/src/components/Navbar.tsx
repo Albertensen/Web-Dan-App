@@ -62,24 +62,24 @@ export default function Navbar() {
 
             {/* Auth: skeleton saat loading (FIX BUG 1 — cegah FOUC) */}
             {status === "loading" ? (
-              <div className="hidden md:block w-40 h-9 rounded-full animate-pulse bg-slate-200" />
+              <div className="w-24 md:w-40 h-9 rounded-full animate-pulse bg-slate-200" />
             ) : status === "authenticated" ? (
               <div className="hidden md:block">
                 <UserDropdown />
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-2.5">
+              <div className="flex items-center gap-2">
                 {/* Masuk */}
                 <Link
                   href="/login"
-                  className="bg-surface border border-slate-300 hover:border-accent text-foreground px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
+                  className="bg-surface border border-slate-300 hover:border-accent text-foreground px-3 md:px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
                 >
                   Masuk
                 </Link>
                 {/* Daftar */}
                 <Link
                   href="/register"
-                  className="bg-accent hover:bg-accent-secondary text-white px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
+                  className="bg-accent hover:bg-accent-secondary text-white px-3 md:px-4 py-1.5 rounded-full text-xs font-semibold transition shadow-sm"
                 >
                   Daftar
                 </Link>

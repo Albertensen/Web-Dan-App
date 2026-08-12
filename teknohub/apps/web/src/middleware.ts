@@ -1,15 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { withAuth } from "next-auth/middleware";
 
 /**
- * Rate limiter in-memory per IP+route untuk semua API mutation.
- * Layer kedua di atas rateLimit() per-route — proteksi seragam di middleware.
- * ponytail: in-memory (single-instance dev/Hobby) — pindah ke Redis/Upstash
- * saat deploy multi-instance; limiter per-route tetap jalan sebagai lapis dalam.
+ * Rate limiting middleware – per‑route limits (POST/PUT/DELETE only).
+ * Lightweight in‑memory store (good for single‑instance dev).
+ * In production swap for Redis/Upstash.
+ * ponytail: add Redis/Upstash when deploying multi‑instance.
  */
 const buckets = new Map<string, { count: number; resetAt: number }>();
 
-function rateLimit(ip: string, route: string, limit: number, windowSec = 60): boolean {
+function rateLimit(
+  ip: string,
+  route: string,
+  limit: number,
+  windowSec = 60,
+): boolean {
   const now = Date.now();
   const key = `${ip}|${route}`;
   const cur = buckets.get(key);
@@ -22,7 +26,7 @@ function rateLimit(ip: string, route: string, limit: number, windowSec = 60): bo
   return true;
 }
 
-// Bersihkan bucket expired tiap 10 menit (cegah memory leak)
+// Auto‑expire old buckets every 10 min (prevent memory leak)
 if (typeof setInterval !== "undefined") {
   setInterval(() => {
     const now = Date.now();
@@ -32,7 +36,9 @@ if (typeof setInterval !== "undefined") {
   }, 10 * 60 * 1000).unref?.();
 }
 
-// Batas per kategori route API
+/* --------------------------------------------------------------
+   API LIMITS – max requests per minute per route group
+   -------------------------------------------------------------- */
 const API_LIMITS: Record<string, number> = {
   "/api/auth": 30,
   "/api/checkout": 20,
@@ -44,47 +50,47 @@ const API_LIMITS: Record<string, number> = {
   "/api/products": 60,
   "/api/webhooks": 120,
   "/api/cron": 30,
+  "/api/*": 60, // fallback
 };
 
-const DEFAULT_LIMIT = 60;
+/**
+ * Extract the top‑level API segment from the pathname,
+ * so we can look‑up the correct limit (e.g. /api/forum/threads → "forum").
+ */
+function getRouteKey(pathname: string): string {
+  const parts = pathname.split("/").filter(Boolean);
+  return "/api/" + (parts[1] || ""); // "/api/forum/threads" → "/api/forum"
+}
 
-// Proteksi halaman yang butuh login (dari next-auth/middleware)
-const authMiddleware = withAuth({
-  pages: { signIn: "/login" },
-});
-
-export function middleware(request: NextRequest) {
+/* --------------------------------------------------------------
+   Main middleware – runs for every request
+   -------------------------------------------------------------- */
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  const method = request.method;
 
-  // 1) Rate limit API — semua route /api/*
-  if (pathname.startsWith("/api/")) {
+  // Apply rate limiting only for mutating API routes
+  if (pathname.startsWith("/api/") && ["POST", "PUT", "DELETE"].includes(method)) {
+    const limit = API_LIMITS[getRouteKey(pathname)] ?? 60;
     const ip =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       request.headers.get("x-real-ip") ||
       "unknown";
-    let limit = DEFAULT_LIMIT;
-    for (const [prefix, l] of Object.entries(API_LIMITS)) {
-      if (pathname.startsWith(prefix)) {
-        limit = l;
-        break;
-      }
-    }
     if (!rateLimit(ip, pathname, limit)) {
-      return NextResponse.json(
-        { error: "Terlalu banyak permintaan. Coba lagi nanti." },
-        { status: 429 }
+      return new NextResponse(
+        JSON.stringify({ error: "Too many requests – please try again later." }),
+        { status: 429, headers: { "Retry-After": "30" } }
       );
     }
   }
 
-  // 2) Auth guard halaman (cart/checkout/profile/orders)
-  if (["/cart", "/checkout", "/profile", "/orders"].some((p) => pathname.startsWith(p))) {
-    return authMiddleware(request);
-  }
-
+  // All other routes pass through unchanged
   return NextResponse.next();
 }
 
+/* --------------------------------------------------------------
+   NextConfig – match only the API routes we care about
+   -------------------------------------------------------------- */
 export const config = {
-  matcher: ["/api/:path*", "/cart/:path*", "/checkout/:path*", "/profile/:path*", "/orders/:path*"],
+  matcher: ["/api/:path*"],
 };
