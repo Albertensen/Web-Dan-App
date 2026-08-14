@@ -8,12 +8,6 @@ interface MobileDrawerProps {
   onClose: () => void;
 }
 
-const NAV_LINKS = [
-  { href: "/products", label: "Store" },
-  { href: "/forum", label: "Forum Komunitas" },
-  { href: "/builder", label: "AI 3D PC Builder" },
-];
-
 /** Drawer slide-in dari kiri utk mobile (<768px) — dgn overlay backdrop */
 export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const { data: session, status } = useSession();
@@ -54,29 +48,8 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           </button>
         </div>
 
-        {/* Nav links — vertical (flex-col) */}
-        <nav className="flex flex-col gap-1 px-3 py-4 flex-1">
-          {NAV_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={onClose}
-              className="px-3 py-3 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
-            >
-              {l.label}
-            </Link>
-          ))}
-          <Link
-            href="/cart"
-            onClick={onClose}
-            className="px-3 py-3 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
-          >
-            🛒 Keranjang
-          </Link>
-        </nav>
-
         {/* Footer drawer: auth — loading state + layout vertikal rapi */}
-        <div className="px-4 py-4 border-t border-slate-300 flex flex-col gap-2.5 shrink-0">
+        <div className="px-4 py-4 border-t border-slate-300 flex flex-col justify-center gap-2.5 flex-1">
           {status === "loading" ? (
             <div className="h-10 rounded-full animate-pulse bg-slate-200" />
           ) : status === "authenticated" ? (
