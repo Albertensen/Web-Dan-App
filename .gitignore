@@ -10,3 +10,6 @@ out/
 .DS_Store
 Thumbs.db
 .obsidian/
+
+# SQLite brain (local)
+agent_memory.db

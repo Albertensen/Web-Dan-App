@@ -133,7 +133,7 @@ Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans ak
 - [ ] SEO lanjut: OG image generator — dynamic meta + sitemap sudah live
 
 ### Cart & Checkout
-- [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
+- [x] Tambah ke keranjang (Zustand persist, AddToCartButton) — terverifikasi end-to-end: klik Tambah di /shop/products/[slug] → item masuk cart (nama/harga/qty), badge navbar live
 - [x] Halaman cart (qty stepper, total)
 - [x] Checkout form (zod alamat, pilih kurir, Midtrans Snap inject)
 - [x] API checkout: create order + order_items + kurangi stock + snap token
@@ -298,7 +298,7 @@ Status: 🟡 Sebagian
 ---
 
 ## FASE 6D — UI Overhaul & Polish
-Status: 🔵 In Progress
+Status: 🟢 Hampir tuntas (sisa: related products, image fallback, forum empty state)
 
 ### Homepage
 - [x] Forum preview: tampilkan 3 thread terbaru dari DB (SSR)
@@ -323,7 +323,7 @@ Status: 🔵 In Progress
 ### Product Pages
 - [ ] Related products section di /products/[slug]
 - [ ] Product image fallback yang menarik (bukan emoji)
-- [ ] Breadcrumb navigation
+- [x] Breadcrumb navigation
 
 ### Empty States
 - [x] /cart empty state: ilustrasi + CTA "Mulai Belanja"

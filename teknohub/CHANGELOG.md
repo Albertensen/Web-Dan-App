@@ -2,7 +2,26 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
-## [2026-08-10] — Builder AI ↔ Build Summary Sync
+## [2026-08-15] — UI Kontras, Fix Path Produk & Integrasi Keranjang
+
+### Fixed
+- Fix 404 detail produk: link katalog `/products/[slug]` → `/shop/products/[slug]` (regresi sejak refactor route group `(main)/shop`). Diperbaiki di ProductCard, cart page, filter kategori home, NavbarSearch
+- Fix marketplace kosong "Produk belum tersedia" di prod: `NEXT_PUBLIC_APP_URL` env Vercel masih menunjuk `teknohub-omega` (sudah dihapus/404) → diganti `https://teknohub-web.vercel.app`
+
+### Changed (Audit Kontras Global)
+- `--color-accent` `#d4f9e0` (pistachio terang, kontras 1.3:1) → `#0B1F45` (navy, 12.6:1) — mempengaruhi 31 tombol utama (Masuk/Daftar, Beli, cart, checkout, forum, builder, admin)
+- Badge stok detail produk: solid `bg-green-200` + `text-green-900` bold + `border-2 border-green-800` (sebelumnya transparan `green-600/20` + `text-green-300` kontras 1.6:1)
+- Badge stok rendah: solid `bg-yellow-200` + `text-yellow-900` bold
+- Tier Gold forum: `bg-amber-500` → `bg-amber-700` + putih (4.8:1)
+- Status pesanan (pending/paid/delivered/cancelled): `text-*300` → `text-*700` di latar 20% (4.5:1)
+- Error forms (23 file): `text-red-400` → `text-red-600` di latar terang
+- Stok rendah admin: `text-amber-400` → `text-amber-700`
+- Navbar & SlideNav: solid `bg-background` (hilang `backdrop-blur` + opacity `/80` `/95`) — mencegah banner gelap tembus saat scroll
+
+### Added
+- Integrasi keranjang terverifikasi end-to-end: klik "Tambah ke Keranjang" di `/shop/products/[slug]` → item masuk `teknohub-cart` (localStorage zustand persist), tampil di `/shop/cart` (nama, harga, qty stepper, total), badge navbar live update
+
+## [2026-08-10] — Builder AI ↔ Build Summary Sync ↔ Build Summary Sync
 
 ### Fixed
 - AI Chat recommendation sekarang ter-sync otomatis ke Build Summary
