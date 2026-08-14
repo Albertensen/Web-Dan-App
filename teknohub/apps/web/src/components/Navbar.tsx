@@ -14,6 +14,7 @@ export default function Navbar() {
   const cartCount = useCartStore(selectTotalItems);
 
   return (
+    <>
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border-soft">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         {/* Logo 2 warna + tagline di bawahnya */}
@@ -97,8 +98,11 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile drawer (slide-in) */}
-      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} />
     </header>
+
+      {/* Mobile drawer — DI LUAR <header>: backdrop-filter header bikin containing block,
+          fixed children terikat header (h-20) bukan viewport → off-screen. Pindah keluar. */}
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} />
+    </>
   );
 }
