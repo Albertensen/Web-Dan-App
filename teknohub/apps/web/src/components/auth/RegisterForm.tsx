@@ -70,7 +70,7 @@ export default function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       {error && (
-        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-400">
+        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-600">
           {error}
         </div>
       )}
@@ -88,7 +88,7 @@ export default function RegisterForm() {
           onChange={(e) => setValues({ ...values, username: e.target.value })}
           className={inputCls}
         />
-        {errors.username && <p className="text-xs text-red-400 mt-1">{errors.username}</p>}
+        {errors.username && <p className="text-xs text-red-600 mt-1">{errors.username}</p>}
       </div>
 
       <div>
@@ -104,7 +104,7 @@ export default function RegisterForm() {
           onChange={(e) => setValues({ ...values, email: e.target.value })}
           className={inputCls}
         />
-        {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -121,7 +121,7 @@ export default function RegisterForm() {
           className={inputCls}
         />
         <PasswordStrengthBar password={values.password} />
-        {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
       </div>
 
       <div>
@@ -138,7 +138,7 @@ export default function RegisterForm() {
           className={inputCls}
         />
         {errors.confirmPassword && (
-          <p className="text-xs text-red-400 mt-1">{errors.confirmPassword}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.confirmPassword}</p>
         )}
       </div>
 
@@ -161,7 +161,7 @@ export default function RegisterForm() {
             </a>
           </span>
         </label>
-        {errors.terms && <p className="text-xs text-red-400 mt-1">{errors.terms}</p>}
+        {errors.terms && <p className="text-xs text-red-600 mt-1">{errors.terms}</p>}
       </div>
 
       <button

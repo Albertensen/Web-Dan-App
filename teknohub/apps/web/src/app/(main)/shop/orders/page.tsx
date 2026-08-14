@@ -9,12 +9,12 @@ export const metadata = {
 };
 
 const STATUS_STYLES: Record<string, string> = {
-  pending: "bg-amber-500/20 text-amber-300 border-amber-700/50",
-  paid: "bg-green-500/20 text-green-300 border-green-700/50",
+  pending: "bg-amber-500/20 text-amber-700 border-amber-700/50",
+  paid: "bg-green-500/20 text-green-700 border-green-700/50",
   processing: "bg-blue-500/20 text-accent border-blue-700/50",
   shipped: "bg-accent-dim text-accent border-accent/30",
-  delivered: "bg-emerald-500/20 text-emerald-300 border-emerald-700/50",
-  cancelled: "bg-red-500/20 text-red-300 border-red-700/50",
+  delivered: "bg-emerald-500/20 text-emerald-700 border-emerald-700/50",
+  cancelled: "bg-red-500/20 text-red-700 border-red-700/50",
   refunded: "bg-slate-500/20 text-muted border-slate-300/50",
 };
 
@@ -49,7 +49,7 @@ export default async function OrdersPage() {
           <h2 className="text-2xl font-bold tracking-tight">Belum ada pesanan</h2>
           <p className="text-muted text-sm">Pesananmu akan muncul di sini setelah checkout</p>
           <Link
-            href="/products"
+            href="/shop/products"
             className="bg-accent text-white px-8 py-3 rounded-full font-semibold hover:bg-accent-secondary transition shadow-sm"
           >
             Lihat Produk →

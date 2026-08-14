@@ -69,7 +69,7 @@ export default function ModerationPanel() {
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold text-foreground mb-6">Moderasi Laporan</h1>
 
-      {error && <p className="text-red-400 text-sm mb-4 p-3 bg-red-900/30 rounded-lg">{error}</p>}
+      {error && <p className="text-red-600 text-sm mb-4 p-3 bg-red-900/30 rounded-lg">{error}</p>}
 
       {loading ? (
         <p className="text-slate-500">Memuat...</p>

@@ -55,7 +55,7 @@ const VoteControl: React.FC<VoteControlProps> = ({ threadId, initialVotes = 0 })
       <button
         onClick={() => handleVote(-1)}
         className={`text-xl p-2 rounded transition-colors ${
-          userVote === -1 ? "text-red-400" : "text-slate-500 hover:text-red-400"
+          userVote === -1 ? "text-red-600" : "text-slate-500 hover:text-red-600"
         }`}
         aria-label="Downvote"
       >

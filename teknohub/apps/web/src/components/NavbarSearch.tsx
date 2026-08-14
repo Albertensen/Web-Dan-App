@@ -10,7 +10,7 @@ export default function NavbarSearch() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const q = term.trim();
-    router.push(q ? `/products?search=${encodeURIComponent(q)}` : "/products");
+    router.push(q ? `/shop/products?search=${encodeURIComponent(q)}` : "/shop/products");
     setTerm("");
   };
 

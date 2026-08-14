@@ -96,7 +96,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* 2 tombol pill berdampingan */}
         <div className="flex gap-2">
           <Link
-            href={`/products/${product.slug}`}
+            href={`/shop/products/${product.slug}`}
             className="flex-1 text-center bg-surface-2 hover:bg-accent hover:text-white text-foreground py-2 rounded-full text-xs font-medium transition"
           >
             Detail

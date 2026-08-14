@@ -102,7 +102,7 @@ export default async function ProductPage({ params }: ProductProps) {
           <div
             className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-medium ${
               product.stock > 5
-                ? "bg-green-600/20 text-green-300 border border-green-700"
+                ? "bg-green-600/20 text-green-700 border border-green-700"
                 : "bg-yellow-600/20 text-yellow-300 border border-yellow-700"
             }`}
           >

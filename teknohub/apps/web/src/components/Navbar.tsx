@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <>
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/80 border-b border-border-soft">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/95 border-b border-border-soft">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         {/* Logo 2 warna + tagline di bawahnya */}
         <div className="flex flex-col shrink-0">

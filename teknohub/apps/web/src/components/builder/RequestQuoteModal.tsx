@@ -71,7 +71,7 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
               className="w-full p-3 text-sm bg-surface border border-slate-300 rounded-lg text-foreground resize-none mb-4 placeholder:text-tertiary"
             />
 
-            {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
+            {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
             {done ? (
               <div className="text-center py-2">
                 <p className="text-emerald-400 text-sm mb-3">✓ Permintaan terkirim! Admin akan menghubungi Anda.</p>

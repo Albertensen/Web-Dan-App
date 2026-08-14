@@ -60,7 +60,7 @@ export default function FollowButton({ targetType, targetId }: FollowButtonProps
       >
         {loading ? "..." : following ? "✓ Mengikuti" : "+ Follow"}
       </button>
-      {error && <span className="text-red-400 text-xs">{error}</span>}
+      {error && <span className="text-red-600 text-xs">{error}</span>}
     </div>
   );
 }

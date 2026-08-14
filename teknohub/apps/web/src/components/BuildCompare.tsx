@@ -91,7 +91,7 @@ export default function BuildCompare() {
             {loading ? "..." : `+ Tambah Build ${builds.length + 1}`}
           </button>
         </div>
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {error && <p className="text-red-600 text-sm">{error}</p>}
       </div>
 
       {builds.length > 0 && (
@@ -104,7 +104,7 @@ export default function BuildCompare() {
                   <th key={i} className="p-4 text-left">
                     <div className="text-foreground font-semibold">{b.label}</div>
                     <div className="text-xs text-tertiary font-normal">{fmt(b.total)}</div>
-                    <button onClick={() => removeBuild(i)} className="text-xs text-red-400 hover:text-red-300 mt-1">
+                    <button onClick={() => removeBuild(i)} className="text-xs text-red-600 hover:text-red-300 mt-1">
                       ✕ Hapus
                     </button>
                   </th>

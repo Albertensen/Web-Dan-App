@@ -24,7 +24,7 @@ export default function CartPage() {
             <h2 className="text-2xl font-bold tracking-tight">Keranjangmu kosong</h2>
             <p className="text-muted text-sm">Temukan produk terbaik di katalog kami</p>
             <Link
-              href="/products"
+              href="/shop/products"
               className="bg-accent hover:bg-accent-secondary text-white px-8 py-3 rounded-full font-semibold transition shadow-sm"
             >
               Mulai Belanja →
@@ -57,7 +57,7 @@ export default function CartPage() {
             </div>
 
             <div className="flex-1 min-w-0">
-              <Link href={`/products/${item.slug}`} className="font-semibold line-clamp-1 hover:text-accent">
+              <Link href={`/shop/products/${item.slug}`} className="font-semibold line-clamp-1 hover:text-accent">
                 {item.name}
               </Link>
               <p className="text-sm text-tertiary">{formatIDR(item.price)}</p>
@@ -83,7 +83,7 @@ export default function CartPage() {
               <p className="font-semibold">{formatIDR(item.price * item.quantity)}</p>
               <button
                 onClick={() => remove(item.id)}
-                className="text-xs text-red-400 hover:text-red-300 mt-1"
+                className="text-xs text-red-600 hover:text-red-300 mt-1"
               >
                 Hapus
               </button>

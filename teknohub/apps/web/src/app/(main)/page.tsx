@@ -63,7 +63,7 @@ export default async function Home() {
             {FEATURED_CATEGORIES.map((c) => (
               <Link
                 key={c}
-                href={c === "Semua" ? "/products" : `/products?category=${encodeURIComponent(c.toLowerCase())}`}
+                href={c === "Semua" ? "/shop/products" : `/shop/products?category=${encodeURIComponent(c.toLowerCase())}`}
                 className="bg-surface px-3 py-1.5 rounded-full border border-slate-300 font-medium cursor-pointer hover:border-accent whitespace-nowrap"
               >
                 {c}
@@ -186,7 +186,7 @@ export default async function Home() {
                 <div>
                   <h3 className="text-sm font-bold text-foreground mb-3">Menu</h3>
                   <ul className="space-y-2 text-xs text-muted">
-                    <li><Link href="/products" className="hover:text-accent transition">Produk</Link></li>
+                    <li><Link href="/shop/products" className="hover:text-accent transition">Produk</Link></li>
                     <li><Link href="/forum" className="hover:text-accent transition">Forum</Link></li>
                     <li><Link href="/builder" className="hover:text-accent transition">PC Builder AI</Link></li>
                     <li><Link href="/cart" className="hover:text-accent transition">Keranjang</Link></li>

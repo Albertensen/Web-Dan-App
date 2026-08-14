@@ -81,7 +81,7 @@ export default function UserDropdown() {
           <div className="border-t border-border py-1.5">
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
-              className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-surface transition"
+              className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-surface transition"
             >
               Keluar
             </button>

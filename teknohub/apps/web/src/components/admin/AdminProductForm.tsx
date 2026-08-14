@@ -138,7 +138,7 @@ export default function AdminProductForm() {
         />
       </div>
 
-      {error && <p className="text-red-400 text-sm">{error}</p>}
+      {error && <p className="text-red-600 text-sm">{error}</p>}
       {success && <p className="text-green-700 text-sm">{success}</p>}
 
       <button

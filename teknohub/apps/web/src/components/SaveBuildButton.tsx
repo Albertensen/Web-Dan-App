@@ -73,7 +73,7 @@ export default function SaveBuildButton({ parts, buildType }: SaveBuildButtonPro
           </button>
         </div>
       )}
-      {error && <p className="text-red-400 text-xs mt-1">{error}</p>}
+      {error && <p className="text-red-600 text-xs mt-1">{error}</p>}
     </div>
   );
 }

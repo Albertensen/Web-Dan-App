@@ -114,7 +114,7 @@ export default function CheckoutForm() {
         onChange={handleChange}
         className={inputCls(!!errors[name])}
       />
-      {errors[name] && <p className="text-red-400 text-sm mt-1">{errors[name]}</p>}
+      {errors[name] && <p className="text-red-600 text-sm mt-1">{errors[name]}</p>}
     </div>
   );
 
@@ -143,7 +143,7 @@ export default function CheckoutForm() {
             </option>
           ))}
         </select>
-        {errors.courier && <p className="text-red-400 text-sm mt-1">{errors.courier}</p>}
+        {errors.courier && <p className="text-red-600 text-sm mt-1">{errors.courier}</p>}
       </div>
 
       <div>
@@ -162,7 +162,7 @@ export default function CheckoutForm() {
       </div>
 
       {errors.general && (
-        <p className="text-red-400 text-sm">{errors.general}</p>
+        <p className="text-red-600 text-sm">{errors.general}</p>
       )}
 
       <button

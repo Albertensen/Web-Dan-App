@@ -80,7 +80,7 @@ function ResetForm() {
 
   if (tokenError) {
     return (
-      <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-400">
+      <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-600">
         {tokenError}
         <div className="mt-3">
           <a href="/forgot-password" className="text-accent hover:underline font-medium">
@@ -118,7 +118,7 @@ function ResetForm() {
           onChange={(e) => setValues({ ...values, password: e.target.value })}
           className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition"
         />
-        {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
       </div>
       <div>
         <label htmlFor="rp-confirm" className="block text-sm font-medium text-muted mb-1.5">
@@ -134,7 +134,7 @@ function ResetForm() {
           className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition"
         />
         {errors.confirmPassword && (
-          <p className="text-xs text-red-400 mt-1">{errors.confirmPassword}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.confirmPassword}</p>
         )}
       </div>
       <button

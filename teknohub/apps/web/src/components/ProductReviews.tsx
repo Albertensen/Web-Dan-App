@@ -23,7 +23,7 @@ function normProfile(p: Profile | { username: string | null; reputation: number 
 function tierOf(reputation: number | null | undefined): { name: string; icon: string; cls: string; bar: string } {
   const r = reputation ?? 0;
   if (r > 50) return { name: "Diamond", icon: "💎", cls: "bg-accent text-white", bar: "bg-accent" };
-  if (r >= 10) return { name: "Gold", icon: "🥇", cls: "bg-amber-500 text-white", bar: "bg-amber-500" };
+  if (r >= 10) return { name: "Gold", icon: "🥇", cls: "bg-amber-700 text-white", bar: "bg-amber-700" };
   return { name: "Silver", icon: "🥈", cls: "bg-slate-500 text-white", bar: "bg-slate-400" };
 }
 

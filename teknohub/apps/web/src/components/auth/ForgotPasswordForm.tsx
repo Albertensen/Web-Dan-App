@@ -51,7 +51,7 @@ export default function ForgotPasswordForm() {
         </div>
       )}
       {status === "error" && message && (
-        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-400">
+        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-600">
           {message}
         </div>
       )}
@@ -69,7 +69,7 @@ export default function ForgotPasswordForm() {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition"
         />
-        {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
       </div>
 
       <button

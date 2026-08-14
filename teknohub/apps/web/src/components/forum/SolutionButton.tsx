@@ -45,7 +45,7 @@ export default function SolutionButton({ replyId, isSolution, onMarked }: Soluti
       >
         {isSolution ? "✅ Solusi" : loading ? "Menandai..." : "✓ Tandai Solusi"}
       </button>
-      {error && <span className="text-red-400 text-xs">{error}</span>}
+      {error && <span className="text-red-600 text-xs">{error}</span>}
     </div>
   );
 }

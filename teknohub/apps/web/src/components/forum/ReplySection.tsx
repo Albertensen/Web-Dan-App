@@ -102,7 +102,7 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <TipTapEditor value={content} onChange={setContent} placeholder="Tulis balasan Anda di sini..." />
-        {error && <p className="text-red-400 text-sm">{error}</p>}
+        {error && <p className="text-red-600 text-sm">{error}</p>}
         <button
           type="submit"
           disabled={submitting}

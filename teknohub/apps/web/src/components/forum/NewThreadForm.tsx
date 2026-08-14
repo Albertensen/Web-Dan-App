@@ -57,7 +57,7 @@ export default function NewThreadForm({ categories }: NewThreadFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6 max-w-3xl mx-auto p-8 bg-surface rounded-xl shadow-2xl border border-slate-300">
-      {error && <p className="text-red-400 text-sm p-3 bg-red-900/30 rounded-lg">{error}</p>}
+      {error && <p className="text-red-600 text-sm p-3 bg-red-900/30 rounded-lg">{error}</p>}
 
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-muted mb-1">Judul Thread</label>

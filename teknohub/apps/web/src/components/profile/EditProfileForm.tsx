@@ -50,7 +50,7 @@ export default function EditProfileForm({ profile }: { profile: Profile }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       {error && (
-        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-400">
+        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-600">
           {error}
         </div>
       )}

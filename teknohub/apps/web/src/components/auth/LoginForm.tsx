@@ -47,7 +47,7 @@ export default function LoginForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-5" noValidate>
       {error && (
-        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-400">
+        <div className="px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-sm text-red-600">
           {error}
         </div>
       )}
@@ -65,7 +65,7 @@ export default function LoginForm() {
           onChange={(e) => setValues({ ...values, email: e.target.value })}
           className="w-full px-4 py-3 rounded-xl bg-surface border border-border text-foreground placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-accent/40 focus:border-accent transition"
         />
-        {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
+        {errors.email && <p className="text-xs text-red-600 mt-1">{errors.email}</p>}
       </div>
 
       <div>
@@ -91,7 +91,7 @@ export default function LoginForm() {
             {showPassword ? "🙈" : "👁️"}
           </button>
         </div>
-        {errors.password && <p className="text-xs text-red-400 mt-1">{errors.password}</p>}
+        {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}
       </div>
 
       <div className="flex items-center justify-between text-sm">

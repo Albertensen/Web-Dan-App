@@ -45,7 +45,7 @@ export default function ReportButton({ targetType, targetId }: ReportButtonProps
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="text-xs text-slate-500 hover:text-red-400 transition"
+        className="text-xs text-slate-500 hover:text-red-600 transition"
       >
         ⚑ Lapor
       </button>
@@ -60,7 +60,7 @@ export default function ReportButton({ targetType, targetId }: ReportButtonProps
             placeholder="Alasan laporan (min 5 karakter)..."
             className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg text-foreground resize-none mb-2 focus:border-red-500"
           />
-          {error && <p className="text-red-400 text-xs mb-2">{error}</p>}
+          {error && <p className="text-red-600 text-xs mb-2">{error}</p>}
           <div className="flex gap-2 justify-end">
             <button
               onClick={() => setOpen(false)}

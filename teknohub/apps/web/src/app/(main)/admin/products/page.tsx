@@ -58,7 +58,7 @@ export default async function AdminProductsPage() {
                       </td>
                       <td className="p-3 text-muted">{p.category}</td>
                       <td className="p-3 text-right text-foreground font-medium">{formatIDR(Number(p.price))}</td>
-                      <td className={`p-3 text-center ${Number(p.stock) <= 5 ? "text-amber-400" : "text-muted"}`}>
+                      <td className={`p-3 text-center ${Number(p.stock) <= 5 ? "text-amber-700" : "text-muted"}`}>
                         {p.stock}
                       </td>
                     </tr>

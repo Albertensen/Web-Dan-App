@@ -90,7 +90,7 @@ export default function AdminQuotes() {
         ))}
       </div>
 
-      {error && <p className="text-red-400 text-sm mb-4 p-3 bg-red-900/30 rounded-lg">{error}</p>}
+      {error && <p className="text-red-600 text-sm mb-4 p-3 bg-red-900/30 rounded-lg">{error}</p>}
 
       {loading ? (
         <p className="text-slate-500">Memuat...</p>
