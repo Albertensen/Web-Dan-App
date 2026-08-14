@@ -1,7 +1,5 @@
-# 🚀 Panduan Setup TeknoHub & Obsidian di PC Baru
 
 > **Repo**: `https://github.com/Albertensen/Web-Dan-App` — project root = `teknohub/` di dalam repo.
-> Dokumen ini disiapkan 2026-08-11 sebagai persiapan pindah PC. Backup lengkap vault Obsidian tersedia di `docs/obsidian-vault/`.
 
 ---
 
@@ -28,8 +26,6 @@
 - Jalankan service: `ollama serve` (berjalan di localhost:11434)
 - Catatan: jika GPU VRAM < 8GB, model bisa dijalankan dengan offload CPU.
 
-### Obsidian (Second Brain Notes)
-- Download & install gratis dari https://obsidian.md
 
 ---
 
@@ -72,12 +68,11 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
-## 4. Open Obsidian Vault di PC Baru
+## 4. Buka Obsidian Vault (opsional, untuk baca arsitektur)
 
-1. Buka aplikasi Obsidian.
-2. Klik **"Open folder as vault"**.
-3. Pilih folder yang di-clone tadi: `Web-Dan-App/teknohub/docs/obsidian-vault/`.
-4. Seluruh catatan arsitektur, DESIGN-RULES.md, dan pilar prompt Hermes/Gemma/Ruflo langsung aktif dan siap dibaca!
+Vault Obsidian tersedia di `teknohub/docs/obsidian-vault/` dalam repo. Buka di Obsidian:
+1. Klik **"Open folder as vault"** → pilih folder tersebut.
+2. Seluruh catatan arsitektur, DESIGN-RULES.md, dan pilar prompt agent langsung aktif dan siap dibaca.
 
 ---
 
@@ -126,12 +121,11 @@ Harus selesai tanpa error sebelum deploy.
 
 ---
 
-## 8. Lanjutkan Pekerjaan dengan Hermes Agent di PC Baru
+## 8. Lanjutkan Pekerjaan dengan Agent di PC Baru
 
-Setelah dev server berjalan di PC baru, buka Hermes Agent dan kirim prompt ini:
+Setelah dev server berjalan di PC baru, buka agent dan kirim prompt ini:
 
 ```
-Hermes, saya sudah sukses pindah ke PC baru. Project TeknoHub & Obsidian
 Vault sudah berjalan di localhost:3000.
 GitHub repo: https://github.com/Albertensen/Web-Dan-App
 Status terakhir: Fase 6D In Progress (sebagian) + Fase 7 Security 🟡 Sebagian.
@@ -152,7 +146,7 @@ Lanjutkan ke FASE 7 Security Hardening (rate limiting, DOMPurify, API auth helpe
 | FASE 4 — Forum Tech & AI | ✅ Tuntas |
 | FASE 5 — PC Builder AI ⭐ | ✅ Tuntas (23/23) |
 | FASE 6 — Responsive Design | ✅ Tuntas (23/23) |
-| FASE 6D — UI Overhaul & Polish | 🔵 In Progress (16/20) |
+| FASE 6D — UI Overhaul & Polish | 🔵 In Progress (16/20, sisa: related products, breadcrumb, forum empty state) |
 | FASE 7 — Security Hardening | 🟡 Sebagian |
 | FASE 8 — Testing & QA | ⏳ Belum dimulai |
 | FASE 9 — Mobile App | ⏳ Belum dimulai (setelah 6/7/8) |
@@ -160,10 +154,8 @@ Lanjutkan ke FASE 7 Security Hardening (rate limiting, DOMPurify, API auth helpe
 
 ---
 
-## Konten Backup (docs/obsidian-vault/)
 
 ```
-docs/obsidian-vault/
 ├── 00-SISTEM/
 │   ├── AGENT-ROSTER.md
 │   ├── DESIGN-RULES.md

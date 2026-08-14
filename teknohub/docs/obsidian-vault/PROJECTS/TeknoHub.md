@@ -6,8 +6,9 @@
 |-------|-------|
 | Repo | https://github.com/Albertensen/Web-Dan-App |
 | Vercel | https://vercel.com/rebahan |
-| Lokal | C:\Users\Administrator\dev-workspace\teknohub\ |
-| Status | 🟡 Setup — Fase 1 |
+| Deploy | https://teknohub-omega.vercel.app |
+| Lokal (Linux) | /home/myhomeai/TEKNOHUB |
+| Status | 🔵 Aktif |
 | Mulai | 2026-08-09 |
 
 ## Deskripsi
@@ -17,27 +18,19 @@ Platform teknologi all-in-one:
 - 💬 Forum Tech & AI
 - 🖥️ Jasa Rakit PC + AI Agent (harga real Tokopedia/Shopee)
 
-## Fase Progress
+## Fase Progress (detail: teknohub/ROADMAP.md — sumber kebenaran)
 
-- [x] Sistem kerja setup (Obsidian, workspace, GitHub)
-- [ ] Fase 1 — Foundation (monorepo, schema, auth, Vercel)
-- [ ] Fase 2 — E-Commerce
-- [ ] Fase 3 — Forum
-- [ ] Fase 4 — PC Builder AI ⭐
-- [ ] Fase 5 — Mobile App
-- [ ] Fase 6 — Launch
-
-> Detail checklist lengkap ada di ROADMAP.md di GitHub repo.
-
-## Next Actions (Fase 1)
-
-- [x] Init monorepo teknohub/ di dev-workspace
-- [x] Next.js 14 setup + homepage (dark theme, 3 hero card gradient glow)
-- [x] SQL schema + migration (14 tabel + RLS + seed) — SUDAH RUN di Supabase
-- [x] Push ke GitHub
-- [x] Buat Supabase project (project ref `abulunzifndlvksdljuf`)
-- [x] Connect ke Vercel (deployed: https://teknohub-omega.vercel.app)
-- [x] Setup Google OAuth (NextAuth v4 + GoogleProvider aktif)
+- [x] Fase 1 — Foundation (monorepo, schema, auth, Vercel)
+- [x] Fase 2 — Autentikasi & Akun Pengguna
+- [x] Fase 3 — E-Commerce (sisa opsional: Algolia, OG-image; blokir: akun Midtrans)
+- [x] Fase 4 — Forum Tech & AI
+- [x] Fase 5 — PC Builder AI ⭐
+- [x] Fase 6 — Responsive Design
+- [~] Fase 6D — UI Overhaul & Polish (sisa: related products, breadcrumb, forum empty state)
+- [~] Fase 7 — Security Hardening (sebagian)
+- [ ] Fase 8 — Testing & QA
+- [ ] Fase 9 — Mobile App (Expo)
+- [ ] Fase 10 — Launch
 
 ## Keputusan Teknis
 
@@ -47,13 +40,13 @@ Platform teknologi all-in-one:
 | Mobile | Expo React Native | 1 codebase → Android + iOS |
 | Database | Supabase PostgreSQL | Auth + Realtime + Storage built-in |
 | Payment | Midtrans | Payment gateway Indonesia terpopuler |
-| Scraping | Playwright | Handle SPA/JS-rendered pages |
-| AI Agent | Hermes + Gemma 4 E4B | Pintar untuk planning, gratis untuk coding |
+| Scraping | Camofox + Playwright fallback | Handle SPA/JS-rendered pages |
+| AI Agent | Agent utama (planning) + Ornith 9B (coding gratis) | Hemat token |
 | Repo struktur | Monorepo (turborepo) | Share types antara web dan mobile |
 | Auth | NextAuth + Supabase | OAuth Google + email |
-| Styling | Tailwind + shadcn/ui | Konsisten dan cepat |
+| Styling | Tailwind + DESIGN-RULES (Tekno Zone) | Konsisten |
 | State | Zustand | Ringan, tidak boilerplate |
 
 ## Stack
 
-Next.js 14 · Expo RN · Supabase · Midtrans · Hermes AI · Playwright
+Next.js 14 · Expo RN · Supabase · Midtrans · Ornith 9B · Camofox/Playwright

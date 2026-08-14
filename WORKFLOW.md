@@ -1,35 +1,32 @@
 # WORKFLOW — Alur Kerja Harian
 
-## Pagi — Planning dengan Hermes (~10 menit, ~300-500 token)
+> Model: ornith:9b via Ollama (gratis) utk tugas ringan; agent utama utk planning/review/security.
+> Aturan hemat token lengkap: teknohub/docs/obsidian-vault/KNOWLEDGE/TOKEN-SAVING-RULES.md
 
-- Kirim SESSION-START.md ke Hermes
-- Hermes baca konteks → tampilkan ringkasan sesi terakhir
-- Tentukan target hari ini → Hermes bagi jadi tugas-tugas kecil (output pseudocode, bukan kode)
-- Simpan daftar tugas ke file TODO-[tanggal].md
+## Pagi — Planning (~10 menit)
 
-## Siang — Coding dengan Gemma (sepanjang hari, GRATIS)
+- Baca teknohub/ROADMAP.md → ambil next action
+- Tentukan target hari → bagi jadi tugas kecil (output pseudocode, bukan kode)
+- Simpan daftar tugas ke TODO-[tanggal].md
+
+## Siang — Coding
 
 - Ambil satu tugas dari daftar
-- Pilih template dari .config/prompts/ sesuai jenis tugas
-- Isi template → kirim ke Gemma
-- Review output (30 detik) → Ruflo simpan ke file
-- Ulangi untuk tugas berikutnya
+- Tugas pendek (<50 baris, duplikasi pola, CSS terisolasi) → Ornith (gratis)
+- Tugas kompleks/multi-file/security → agent utama
+- Review output → simpan ke file
 
-## Sore — Review Visual dengan Gemma (~30 menit, GRATIS)
+## Sore — Review Visual
 
-- Screenshot halaman yang sudah dibuat
-- Kirim ke Gemma dengan template visual.md
-- Gemma analisis masalah visual → saran CSS konkret
-- Terapkan perbaikan → screenshot ulang untuk validasi
+- Screenshot halaman → analisis masalah visual → saran CSS konkret
+- Terapkan perbaikan → screenshot ulang utk validasi
 
-## Akhir Hari — Final Review dengan Hermes (~5 menit, ~200-400 token)
+## Akhir Hari — Final Review
 
-- Paste file-file kritis yang diubah hari ini
-- Hermes cek: bug obvious, security issue, hal yang perlu diperbaiki
-- Jika ada issue: tambahkan ke TODO besok
-- Sync ke GitHub: klik sync.bat
-- Isi log di Obsidian DAILY/
+- Review file kritis: auth, payment, security, API
+- Update ROADMAP.md (centang item selesai) + CHANGELOG.md (entry baru)
+- Sync ke GitHub (lihat MASTER-INDEX.md)
 
-## Estimasi Token Hermes per Hari
+## Estimasi Token
 
-**500-900 token** — sisanya GRATIS via Gemma
+Agent utama hanya utk planning + review kritis — sisanya gratis via Ornith.
