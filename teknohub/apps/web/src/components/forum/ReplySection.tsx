@@ -74,7 +74,7 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
                 dangerouslySetInnerHTML={{ __html: reply.content }}
               />
               {reply.is_solution && (
-                <span className="inline-flex items-center px-3 py-1 text-xs font-medium bg-green-600/20 text-green-400 rounded-full border border-green-700 mb-2">
+                <span className="inline-flex items-center px-3 py-1 text-xs font-medium bg-green-600/20 text-green-700 rounded-full border border-green-700 mb-2">
                   ✅ Solusi
                 </span>
               )}

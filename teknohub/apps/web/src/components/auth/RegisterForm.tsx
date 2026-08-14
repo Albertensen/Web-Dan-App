@@ -172,7 +172,7 @@ export default function RegisterForm() {
         {loading ? "Mendaftarkan..." : "Daftar"}
       </button>
 
-      <div className="flex items-center gap-3 text-xs text-slate-400">
+      <div className="flex items-center gap-3 text-xs text-slate-500">
         <span className="flex-1 h-px bg-border" />
         atau
         <span className="flex-1 h-px bg-border" />

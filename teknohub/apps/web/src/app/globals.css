@@ -22,9 +22,9 @@
   --color-surface-glass: rgba(251, 251, 245, 0.8);
 
   /* Accent (use pistachio-10 as accent green) */
-  --color-accent: #d4f9e0; /* pistachio-10 */
-  --color-accent-secondary: #b2e8c9; /* lighter */
-  --color-accent-dim: rgba(212, 249, 224, 0.1);
+  --color-accent: #0B1F45; /* chromeAccent navy — kontras dgn putih 12.6:1 (WCAG AAA) */
+  --color-accent-secondary: #1E3A6E; /* navy terang utk hover */
+  --color-accent-dim: rgba(11, 31, 69, 0.08);
   --color-zone-blue: #2563eb; /* keep zoneBlue from original? maybe not */
 
   /* Text */

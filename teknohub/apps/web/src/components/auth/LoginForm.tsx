@@ -86,7 +86,7 @@ export default function LoginForm() {
             type="button"
             onClick={() => setShowPassword(!showPassword)}
             aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-foreground transition"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-foreground transition"
           >
             {showPassword ? "🙈" : "👁️"}
           </button>
@@ -108,7 +108,7 @@ export default function LoginForm() {
         {loading ? "Memproses..." : "Masuk"}
       </button>
 
-      <div className="flex items-center gap-3 text-xs text-slate-400">
+      <div className="flex items-center gap-3 text-xs text-slate-500">
         <span className="flex-1 h-px bg-border" />
         atau
         <span className="flex-1 h-px bg-border" />

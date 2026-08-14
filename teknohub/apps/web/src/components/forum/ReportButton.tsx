@@ -80,7 +80,7 @@ export default function ReportButton({ targetType, targetId }: ReportButtonProps
       )}
 
       {done && (
-        <span className="ml-2 text-xs text-green-400">✓ Terkirim</span>
+        <span className="ml-2 text-xs text-green-700">✓ Terkirim</span>
       )}
     </div>
   );
