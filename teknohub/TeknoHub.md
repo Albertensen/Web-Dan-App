@@ -9,7 +9,7 @@ Platform e-commerce + forum + AI PC Builder. Monorepo: `apps/web` (Next.js 14), 
 
 - **Auth**: NextAuth (Credentials + Google OAuth) → Supabase signInWithPassword; admin createUser utk seed
 - **AI**: Ollama lokal (Gemma 4 E4B), algoritma bottleneck + alokasi budget
-- **Deploy**: Vercel (`teknohub-omega.vercel.app`), Supabase Cloud
+- **Deploy**: Vercel (`teknohub-web.vercel.app`), Supabase Cloud
 
 ## Fase Roadmap
 

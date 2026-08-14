@@ -6,7 +6,7 @@
 |-------|-------|
 | Repo | https://github.com/Albertensen/Web-Dan-App |
 | Vercel | https://vercel.com/rebahan |
-| Deploy | https://teknohub-omega.vercel.app |
+| Deploy | https://teknohub-web.vercel.app |
 | Lokal (Linux) | /home/myhomeai/TEKNOHUB |
 | Status | 🔵 Aktif |
 | Mulai | 2026-08-09 |

@@ -11,7 +11,7 @@
 | Second Brain Vault | /home/myhomeai/Documents/secondbrain |
 | GitHub Repo | https://github.com/Albertensen/Web-Dan-App.git |
 | Vercel Dashboard | https://vercel.com/rebahan |
-| Deploy | https://teknohub-omega.vercel.app |
+| Deploy (PROD) | https://teknohub-web.vercel.app (project aktif, git-integrated) |
 
 ## Service & AI
 
@@ -29,6 +29,15 @@
 - Port 20128: next-server v16 — kemungkinan hermes agent, bukan TeknoHub
 - Port 11434: Ollama (model ornith:9b)
 - Port 3100: Ruflo MCP bridge
+
+## Deploy (Vercel) — verified 2026-08-15
+
+- Project aktif: `teknohub-web` (prj_rMXAVyOxR7EcGeXJ3As4Ku4LliGW)
+- Git integration: TERHUBUNG ke repo `Albertensen/Web-Dan-App`, production branch `main`
+  → setiap `git push` ke main auto-deploy ke https://teknohub-web.vercel.app
+- Fallback manual: `cd teknohub/apps/web && npx vercel --prod` (butuh token di ~/.local/share/com.vercel.cli/auth.json)
+- Project LAMA `teknohub` (teknohub-web.vercel.app) sudah DIHAPUS 2026-08-15 — URL mati (404)
+- JANGAN pakai URL omega — selalu teknohub-web
 
 ## Node.js
 

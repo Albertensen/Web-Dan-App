@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "Tekno Zone — E-Commerce, AI Builder & Komunitas",
     description: "Belanja elektronik, diskusi tech & AI, dan rakit PC dengan AI Agent.",
     type: "website",
-    url: "https://teknohub-omega.vercel.app",
+    url: "https://teknohub-web.vercel.app",
     siteName: "Tekno Zone",
   },
 };

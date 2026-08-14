@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase/client";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_APP_URL || "https://teknohub-omega.vercel.app";
+  const base = process.env.NEXT_PUBLIC_APP_URL || "https://teknohub-web.vercel.app";
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
