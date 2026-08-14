@@ -12,7 +12,7 @@ export default function SlideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-20 z-40 bg-background/90 border-b border-border-soft backdrop-blur-md">
+    <div className="sticky top-20 z-40 bg-background border-b border-border-soft">
       <div className="max-w-7xl mx-auto px-6 flex items-center gap-10 overflow-x-auto no-scrollbar py-3 text-sm font-bold">
         {SLIDE_LINKS.map((l) => {
           const isHome = pathname === "/" || pathname.startsWith("/#");

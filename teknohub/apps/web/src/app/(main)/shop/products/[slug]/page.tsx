@@ -100,10 +100,10 @@ export default async function ProductPage({ params }: ProductProps) {
                     </div>
 
           <div
-            className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-medium ${
+            className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-bold border-2 ${
               product.stock > 5
-                ? "bg-green-600/20 text-green-700 border border-green-700"
-                : "bg-yellow-600/20 text-yellow-300 border border-yellow-700"
+                ? "bg-green-200 text-green-900 border-green-800"
+                : "bg-yellow-200 text-yellow-900 border-yellow-800"
             }`}
           >
             Stok: {product.stock}
