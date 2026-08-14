@@ -19,8 +19,16 @@
 |------|-----------|
 | Ollama (Ornith 9B) | http://localhost:11434/v1 |
 | Ruflo MCP Bridge | http://127.0.0.1:3100/mcp |
-| RuVocal UI | http://localhost:3000 (default) |
+| TeknoHub Dev | http://localhost:3001 (next dev — port 3000 dipakai whatsapp-bridge) |
 | Ruflo Install | ~/ruflo/mcp-bridge (systemd: ruflo-mcp-bridge.service) |
+
+## Catatan Port (verified 2026-08-15)
+
+- TeknoHub dev server: http://localhost:3001 (bukan 3000)
+- Port 3000: whatsapp-bridge (bukan TeknoHub)
+- Port 20128: next-server v16 — kemungkinan hermes agent, bukan TeknoHub
+- Port 11434: Ollama (model ornith:9b)
+- Port 3100: Ruflo MCP bridge
 
 ## Node.js
 
