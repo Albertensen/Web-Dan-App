@@ -37,7 +37,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2.5 shrink-0">
             {/* Cart SVG — ikon lebih rapi */}
             <Link
-              href="/cart"
+              href="/shop/cart"
               className="w-9 h-9 rounded-full bg-surface border border-slate-300 flex items-center justify-center text-accent hover:border-accent transition shadow-sm relative"
               title="Keranjang Belanja"
             >

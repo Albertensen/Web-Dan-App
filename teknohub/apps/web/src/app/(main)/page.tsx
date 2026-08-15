@@ -189,14 +189,14 @@ export default async function Home() {
                     <li><Link href="/shop/products" className="hover:text-accent transition">Produk</Link></li>
                     <li><Link href="/forum" className="hover:text-accent transition">Forum</Link></li>
                     <li><Link href="/builder" className="hover:text-accent transition">PC Builder AI</Link></li>
-                    <li><Link href="/cart" className="hover:text-accent transition">Keranjang</Link></li>
+                    <li><Link href="/shop/cart" className="hover:text-accent transition">Keranjang</Link></li>
                   </ul>
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-foreground mb-3">Akun</h3>
                   <ul className="space-y-2 text-xs text-muted">
-                    <li><Link href="/profile" className="hover:text-accent transition">Profil</Link></li>
-                    <li><Link href="/orders" className="hover:text-accent transition">Pesanan</Link></li>
+                    <li><Link href="/user/profile" className="hover:text-accent transition">Profil</Link></li>
+                    <li><Link href="/shop/orders" className="hover:text-accent transition">Pesanan</Link></li>
                     <li><Link href="/login" className="hover:text-accent transition">Masuk</Link></li>
                   </ul>
                 </div>

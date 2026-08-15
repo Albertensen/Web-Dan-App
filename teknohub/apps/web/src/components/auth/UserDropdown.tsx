@@ -57,21 +57,21 @@ export default function UserDropdown() {
           </div>
           <div className="py-1.5">
             <Link
-              href="/profile"
+              href="/user/profile"
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >
               👤 Profil Saya
             </Link>
             <Link
-              href="/orders"
+              href="/shop/orders"
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >
               📦 Pesanan
             </Link>
             <Link
-              href="/cart"
+              href="/shop/cart"
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >

@@ -281,7 +281,7 @@ export default function PcBuilder() {
             )}
           </h3>
           {hasAnyComponent && (
-            <Link href="/quotes" className="text-xs text-cyan-300 hover:text-cyan-200 underline underline-offset-2">
+            <Link href="/admin/quotes" className="text-xs text-cyan-300 hover:text-cyan-200 underline underline-offset-2">
               Minta Penawaran →
             </Link>
           )}

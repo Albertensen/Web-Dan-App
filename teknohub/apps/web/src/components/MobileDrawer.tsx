@@ -66,14 +66,14 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                 </span>
               </div>
               <Link
-                href="/profile"
+                href="/user/profile"
                 onClick={onClose}
                 className="px-3 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
               >
                 👤 Profil Saya
               </Link>
               <Link
-                href="/orders"
+                href="/shop/orders"
                 onClick={onClose}
                 className="px-3 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
               >

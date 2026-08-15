@@ -100,7 +100,7 @@ export default function CartPage() {
           <p className="text-2xl font-bold">{formatIDR(totalPrice)}</p>
         </div>
         <Link
-          href="/checkout"
+          href="/shop/checkout"
           className="px-8 py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity"
         >
           Checkout
