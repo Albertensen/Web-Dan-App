@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import LoginForm from "@/components/auth/LoginForm";
+import AuthSlider from "@/components/auth/AuthSlider";
 
 export const metadata = {
   title: "Masuk — TeknoZone",
@@ -13,14 +13,8 @@ export default async function LoginPage() {
   if (session) redirect("/");
 
   return (
-    <div className="animate-page-in-right">
-      <div className="mb-8">
-        <h1 className="text-3xl font-extrabold tracking-tight mb-2">Selamat datang kembali 👋</h1>
-        <p className="text-sm text-muted">
-          Masuk untuk melanjutkan ke marketplace, forum, dan PC Builder.
-        </p>
-      </div>
-      <LoginForm />
+    <div className="w-full flex justify-center">
+      <AuthSlider />
     </div>
   );
 }
