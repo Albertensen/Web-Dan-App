@@ -2,6 +2,14 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-15] — Fase 6D Tuntas (UI Overhaul & Polish)
+
+### Added
+- Related products section di halaman detail produk (4 produk kategori sama)
+- Product image fallback premium: gradient + ikon SVG per kategori (laptop, smartphone, monitor, gpu, cpu, ram, storage) — komponen `ProductImage`, dipakai ProductCard + detail
+- Forum empty state: ikon ilustrasi + CTA "Buat Thread Pertama"
+
+
 ## [2026-08-15] — UI Kontras, Fix Path Produk & Integrasi Keranjang
 
 ### Fixed
