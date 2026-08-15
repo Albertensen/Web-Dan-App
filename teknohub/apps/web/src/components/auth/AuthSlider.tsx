@@ -15,7 +15,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
   const loginActive = mode === "login";
 
   return (
-    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 overflow-hidden rounded-3xl border border-slate-300 shadow-2xl bg-surface">
+    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[840px] lg:min-h-[720px] overflow-hidden rounded-3xl border border-slate-300 shadow-2xl bg-surface">
       {/* Panel form */}
       <section className="order-1 lg:order-2 flex items-center p-6 sm:p-10 lg:p-14">
         <div key={mode} className={`w-full max-w-md mx-auto ${loginActive ? "animate-page-in-right" : "animate-page-in-left"}`}>
