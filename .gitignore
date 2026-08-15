@@ -13,3 +13,7 @@ Thumbs.db
 
 # SQLite brain (local)
 agent_memory.db
+
+# Python
+__pycache__/
+*.pyc
