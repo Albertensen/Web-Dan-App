@@ -298,7 +298,7 @@ Status: 🟡 Sebagian
 ---
 
 ## FASE 6D — UI Overhaul & Polish
-Status: 🟢 Hampir tuntas (sisa: related products, image fallback, forum empty state)
+Status: ✅ Tuntas
 
 ### Homepage
 - [x] Forum preview: tampilkan 3 thread terbaru dari DB (SSR)
@@ -321,14 +321,14 @@ Status: 🟢 Hampir tuntas (sisa: related products, image fallback, forum empty 
 - [x] Build summary card dengan glow effect dan animasi total harga
 
 ### Product Pages
-- [ ] Related products section di /products/[slug]
-- [ ] Product image fallback yang menarik (bukan emoji)
+- [x] Related products section di /products/[slug]
+- [x] Product image fallback yang menarik (gradient + ikon SVG per kategori)
 - [x] Breadcrumb navigation
 
 ### Empty States
 - [x] /cart empty state: ilustrasi + CTA "Mulai Belanja"
 - [x] /orders empty state: ilustrasi + CTA
-- [ ] /forum empty state yang menarik
+- [x] /forum empty state yang menarik (ikon + CTA buat thread)
 
 ---
 ## FASE 8 — Testing & QA
