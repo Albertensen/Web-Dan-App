@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
+import ProductImage from "@/components/ProductImage";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductReviews from "@/components/ProductReviews";
 
@@ -59,6 +60,14 @@ export default async function ProductPage({ params }: ProductProps) {
     maximumFractionDigits: 0,
   }).format(Number(product.price));
 
+  const { data: related } = await supabase
+    .from("products")
+    .select("id, name, slug, price, image_url, category, brand, stock")
+    .eq("category", product.category)
+    .eq("is_active", true)
+    .neq("id", product.id)
+    .limit(4);
+
   return (
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
       {/* Breadcrumb */}
@@ -74,19 +83,14 @@ export default async function ProductPage({ params }: ProductProps) {
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
         {/* Left Column: Image/Placeholder */}
         <div className="col-span-1 flex justify-center items-start">
-          <div className="w-full max-w-md aspect-[4/5] bg-surface-2 rounded-xl shadow-2xl p-6 flex items-center justify-center">
-            {product.image_url ? (
-                          <Image
-                            src={product.image_url}
-                            alt={product.name}
-                            width={800}
-                            height={1000}
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="w-full h-full object-cover rounded-xl"
-                          />
-                        ) : (
-              <div className="text-slate-500 text-8xl">🖥️</div>
-            )}
+          <div className="w-full max-w-md aspect-[4/5] bg-surface-2 rounded-xl shadow-2xl overflow-hidden">
+            <ProductImage
+              src={product.image_url}
+              alt={product.name}
+              category={product.category}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="w-full h-full rounded-xl"
+            />
           </div>
         </div>
 
@@ -133,6 +137,37 @@ export default async function ProductPage({ params }: ProductProps) {
           </div>
         </div>
       </div>
+
+      {/* Related Products */}
+      {related && related.length > 0 && (
+        <div className="max-w-6xl mx-auto mt-14">
+          <h2 className="text-xl font-bold text-foreground mb-6">Produk Terkait</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {related.map((p) => (
+              <Link
+                key={p.id}
+                href={`/shop/products/${p.slug}`}
+                className="group bg-surface border border-slate-300 rounded-2xl p-3 hover:border-accent transition duration-300"
+              >
+                <div className="aspect-square rounded-xl overflow-hidden mb-3">
+                  <ProductImage
+                    src={p.image_url}
+                    alt={p.name}
+                    category={p.category}
+                    fill
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                    className="group-hover:scale-110 transition duration-500 ease-out"
+                  />
+                </div>
+                <p className="text-sm font-semibold text-foreground line-clamp-1 mb-1">{p.name}</p>
+                <p className="text-sm font-bold text-accent">
+                  {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(Number(p.price))}
+                </p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

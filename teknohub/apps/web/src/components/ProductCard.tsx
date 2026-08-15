@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useCartStore } from "@/store/cartStore";
+import ProductImage from "./ProductImage";
 
 interface Product {
   id: string;
@@ -20,15 +20,6 @@ interface Product {
 interface ProductCardProps {
   product: Product;
 }
-
-const PLACEHOLDER_EMOJI: Record<string, string> = {
-  laptop: "💻",
-  smartphone: "📱",
-  monitor: "🖥️",
-  gpu: "🎮",
-  cpu: "🧠",
-  ram: "💾",
-};
 
 const CATEGORY_LABEL: Record<string, string> = {
   laptop: "Laptop",
@@ -54,19 +45,14 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Gambar full + hover zoom (scale-110 halus) */}
         <div className="h-56 rounded-[1.5rem] mb-5 overflow-hidden flex items-center justify-center relative bg-surface-2/80">
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none" />
-          {product.image_url ? (
-                      <Image
-                        src={product.image_url}
-                        alt={product.name}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                        className="object-cover z-0 group-hover:scale-110 transition duration-500 ease-out"
-                      />
-                    ) : (
-            <span className="text-6xl z-0 group-hover:scale-110 transition duration-500 ease-out">
-              {PLACEHOLDER_EMOJI[product.category] ?? "🛒"}
-            </span>
-          )}
+          <ProductImage
+            src={product.image_url}
+            alt={product.name}
+            category={product.category}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="z-0 group-hover:scale-110 transition duration-500 ease-out"
+          />
         </div>
 
         {/* Kategori */}

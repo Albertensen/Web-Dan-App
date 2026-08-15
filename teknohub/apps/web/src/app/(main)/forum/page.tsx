@@ -135,11 +135,23 @@ export default async function ForumPage({ searchParams }: ForumPageProps) {
           ))}
         </div>
       ) : (
-        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
-          <p className="text-lg font-medium text-tertiary">Belum ada thread</p>
-          <p className="text-sm text-slate-500 mt-1">
-            Jadilah yang pertama memulai diskusi!
-          </p>
+        <div className="flex flex-col items-center justify-center gap-5 text-center py-16 px-6 border border-dashed border-slate-300 rounded-2xl bg-surface-2/40">
+          <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-slate-400 shadow-sm border border-slate-300">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-11 h-11">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight">Belum ada thread</h2>
+            <p className="text-muted text-sm mt-1">Jadilah yang pertama memulai diskusi di forum ini</p>
+          </div>
+          <Link
+            href="/forum/new"
+            className="bg-accent hover:bg-accent-secondary text-white px-8 py-3 rounded-full font-semibold transition shadow-sm"
+          >
+            + Buat Thread Pertama
+          </Link>
         </div>
       )}
     </main>
