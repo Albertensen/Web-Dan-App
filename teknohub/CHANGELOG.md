@@ -2,6 +2,26 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-15] — Auth UI Overhaul & Perbaikan OAuth/Avatar
+
+### Added
+- AuthSlider split-screen: panel biru ajakan + form putih, tinggi kartu tetap (min-h 840 mobile / 720 desktop), tanpa elemen bertumpuk
+- Logo TeknoZone clickable (Link ke `/`) di panel biru halaman login/register
+- Skeleton tombol Masuk/Daftar presisi (2 pill 64×30) — cegah layout shift saat session loading
+- Avatar fallback inisial 2 huruf (mis. "AE" dari "Albert Ensen") — lingkaran navy rapi saat foto gagal/tidak tersedia
+
+### Changed
+- Foto profil Google kini tersimpan di JWT dan direstore ke session (`jwt`/`session` callback) — avatar tampil setelah login OAuth
+- Tautan ganda "Belum/Sudah punya akun?" dihapus dari bawah form; aksi pindah form via tombol panel biru
+- MobileDrawer: avatar bulat object-cover + fallback inisial
+
+### Fixed
+- Google OAuth `redirect_uri_mismatch`: NEXTAUTH_URL Vercel dikoreksi ke `https://teknohub-web.vercel.app` (sebelumnya `http://localhost:3000`)
+- Kredensial Google OAuth diperbarui (client ID/secret baru) — client lama tidak ditemukan di Google Cloud
+- Avatar desktop & mobile: wrapper square 32×32 `shrink-0 overflow-hidden` + `object-cover`, tanpa distorsi
+- Vercel sensitive env: PATCH tidak mengubah value — perlu delete + re-create via CLI
+
+
 ## [2026-08-15] — Fase 6D Tuntas (UI Overhaul & Polish)
 
 ### Added

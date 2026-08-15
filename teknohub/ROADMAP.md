@@ -117,6 +117,16 @@ Status: ✅ Tuntas
 
 ---
 
+### UI Auth & Avatar (2026-08-15)
+- [x] AuthSlider — kartu split-screen 2 kolom (panel biru kiri + form putih kanan), tinggi tetap, tanpa overlap
+- [x] Responsif mobile: stack vertikal + toggle teks "Belum punya akun? Daftar"
+- [x] Logo TeknoZone clickable (Link ke /) di atas panel biru
+- [x] Skeleton tombol auth ukuran presisi (2 pill 64x30) — tanpa layout shift saat load
+- [x] Avatar profil: lingkaran 32x32 object-cover; fallback inisial 2 huruf (mis. "AE") saat foto gagal/tidak ada
+- [x] Foto Google tersimpan di JWT/session (jwt/session callback) — avatar tampil setelah login OAuth
+- [x] Google OAuth: kredensial baru (client ID/secret) di Vercel; NEXTAUTH_URL = https://teknohub-web.vercel.app
+- [x] Hapus elemen ganda "Belum/Sudah punya akun?" dari bawah form (pindah ke panel biru)
+
 ## FASE 3 — E-Commerce
 Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans akun)
 
