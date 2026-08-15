@@ -14,7 +14,7 @@ export default async function RegisterPage() {
 
   return (
     <div className="w-full flex justify-center">
-      <AuthSlider />
+      <AuthSlider initialMode="register" />
     </div>
   );
 }
