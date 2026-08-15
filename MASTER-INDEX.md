@@ -19,6 +19,31 @@
 2. Cek git status (repo /home/myhomeai/TEKNOHUB)
 3. Mulai dari next action di ROADMAP.md
 
+## Hybrid Agent Workflow (Hemat Token Utama)
+
+Delegasikan tugas repetitif/terisolasi ke sub-agent lokal Ollama (ornith:9b) via modul `ollama_agent/`.
+
+**Panggil dari Python:**
+```python
+import sys; sys.path.insert(0, "/home/myhomeai/TEKNOHUB")
+import ollama_agent
+hasil = ollama_agent.run("prompt...")   # ~50 detik per call
+```
+
+**CLI:**
+```bash
+python -m ollama_agent "prompt"
+python -m ollama_agent --file input.txt
+```
+
+**Tugas yang Didelegasikan ke Ornith 9B:**
+- Mock data JSON (katalog produk, ulasan, data forum)
+- SEO on-page: draf meta title/description, OpenGraph, deskripsi produk
+- Fungsi utilitas & validasi form sederhana (email, telepon, password)
+- Dokumentasi & konfigurasi: .env.example, ringkasan fungsi, komentar kode
+
+**Wajib: validasi hasil sebelum integrasi** — cek sintaks + `npx tsc --noEmit` di `teknohub/apps/web` agar lolos build. Ornith = penulis draft, Prime Agent = reviewer/pengintegrasi.
+
 ## Cara Sync ke GitHub
 
 - Manual: `git add <file-spesifik> && git commit -m "pesan" && git pull --rebase && git push`

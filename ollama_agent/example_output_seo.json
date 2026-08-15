@@ -1,0 +1,22 @@
+[
+  {
+    "name": "RTX 4060 Gaming GPU",
+    "harga": 4599000,
+    "kategori": "gpu",
+    "meta_title": "RTX 4060 - GPU Gaming Performa Tinggi | Harga Terbaik",
+    "meta_description": "GPU gaming RTX 4060 dengan arsitektur Ada Lovelace. Cocok untuk gaming 1080p dan editing ringan. Beli sekarang!",
+    "og_title": "RTX 4060 Gaming GPU - Performa Maksimal",
+    "og_description": "Upgrade PC gaming Anda dengan RTX 4060. Ray tracing, DLSS 3, dan performa stabil untuk game AAA terbaru.",
+    "deskripsi_produk": "RTX 4060 hadir dengan arsitektur Ada Lovelace yang dioptimalkan untuk gaming 1080p dengan ray tracing dan DLSS 3. Cocok untuk build PC gaming entry-level hingga mid-range."
+  },
+  {
+    "name": "Ryzen 7 7800X3D Processor",
+    "harga": 6199000,
+    "kategori": "cpu",
+    "meta_title": "Ryzen 7 7800X3D - CPU Gaming Terbaik 2024 | Ryzen 7",
+    "meta_description": "Processor gaming kelas atas dengan 3D V-Cache. Performa single-core terbaik untuk FPS game. Cocok untuk build PC gaming premium.",
+    "og_title": "Ryzen 7 7800X3D - Raja Gaming",
+    "og_description": "CPU gaming paling kuat saat ini berkat teknologi 3D V-Cache AMD. Dominasi di semua genre game dengan clock speed tinggi dan efisiensi daya.",
+    "deskripsi_produk": "Ryzen 7 7800X3D menggabungkan arsitektur Zen 4 dengan 3D V-Cache untuk performa gaming single-core terbaik di kelasnya. Ideal untuk build PC gaming premium yang mengejar FPS maksimal."
+  }
+]
