@@ -63,7 +63,10 @@ export default function Navbar() {
 
             {/* Auth: skeleton saat loading (FIX BUG 1 — cegah FOUC) */}
             {status === "loading" ? (
-              <div className="w-24 md:w-40 h-9 rounded-full animate-pulse bg-slate-200" />
+              <div className="hidden md:flex items-center gap-2" aria-hidden="true">
+                <div className="w-[64px] h-[30px] rounded-full animate-pulse bg-slate-200" />
+                <div className="w-[64px] h-[30px] rounded-full animate-pulse bg-slate-200" />
+              </div>
             ) : status === "authenticated" ? (
               <div className="hidden md:block">
                 <UserDropdown />
