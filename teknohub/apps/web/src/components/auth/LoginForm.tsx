@@ -141,16 +141,7 @@ export default function LoginForm() {
         Lanjutkan dengan Google
       </button>
 
-      <p className="text-center text-sm text-muted">
-        Belum punya akun?{" "}
-        <a
-          href="/register"
-          className="group inline-flex items-center gap-1 text-accent font-medium hover:text-accent-secondary transition-colors"
-        >
-          Daftar
-          <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>
-        </a>
-      </p>
+      
     </form>
   );
 }
