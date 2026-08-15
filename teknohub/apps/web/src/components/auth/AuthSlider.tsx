@@ -5,37 +5,51 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
 /**
- * AuthSlider — split-screen auth, kartu tinggi tetap (min-h), panel biru geser,
- * tanpa elemen ganda. Mobile: stack rapi.
+ * AuthSlider — kartu auth dua panel (biru + putih), tinggi fleksibel mengikuti form terpanjang.
+ * Desktop: 2 kolom (biru kiri, form kanan), toggle via tombol di panel biru.
+ * Mobile: stack vertikal, panel biru ringkas di atas, toggle teks di bawah form.
+ * Tidak ada overflow/scroll internal; bingkai stabil di kedua mode.
  */
 export default function AuthSlider({ initialMode = "login" }: { initialMode?: "login" | "register" }) {
   const [mode, setMode] = useState<"login" | "register">(initialMode);
   const loginActive = mode === "login";
 
   return (
-    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[640px] lg:min-h-[560px] overflow-hidden rounded-3xl border border-slate-300 shadow-2xl">
-      {/* Panel kanan (form) */}
-      <section className="order-1 lg:order-2 bg-surface flex items-stretch">
-        <div className="w-full overflow-y-auto max-h-[640px] lg:max-h-[560px] p-6 sm:p-10 lg:p-12">
-          <div key={mode} className={`w-full max-w-md mx-auto ${loginActive ? "animate-page-in-right" : "animate-page-in-left"}`}>
-            {loginActive ? (
-              <>
-                <h1 className="text-2xl font-extrabold tracking-tight mb-1">Selamat datang kembali</h1>
-                <p className="text-sm text-muted mb-6">Masuk untuk lanjut ke marketplace, forum, dan PC Builder.</p>
-                <LoginForm />
-              </>
-            ) : (
-              <>
-                <h1 className="text-2xl font-extrabold tracking-tight mb-1">Buat akun baru</h1>
-                <p className="text-sm text-muted mb-6">Bergabung dengan komunitas TeknoZone — gratis, 1 menit.</p>
-                <RegisterForm />
-              </>
-            )}
-          </div>
+    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 overflow-hidden rounded-3xl border border-slate-300 shadow-2xl bg-surface">
+      {/* Panel form */}
+      <section className="order-1 lg:order-2 flex items-center p-6 sm:p-10 lg:p-14">
+        <div key={mode} className={`w-full max-w-md mx-auto ${loginActive ? "animate-page-in-right" : "animate-page-in-left"}`}>
+          {loginActive ? (
+            <>
+              <h1 className="text-2xl font-extrabold tracking-tight mb-1">Selamat datang kembali</h1>
+              <p className="text-sm text-muted mb-6">Masuk untuk lanjut ke marketplace, forum, dan PC Builder.</p>
+              <LoginForm />
+              {/* Toggle teks — mobile only */}
+              <p className="lg:hidden text-center text-sm text-muted mt-6">
+                Belum punya akun?{" "}
+                <button type="button" onClick={() => setMode("register")} className="text-accent font-medium hover:underline">
+                  Daftar
+                </button>
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-2xl font-extrabold tracking-tight mb-1">Buat akun baru</h1>
+              <p className="text-sm text-muted mb-6">Bergabung dengan komunitas TeknoZone — gratis, 1 menit.</p>
+              <RegisterForm />
+              {/* Toggle teks — mobile only */}
+              <p className="lg:hidden text-center text-sm text-muted mt-6">
+                Sudah punya akun?{" "}
+                <button type="button" onClick={() => setMode("login")} className="text-accent font-medium hover:underline">
+                  Masuk
+                </button>
+              </p>
+            </>
+          )}
         </div>
       </section>
 
-      {/* Panel kiri (biru) */}
+      {/* Panel biru */}
       <aside className="order-2 lg:order-1 flex flex-col justify-center p-8 sm:p-10 lg:p-14 text-white relative overflow-hidden"
         style={{ background: "linear-gradient(135deg, #0B1F45 0%, #1E3A6E 60%, #2563EB 100%)" }}>
         <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
@@ -46,7 +60,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
           </h2>
           <p className="text-slate-200 text-sm leading-relaxed mb-8">
             {loginActive
-              ? "Belum punya akun? Daftar gratis dan mulai rakit PC, belanja komponen, dan diskusi di forum."
+              ? "Daftar gratis dan mulai rakit PC, belanja komponen, dan diskusi di forum."
               : "Masuk kembali untuk melanjutkan aktivitasmu di TeknoZone."}
           </p>
           <button
