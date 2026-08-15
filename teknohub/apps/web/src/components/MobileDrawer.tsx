@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 
 interface MobileDrawerProps {
@@ -11,6 +12,14 @@ interface MobileDrawerProps {
 /** Drawer slide-in dari kiri utk mobile (<768px) — dgn overlay backdrop */
 export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
   const { data: session, status } = useSession();
+  const [imgError, setImgError] = useState(false);
+  const name = session?.user?.name ?? session?.user?.email?.split("@")[0] ?? "User";
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p.charAt(0).toUpperCase())
+    .join("") || name.charAt(0).toUpperCase();
 
   return (
     <>
@@ -55,14 +64,25 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           ) : status === "authenticated" ? (
             <>
               <div className="flex items-center gap-3 px-2 py-1.5">
-                <span className="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-200 border border-slate-300">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={session?.user?.image ?? "/default-avatar.png"}
-                    alt="Avatar"
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </span>
+                {imgError ? (
+                  <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold tracking-wide">
+                    {initials}
+                  </span>
+                ) : session?.user?.image ? (
+                  <span className="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-200 border border-slate-300">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={session?.user?.image}
+                      alt="Avatar"
+                      onError={() => setImgError(true)}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  </span>
+                ) : (
+                  <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold tracking-wide">
+                    {initials}
+                  </span>
+                )}
                 <span className="text-sm font-semibold text-foreground truncate">
                   {session?.user?.name}
                 </span>

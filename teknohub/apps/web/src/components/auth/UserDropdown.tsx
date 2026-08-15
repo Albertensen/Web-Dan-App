@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function UserDropdown() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,7 +21,12 @@ export default function UserDropdown() {
 
   if (!session?.user) return null;
   const name = session.user.name ?? session.user.email?.split("@")[0] ?? "User";
-  const initial = name.charAt(0).toUpperCase();
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p.charAt(0).toUpperCase())
+    .join("") || name.charAt(0).toUpperCase();
 
   return (
     <div className="relative" ref={ref}>
@@ -30,7 +36,11 @@ export default function UserDropdown() {
         aria-label="Menu akun"
         aria-expanded={open}
       >
-        {session.user.image ? (
+        {imgError ? (
+          <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold tracking-wide">
+            {initials}
+          </span>
+        ) : session.user.image ? (
           <span className="w-8 h-8 shrink-0 rounded-full overflow-hidden border border-border">
             <Image
               src={session.user.image}
@@ -38,12 +48,13 @@ export default function UserDropdown() {
               width={32}
               height={32}
               sizes="32px"
+              onError={() => setImgError(true)}
               className="w-full h-full rounded-full object-cover"
             />
           </span>
         ) : (
-          <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-sm font-bold">
-            {initial}
+          <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-xs font-bold tracking-wide">
+            {initials}
           </span>
         )}
         <span className="hidden sm:block text-sm font-semibold max-w-[8rem] truncate">
