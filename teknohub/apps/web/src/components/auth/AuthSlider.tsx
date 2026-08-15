@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
@@ -55,6 +56,12 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
         <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-zone-blue/40 blur-3xl" />
         <div className="relative z-10 text-center lg:text-left">
+          <Link href="/" className="inline-flex items-center gap-2 mb-8 hover:opacity-90 transition-opacity">
+            <span className="w-4 h-4 bg-white rounded-full" />
+            <span className="text-2xl font-extrabold tracking-tight">
+              Tekno<span className="text-zone-blue">Zone</span>
+            </span>
+          </Link>
           <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mb-4">
             {loginActive ? "Halo, Sobat Tekno!" : "Sudah punya akun?"}
           </h2>
