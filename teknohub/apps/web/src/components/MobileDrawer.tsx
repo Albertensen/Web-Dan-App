@@ -55,12 +55,14 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
           ) : status === "authenticated" ? (
             <>
               <div className="flex items-center gap-3 px-2 py-1.5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={session?.user?.image ?? "/default-avatar.png"}
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full bg-slate-200"
-                />
+                <span className="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-200 border border-slate-300">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={session?.user?.image ?? "/default-avatar.png"}
+                    alt="Avatar"
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                </span>
                 <span className="text-sm font-semibold text-foreground truncate">
                   {session?.user?.name}
                 </span>
