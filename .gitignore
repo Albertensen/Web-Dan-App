@@ -17,3 +17,6 @@ agent_memory.db
 # Python
 __pycache__/
 *.pyc
+
+# Ollama agent cache
+ollama_agent/.cache/
