@@ -36,13 +36,18 @@ python -m ollama_agent "prompt"
 python -m ollama_agent --file input.txt
 ```
 
-**Tugas yang Didelegasikan ke Ornith 9B:**
-- Mock data JSON (katalog produk, ulasan, data forum)
-- SEO on-page: draf meta title/description, OpenGraph, deskripsi produk
-- Fungsi utilitas & validasi form sederhana (email, telepon, password)
-- Dokumentasi & konfigurasi: .env.example, ringkasan fungsi, komentar kode
+**Tugas yang Didelegasikan ke Ornith 9B (terverifikasi):**
+- Mock data JSON (katalog produk, ulasan, data forum) — `agent.mock_data(...)`
+- SEO on-page 1 produk: meta title/description, OpenGraph, deskripsi — `agent.seo_copy(...)`
+- Ekstraksi data teks → JSON — `agent.extract(...)`
+- Format ulang teks/markdown — `agent.format(...)`
+- Draf dokumentasi singkat — `agent.docs(...)` (review wajib)
 
-**Wajib: validasi hasil sebelum integrasi** — cek sintaks + `npx tsc --noEmit` di `teknohub/apps/web` agar lolos build. Ornith = penulis draft, Prime Agent = reviewer/pengintegrasi.
+**JANGAN delegasikan ke Ornith:**
+- Kode multi-fungsi / >20 baris (validator, boilerplate) — model rusak sintaks (`from`/`=` hilang), tidak lolos tsc
+- Logika bisnis inti, auth, payment, security — selalu Prime Agent
+
+**Wajib: validasi hasil sebelum integrasi** — cek sintaks + `npx tsc --noEmit` di `teknohub/apps/web`. Ornith = penulis draft, Prime Agent = reviewer/pengintegrasi. Cache aktif (hash prompt) — prompt identik = instant.
 
 ## Cara Sync ke GitHub
 
