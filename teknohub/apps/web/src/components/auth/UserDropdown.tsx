@@ -31,16 +31,18 @@ export default function UserDropdown() {
         aria-expanded={open}
       >
         {session.user.image ? (
-          <Image
-            src={session.user.image}
-            alt={name}
-            width={32}
-            height={32}
-            sizes="32px"
-            className="w-8 h-8 rounded-full object-cover border border-border"
-          />
+          <span className="w-8 h-8 shrink-0 rounded-full overflow-hidden border border-border">
+            <Image
+              src={session.user.image}
+              alt={name}
+              width={32}
+              height={32}
+              sizes="32px"
+              className="w-full h-full rounded-full object-cover"
+            />
+          </span>
         ) : (
-          <span className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center text-sm font-bold">
+          <span className="w-8 h-8 shrink-0 rounded-full bg-accent text-white flex items-center justify-center text-sm font-bold">
             {initial}
           </span>
         )}
