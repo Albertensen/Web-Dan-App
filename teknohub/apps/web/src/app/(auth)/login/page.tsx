@@ -13,7 +13,7 @@ export default async function LoginPage() {
   if (session) redirect("/");
 
   return (
-    <div>
+    <div className="animate-page-in-right">
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight mb-2">Selamat datang kembali 👋</h1>
         <p className="text-sm text-muted">

@@ -51,12 +51,22 @@ const config: Config = {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(-4px)" },
         },
+        pageInRight: {
+          "0%": { opacity: "0", transform: "translateX(48px) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translateX(0) scale(1)" },
+        },
+        pageInLeft: {
+          "0%": { opacity: "0", transform: "translateX(-48px) scale(0.98)" },
+          "100%": { opacity: "1", transform: "translateX(0) scale(1)" },
+        },
       },
       animation: {
         "fade-in-up": "fadeInUp 0.5s ease forwards",
         "glow-pulse": "glowPulse 2s infinite",
         shimmer: "shimmer 1.5s infinite",
         "card-lift": "cardLift 0.2s ease forwards",
+        "page-in-right": "pageInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "page-in-left": "pageInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
     },
   },

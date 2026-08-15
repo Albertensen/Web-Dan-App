@@ -13,7 +13,7 @@ export default async function RegisterPage() {
   if (session) redirect("/");
 
   return (
-    <div>
+    <div className="animate-page-in-left">
       <div className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight mb-2">Buat akun baru ✨</h1>
         <p className="text-sm text-muted">
