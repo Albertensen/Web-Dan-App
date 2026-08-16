@@ -71,7 +71,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
   const sold = reviews.length * 10 + 37;
 
   const fmtDate = (iso: string) =>
-    new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short", year: "numeric" }).format(new Date(iso));
+    new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
 
   return (
     <div className="space-y-6">

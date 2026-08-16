@@ -16,6 +16,7 @@ interface Product {
   brand: string | null;
   description?: string | null;
   original_price?: number | null;
+  reviews?: { rating: number }[];
 }
 
 interface ProductCardProps {
@@ -76,6 +77,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   const discountPercent = hasDiscount
     ? Math.round(((product.original_price! - product.price) / product.original_price!) * 100)
     : 0;
+
+  const reviews = product.reviews ?? [];
+  const avgRating = reviews.length
+    ? Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1))
+    : 0;
+  const totalReviews = reviews.length;
 
   const outOfStock = product.stock <= 0;
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
@@ -138,10 +145,16 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="flex items-center gap-1 text-[11px] mt-2 border-t border-slate-100 dark:border-slate-800 pt-2">
         <div className="flex items-center gap-0.5 shrink-0">
           {[1, 2, 3, 4, 5].map((i) => (
-            <Star key={i} size={12} className="fill-amber-400 text-amber-400" />
+            <Star
+              key={i}
+              size={12}
+              className={i <= Math.round(avgRating) ? "fill-amber-400 text-amber-400" : "text-slate-300"}
+            />
           ))}
         </div>
-        <span className="text-tertiary font-medium">4.9 · Jakarta Barat · Garansi Resmi</span>
+        <span className="text-tertiary font-medium">
+          {reviews.length ? `${avgRating} · ${totalReviews} ulasan · Garansi Resmi` : "Belum ada ulasan · Garansi Resmi"}
+        </span>
         {outOfStock && (
           <span className="ml-auto text-[10px] font-bold text-red-500">Stok Habis</span>
         )}

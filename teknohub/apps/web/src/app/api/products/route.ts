@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   let query = supabase
     .from("products")
-    .select("name, slug, price, stock, image_url, category, brand, description, created_at")
+    .select("id, name, slug, price, stock, image_url, category, brand, description, created_at")
     .eq("is_active", true);
 
   if (category) {
@@ -39,5 +39,28 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ data: data ?? [] });
+  const prods = data ?? [];
+
+  // Bawa rating + jumlah ulasan per produk dari product_reviews
+  let reviewsByProduct: Record<string, { rating: number }[]> = {};
+  if (prods.length > 0) {
+    const ids = prods.map((p) => p.id);
+    const { data: reviews } = await supabase
+      .from("product_reviews")
+      .select("product_id, rating")
+      .in("product_id", ids);
+    if (reviews) {
+      reviewsByProduct = reviews.reduce<Record<string, { rating: number }[]>>((acc, r) => {
+        (acc[r.product_id] = acc[r.product_id] ?? []).push({ rating: r.rating });
+        return acc;
+      }, {});
+    }
+  }
+
+  const enriched = prods.map((p) => ({
+    ...p,
+    reviews: reviewsByProduct[p.id] ?? [],
+  }));
+
+  return NextResponse.json({ data: enriched });
 }

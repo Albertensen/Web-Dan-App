@@ -42,17 +42,18 @@ export default function StickyBuyBar({ product }: { product: StickyProduct }) {
       <button
         onClick={() => add(false)}
         disabled={out}
-        className="flex items-center gap-1.5 px-3 py-2.5 rounded-full border border-slate-300 text-foreground text-xs font-bold shrink-0 disabled:opacity-50"
+        className="flex items-center gap-1.5 px-3 py-2.5 rounded-full border border-slate-300 text-foreground text-xs font-bold shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {added ? <Check size={14} className="text-emerald-500" /> : <ShoppingCart size={14} />}
-        {added ? "Ditambah" : "+ Keranjang"}
+        {out ? null : added ? <Check size={14} className="text-emerald-500" /> : <ShoppingCart size={14} />}
+        {out ? "Stok Habis" : added ? "Ditambah" : "+ Keranjang"}
       </button>
       <button
         onClick={() => add(true)}
         disabled={out}
-        className="flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-accent text-white text-xs font-bold shrink-0 disabled:opacity-50"
+        className="flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-accent text-white text-xs font-bold shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Zap size={14} /> Beli Sekarang
+        {out ? null : <><Zap size={14} /> Beli Sekarang</>}
+        {out && "Stok Habis"}
       </button>
     </div>
   );
