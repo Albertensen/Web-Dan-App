@@ -7,6 +7,7 @@ import AddToCartButton from "@/components/AddToCartButton";
 import ProductReviews from "@/components/ProductReviews";
 import ProductGallery from "@/components/ProductGallery";
 import StickyBuyBar from "@/components/StickyBuyBar";
+import ShareButton from "@/components/ShareButton";
 
 export const dynamic = "force-dynamic";
 
@@ -105,7 +106,10 @@ export default async function ProductPage({ params }: ProductProps) {
 
 {/* Right Column: Details and CTA */}
         <div className="col-span-1 space-y-6">
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground">{product.name}</h1>
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground">{product.name}</h1>
+            <div className="shrink-0 mt-1"><ShareButton /></div>
+          </div>
 
                     <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                       <p className="text-sm sm:text-lg text-accent font-medium">Brand: {product.brand || "Unknown"}</p>
@@ -125,6 +129,27 @@ export default async function ProductPage({ params }: ProductProps) {
           <div className="pt-4 border-t border-border">
             <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
             <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
+          </div>
+          <div className="pt-4 border-t border-border">
+            <h2 className="text-xl font-semibold mb-3 text-muted">Spesifikasi Teknis</h2>
+            <div className="overflow-x-auto rounded-2xl border border-border">
+              <table className="w-full text-sm">
+                <tbody>
+                  {[
+                    ["Merek / Brand", product.brand || "—"],
+                    ["Kategori", product.category ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : "—"],
+                    ["ID Produk", product.id],
+                    ["Stok Tersedia", String(product.stock)],
+                    ["Harga", formattedPrice],
+                  ].map(([k, v], idx) => (
+                    <tr key={k} className={idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}>
+                      <td className="px-4 py-2.5 font-medium text-muted w-1/3 align-top">{k}</td>
+                      <td className="px-4 py-2.5 text-foreground">{v}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="pt-6">

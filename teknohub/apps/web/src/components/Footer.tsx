@@ -72,21 +72,28 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Trust badges — metode pembayaran & logistik */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-[10px] font-semibold text-tertiary">
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">QRIS</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">BCA VA</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Mandiri VA</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">BNI VA</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">GoPay</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">OVO</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">DANA</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Visa</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Mastercard</span>
-          <span className="w-px h-4 bg-slate-200 mx-1" />
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">JNE</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">SiCepat</span>
-          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">GoSend</span>
+        {/* Trust badges — metode pembayaran & jasa pengiriman */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-border pt-6">
+          <div>
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-foreground mb-3">Metode Pembayaran</h3>
+            <div className="flex flex-wrap items-center gap-2">
+              {["QRIS","BCA","Mandiri","BNI","GoPay","OVO","DANA"].map((b) => (
+                <span key={b} className="h-8 px-2.5 py-1 bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs">
+                  {b}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-foreground mb-3">Jasa Pengiriman</h3>
+            <div className="flex flex-wrap items-center gap-2">
+              {["JNE","SiCepat","GoSend"].map((b) => (
+                <span key={b} className="h-8 px-2.5 py-1 bg-white dark:bg-slate-800 rounded-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-xs font-medium text-slate-700 dark:text-slate-300 shadow-xs">
+                  {b}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
