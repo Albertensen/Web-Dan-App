@@ -14,20 +14,20 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     role === "admin"
       ? "Super Admin"
       : role === "marketplace"
-      ? "Staff Marketplace"
+      ? "Staff Toko"
       : role === "moderator"
       ? "Moderator"
       : "Member (Akses Toko)";
 
   return (
-    <div className="flex min-h-[calc(100vh-10rem)] bg-slate-100">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-10rem)] bg-slate-100 w-full overflow-x-hidden">
       <AdminSidebar userRole={role} />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 w-full">
         <AdminHeader
-          title="Portal Toko & Back-Office"
-          subtitle={`Akses: ${roleLabel}`}
+          title="Portal Toko &amp; Manajemen"
+          subtitle={`Status: ${roleLabel}`}
         />
-        <div className="flex-1 overflow-y-auto">{children}</div>
+        <div className="flex-1 overflow-y-auto w-full">{children}</div>
       </div>
     </div>
   );

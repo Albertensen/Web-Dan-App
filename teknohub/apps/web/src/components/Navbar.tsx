@@ -18,15 +18,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-background border-b border-border-soft">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-6">
         {/* Logo 2 warna + tagline di bawahnya */}
-        <div className="flex flex-col shrink-0">
-          <Link href="/" className="text-2xl font-extrabold tracking-tight flex items-center gap-2.5">
-            <span className="w-3.5 h-3.5 bg-zone-blue rounded-full" />
-            <span>
+        <div className="flex flex-col shrink-0 max-w-[180px] sm:max-w-none">
+          <Link href="/" className="text-xl sm:text-2xl font-extrabold tracking-tight flex items-center gap-2">
+            <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 bg-zone-blue rounded-full shrink-0" />
+            <span className="truncate">
               <span className="text-accent">Tekno</span>
               <span className="text-zone-blue">Zone</span>
             </span>
           </Link>
-          <span className="text-[10px] font-semibold text-muted tracking-wide mt-0.5">
+          <span className="hidden sm:block text-[10px] font-semibold text-muted tracking-wide mt-0.5 truncate">
             Pusat Hardware &amp; Komunitas Terpercaya
           </span>
         </div>

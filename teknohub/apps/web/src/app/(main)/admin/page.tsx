@@ -19,18 +19,14 @@ export default async function AdminDashboardPage() {
   const isAdmin = role === "admin";
   const db = getServiceClient();
 
-  const [ordersRes, quotesRes, threadsRes, reportsRes, productsRes] = await Promise.all([
+  const [ordersRes, quotesRes, productsRes] = await Promise.all([
     db.from("orders").select("id, status, total_amount, created_at"),
     isAdmin ? db.from("build_quotes").select("id, status") : Promise.resolve({ data: [] }),
-    db.from("threads").select("id, is_locked, created_at"),
-    db.from("reports").select("id, status"),
     db.from("products").select("id, name, stock, is_active").order("stock", { ascending: true }).limit(5),
   ]);
 
   const orders = ordersRes.data ?? [];
   const quotes = quotesRes.data ?? [];
-  const threads = threadsRes.data ?? [];
-  const reports = reportsRes.data ?? [];
   const products = productsRes.data ?? [];
 
   const revenue = orders
@@ -38,7 +34,6 @@ export default async function AdminDashboardPage() {
     .reduce((sum, o) => sum + Number(o.total_amount), 0);
   const activeOrders = orders.filter((o) => ["pending", "paid", "processing", "shipped"].includes(o.status)).length;
   const pendingQuotes = quotes.filter((q) => q.status === "pending").length;
-  const openReports = reports.filter((r) => r.status === "open").length;
   const criticalStock = products.filter((p) => p.stock <= 5);
 
   // Tren 7 hari terakhir (jumlah pesanan per hari)
@@ -53,52 +48,47 @@ export default async function AdminDashboardPage() {
   }
   const maxCount = Math.max(1, ...days.map((d) => d.count));
 
-  // Modul yang diizinkan untuk role ini
+  // Modul menu toko
   const modules = [
-    { href: "/admin/orders", label: "Pesanan", desc: "Kelola status & resi", icon: "📦" },
-    { href: "/admin/products", label: "Produk", desc: "Katalog & stok", icon: "🏷️" },
-    { href: "/admin/moderation", label: "Moderasi Forum", desc: "Report & thread", icon: "🛡️" },
-    { href: "/admin/reviews", label: "Ulasan Produk", desc: "Rating & review", icon: "⭐" },
+    { href: "/admin/orders", label: "Pesanan Toko", desc: "Kelola status & resi pengiriman", icon: "📦" },
+    { href: "/admin/products", label: "Katalog Produk", desc: "Kelola stok & harga produk", icon: "🏷️" },
+    { href: "/admin/reviews", label: "Ulasan Pembeli", desc: "Monitoring rating & ulasan", icon: "⭐" },
     ...(isAdmin ? [
-      { href: "/admin/components", label: "Komponen PC (Admin)", desc: "Scraper & harga", icon: "🧩" },
-      { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", desc: "Quote & invoice", icon: "📋" },
-      { href: "/admin/users", label: "Pengguna & Role (Admin)", desc: "Role, ban, audit", icon: "👥" },
+      { href: "/admin/components", label: "Komponen PC (Admin)", desc: "Database & scraper harga", icon: "🧩" },
+      { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", desc: "Quote AI & invoice PDF", icon: "📋" },
+      { href: "/admin/moderation", label: "Moderasi Forum (Admin)", desc: "Tindak laporan komunitas", icon: "🛡️" },
+      { href: "/admin/users", label: "Pengguna & Role (Admin)", desc: "Manajemen user & ban", icon: "👥" },
     ] : []),
   ];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto w-full">
+    <div className="p-4 sm:p-6 max-w-7xl mx-auto w-full">
       {/* KPI Cards */}
-      <div className={`grid gap-4 mb-6 ${isAdmin ? "grid-cols-2 md:grid-cols-4" : "grid-cols-1 sm:grid-cols-3"}`}>
+      <div className={`grid gap-4 mb-6 ${isAdmin ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-3" : "grid-cols-1 sm:grid-cols-2"}`}>
         <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
-          <p className="text-xs text-tertiary font-medium">Revenue Toko</p>
-          <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{formatIDR(revenue)}</p>
+          <p className="text-xs text-tertiary font-medium">Total Pendapatan (Revenue)</p>
+          <p className="text-lg sm:text-2xl font-extrabold text-foreground mt-1 truncate">{formatIDR(revenue)}</p>
           <p className="text-[11px] text-tertiary mt-1">dari {orders.length} pesanan</p>
         </div>
         <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
-          <p className="text-xs text-tertiary font-medium">Pesanan Aktif</p>
-          <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{activeOrders}</p>
+          <p className="text-xs text-tertiary font-medium">Pesanan Aktif Berjalan</p>
+          <p className="text-xl sm:text-2xl font-extrabold text-foreground mt-1">{activeOrders}</p>
           <Link href="/admin/orders" className="text-[11px] text-accent hover:underline">Kelola pesanan →</Link>
         </div>
         {isAdmin && (
           <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
             <p className="text-xs text-tertiary font-medium">Quote Rakit Pending</p>
-            <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{pendingQuotes}</p>
+            <p className="text-xl sm:text-2xl font-extrabold text-foreground mt-1">{pendingQuotes}</p>
             <Link href="/admin/quotes" className="text-[11px] text-accent hover:underline">Review quote →</Link>
           </div>
         )}
-        <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
-          <p className="text-xs text-tertiary font-medium">Laporan Forum</p>
-          <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{openReports}</p>
-          <Link href="/admin/moderation" className="text-[11px] text-accent hover:underline">Moderasi →</Link>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {/* Tren Transaksi */}
-        <div className="lg:col-span-2 bg-surface rounded-2xl border border-slate-300 p-5 shadow-sm">
-          <h2 className="font-bold text-foreground mb-4">Tren Transaksi (7 hari)</h2>
-          <div className="flex items-end gap-2 h-36">
+        <div className="lg:col-span-2 bg-surface rounded-2xl border border-slate-300 p-4 sm:p-5 shadow-sm">
+          <h2 className="font-bold text-foreground mb-4 text-sm sm:text-base">Tren Transaksi Pesanan (7 hari)</h2>
+          <div className="flex items-end gap-2 h-32 sm:h-36">
             {days.map((d) => (
               <div key={d.label} className="flex-1 flex flex-col items-center gap-1">
                 <span className="text-[10px] text-tertiary">{d.count}</span>
@@ -113,16 +103,16 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Alert Stok Kritis */}
-        <div className="bg-surface rounded-2xl border border-slate-300 p-5 shadow-sm">
-          <h2 className="font-bold text-foreground mb-4">⚠️ Stok Kritis</h2>
+        <div className="bg-surface rounded-2xl border border-slate-300 p-4 sm:p-5 shadow-sm">
+          <h2 className="font-bold text-foreground mb-4 text-sm sm:text-base">⚠️ Stok Kritis Produk</h2>
           {criticalStock.length === 0 ? (
-            <p className="text-sm text-tertiary">Semua stok aman.</p>
+            <p className="text-xs text-tertiary">Semua stok produk toko aman.</p>
           ) : (
             <ul className="space-y-2">
               {criticalStock.map((p) => (
-                <li key={p.id} className="flex items-center justify-between text-sm">
-                  <span className="truncate font-medium text-foreground">{p.name}</span>
-                  <span className={`shrink-0 ml-2 px-2 py-0.5 rounded-full text-[11px] font-bold ${
+                <li key={p.id} className="flex items-center justify-between text-xs">
+                  <span className="truncate font-medium text-foreground max-w-[140px] sm:max-w-xs">{p.name}</span>
+                  <span className={`shrink-0 ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold ${
                     p.stock <= 0 ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"
                   }`}>
                     {p.stock <= 0 ? "Habis" : `${p.stock} pcs`}
@@ -135,30 +125,23 @@ export default async function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* Feed Aktivitas Terbaru */}
-      <div className="bg-surface rounded-2xl border border-slate-300 p-5 shadow-sm mb-6">
-        <h2 className="font-bold text-foreground mb-4">Aktivitas Toko &amp; Forum</h2>
-        {orders.length === 0 && threads.length === 0 ? (
-          <p className="text-sm text-tertiary">Belum ada aktivitas.</p>
+      {/* Feed Aktivitas Pesanan Terbaru */}
+      <div className="bg-surface rounded-2xl border border-slate-300 p-4 sm:p-5 shadow-sm mb-6">
+        <h2 className="font-bold text-foreground mb-3 text-sm sm:text-base">Aktivitas Pesanan Masuk</h2>
+        {orders.length === 0 ? (
+          <p className="text-xs text-tertiary">Belum ada pesanan masuk.</p>
         ) : (
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2 text-xs">
             {[...orders.slice(-5)].reverse().map((o) => (
-              <li key={o.id} className="flex items-center gap-2 text-tertiary">
-                <span className="text-xs">🛒</span>
-                <span>Pesanan <b className="text-foreground">{formatIDR(Number(o.total_amount))}</b></span>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+              <li key={o.id} className="flex items-center gap-2 text-tertiary flex-wrap sm:flex-nowrap">
+                <span className="text-xs shrink-0">🛒</span>
+                <span className="truncate">Pesanan <b className="text-foreground">{formatIDR(Number(o.total_amount))}</b></span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${
                   o.status === "delivered" ? "bg-green-100 text-green-700"
                   : o.status === "cancelled" ? "bg-red-100 text-red-700"
                   : "bg-blue-100 text-blue-700"
                 }`}>{o.status}</span>
-                <span className="ml-auto text-[11px]">{(o.created_at ?? "").slice(0, 16).replace("T", " ")}</span>
-              </li>
-            ))}
-            {threads.slice(-3).reverse().map((t) => (
-              <li key={t.id} className="flex items-center gap-2 text-tertiary">
-                <span className="text-xs">💬</span>
-                <span>Thread {t.is_locked ? "dikunci" : "baru"}</span>
-                <span className="ml-auto text-[11px]">{(t.created_at ?? "").slice(0, 16).replace("T", " ")}</span>
+                <span className="ml-auto text-[11px] text-tertiary shrink-0">{(o.created_at ?? "").slice(0, 16).replace("T", " ")}</span>
               </li>
             ))}
           </ul>
@@ -166,12 +149,12 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Quick links menu */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {modules.map((s) => (
           <Link key={s.href} href={s.href} className="bg-surface border border-slate-300 rounded-2xl p-4 hover:border-accent hover:shadow-md transition group">
             <div className="text-2xl mb-2">{s.icon}</div>
-            <p className="font-semibold text-foreground text-sm group-hover:text-accent">{s.label}</p>
-            <p className="text-xs text-tertiary mt-0.5">{s.desc}</p>
+            <p className="font-semibold text-foreground text-xs sm:text-sm group-hover:text-accent">{s.label}</p>
+            <p className="text-[11px] text-tertiary mt-0.5">{s.desc}</p>
           </Link>
         ))}
       </div>
