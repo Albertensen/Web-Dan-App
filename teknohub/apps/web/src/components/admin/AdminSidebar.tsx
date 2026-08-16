@@ -51,7 +51,7 @@ export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
             {!collapsed && (
               <span className="truncate">
                 <span className="text-accent">Tekno</span>
-                <span className="text-zone-blue">Zone</span>
+                <span className="text-zone-blue">Hub</span>
                 <span className="text-[10px] block font-semibold text-tertiary">
                   {userRole === "admin" ? "SUPER ADMIN" : "PORTAL TOKO"}
                 </span>

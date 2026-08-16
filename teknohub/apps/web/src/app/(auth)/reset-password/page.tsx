@@ -2,8 +2,8 @@ import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
 import {  } from "lucide-react";
 
 export const metadata = {
-  title: "Reset Password — TeknoZone",
-  description: "Buat password baru untuk akun TeknoZone Anda.",
+  title: "Reset Password — TeknoHub",
+  description: "Buat password baru untuk akun TeknoHub Anda.",
 };
 
 export default function ResetPasswordPage() {

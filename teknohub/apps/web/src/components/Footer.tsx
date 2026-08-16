@@ -42,7 +42,7 @@ export default function Footer() {
               <span className="w-3.5 h-3.5 bg-zone-blue rounded-full" />
               <span>
                 <span className="text-accent">Tekno</span>
-                <span className="text-zone-blue">Zone</span>
+                <span className="text-zone-blue">Hub</span>
               </span>
             </Link>
             <p className="mt-3 text-xs sm:text-sm text-muted leading-relaxed max-w-xs">
@@ -98,7 +98,7 @@ export default function Footer() {
 
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[11px] text-tertiary">
-            © {new Date().getFullYear()} TeknoZone. Seluruh hak cipta dilindungi.
+            © {new Date().getFullYear()} TeknoHub. Seluruh hak cipta dilindungi.
           </p>
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <Link href="/terms" className="text-[11px] text-tertiary hover:text-accent transition">

@@ -2,7 +2,7 @@ import ForgotPasswordForm from "@/components/auth/ForgotPasswordForm";
 import {  } from "lucide-react";
 
 export const metadata = {
-  title: "Lupa Password — TeknoZone",
+  title: "Lupa Password — TeknoHub",
   description: "Kirim link reset password ke email Anda.",
 };
 

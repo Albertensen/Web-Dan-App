@@ -103,10 +103,10 @@ Status: 🟡 Dalam Penyempurnaan (Katalog, Media, Search & Payment)
 - [x] Halaman detail produk (PDP)
 - [x] Admin panel: CRUD produk (admin/products + API admin)
 - [x] Upload gambar ke Supabase Storage (bucket `product-images`)
-- [ ] **Fix Data Media Produk**: Isi URL gambar asli beresolusi tinggi di database (`image_url`) agar kartu produk & PDP tidak lagi menampilkan icon placeholder SVG
+- [x] **Fix Data Media Produk**: Isi URL gambar asli beresolusi tinggi di database (`image_url`) agar kartu produk & PDP tidak lagi menampilkan icon placeholder SVG
 - [x] **Fix Search Backend**: Perbaiki `/api/products?search=` agar melakukan pencarian case-insensitive pada kolom `name`, `brand`, `category`, dan `description` (agar keyword seperti "ASUS" atau "Laptop" memunculkan produk yang relevan)
-- [ ] **Filter Lanjutan**: Tambahkan filter Rentang Harga (Min-Max slider), Filter Brand (ASUS, Lenovo, Acer, Apple, Samsung, dll.), dan Filter Status Stok
-- [ ] **Sorting Produk**: Opsi pengurutan (Harga Terendah, Harga Tertinggi, Rating Tertinggi, Terpopuler, Produk Terbaru)
+- [x] **Filter Lanjutan**: Tambahkan filter Rentang Harga (Min-Max slider), Filter Brand (ASUS, Lenovo, Acer, Apple, Samsung, dll.), dan Filter Status Stok
+- [x] **Sorting Produk**: Opsi pengurutan (Harga Terendah, Harga Tertinggi, Rating Tertinggi, Terpopuler, Produk Terbaru)
 
 ### 3.2. Product Detail Page (PDP) Upgrade
 - [x] Tampilan spesifikasi teknis produk & badge garansi
@@ -179,11 +179,11 @@ Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 ### 6.1. Critical SEO Fixes
 - [x] **Fix Sitemap URL Mismatch**: Perbaiki `app/sitemap.ts` agar URL produk mengarah ke `/shop/products/[slug]` (bukan `/products/[slug]` yang menghasilkan 404)
 - [x] **Buat app/robots.ts**: Generate file `robots.txt` dinamis yang mengizinkan perayapan dan menunjuk ke sitemap resmi
-- [ ] **JSON-LD Schema Structured Data**:
+- [x] **JSON-LD Schema Structured Data**:
   - `schema.org/Product` pada semua halaman PDP
   - `schema.org/DiscussionForumPosting` pada halaman forum
   - `schema.org/BreadcrumbList` pada navigasi
-- [ ] **Keseragaman Brand**: Sinkronisasi nama platform (**TeknoZone** / **TeknoHub**) pada meta title, header, hero banner, dan footer
+- [x] **Keseragaman Brand**: Sinkronisasi nama platform (**TeknoZone** / **TeknoHub**) pada meta title, header, hero banner, dan footer
 
 ### 6.2. Performa & Optimasi Aset
 - [ ] Terapkan komponen `next/image` dengan format WebP/AVIF, responsive `sizes`, dan `placeholder="blur"` untuk optimasi LCP

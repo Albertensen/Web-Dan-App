@@ -10,6 +10,8 @@ interface ProductsPageProps {
     search?: string;
     min_price?: string;
     max_price?: string;
+    brands?: string;
+    in_stock?: string;
     sort?: string;
   };
 }
@@ -19,10 +21,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const search = searchParams.search || "";
   const minPrice = searchParams.min_price || "";
   const maxPrice = searchParams.max_price || "";
+  const brands = searchParams.brands || "";
+  const inStock = searchParams.in_stock || "";
   const sort = searchParams.sort || "relevance";
 
   const params = new URLSearchParams({
-    category, search, min_price: minPrice, max_price: maxPrice, sort,
+    category, search, min_price: minPrice, max_price: maxPrice, brands, in_stock: inStock, sort,
   });
   const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/products?${params.toString()}`;
 
@@ -49,7 +53,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <div className="flex gap-6 items-start">
         {/* Sidebar Filter (desktop) */}
         <div className="hidden lg:block w-64 shrink-0 sticky top-20">
-          <ProductFilter initialCategory={category} initialSearch={search} />
+          <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} />
         </div>
 
         <div className="flex-1 min-w-0">
@@ -61,7 +65,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             initialMaxPrice={maxPrice}
             initialSort={sort}
           >
-            <ProductFilter initialCategory={category} initialSearch={search} />
+            <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} />
           </FilterSortBar>
 
           {products.length > 0 ? (

@@ -36,7 +36,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
           ) : (
             <>
               <h1 className="text-2xl font-extrabold tracking-tight mb-1">Buat akun baru</h1>
-              <p className="text-sm text-muted mb-6">Bergabung dengan komunitas TeknoZone — gratis, 1 menit.</p>
+              <p className="text-sm text-muted mb-6">Bergabung dengan komunitas TeknoHub — gratis, 1 menit.</p>
               <RegisterForm />
               {/* Toggle teks — mobile only */}
               <p className="lg:hidden text-center text-sm text-muted mt-6">
@@ -59,7 +59,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
           <Link href="/" className="inline-flex items-center gap-2 mb-8 hover:opacity-90 transition-opacity">
             <span className="w-4 h-4 bg-white rounded-full" />
             <span className="text-2xl font-extrabold tracking-tight">
-              Tekno<span className="text-zone-blue">Zone</span>
+              Tekno<span className="text-zone-blue">Hub</span>
             </span>
           </Link>
           <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight mb-4">
@@ -68,7 +68,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
           <p className="text-slate-200 text-sm leading-relaxed mb-8">
             {loginActive
               ? "Daftar gratis dan mulai rakit PC, belanja komponen, dan diskusi di forum."
-              : "Masuk kembali untuk melanjutkan aktivitasmu di TeknoZone."}
+              : "Masuk kembali untuk melanjutkan aktivitasmu di TeknoHub."}
           </p>
           <button
             type="button"

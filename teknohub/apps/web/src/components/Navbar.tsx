@@ -26,7 +26,7 @@ export default function Navbar() {
               <span className="w-3.5 h-3.5 bg-zone-blue rounded-full shrink-0 shadow-sm" />
               <span>
                 <span className="text-accent">Tekno</span>
-                <span className="text-zone-blue">Zone</span>
+                <span className="text-zone-blue">Hub</span>
               </span>
             </Link>
             <span className="hidden md:block text-[10px] font-bold text-muted tracking-wide mt-0.5">

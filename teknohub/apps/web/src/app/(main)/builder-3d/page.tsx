@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Monitor } from "lucide-react";
 
 export const metadata = {
-  title: "AI 3D PC Builder — Tekno Zone",
+  title: "AI 3D PC Builder — TeknoHub",
   description:
     "Visualisasi 3D exploded view komponen PC: rakit, periksa kompatibilitas daya, dan cegah bottleneck.",
 };

@@ -175,7 +175,7 @@ export default async function Home() {
             Belanja Komponen, Konsultasi AI, dan Berbagi Pengalaman di Satu Tempat.
           </h2>
           <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
-            TeknoZone menghadirkan ekosistem terlengkap untuk antusias PC, gamer, dan kreator konten di Indonesia. Ditenagai algoritma kecerdasan buatan untuk meracik komponen tanpa khawatir bottleneck.
+            TeknoHub menghadirkan ekosistem terlengkap untuk antusias PC, gamer, dan kreator konten di Indonesia. Ditenagai algoritma kecerdasan buatan untuk meracik komponen tanpa khawatir bottleneck.
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/builder" className="px-6 py-3 rounded-full bg-white text-accent font-extrabold text-xs hover:bg-slate-100 transition shadow-lg">

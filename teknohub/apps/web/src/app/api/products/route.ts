@@ -4,8 +4,8 @@ import { supabase } from "@/lib/supabase/client";
 const SORT_MAP: Record<string, { col: string; asc: boolean }> = {
   price_asc: { col: "price", asc: true },
   price_desc: { col: "price", asc: false },
-  created_desc: { col: "created_at", asc: false },
-  created_asc: { col: "created_at", asc: true },
+  rating_desc: { col: "rating", asc: false },
+  latest: { col: "created_at", asc: false },
 };
 
 export async function GET(request: NextRequest) {
@@ -14,6 +14,8 @@ export async function GET(request: NextRequest) {
   const search = searchParams.get("search") || undefined;
   const minPrice = searchParams.get("min_price");
   const maxPrice = searchParams.get("max_price");
+  const brandsParam = searchParams.get("brands");
+  const inStock = searchParams.get("in_stock");
   const sort = searchParams.get("sort") || "relevance";
   const limit = Number(searchParams.get("limit")) || 50;
 
@@ -33,8 +35,16 @@ export async function GET(request: NextRequest) {
   }
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
+  if (brandsParam) {
+    const brands = brandsParam.split(",").map((b) => b.trim()).filter(Boolean);
+    if (brands.length) query = query.in("brand", brands);
+  }
+  if (inStock === "1") query = query.gt("stock", 0);
 
   const s = SORT_MAP[sort] ?? { col: "created_at", asc: false };
+
+  // rating_desc: fetch all then sort applied post-hoc (rating computed after)
+  // handled below; intermediate order harmless.
   const { data, error } = await query.order(s.col, { ascending: s.asc }).limit(limit);
 
   if (error) {
@@ -59,10 +69,18 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const enriched = prods.map((p) => ({
-    ...p,
-    reviews: reviewsByProduct[p.id] ?? [],
-  }));
+  const enriched = prods.map((p) => {
+    const rs = reviewsByProduct[p.id] ?? [];
+    return {
+      ...p,
+      reviews: rs,
+      avg_rating: rs.length ? Number((rs.reduce((sum, r) => sum + r.rating, 0) / rs.length).toFixed(1)) : 0,
+    };
+  });
+
+  if (sort === "rating_desc") {
+    enriched.sort((a, b) => b.avg_rating - a.avg_rating);
+  }
 
   return NextResponse.json({ data: enriched });
 }

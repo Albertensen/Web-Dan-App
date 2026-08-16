@@ -42,7 +42,25 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
   const currentUserId = session?.user?.id ?? undefined;
   const threadAuthorId = (thread.author_id as string) ?? undefined;
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://teknohub-web.vercel.app";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DiscussionForumPosting",
+    headline: thread.title ?? thread.subject ?? "Diskusi Forum",
+    author: { "@type": "Person", name: "TeknoHub Member" },
+    datePublished: thread.created_at ? new Date(thread.created_at).toISOString() : new Date().toISOString(),
+    text: thread.content ?? "",
+    discussionUrl: `${baseUrl}/forum/${category}/${id}`,
+    interactionStatistic: {
+      "@type": "InteractionCounter",
+      interactionType: "https://schema.org/CommentAction",
+      userInteractionCount: replies?.length ?? 0,
+    },
+  };
+
   return (
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
       {/* Breadcrumb */}
       <div className="text-sm text-tertiary mb-6 flex items-center gap-2">
@@ -94,5 +112,6 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }

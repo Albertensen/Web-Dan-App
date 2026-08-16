@@ -4,8 +4,8 @@ import { authOptions } from "@/lib/auth-options";
 import AuthSlider from "@/components/auth/AuthSlider";
 
 export const metadata = {
-  title: "Daftar — TeknoZone",
-  description: "Buat akun TeknoZone untuk belanja, berdiskusi, dan merakit PC.",
+  title: "Daftar — TeknoHub",
+  description: "Buat akun TeknoHub untuk belanja, berdiskusi, dan merakit PC.",
 };
 
 export default async function RegisterPage() {

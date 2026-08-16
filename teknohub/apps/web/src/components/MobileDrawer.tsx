@@ -46,7 +46,7 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
             <span className="w-3 h-3 bg-zone-blue rounded-full" />
             <span>
               <span className="text-accent">Tekno</span>
-              <span className="text-zone-blue">Zone</span>
+              <span className="text-zone-blue">Hub</span>
             </span>
           </Link>
           <button

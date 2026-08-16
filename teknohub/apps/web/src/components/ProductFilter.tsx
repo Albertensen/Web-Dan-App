@@ -9,6 +9,8 @@ interface Props {
   initialSearch?: string;
   initialMinPrice?: string;
   initialMaxPrice?: string;
+  initialBrands?: string;
+  initialInStock?: string;
 }
 
 interface CategoryNode {
@@ -16,6 +18,8 @@ interface CategoryNode {
   label: string;
   children?: CategoryNode[];
 }
+
+const BRANDS = ["ASUS","Lenovo","Acer","Apple","Samsung","MSI","Corsair","AMD","Intel","Kingston","NVIDIA","Xiaomi","LG"];
 
 const CATEGORY_TREE: CategoryNode[] = [
   { value: "", label: "Semua" },
@@ -30,7 +34,7 @@ const CATEGORY_TREE: CategoryNode[] = [
   { value: "psu", label: "PSU" },
 ];
 
-export default function ProductFilter({ initialCategory = "", initialSearch = "", initialMinPrice = "", initialMaxPrice = "" }: Props) {
+export default function ProductFilter({ initialCategory = "", initialSearch = "", initialMinPrice = "", initialMaxPrice = "", initialBrands = "", initialInStock = "" }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,7 +42,8 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
   const [term, setTerm] = useState(initialSearch);
   const [min, setMin] = useState(initialMinPrice);
   const [max, setMax] = useState(initialMaxPrice);
-  const [readyStock, setReadyStock] = useState(false);
+  const [readyStock, setReadyStock] = useState(initialInStock === "1");
+  const [brands, setBrands] = useState<string[]>(initialBrands ? initialBrands.split(",") : []);
 
   // sync URL -> state
   useEffect(() => {
@@ -46,17 +51,21 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
     setTerm(searchParams.get("search") || "");
     setMin(searchParams.get("min_price") || "");
     setMax(searchParams.get("max_price") || "");
+    setBrands(searchParams.get("brands") ? searchParams.get("brands")!.split(",") : []);
+    setReadyStock(searchParams.get("in_stock") === "1");
   }, [searchParams]);
 
-  const buildParams = (cat: string[] = cats, search: string = term, mn: string = min, mx: string = max) => {
+  const buildParams = (cat: string[] = cats, search: string = term, mn: string = min, mx: string = max, br: string[] = brands, st: boolean = readyStock) => {
     const p = new URLSearchParams(searchParams.toString());
     p.delete("category"); p.delete("search"); p.delete("min_price"); p.delete("max_price");
+    p.delete("brands"); p.delete("in_stock");
     const c = cat.join(",");
     if (c) p.set("category", c);
-    if (cat.length === 0) p.delete("category");
     if (search) p.set("search", search);
     if (mn) p.set("min_price", mn);
     if (mx) p.set("max_price", mx);
+    if (br.length) p.set("brands", br.join(","));
+    if (st) p.set("in_stock", "1");
     return p.toString();
   };
 
@@ -65,11 +74,16 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
   const toggleCat = (v: string) => {
     const next = v === "" ? [] : (ids.includes(v) ? ids.filter((x) => x !== v) : [...ids, v]);
     // hanya 1 kategori akif kotak centang? multi-select
-    push(buildParams(next, term, min, max));
+    push(buildParams(next, term, min, max, brands, readyStock));
   };
 
-  const aply = () => push(buildParams(cats, term, min, max));
-  const rset = () => { push(buildParams([], "", "", "")); };
+  const toggleBrand = (b: string) => {
+    const next = brands.includes(b) ? brands.filter((x) => x !== b) : [...brands, b];
+    push(buildParams(cats, term, min, max, next, readyStock));
+  };
+
+  const aply = () => push(buildParams(cats, term, min, max, brands, readyStock));
+  const rset = () => { push(buildParams([], "", "", "", [], false)); };
 
   // multi-select state: pakai cats yg mungkin comma-separated
   const ids = cats.join(",").split(",").filter(Boolean);
@@ -117,6 +131,24 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
             type="number" min={0} value={max} onChange={(e) => setMax(e.target.value)}
             placeholder="Max" className="w-1/2 p-2 border border-border rounded-lg bg-surface text-sm text-foreground"
           />
+        </div>
+      </div>
+
+      {/* Brand */}
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wider text-tertiary mb-2">Brand</p>
+        <div className="flex flex-wrap gap-1.5">
+          {BRANDS.map((b) => (
+            <button
+              key={b}
+              onClick={() => toggleBrand(b)}
+              className={`px-2.5 py-1 rounded-full text-[11px] font-semibold border transition ${
+                brands.includes(b) ? "bg-accent text-white border-accent" : "border-slate-300 text-muted hover:text-accent"
+              }`}
+            >
+              {b}
+            </button>
+          ))}
         </div>
       </div>
 

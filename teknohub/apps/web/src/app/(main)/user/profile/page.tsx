@@ -8,8 +8,8 @@ import ProfileStats from "@/components/profile/ProfileStats";
 import ProfileTabs from "@/components/profile/ProfileTabs";
 
 export const metadata = {
-  title: "Profil Saya — TeknoZone",
-  description: "Profil dan riwayat aktivitas pengguna TeknoZone.",
+  title: "Profil Saya — TeknoHub",
+  description: "Profil dan riwayat aktivitas pengguna TeknoHub.",
 };
 
 export const dynamic = "force-dynamic";

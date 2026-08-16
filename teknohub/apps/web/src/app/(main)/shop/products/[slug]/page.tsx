@@ -71,7 +71,28 @@ export default async function ProductPage({ params }: ProductProps) {
     .neq("id", product.id)
     .limit(4);
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://teknohub-web.vercel.app";
+  const availability = product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.image_url || undefined,
+    description: product.description || undefined,
+    brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "IDR",
+      price: Number(product.price),
+      availability,
+      itemCondition: "https://schema.org/NewCondition",
+      url: `${baseUrl}/shop/products/${product.slug}`,
+    },
+  };
+
   return (
+    <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8 pb-28 md:pb-12">
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="mb-8 flex items-center flex-wrap gap-2 text-sm text-tertiary">
@@ -187,5 +208,6 @@ export default async function ProductPage({ params }: ProductProps) {
 
       <StickyBuyBar product={{ id: product.id, name: product.name, slug: product.slug, price: Number(product.price), stock: Number(product.stock), image_url: product.image_url }} />
     </div>
+    </>
   );
 }
