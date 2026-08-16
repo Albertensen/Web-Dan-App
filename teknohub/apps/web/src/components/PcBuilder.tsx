@@ -73,14 +73,27 @@ export default function PcBuilder() {
   const [buyToast, setBuyToast] = useState(false);
 
   const buyAll = () => {
+    const priceOf = (type: string) => result?.parts.find((rp) => rp.type === type)?.price ?? 0;
     const list = partsFromStore.filter((pp) => pp && pp.id);
     if (list.length === 0) return;
-    list.forEach((pp) => addItem({ id: pp.id, name: pp.name, price: pp.price, image_url: null, slug: pp.name }));
+    list.forEach((pp) => addItem({ id: pp.id, name: pp.name, price: priceOf(pp.type), image_url: null, slug: pp.name, stock: 99 }));
     setBuyToast(true);
     setTimeout(() => router.push("/shop/cart"), 700);
   };
 
   const hasAnyComponent = Object.values(selectedComponents).some(Boolean);
+
+  // Estimasi daya per tipe komponen (approksimasi umum)
+  const TYPE_WATT: Record<string, number> = { cpu: 105, gpu: 250, ram: 15, storage: 8, motherboard: 60, psu: 0, casing: 0, cooler: 10 };
+  const estWattage = COMP_TYPE_LABELS.reduce((acc, [key]) => (selectedComponents[key] ? acc + (TYPE_WATT[key] ?? 0) : acc), 0);
+  const wattStatus = (() => {
+    const psu = estWattage <= 0 ? 0 : Math.ceil((estWattage * 1.35) / 50) * 50;
+    const pct = estWattage <= 0 ? 0 : Math.min(100, (estWattage / 650) * 100);
+    if (estWattage <= 0) return { pct: 0, bar: "bg-slate-600", dot: "text-slate-400", label: "Belum ada komponen", psu: 0 };
+    if (estWattage < 500) return { pct, bar: "bg-emerald-500", dot: "text-emerald-400", label: "Aman", psu };
+    if (estWattage < 650) return { pct, bar: "bg-amber-500", dot: "text-amber-400", label: "Perhatian", psu };
+    return { pct, bar: "bg-red-500", dot: "text-red-400", label: "Butuh PSU besar", psu };
+  })();
 
   // parts utk SaveBuildButton dari store
   const partsFromStore = COMP_TYPE_LABELS
@@ -328,6 +341,22 @@ export default function PcBuilder() {
             <div className="flex justify-between mt-4 pt-3 border-t border-slate-800">
               <span className="font-semibold text-white">Total Estimasi</span>
               <span className="font-bold text-cyan-300">{formatIDR(totalEstimasi)}</span>
+            </div>
+            {/* Wattage estimator */}
+            <div className="mt-3">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className="text-slate-400">Estimasi Konsumsi Daya</span>
+                <span className="font-bold text-white">{estWattage}W</span>
+              </div>
+              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all ${wattStatus.bar}`}
+                  style={{ width: `${wattStatus.pct}%` }}
+                />
+              </div>
+              <div className="flex items-center gap-1.5 mt-1 text-[11px]">
+                <span className={wattStatus.dot} /> {wattStatus.label} (PSU rekomendasi {wattStatus.psu}W)
+              </div>
             </div>
             <div className="mt-4 flex gap-2 flex-wrap">
               <SaveBuildButton parts={partsFromStore} buildType={useCase} />

@@ -30,6 +30,8 @@ const PAYMENT_METHODS = [
 ];
 
 const SERVICE_FEE = 2500;
+const RAKIT_FEE = 150000;
+const PACKING_FEE = 35000;
 
 type FormState = {
   name: string;
@@ -59,13 +61,16 @@ export default function CheckoutForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [payMethod, setPayMethod] = useState("qris");
+  const [addonRakit, setAddonRakit] = useState(false);
+  const [addonPacking, setAddonPacking] = useState(false);
   const [modal, setModal] = useState<null | { method: string; va: string }>(null);
 
   const pack = COURIER_PACKS.find((p) => p.courier === form.courier)!;
   const service = pack.services.find((s) => s.id === form.service) ?? pack.services[0];
 
   const shipping = service.cost;
-  const grandTotal = subtotal + shipping + SERVICE_FEE;
+  const addonsCost = (addonRakit ? RAKIT_FEE : 0) + (addonPacking ? PACKING_FEE : 0);
+  const grandTotal = subtotal + shipping + SERVICE_FEE + addonsCost;
 
   const fmt = (n: number) =>
     new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
@@ -161,6 +166,25 @@ export default function CheckoutForm() {
         </div>
       </section>
 
+      {/* Layanan Tambahan */}
+      <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
+        <h2 className="font-bold text-foreground">Layanan Tambahan (Opsional)</h2>
+        <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+          <span className="flex items-center gap-2">
+            <input type="checkbox" checked={addonRakit} onChange={(e) => setAddonRakit(e.target.checked)} className="accent-accent" />
+            <span className="text-sm font-semibold text-foreground">Jasa Rakit &amp; Cable Management</span>
+          </span>
+          <span className="text-sm font-bold text-foreground">{fmt(RAKIT_FEE)}</span>
+        </label>
+        <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+          <span className="flex items-center gap-2">
+            <input type="checkbox" checked={addonPacking} onChange={(e) => setAddonPacking(e.target.checked)} className="accent-accent" />
+            <span className="text-sm font-semibold text-foreground">Packing Kayu &amp; Asuransi Ekstra</span>
+          </span>
+          <span className="text-sm font-bold text-foreground">{fmt(PACKING_FEE)}</span>
+        </label>
+      </section>
+
       {/* Pembayaran */}
       <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
         <h2 className="font-bold text-foreground">3. Metode Pembayaran</h2>
@@ -186,6 +210,7 @@ export default function CheckoutForm() {
           <div className="flex justify-between text-muted"><span>Subtotal Produk ({totalItems} item)</span><span className="font-semibold text-foreground">{fmt(subtotal)}</span></div>
           <div className="flex justify-between text-muted"><span>Ongkir ({service.label})</span><span className="font-semibold text-foreground">{fmt(shipping)}</span></div>
           <div className="flex justify-between text-muted"><span>Biaya Layanan</span><span className="font-semibold text-foreground">{fmt(SERVICE_FEE)}</span></div>
+          {addonsCost > 0 && <div className="flex justify-between text-muted"><span>Layanan Tambahan</span><span className="font-semibold text-foreground">{fmt(addonsCost)}</span></div>}
           <div className="border-t border-slate-200 dark:border-slate-800 pt-2 flex justify-between font-bold text-foreground"><span>Grand Total</span><span className="text-lg">{fmt(grandTotal)}</span></div>
         </div>
       </section>

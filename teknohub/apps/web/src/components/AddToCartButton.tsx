@@ -9,6 +9,7 @@ interface AddToCartButtonProps {
     slug: string;
     price: number;
     image_url: string | null;
+    stock?: number;
   };
 }
 
@@ -17,7 +18,7 @@ export default function AddToCartButton({ product }: AddToCartButtonProps) {
 
   return (
     <button
-      onClick={() => add(product)}
+      onClick={() => add({ ...product, stock: product.stock ?? 0 })}
       className="w-full py-3.5 px-6 text-sm sm:text-base font-bold rounded-full transition duration-200 bg-accent hover:bg-accent-secondary text-white shadow-md shadow-accent/20 hover:shadow-lg transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
     >
       Tambah ke Keranjang

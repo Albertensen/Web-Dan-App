@@ -74,7 +74,8 @@ export default function CartPage() {
               <span className="w-8 text-center">{item.quantity}</span>
               <button
                 onClick={() => updateQty(item.id, item.quantity + 1)}
-                className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/60 font-bold"
+                disabled={item.quantity >= item.stock}
+                className="w-8 h-8 rounded-lg bg-surface-2 hover:bg-surface-2/60 font-bold disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 +
               </button>

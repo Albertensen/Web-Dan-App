@@ -8,6 +8,7 @@ export interface CartItem {
   image_url: string | null;
   slug: string;
   quantity: number;
+  stock: number;
 }
 
 interface CartState {
@@ -28,11 +29,13 @@ export const useCartStore = create<CartState>()(
           if (existing) {
             return {
               items: state.items.map((i) =>
-                i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+                i.id === item.id
+                  ? { ...i, quantity: Math.min(i.quantity + 1, i.stock || Infinity) }
+                  : i
               ),
             };
           }
-          return { items: [...state.items, { ...item, quantity: 1 }] };
+          return { items: [...state.items, { ...item, quantity: 1, stock: item.stock ?? 0 }] };
         }),
       remove: (id) =>
         set((state) => ({ items: state.items.filter((i) => i.id !== id) })),

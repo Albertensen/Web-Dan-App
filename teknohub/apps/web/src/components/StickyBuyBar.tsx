@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import { ShoppingCart, Zap, Check } from "lucide-react";
@@ -13,6 +13,15 @@ export default function StickyBuyBar({ product }: { product: StickyProduct }) {
   const addItem = useCartStore((s) => s.add);
   const router = useRouter();
   const [added, setAdded] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  // Muncul setelah scroll 300px, hilang saat kembali ke atas
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 300);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const fmt = (n: number) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
   const out = product.stock <= 0;
 
@@ -25,7 +34,7 @@ export default function StickyBuyBar({ product }: { product: StickyProduct }) {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 md:hidden bg-surface/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center gap-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
+    <div className={`fixed bottom-0 left-0 right-0 z-40 md:hidden bg-surface/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex items-center gap-3 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] transition-transform duration-300 ${visible ? "translate-y-0" : "translate-y-full"}`}>
       <div className="min-w-0 flex-1">
         <p className="text-lg font-black text-foreground truncate">{fmt(product.price)}</p>
         <p className="text-[10px] text-tertiary">{out ? "Stok Habis" : "Stok tersedia"}</p>
