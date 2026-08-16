@@ -402,6 +402,38 @@ Status: ⏳ Belum dimulai
 
 ---
 
+## FASE 13 — Modernisasi Marketplace, Trust UI/UX & AI Builder
+Status: ⏳ Belum dimulai
+
+### Fase 1: Trust, UI Cleanup & Design System
+- [ ] Pembersihan teks generator/footer ("Dibuat dengan AI Agent") dan menggantinya dengan informasi bantuan & layanan pelanggan resmi
+- [ ] Penghapusan testing threads/dummy data di forum dan inisialisasi panduan komunitas resmi
+- [ ] Migrasi icon emoji UI sistem (seperti 🛍️, 🤖, 💬, ⚡) ke library ikon vektor profesional (misal: Lucide Icons)
+- [ ] Standardisasi tema warna, elevation shadow, dan border-radius pada komponen kartu produk
+
+### Fase 2: Core E-Commerce & Checkout Experience
+- [ ] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk
+- [ ] Sistem Filter & Multi-Sorting di katalog produk (rentang harga, spesifikasi teknis socket/VRAM/DDR, garansi, dan sorting popularitas/harga)
+- [ ] Revamp kartu produk: penambahan tombol cepat "+ Keranjang" (Quick Add), Wishlist icon, badge diskon & harga coret, serta indikator stok
+- [ ] Modul review & ulasan terverifikasi (Verified Buyer) beserta upload foto bukti unboxing
+- [ ] Integrasi Payment Gateway (QRIS, VA Bank, E-Wallet) dan API ongkir logistik (RajaOngkir/Biteship) serta trust badges di footer
+
+### Fase 3: AI Builder & Ecosystem Integration
+- [ ] Fitur 1-Click "Beli Semua Komponen" langsung dari hasil rakitan AI/3D Builder ke keranjang belanja
+- [ ] Sinkronisasi ketersediaan stok real-time di modul AI Builder beserta rekomendasi alternatif otomatis
+- [ ] Fitur side-by-side perbandingan spesifikasi hardware (Compare Specs)
+- [ ] Opsi add-on checkout: Jasa Rakit & Cable Management, Asuransi/Packing Kayu, dan Instalasi OS/Driver
+
+### Fase 4: Community Forum & Social Proof
+- [ ] Embed widget rakitan PC interaktif dari Builder ke postingan forum
+- [ ] Sistem reputasi badge member forum dan upvote answer
+
+### Fase 5: SEO, Performance & PWA
+- [ ] Implementasi JSON-LD Structured Data (Product, AggregateRating, ForumPosting)
+- [ ] Caching 3D model assets untuk AI Builder dan optimasi Core Web Vitals gambar produk (WebP/AVIF)
+
+---
+
 ## Environment Variables yang Dibutuhkan
 
 | Variable | Deskripsi |
