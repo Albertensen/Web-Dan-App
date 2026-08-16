@@ -393,8 +393,8 @@ Status: ✅ Tuntas (Inisialisasi & Core App)
 Status: ⏳ Belum dimulai
 
 ### Fase 1: Trust, UI Cleanup & Design System
-- [ ] Pembersihan teks generator/footer ("Dibuat dengan AI Agent") dan menggantinya dengan informasi bantuan & layanan pelanggan resmi
-- [ ] Penghapusan testing threads/dummy data di forum dan inisialisasi panduan komunitas resmi
+- [x] Pembersihan teks generator/footer ("Dibuat dengan AI Agent") dan menggantinya dengan informasi bantuan & layanan pelanggan resmi (609aca0)
+- [x] Penghapusan testing threads/dummy data di forum dan inisialisasi panduan komunitas resmi (3 thread kurasi live)
 - [ ] Migrasi icon emoji UI sistem (seperti 🛍️, 🤖, 💬, ⚡) ke library ikon vektor profesional (misal: Lucide Icons)
 - [ ] Standardisasi tema warna, elevation shadow, dan border-radius pada komponen kartu produk
 
