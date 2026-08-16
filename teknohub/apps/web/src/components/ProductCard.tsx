@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import ProductImage from "./ProductImage";
+import { Star } from "lucide-react";
 
 interface Product {
   id: string;
@@ -50,10 +51,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
 
   return (
-    <div className="bg-surface border border-border rounded-2xl p-4 flex flex-col justify-between hover:border-accent hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group">
+    <div className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-4 flex flex-col justify-between hover:border-accent hover:shadow-lg hover:-translate-y-1 transition-all duration-200 group">
       <div>
         {/* Gambar Produk dengan Zoom Halus & Badge Diskon */}
-        <div className="aspect-square rounded-xl mb-4 overflow-hidden flex items-center justify-center relative bg-surface-2 border border-border">
+        <div className="aspect-square rounded-xl mb-4 overflow-hidden flex items-center justify-center relative bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none" />
 
           {hasDiscount && (
@@ -92,9 +93,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
 
         {/* Rating & Penjualan Mock */}
-        <div className="flex items-center gap-1 text-xs text-amber-500 mb-2">
-          <span>★★★★★</span>
-          <span className="text-tertiary text-[11px] font-medium">(4.9) · Terjual 50+</span>
+        <div className="flex items-center gap-1 text-xs mb-2">
+          {[1,2,3,4,5].map((i) => (
+            <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
+          ))}
+          <span className="text-tertiary text-[11px] font-medium ml-0.5">4.9 · 50+ ulasan</span>
         </div>
       </div>
 
