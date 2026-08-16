@@ -403,7 +403,7 @@ Status: ⏳ Belum dimulai
 - [x] Sistem Filter & Multi-Sorting di katalog produk (kategori multi-pilih, rentang harga, sorting harga/terbaru; sisa: socket/VRAM/DDR & garansi) (c08b5e9)
 - [x] Revamp kartu produk: Quick Add-to-Cart + Toast, Wishlist (localStorage), badge diskon & harga coret, indikator stok (04b05eb)
 - [x] Modul review & ulasan terverifikasi (rating summary, filter bintang/foto, galeri lightbox, badge Pembeli Terverifikasi, varian) (260e016)
-- [ ] Integrasi Payment Gateway (QRIS, VA Bank, E-Wallet) dan API ongkir logistik (RajaOngkir/Biteship) serta trust badges di footer
+- [x] Integrasi Payment Gateway & api ongkir (sendiri: simulasi QRIS/VA/E-wallet/Kartu, kurir JNE/SiCepat/GoSend + estimasi & ongkir dinamis, trust badges footer; sisa: RajaOngkir/Biteship & Midtrans live) (c592ab0)
 
 ### Fase 3: AI Builder & Ecosystem Integration
 - [ ] Fitur 1-Click "Beli Semua Komponen" langsung dari hasil rakitan AI/3D Builder ke keranjang belanja
