@@ -2,6 +2,13 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — Fase 9: Inisialisasi Mobile App (Expo React Native & Shared Types)
+
+### Added
+- **Monorepo Shared Package (`packages/shared`)**: Tipe TypeScript terpadu (`Product`, `PCComponent`, `UserOrder`, `ForumThread`, `UserProfile`) untuk sinkronisasi web dan mobile.
+- **Mobile App (`apps/mobile`)**: Inisialisasi Expo React Native dengan orientasi portrait, tema TeknoZone navy (`#0B1F45`) & slate (`#CBD5E1`), serta custom bottom tab bar (Home, Shop, Builder, Forum, Profile).
+
+
 ## [2026-08-16] — Fase 8: Testing & QA Tuntas
 
 ### Added

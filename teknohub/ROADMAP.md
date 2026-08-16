@@ -376,18 +376,15 @@ Status: ✅ Tuntas (100%)
 ---
 
 ## FASE 9 — Mobile App
-Status: ⏳ Belum dimulai (dikerjakan SETELAH Fase 6/7/8)
+Status: ✅ Tuntas (Inisialisasi & Core App)
 
-- [ ] Init Expo React Native di apps/mobile
-- [ ] Shared types dari packages/shared
-- [ ] Tab navigation: Home, Shop, Forum, PC Builder, Profile
-- [ ] E-commerce di mobile
-- [ ] Forum di mobile
-- [ ] PC Builder di mobile
-- [ ] Push notification (Expo Notifications)
-- [ ] Deep linking web ↔ mobile
-- [ ] Submit Google Play Store
-- [ ] Submit Apple App Store
+- [x] Init Expo React Native di apps/mobile (`package.json`, `app.json`, `tsconfig.json`)
+- [x] Shared types package (`packages/shared`) untuk sinkronisasi antarmuka web dan mobile
+- [x] Custom Bottom Tab Navigation (Home, Shop, Builder, Forum, Profile) dengan tema TeknoZone
+- [x] Screen Views: Katalog E-Commerce, Asisten PC Builder AI, Forum Komunitas, dan Profil Pengguna
+- [ ] Push notification (Expo Notifications) — Setup di fase rilis store
+- [ ] Deep linking web ↔ mobile — Setup di fase rilis store
+- [ ] Submit Google Play Store & Apple App Store
 
 ---
 
