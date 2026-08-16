@@ -389,20 +389,7 @@ Status: ✅ Tuntas (Inisialisasi & Core App)
 
 ---
 
-## FASE 12 — Launch
-Status: ⏳ Belum dimulai
-
-- [ ] Beta testing 20-50 user
-- [ ] Load testing
-- [ ] Core Web Vitals optimization
-- [ ] Redis caching untuk harga komponen
-- [ ] Monitoring: Sentry + Vercel Analytics
-- [ ] Seed konten: 20 produk, 10 thread forum, 5 build showcase
-- [ ] Public launch
-
----
-
-## FASE 13 — Modernisasi Marketplace, Trust UI/UX & AI Builder
+## FASE 12 — Modernisasi Marketplace, Trust UI/UX & AI Builder
 Status: ⏳ Belum dimulai
 
 ### Fase 1: Trust, UI Cleanup & Design System
@@ -431,6 +418,19 @@ Status: ⏳ Belum dimulai
 ### Fase 5: SEO, Performance & PWA
 - [ ] Implementasi JSON-LD Structured Data (Product, AggregateRating, ForumPosting)
 - [ ] Caching 3D model assets untuk AI Builder dan optimasi Core Web Vitals gambar produk (WebP/AVIF)
+
+---
+
+## FASE 13 — Launch
+Status: ⏳ Belum dimulai
+
+- [ ] Beta testing 20-50 user
+- [ ] Load testing
+- [ ] Core Web Vitals optimization
+- [ ] Redis caching untuk harga komponen
+- [ ] Monitoring: Sentry + Vercel Analytics
+- [ ] Seed konten: 20 produk, 10 thread forum, 5 build showcase
+- [ ] Public launch
 
 ---
 
