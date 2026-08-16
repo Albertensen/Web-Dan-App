@@ -7,6 +7,7 @@ import NavbarSearch from "./NavbarSearch";
 import MobileDrawer from "./MobileDrawer";
 import { useCartStore, selectTotalItems } from "@/store/cartStore";
 import UserDropdown from "./auth/UserDropdown";
+import NotificationBell from "./forum/NotificationBell";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,7 +36,10 @@ export default function Navbar() {
 
         {/* Area kanan: cart + auth (auth hidden di mobile — di drawer) */}
         <div className="flex items-center gap-2.5 shrink-0">
-            {/* Cart SVG — ikon lebih rapi */}
+            {/* Notification Bell */}
+          <NotificationBell />
+
+          {/* Cart SVG — ikon lebih rapi */}
             <Link
               href="/shop/cart"
               className="w-9 h-9 rounded-full bg-surface border border-slate-300 flex items-center justify-center text-accent hover:border-accent transition shadow-sm relative"

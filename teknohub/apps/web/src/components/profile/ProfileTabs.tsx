@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import UserReviewsTab from "./UserReviewsTab";
 import EditProfileForm from "./EditProfileForm";
@@ -30,6 +30,17 @@ interface UserThread {
   is_locked: boolean;
   reply_count: number;
   created_at: string;
+  category_id?: string;
+}
+
+interface ForumNotification {
+  id: string;
+  type: string;
+  title: string;
+  body: string | null;
+  link: string | null;
+  is_read: boolean;
+  created_at: string;
 }
 
 interface ProfileTabsProps {
@@ -57,7 +68,45 @@ const STATUS_BADGE: Record<string, string> = {
 };
 
 export default function ProfileTabs({ profile, orders, threads }: ProfileTabsProps) {
-  const [activeTab, setActiveTab] = useState<"orders" | "reviews" | "forum" | "edit">("orders");
+  const [activeTab, setActiveTab] = useState<"orders" | "reviews" | "forum" | "notifications" | "edit">("orders");
+  const [notifications, setNotifications] = useState<ForumNotification[]>([]);
+  const [notifLoading, setNotifLoading] = useState(false);
+
+  const fetchNotifs = useCallback(async () => {
+    setNotifLoading(true);
+    try {
+      const res = await fetch("/api/forum/notifications");
+      if (res.ok) {
+        const json = await res.json();
+        setNotifications(json.data ?? []);
+      }
+    } finally {
+      setNotifLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === "notifications") {
+      fetchNotifs();
+    }
+  }, [activeTab, fetchNotifs]);
+
+  const markAllRead = async () => {
+    try {
+      const res = await fetch("/api/forum/notifications", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ all: true }),
+      });
+      if (res.ok) {
+        setNotifications(notifications.map((n) => ({ ...n, is_read: true })));
+      }
+    } catch {
+      // silent
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   return (
     <div className="space-y-4">
@@ -88,7 +137,21 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
             activeTab === "forum" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
           }`}
         >
-          💬 Aktivitas Forum ({threads.length})
+          💬 Riwayat Thread ({threads.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("notifications")}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap flex items-center gap-1.5 ${
+            activeTab === "notifications" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
+          }`}
+        >
+          <span>🔔 Notifikasi Forum</span>
+          {unreadCount > 0 && (
+            <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-500 text-white">
+              {unreadCount}
+            </span>
+          )}
         </button>
         <button
           type="button"
@@ -151,30 +214,100 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
       {/* Tab Content: Ulasan Saya (Bisa diedit bintang & review-nya) */}
       {activeTab === "reviews" && <UserReviewsTab />}
 
-      {/* Tab Content: Forum */}
+      {/* Tab Content: Riwayat Thread Forum yang Dibuat User */}
       {activeTab === "forum" && (
         <div className="space-y-3">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-bold text-foreground">Daftar Thread Diskusi Anda</h3>
+            <Link href="/forum/new" className="px-3 py-1.5 rounded-xl bg-accent text-white text-xs font-semibold hover:bg-accent-secondary transition">
+              + Buat Thread Baru
+            </Link>
+          </div>
+
           {threads.length === 0 ? (
             <div className="p-8 text-center bg-surface-2/40 border border-dashed border-border rounded-2xl">
-              <p className="text-sm text-muted">Anda belum pernah membuat thread di forum.</p>
+              <p className="text-sm text-muted">Anda belum pernah membuat thread diskusi di forum.</p>
               <Link href="/forum/new" className="inline-block mt-3 px-4 py-2 rounded-full bg-accent text-white text-xs font-semibold">
-                + Buat Thread Baru
+                Mulai Diskusi Sekarang
               </Link>
             </div>
           ) : (
             threads.map((t) => (
-              <div key={t.id} className="bg-surface border border-border rounded-2xl p-4 flex items-center justify-between gap-3">
-                <div>
-                  <Link href={`/forum/${t.id}`} className="font-bold text-foreground hover:text-accent text-sm line-clamp-1">
+              <div key={t.id} className="bg-surface border border-border rounded-2xl p-4 flex items-center justify-between gap-3 hover:border-accent transition">
+                <div className="min-w-0 flex-1">
+                  <Link href={`/forum/all/${t.id}`} className="font-bold text-foreground hover:text-accent text-sm line-clamp-1">
                     {t.title}
                   </Link>
-                  <p className="text-xs text-tertiary mt-1">
-                    💬 {t.reply_count} balasan · {(t.created_at ?? "").slice(0, 10)}
-                  </p>
+                  <div className="flex items-center gap-3 text-xs text-tertiary mt-1">
+                    <span>💬 {t.reply_count} balasan</span>
+                    <span>· {(t.created_at ?? "").slice(0, 10)}</span>
+                    {t.is_locked && (
+                      <span className="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">
+                        Terkunci
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <Link href={`/forum/${t.id}`} className="shrink-0 px-3 py-1.5 rounded-xl bg-surface-2 text-xs font-semibold hover:bg-slate-200">
-                  Lihat →
+                <Link href={`/forum/all/${t.id}`} className="shrink-0 px-3.5 py-1.5 rounded-xl bg-surface-2 text-xs font-semibold text-foreground hover:bg-accent hover:text-white transition">
+                  Buka Thread →
                 </Link>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Tab Content: Notifikasi Forum & Balasan Diskusi */}
+      {activeTab === "notifications" && (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-bold text-foreground">Notifikasi Balasan &amp; Komunitas</h3>
+            {notifications.length > 0 && (
+              <button
+                type="button"
+                onClick={markAllRead}
+                className="text-xs text-accent font-semibold hover:underline"
+              >
+                Tandai Semua Sudah Dibaca
+              </button>
+            )}
+          </div>
+
+          {notifLoading ? (
+            <div className="p-8 text-center text-sm text-tertiary">Memuat notifikasi...</div>
+          ) : notifications.length === 0 ? (
+            <div className="p-8 text-center bg-surface-2/40 border border-dashed border-border rounded-2xl">
+              <p className="text-sm text-muted">Belum ada notifikasi forum untuk Anda.</p>
+            </div>
+          ) : (
+            notifications.map((n) => (
+              <div
+                key={n.id}
+                className={`border rounded-2xl p-4 flex items-center justify-between gap-3 transition ${
+                  n.is_read
+                    ? "bg-surface border-border opacity-75"
+                    : "bg-blue-50/50 border-blue-200 shadow-sm"
+                }`}
+              >
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs">🔔</span>
+                    <p className="font-bold text-foreground text-xs">{n.title}</p>
+                    {!n.is_read && (
+                      <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />
+                    )}
+                  </div>
+                  {n.body && <p className="text-xs text-muted mt-0.5 line-clamp-1">{n.body}</p>}
+                  <span className="text-[10px] text-tertiary mt-1 block">{(n.created_at ?? "").slice(0, 16).replace("T", " ")}</span>
+                </div>
+                {n.link && (
+                  <Link
+                    href={n.link}
+                    className="shrink-0 px-3 py-1.5 rounded-xl bg-accent text-white text-xs font-semibold hover:bg-accent-secondary transition"
+                  >
+                    Buka
+                  </Link>
+                )}
               </div>
             ))
           )}
