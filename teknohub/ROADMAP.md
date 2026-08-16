@@ -258,7 +258,7 @@ Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 
 ---
 
-## FASE 6D — UI Overhaul & Polish
+## FASE 7 — UI Overhaul & Polish
 Status: ✅ Tuntas
 
 ### Homepage
@@ -294,7 +294,7 @@ Status: ✅ Tuntas
 ---
 ---
 
-## FASE ADMIN PORTAL — Back-Office Management & Operations
+## FASE 8 — Back-Office Management & Operations
 Status: ✅ Tuntas (100%)
 
 ### Admin Shell & Layout
@@ -308,7 +308,7 @@ Status: ✅ Tuntas (100%)
 - [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
 
 ---
-## FASE 7 — Security Hardening
+## FASE 9 — Security Hardening
 Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update deps, rotate key)
 
 ### HTTP Security Headers
@@ -342,7 +342,7 @@ Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update de
 - [x] Brute force protection di CredentialsProvider (rate limit 5x per menit)
 - [x] Password minimum 8 karakter terverifikasi dengan Zod schema
 
-### Environment & Secrets Audit
+### Audit Secrets & Lingkungan
 - [x] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit — verif 2026-08-16 (root + apps/web, .env & run_00*.py excluded)
 - [x] Vercel env: semua secret di production env (tidak ada yang hardcode) — verif 2026-08-16
 - [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
@@ -355,7 +355,7 @@ Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update de
 
 ---
 
-## FASE 8 — Testing & QA
+## FASE 10 — Testing & QA
 Status: ✅ Tuntas (100%)
 
 ### Unit & Security Test
@@ -376,7 +376,7 @@ Status: ✅ Tuntas (100%)
 
 ---
 
-## FASE 9 — Mobile App
+## FASE 11 — Mobile App
 Status: ✅ Tuntas (Inisialisasi & Core App)
 
 - [x] Init Expo React Native di apps/mobile (`package.json`, `app.json`, `tsconfig.json`)
@@ -389,7 +389,7 @@ Status: ✅ Tuntas (Inisialisasi & Core App)
 
 ---
 
-## FASE 10 — Launch
+## FASE 12 — Launch
 Status: ⏳ Belum dimulai
 
 - [ ] Beta testing 20-50 user
@@ -420,7 +420,7 @@ Status: ⏳ Belum dimulai
 
 ## Catatan Sesi
 
-- **2026-08-09**: Fase 2 (Auth) tuntas (a183ba6); Fase 6 (Responsive) & 7 (Security) sebagian (0ab97ca, d0163e6) — 17 item dicentang, 58 sisa. Urutan kerja: **6 (responsif browser) → 7 (security) → 8 (testing) → 9 (mobile) → 10 (launch)**. Snapshot: [[TeknoHub-Status]].
+- **2026-08-09**: Fase 2 (Auth) tuntas (a183ba6); Fase 6 (Responsive) & 9 (Security) sebagian (0ab97ca, d0163e6) — 17 item dicentang, 58 sisa. Urutan kerja: **6 (responsif) → 9 (security) → 10 (testing) → 11 (mobile) → 12 (launch)**. Snapshot: [[TeknoHub-Status]].
 
 ## Catatan
 
