@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useCartStore, selectTotalPrice, selectTotalItems } from "@/store/cartStore";
 import { checkoutSchema, type CheckoutInput } from "@/lib/validations/checkout";
 import { Truck, QrCode, Landmark, Wallet, CreditCard, CheckCircle2, X } from "lucide-react";
@@ -52,6 +53,7 @@ const initialForm: FormState = {
 };
 
 export default function CheckoutForm() {
+  const router = useRouter();
   const items = useCartStore((s) => s.items);
   const subtotal = useCartStore(selectTotalPrice);
   const totalItems = useCartStore(selectTotalItems);
@@ -104,6 +106,7 @@ export default function CheckoutForm() {
     setModal(null);
     clearCart();
     alert("Pembayaran berhasil (simulasi). Pesanan Anda sedang diproses.");
+    router.push("/shop/orders");
   };
 
   const inputCls = (hasError: boolean) =>

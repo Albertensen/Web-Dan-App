@@ -71,15 +71,26 @@ export default async function ProductPage({ params }: ProductProps) {
     .limit(4);
 
   return (
-    <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
+    <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8 pb-28 md:pb-12">
       {/* Breadcrumb */}
-      <div className="mb-10 flex items-center space-x-3 text-sm text-tertiary">
-        <span className="hover:text-accent">Beranda</span>
-        <span>/</span>
-        <span className="hover:text-accent">Produk</span>
-        <span>/</span>
-        <span className="font-medium text-foreground">{product.name}</span>
-      </div>
+      <nav aria-label="Breadcrumb" className="mb-8 flex items-center flex-wrap gap-2 text-sm text-tertiary">
+        <Link href="/" className="hover:text-accent transition">Beranda</Link>
+        <span aria-hidden="true">/</span>
+        <Link href="/shop/products" className="hover:text-accent transition">Produk</Link>
+        {product.category && (
+          <>
+            <span aria-hidden="true">/</span>
+            <Link
+              href={`/shop/products?category=${encodeURIComponent(product.category)}`}
+              className="hover:text-accent transition capitalize"
+            >
+              {product.category}
+            </Link>
+          </>
+        )}
+        <span aria-hidden="true">/</span>
+        <span className="font-medium text-foreground line-clamp-1">{product.name}</span>
+      </nav>
 
       {/* Main Product Grid */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
