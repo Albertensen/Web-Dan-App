@@ -37,11 +37,12 @@ Status: ✅ Terintegrasi (globals.css + tailwind.config.ts)
 - [x] Tailwind extend: colors, fontFamily (display/body), boxShadow glow-sm..xl, animation, keyframes
 - [x] Homepage hero monumental (font extralight, gradient-text, animated mesh)
 - [x] Navbar glassmorphism + cart badge live + mobile drawer
-- [x] ProductCard premium (4:3 image, neon pill, gradient price, add-to-cart)
+- [x] ProductCard Marketplace Professional (diskon badge, rating 5-star, garansi resmi, brand tag, quick add to cart)
+- [x] Trust Badges Bar (100% Produk Asli, Garansi Resmi, Pengiriman Cepat, Konsultasi AI 24/7)
+- [x] Horizontal Category Carousel Pills dengan icon estetik di homepage
 - [x] Products page (token colors, sticky glass filter)
 - [x] ThreadCard upgrade (category color pills, relative time)
 - [x] Builder page pakai token (glow-card via PcBuilder)
-- [ ] Halaman lain menyusul (detail produk, forum detail, checkout, admin) — inkremental
 
 ---
 

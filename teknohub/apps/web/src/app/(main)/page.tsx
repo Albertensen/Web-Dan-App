@@ -3,10 +3,26 @@ import ProductCard from "@/components/ProductCard";
 import BuilderBanner from "@/components/BuilderBanner";
 import ThreadCard, { type ThreadProps } from "@/components/forum/ThreadCard";
 
-// Halaman dinamis — fetch produk real per request (bukan static build)
 export const dynamic = "force-dynamic";
 
-const FEATURED_CATEGORIES = ["Semua", "Laptop", "GPU", "Processor", "Smartphone", "Monitor", "Storage", "Peripherals"];
+const FEATURED_CATEGORIES = [
+  { slug: "all", label: "Semua Kategori", icon: "🔥" },
+  { slug: "laptop", label: "Laptop", icon: "💻" },
+  { slug: "gpu", label: "VGA / GPU", icon: "🎮" },
+  { slug: "cpu", label: "Processor", icon: "🧠" },
+  { slug: "motherboard", label: "Motherboard", icon: "🖲️" },
+  { slug: "ram", label: "RAM Memory", icon: "💾" },
+  { slug: "storage", label: "SSD & Storage", icon: "💽" },
+  { slug: "smartphone", label: "Smartphone", icon: "📱" },
+  { slug: "monitor", label: "Monitor", icon: "🖥️" },
+];
+
+const TRUST_BADGES = [
+  { icon: "🛡️", title: "100% Produk Asli", desc: "Garansi resmi distributor" },
+  { icon: "⚡", title: "Pengiriman Cepat", desc: "Asuransi & packing aman" },
+  { icon: "🤖", title: "Konsultasi AI 24/7", desc: "Racik PC bebas bottleneck" },
+  { icon: "💬", title: "Komunitas Terpercaya", desc: "Diskusi & reputasi member" },
+];
 
 interface Product {
   id: string;
@@ -20,7 +36,6 @@ interface Product {
 }
 
 export default async function Home() {
-  // Fetch produk real dari API (tanpa mock data)
   let products: Product[] = [];
   try {
     const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/products`;
@@ -33,7 +48,6 @@ export default async function Home() {
     console.error("Error fetching products");
   }
 
-  // Fetch thread komunitas real
   let threads: ThreadProps[] = [];
   try {
     const forumUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/forum/threads?sort=latest`;
@@ -47,164 +61,131 @@ export default async function Home() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-6 py-8 space-y-12">
-      {/* ================= BANNER AI 3D PC BUILDER ================= */}
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-12">
+      {/* ================= HERO BUILDER BANNER ================= */}
       <BuilderBanner />
 
-      {/* ================= MARKETPLACE (Direct View) ================= */}
-      <section id="marketplace">
-        <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                  <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Katalog Produk Unggulan</h1>
-                    <p className="text-xs text-muted">Perangkat elektronik &amp; hardware dengan standar performa tertinggi.</p>
-                  </div>
-          {/* Filter kategori pills */}
-          <div className="flex gap-2 text-xs overflow-x-auto no-scrollbar pb-1">
-            {FEATURED_CATEGORIES.map((c) => (
-              <Link
-                key={c}
-                href={c === "Semua" ? "/shop/products" : `/shop/products?category=${encodeURIComponent(c.toLowerCase())}`}
-                className="bg-surface px-3 py-1.5 rounded-full border border-slate-300 font-medium cursor-pointer hover:border-accent whitespace-nowrap"
-              >
-                {c}
-              </Link>
-            ))}
+      {/* ================= TRUST BADGES (MARKETPLACE STANDARD) ================= */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        {TRUST_BADGES.map((b) => (
+          <div key={b.title} className="bg-surface border border-slate-300 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+            <span className="text-2xl sm:text-3xl shrink-0">{b.icon}</span>
+            <div className="min-w-0">
+              <p className="font-extrabold text-xs sm:text-sm text-foreground truncate">{b.title}</p>
+              <p className="text-[11px] text-tertiary truncate">{b.desc}</p>
+            </div>
           </div>
+        ))}
+      </div>
+
+      {/* ================= MARKETPLACE CATALOG SECTION ================= */}
+      <section id="marketplace" className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">🛍️</span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
+                Katalog Produk Resmi
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-muted mt-1">
+              Komponen PC, laptop gaming, smartphone, dan periferal bergaransi resmi
+            </p>
+          </div>
+          <Link
+            href="/shop/products"
+            className="self-start sm:self-auto px-5 py-2 rounded-full border border-slate-300 bg-surface-2 hover:border-accent text-xs font-bold transition"
+          >
+            Lihat Semua Produk →
+          </Link>
         </div>
 
-        {/* Grid produk kompak */}
-        {products.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {products.slice(0, 8).map((p) => (
-              <ProductCard key={p.slug} product={p} />
-            ))}
+        {/* Kategori Carousel Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
+          {FEATURED_CATEGORIES.map((c) => (
+            <Link
+              key={c.slug}
+              href={c.slug === "all" ? "/shop/products" : `/shop/products?category=${c.slug}`}
+              className="shrink-0 bg-surface border border-slate-300 hover:border-accent hover:shadow px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition"
+            >
+              <span>{c.icon}</span>
+              <span>{c.label}</span>
+            </Link>
+          ))}
+        </div>
+
+        {/* Product Grid */}
+        {products.length === 0 ? (
+          <div className="p-12 text-center bg-surface-2/60 border border-dashed border-slate-300 rounded-3xl">
+            <p className="text-tertiary text-sm">Produk sedang disiapkan. Silakan kunjungi kembali nanti.</p>
           </div>
         ) : (
-          <div className="p-8 bg-surface border border-dashed border-slate-300 rounded-2xl text-center">
-            <p className="text-sm text-muted">Produk belum tersedia. Cek kembali nanti.</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {products.slice(0, 8).map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
           </div>
         )}
       </section>
 
-      {/* ================= STATS / SOCIAL PROOF ================= */}
-      <section className="pt-2">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
-            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">
-              {products.length}+
+      {/* ================= FORUM COMMUNITY SECTION ================= */}
+      <section id="forum-slide" className="bg-surface rounded-3xl border border-slate-300 p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">💬</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
+                Diskusi Komunitas Terbaru
+              </h2>
             </div>
-            <p className="text-xs font-semibold text-muted">Produk Terkurasi</p>
+            <p className="text-xs sm:text-sm text-tertiary mt-1">
+              Tanyakan rekomendasi rakit PC, benchmark, dan diskusikan teknologi terkini
+            </p>
           </div>
-          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
-            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">5.000+</div>
-            <p className="text-xs font-semibold text-muted">Member Terdaftar</p>
-          </div>
-          <div className="bg-surface border border-slate-300 rounded-3xl p-6 text-center shadow-sm">
-            <div className="text-3xl font-extrabold tracking-tight text-accent mb-1">24/7</div>
-            <p className="text-xs font-semibold text-muted">AI Support</p>
-          </div>
-        </div>
-      </section>
-
-      {/* ================= FORUM KOMUNITAS (Slide) ================= */}
-      <section id="forum-slide" className="pt-8 border-t-2 border-slate-400">
-        <div className="mb-6">
-          <span className="text-[11px] uppercase font-semibold text-accent tracking-widest block mb-1">
-            Community Hub
-          </span>
-          <h2 className="text-2xl font-bold tracking-tight">Forum Komunitas</h2>
-          <p className="text-xs text-muted">
-            Diskusi hardware, AI, gaming, dan DIY dari komunitas TeknoZone.
-          </p>
-        </div>
-
-        {/* Thread komunitas terbaru */}
-        <div className="space-y-4">
-          {threads.length > 0 ? (
-            threads.slice(0, 4).map((t) => <ThreadCard key={t.id} thread={t} />)
-          ) : (
-            <div className="p-8 bg-surface border border-dashed border-slate-300 rounded-2xl text-center">
-              <p className="text-sm text-muted">Belum ada diskusi. Mulai thread pertama!</p>
-            </div>
-          )}
-        </div>
-
-        <div className="mt-6 flex justify-center">
           <Link
-            href="/forum"
-            className="bg-accent text-white px-6 py-2.5 rounded-full text-xs font-medium hover:bg-accent-secondary transition"
+            href="/forum/new"
+            className="self-start sm:self-auto bg-accent text-white hover:bg-accent-secondary px-5 py-2.5 rounded-full text-xs font-bold transition shadow-md shadow-accent/20"
           >
-            Buka Forum Komunitas &rarr;
+            + Buat Thread Baru
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {threads.slice(0, 4).map((t) => (
+            <ThreadCard key={t.id} thread={t} />
+          ))}
+        </div>
+
+        <div className="text-center pt-2">
+          <Link href="/forum" className="text-xs font-bold text-accent hover:underline">
+            Kunjungi Semua Diskusi di Forum Komunitas →
           </Link>
         </div>
       </section>
 
       {/* ================= TENTANG TEKNOZONE ================= */}
-      <section id="tentang" className="pt-8 border-t-2 border-slate-400">
-        <div className="bg-surface border border-slate-300 rounded-3xl p-8 shadow-sm">
-          <span className="text-[11px] uppercase font-semibold text-accent tracking-widest block mb-2">
-            About Us
+      <section id="tentang" className="bg-gradient-to-br from-accent via-accent-secondary to-accent text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+        <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-zone-blue/30 blur-3xl" />
+        <div className="relative z-10 max-w-2xl">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold mb-4">
+            ⚡ Platform Teknologi Terintegrasi
           </span>
-          <h2 className="text-2xl font-bold tracking-tight mb-3">Tentang TeknoZone</h2>
-          <p className="text-xs text-muted leading-relaxed max-w-3xl mb-6">
-            TeknoZone adalah pusat hardware &amp; komunitas terpercaya — satu ekosistem untuk
-            belanja elektronik, konsultasi rakit PC dengan AI agent, dan forum teknologi dengan
-            sistem reputasi transparan berbasis tier transaksi.
+          <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
+            Belanja Komponen, Konsultasi AI, dan Berbagi Pengalaman di Satu Tempat.
+          </h2>
+          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6">
+            TeknoZone menghadirkan ekosistem terlengkap untuk antusias PC, gamer, dan kreator konten di Indonesia. Ditenagai algoritma kecerdasan buatan untuk meracik komponen tanpa khawatir bottleneck.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-surface-2/60 rounded-2xl p-4">
-              <div className="font-bold text-sm text-foreground mb-1">🛒 Marketplace</div>
-              <p className="text-[11px] text-muted leading-relaxed">
-                Katalog produk elektronik &amp; hardware tervalidasi dengan harga kompetitif.
-              </p>
-            </div>
-            <div className="bg-surface-2/60 rounded-2xl p-4">
-              <div className="font-bold text-sm text-foreground mb-1">🤖 Build PC with Agent AI</div>
-              <p className="text-[11px] text-muted leading-relaxed">
-                Simulasi perakitan 3D interaktif dengan cek kompatibilitas daya &amp; anti-bottleneck.
-              </p>
-            </div>
-            <div className="bg-surface-2/60 rounded-2xl p-4">
-              <div className="font-bold text-sm text-foreground mb-1">💬 Komunitas</div>
-              <p className="text-[11px] text-muted leading-relaxed">
-                Forum dengan tier reputasi (Silver, Gold, Diamond) anti-fake review.
-              </p>
-            </div>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/builder" className="px-6 py-3 rounded-full bg-white text-accent font-extrabold text-xs hover:bg-slate-100 transition shadow-lg">
+              Coba AI PC Builder →
+            </Link>
+            <Link href="/shop/products" className="px-6 py-3 rounded-full bg-white/10 text-white border border-white/20 font-bold text-xs hover:bg-white/20 transition">
+              Katalog Toko
+            </Link>
           </div>
         </div>
       </section>
-
-      {/* ================= FOOTER ================= */}
-            <footer className="border-t-2 border-slate-400/60 mt-16 pt-10 pb-8 px-4 sm:px-6">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
-                <div>
-                  <h3 className="text-sm font-bold text-foreground mb-3">Tekno Zone</h3>
-                  <p className="text-xs text-muted leading-relaxed max-w-xs">
-                    Belanja elektronik, diskusi tech &amp; AI, dan rakit PC dengan AI Agent — satu ekosistem.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-foreground mb-3">Menu</h3>
-                  <ul className="space-y-2 text-xs text-muted">
-                    <li><Link href="/shop/products" className="hover:text-accent transition">Produk</Link></li>
-                    <li><Link href="/forum" className="hover:text-accent transition">Forum</Link></li>
-                    <li><Link href="/builder" className="hover:text-accent transition">PC Builder AI</Link></li>
-                    <li><Link href="/shop/cart" className="hover:text-accent transition">Keranjang</Link></li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-foreground mb-3">Akun</h3>
-                  <ul className="space-y-2 text-xs text-muted">
-                    <li><Link href="/user/profile" className="hover:text-accent transition">Profil</Link></li>
-                    <li><Link href="/shop/orders" className="hover:text-accent transition">Pesanan</Link></li>
-                    <li><Link href="/login" className="hover:text-accent transition">Masuk</Link></li>
-                  </ul>
-                </div>
-              </div>
-              <div className="pt-6 border-t border-slate-400/50 text-center text-muted text-[11px] font-medium tracking-wide">
-                <p>© 2026 TeknoZone. Platform Hardware &amp; Komunitas Terpercaya Indonesia.</p>
-              </div>
-            </footer>
     </main>
   );
 }

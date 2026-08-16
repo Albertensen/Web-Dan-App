@@ -2,6 +2,14 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — UI Overhaul Standar Marketplace Modern (Shopify & Google Design System)
+
+### Added
+- **Marketplace Product Card (`ProductCard.tsx`)**: Desain kartu produk ala e-commerce terkemuka dengan badge diskon hemat persentase, rating bintang 5-star, penanda produk original/garansi resmi, dan tombol aksi ganda.
+- **Trust Badges Bar di Beranda**: Bar penjamin kepuasan belanja mencakup 100% Produk Asli, Pengiriman Cepat, Konsultasi AI Bebas Bottleneck 24/7, dan Komunitas Terpercaya.
+- **Horizontal Category Carousel**: Pill filter kategori berikon di beranda untuk navigasi instan antar jenis komponen hardware.
+
+
 ## [2026-08-16] — Fase 9: Inisialisasi Mobile App (Expo React Native & Shared Types)
 
 ### Added
