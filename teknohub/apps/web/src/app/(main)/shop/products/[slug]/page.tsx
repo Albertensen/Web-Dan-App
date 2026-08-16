@@ -83,20 +83,16 @@ export default async function ProductPage({ params }: ProductProps) {
 
       {/* Main Product Grid */}
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Left Column: Image/Placeholder */}
-        <div className="col-span-1 flex justify-center items-start">
-          <div className="w-full max-w-md aspect-[4/5] bg-surface-2 rounded-xl shadow-2xl overflow-hidden">
-            <ProductImage
-              src={product.image_url}
-              alt={product.name}
-              category={product.category}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="w-full h-full rounded-xl"
-            />
-          </div>
+        {/* Left Column: Gallery */}
+        <div className="col-span-1">
+          <ProductGallery
+            images={[product.image_url, product.image_url, product.image_url, product.image_url]}
+            name={product.name}
+            category={product.category}
+          />
         </div>
 
-        {/* Right Column: Details and CTA */}
+{/* Right Column: Details and CTA */}
         <div className="col-span-1 space-y-6">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground">{product.name}</h1>
 
@@ -170,6 +166,8 @@ export default async function ProductPage({ params }: ProductProps) {
           </div>
         </div>
       )}
+
+      <StickyBuyBar product={{ id: product.id, name: product.name, slug: product.slug, price: Number(product.price), stock: Number(product.stock), image_url: product.image_url }} />
     </div>
   );
 }
