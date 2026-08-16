@@ -71,7 +71,7 @@ export default function BuildCompare() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300 mb-6">
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border mb-6">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Bandingkan Build</h2>
         <p className="text-sm text-tertiary mb-4">
           Tambahkan hingga 3 build rekomendasi untuk dibandingkan komponen per komponen.
@@ -81,7 +81,7 @@ export default function BuildCompare() {
             value={label}
             onChange={(e) => setLabel(e.target.value)}
             placeholder={`Label build ${builds.length + 1} (opsional)`}
-            className="flex-1 px-4 py-2 bg-surface border border-slate-300 rounded-lg text-foreground text-sm placeholder:text-tertiary"
+            className="flex-1 px-4 py-2 bg-surface border border-border rounded-lg text-foreground text-sm placeholder:text-tertiary"
           />
           <button
             onClick={addBuild}
@@ -95,10 +95,10 @@ export default function BuildCompare() {
       </div>
 
       {builds.length > 0 && (
-        <div className="bg-surface-2/60 rounded-xl shadow-lg border border-slate-300 overflow-x-auto">
+        <div className="bg-surface-2/60 rounded-xl shadow-lg border border-border overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-300">
+              <tr className="border-b border-border">
                 <th className="text-left p-4 text-tertiary font-medium">Komponen</th>
                 {builds.map((b, i) => (
                   <th key={i} className="p-4 text-left">
@@ -113,7 +113,7 @@ export default function BuildCompare() {
             </thead>
             <tbody>
               {allTypes.map((type) => (
-                <tr key={type} className="border-b border-slate-300">
+                <tr key={type} className="border-b border-border">
                   <td className="p-4 text-tertiary font-medium whitespace-nowrap">{TYPE_LABEL[type] ?? type}</td>
                   {builds.map((b, i) => {
                     const part = b.parts.find((p) => p.type === type);

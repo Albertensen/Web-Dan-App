@@ -48,7 +48,7 @@ export default async function ProductReviews({ productId }: { productId: string 
 
   if (list.length === 0) {
     return (
-      <div className="p-6 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
+      <div className="p-6 bg-surface-2/60 border border-dashed border-border rounded-xl text-center">
         <p className="text-sm text-muted">Belum ada ulasan untuk produk ini.</p>
         <p className="text-xs text-tertiary mt-1">Jadilah yang pertama memberi ulasan!</p>
       </div>
@@ -75,7 +75,7 @@ export default async function ProductReviews({ productId }: { productId: string 
   return (
     <div className="space-y-6">
       {/* Ringkasan: indicator tier (bukan bintang) */}
-      <div className="bg-surface-2/60 border border-slate-300 rounded-2xl p-5">
+      <div className="bg-surface-2/60 border border-border rounded-2xl p-5">
         <div className="flex items-baseline gap-3 mb-4">
           <span className="text-4xl font-extrabold text-foreground">{avg}</span>
           <div className="flex items-center gap-1.5">
@@ -110,7 +110,7 @@ export default async function ProductReviews({ productId }: { productId: string 
         {list.map((r) => {
           const tier = tierOf(r.profiles?.reputation);
           return (
-            <div key={r.id} className="bg-surface border border-slate-300 rounded-2xl p-5 shadow-sm">
+            <div key={r.id} className="bg-surface border border-border rounded-2xl p-5 shadow-sm">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-surface-2 flex items-center justify-center text-sm text-accent font-bold">
                   {r.profiles?.username?.[0]?.toUpperCase() || "?"}

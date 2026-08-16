@@ -16,7 +16,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
   const loginActive = mode === "login";
 
   return (
-    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[840px] lg:min-h-[720px] overflow-hidden rounded-3xl border border-slate-300 shadow-2xl bg-surface">
+    <div className="w-full max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 min-h-[840px] lg:min-h-[720px] overflow-hidden rounded-3xl border border-border shadow-2xl bg-surface">
       {/* Panel form */}
       <section className="order-1 lg:order-2 flex items-center p-6 sm:p-10 lg:p-14">
         <div key={mode} className={`w-full max-w-md mx-auto ${loginActive ? "animate-page-in-right" : "animate-page-in-left"}`}>
@@ -52,7 +52,7 @@ export default function AuthSlider({ initialMode = "login" }: { initialMode?: "l
 
       {/* Panel biru */}
       <aside className="order-2 lg:order-1 flex flex-col justify-center p-8 sm:p-10 lg:p-14 text-white relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0B1F45 0%, #1E3A6E 60%, #2563EB 100%)" }}>
+        style={{ background: "linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-secondary) 60%, var(--color-zone-blue) 100%)" }}>
         <div className="pointer-events-none absolute -top-24 -right-24 w-80 h-80 rounded-full bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-zone-blue/40 blur-3xl" />
         <div className="relative z-10 text-center lg:text-left">

@@ -57,7 +57,7 @@ export default function AICustomerServiceWidget() {
 
       {/* Chat panel */}
       {open && (
-        <div className="fixed bottom-24 right-5 z-50 w-80 sm:w-96 max-h-[70vh] flex flex-col bg-surface border border-slate-300 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="fixed bottom-24 right-5 z-50 w-80 sm:w-96 max-h-[70vh] flex flex-col bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="px-4 py-3 bg-accent flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm">🤖</div>
@@ -80,7 +80,7 @@ export default function AICustomerServiceWidget() {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="px-3 py-2 text-xs rounded-lg bg-surface-2 border border-slate-300 text-muted hover:border-accent hover:text-accent transition text-left"
+                      className="px-3 py-2 text-xs rounded-lg bg-surface-2 border border-border text-muted hover:border-accent hover:text-accent transition text-left"
                     >
                       {q}
                     </button>
@@ -94,7 +94,7 @@ export default function AICustomerServiceWidget() {
                   className={`max-w-[85%] px-3 py-2 rounded-xl text-xs whitespace-pre-wrap ${
                     m.role === "user"
                       ? "bg-blue-500/25 text-blue-100 border border-blue-500/30 rounded-br-sm"
-                      : "bg-surface-2 text-foreground border border-slate-300 rounded-bl-sm"
+                      : "bg-surface-2 text-foreground border border-border rounded-bl-sm"
                   }`}
                 >
                   {m.content}
@@ -103,7 +103,7 @@ export default function AICustomerServiceWidget() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="px-3 py-2 rounded-xl text-xs bg-surface-2 text-tertiary border border-slate-300">
+                <div className="px-3 py-2 rounded-xl text-xs bg-surface-2 text-tertiary border border-border">
                   Mengetik...
                 </div>
               </div>
@@ -111,13 +111,13 @@ export default function AICustomerServiceWidget() {
           </div>
 
           {/* Input */}
-          <div className="p-3 border-t border-slate-300 flex gap-2">
+          <div className="p-3 border-t border-border flex gap-2">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
               placeholder="Tulis pertanyaan..."
-              className="flex-1 px-3 py-2 text-xs bg-surface border border-slate-300 rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
+              className="flex-1 px-3 py-2 text-xs bg-surface border border-border rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
             />
             <button
               onClick={() => send()}
