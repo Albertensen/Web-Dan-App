@@ -65,7 +65,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
 
   const bars = [5, 4, 3, 2, 1].map((star) => {
     const count = reviews.filter((r) => r.rating === star).length;
-    return { star, count, pct: reviews.length ? (count / reviews.length) * 100 : 0 };
+    return { star, count, pct: reviews.length ? Number(((count / reviews.length) * 100).toFixed(1)) : 0 };
   });
 
   const sold = reviews.length * 10 + 37;
@@ -98,7 +98,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
                 <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
                   <div className="h-full bg-amber-400 rounded-full" style={{ width: `${b.pct}%` }} />
                 </div>
-                <span className="w-8 text-right text-tertiary shrink-0">{b.pct}%</span>
+                <span className="w-10 text-right text-tertiary shrink-0 whitespace-nowrap">{b.pct}%</span>
               </div>
             ))}
           </div>

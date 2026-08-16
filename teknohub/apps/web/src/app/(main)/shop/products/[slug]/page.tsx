@@ -71,14 +71,6 @@ export default async function ProductPage({ params }: ProductProps) {
     .neq("id", product.id)
     .limit(4);
 
-  // Spek teknis dari kolom jsonb specs (fallback kosong jika tak ada)
-  const rawSpecs = (product.specs ?? {}) as Record<string, string | number | boolean | null>;
-  const specRows = Object.fromEntries(
-    Object.entries(rawSpecs).filter(([, v]) => v !== null && v !== undefined && v !== "")
-  );
-  const labelSpec = (k: string) =>
-    k.replace(/[_-]+/g, " ").replace(/\w/g, (c) => c.toUpperCase());
-
   return (
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8 pb-28 md:pb-12">
       {/* Breadcrumb */}
@@ -138,31 +130,7 @@ export default async function ProductPage({ params }: ProductProps) {
             <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
             <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
           </div>
-          <div className="pt-4 border-t border-border">
-            <h2 className="text-xl font-semibold mb-3 text-muted">Spesifikasi Teknis</h2>
-            <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-200 dark:divide-slate-800">
-              {[
-                ["Merek / Brand", product.brand || "—"],
-                ["Kategori", product.category ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : "—"],
-                ["ID Produk", product.id],
-                ["Stok Tersedia", String(product.stock)],
-                ["Harga", formattedPrice],
-                ...Object.entries(specRows).map(([k, v]) => [labelSpec(k), String(v)] as [string, string]),
-              ]
-                .filter(([, v]) => v && v !== "—")
-                .map(([k, v], idx) => (
-                  <div
-                    key={k}
-                    className={`p-3 grid grid-cols-3 gap-2 text-sm ${idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}`}
-                  >
-                    <span className="col-span-1 font-medium text-slate-500 dark:text-slate-400">{k}</span>
-                    <span className="col-span-2 font-semibold text-slate-900 dark:text-slate-100 whitespace-pre-wrap">{v}</span>
-                  </div>
-                ))}
-            </div>
-          </div>
-
-          <div className="pt-6">
+<div className="pt-6">
             <AddToCartButton
               product={{
                 id: product.id,
