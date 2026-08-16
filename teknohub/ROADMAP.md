@@ -390,7 +390,7 @@ Status: ✅ Tuntas (Inisialisasi & Core App)
 ---
 
 ## FASE 12 — Modernisasi Marketplace, Trust UI/UX & AI Builder
-Status: ⏳ Belum dimulai
+Status: 🟢 Aktif (Batch 1 & 2 selesai)
 
 ### Fase 1: Trust, UI Cleanup & Design System
 - [x] Pembersihan teks generator/footer ("Dibuat dengan AI Agent") dan menggantinya dengan informasi bantuan & layanan pelanggan resmi (609aca0)
@@ -409,7 +409,7 @@ Status: ⏳ Belum dimulai
 - [x] Fitur 1-Click "Beli Semua Komponen" dari hasil rakitan AI/3D Builder ke keranjang belanja (+ toast, redirect /shop/cart) (9701cba)
 - [ ] Sinkronisasi ketersediaan stok real-time di modul AI Builder beserta rekomendasi alternatif otomatis
 - [ ] Fitur side-by-side perbandingan spesifikasi hardware (Compare Specs)
-- [ ] Opsi add-on checkout: Jasa Rakit & Cable Management, Asuransi/Packing Kayu, dan Instalasi OS/Driver
+- [x] Opsi add-on checkout: Jasa Rakit & Cable Management, Asuransi/Packing Kayu, dan Instalasi OS/Driver
 
 ### Fase 4: Community Forum & Social Proof
 - [ ] Embed widget rakitan PC interaktif dari Builder ke postingan forum
@@ -420,6 +420,21 @@ Status: ⏳ Belum dimulai
 - [ ] Caching 3D model assets untuk AI Builder dan optimasi Core Web Vitals gambar produk (WebP/AVIF)
 
 ---
+
+### Batch 2: Polis Produk & PDP (Selesai)
+- [x] Rating & jumlah ulasan ProductCard dihitung dinamis dari `product_reviews` (bukan hardcode)
+- [x] Fallback min 3 ulasan terverifikasi di PDP saat review kosong
+- [x] Sticky buy bar mobile muncul saat scroll (tidak menutupi footer)
+- [x] Swipe kiri/kanan galeri + thumbnail ganti foto produk di mobile
+- [x] Tombol Bagikan / Copy Link PDP dengan toast
+- [x] Breadcrumb ber-link (Beranda / Produk / Kategori / Nama)
+- [x] Gambar utama PDP aspect-square object-contain (tak terdistorsi)
+- [x] Rating di-review cap 1 desimal + bar persentase (66.7% bukan 66.6666%)
+- [x] Empty cart redesign + CTA "Mulai Belanja Komputer"
+- [x] Card: clamp judul 2 baris, badge Garansi Resmi, harga/rating rata bawah
+- [x] Saran "Pencarian Populer" di dropdown search header
+- [x] Builder: Bagikan Rakitan (copy-link) + Export Ringkasan (clipboard)
+- [x] Footer trust badges: 2 kategori terpisah (Pembayaran & Pengiriman)
 
 ## FASE 13 — Launch
 Status: ⏳ Belum dimulai

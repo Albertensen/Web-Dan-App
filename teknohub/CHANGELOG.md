@@ -4,6 +4,12 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 
 ## [Unreleased]
 
+### Marketplace & Builder
+- Redesigned empty cart: ikon ShoppingBag besar, heading & subtext ramah, CTA "Mulai Belanja Komputer".
+- Changed ProductCard: judul clamp 2 baris (`line-clamp-2 h-10`), badge "Garansi Resmi", harga & rating rata bawah (mt-auto).
+- Added panel "Pencarian Populer" (RTX 4070, Ryzen 7, RAM DDR5, Monitor 144Hz) saat search header difokus.
+- Added tombol "Bagikan Rakitan" (copy-link + toast) dan "Export Ringkasan" (copy daftar komponen berformat) di builder.
+
 ### Produk & PDP
 - Added rating & jumlah ulasan di ProductCard dihitung dinamis dari `product_reviews` (bukan angka statis).
 - Added validasi stok habis di PDP: tombol AddToCart & StickyBuyBar nonaktif berlabel "Stok Habis".
