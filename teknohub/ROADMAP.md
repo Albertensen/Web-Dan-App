@@ -53,7 +53,7 @@ Status: ✅ Selesai
 - [x] Init monorepo teknohub/ (Next.js + packages + supabase)
 - [x] Homepage profesional (dark theme, 3 hero card)
 - [x] Semua route placeholder dibuat
-- [x] SQL schema lengkap (13 tabel + indexes + RLS policies + seed data)
+- [x] SQL schema lengkap (19 tabel + indexes + RLS policies + seed data)
 - [x] .env.example + turbo.json + next.config.mjs (Next 14 tak dukung .ts)
 - [x] npm run dev jalan di localhost:3000
 
@@ -65,7 +65,7 @@ Status: ✅ Selesai
 
 ### Database & Auth
 - [x] Buat Supabase project
-- [x] Run SQL migration di Supabase (14 tabel + RLS + seed via Management API)
+- [x] Run SQL migration di Supabase (19 tabel + RLS + seed via Management API)
 - [x] Setup NextAuth + Google OAuth (credentials aktif di Vercel + dev)
 - [x] Login/register flow berfungsi (provider google live, callback verified)
 - [x] RLS policies aktif dan ditest (6/6 PASS)
@@ -258,69 +258,6 @@ Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 
 ---
 
-## FASE ADMIN PORTAL — Back-Office Management & Operations
-Status: ✅ Tuntas (100%)
-
-### Admin Shell & Layout
-- [x] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
-- [x] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
-- [x] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
-- [x] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
-- [x] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
-- [x] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
-- [x] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
-- [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
-
----
-## FASE 7 — Security Hardening
-Status: ✅ Tuntas (100%)
-
-### HTTP Security Headers
-- [x] next.config.mjs: Content-Security-Policy (CSP)
-- [x] X-Frame-Options: DENY
-- [x] X-Content-Type-Options: nosniff
-- [x] Referrer-Policy: strict-origin-when-cross-origin
-- [x] Permissions-Policy: camera=(), microphone=(), geolocation=()
-- [x] Strict-Transport-Security (HSTS: max-age=63072000; includeSubDomains; preload)
-
-### API Route Security & RBAC
-- [x] Rate limiting semua API routes (custom middleware)
-- [x] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
-- [x] Auth check wajib di semua route yang butuh login (tidak ada route admin/staf tanpa cek role di database profiles)
-- [x] Audit semua route sensitif: RBAC terpisah antara super admin, staf toko/marketplace, dan member
-
-### Input Validation & Sanitization
-- [x] Semua input user divalidasi dengan Zod sebelum masuk DB (auth, checkout, review, quote, forum)
-- [x] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify / sanitize-html)
-- [x] File upload: validasi MIME type whitelist (image/*) di server
-- [x] Cegah path traversal di file upload ke Supabase Storage (whitelist ekstensi, larang "../" dan "%2e%2e")
-
-### Supabase RLS & Role Isolation
-- [x] RLS aktif di seluruh 14 tabel database
-- [x] Service role key hanya diakses di server-side environment
-- [x] Proteksi akun admin: pencegahan self-ban dan penurunan role mandiri
-
-### Autentikasi & Session
-- [x] NEXTAUTH_SECRET 64-karakter acak terverifikasi
-- [x] Session cookie: httpOnly, secure di produksi, sameSite="lax"
-- [x] Brute force protection di CredentialsProvider (rate limit 5x per menit)
-- [x] Password minimum 8 karakter terverifikasi dengan Zod schema
-
-### Environment & Secrets Audit
-- [ ] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit
-- [ ] Vercel env: semua secret di production env (tidak ada yang hardcode)
-- [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
-- [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
-
-### Dependency Security
-- [ ] npm audit — fix semua critical + high vulnerability
-- [ ] Update dependencies ke versi aman terbaru
-- [ ] Hapus package yang tidak terpakai dari package.json
-
----
-
----
-
 ## FASE 6D — UI Overhaul & Polish
 Status: ✅ Tuntas
 
@@ -355,6 +292,69 @@ Status: ✅ Tuntas
 - [x] /forum empty state yang menarik (ikon + CTA buat thread)
 
 ---
+---
+
+## FASE ADMIN PORTAL — Back-Office Management & Operations
+Status: ✅ Tuntas (100%)
+
+### Admin Shell & Layout
+- [x] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
+- [x] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
+- [x] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
+- [x] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
+- [x] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
+- [x] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
+- [x] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
+- [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
+
+---
+## FASE 7 — Security Hardening
+Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update deps, rotate key)
+
+### HTTP Security Headers
+- [x] next.config.mjs: Content-Security-Policy (CSP)
+- [x] X-Frame-Options: DENY
+- [x] X-Content-Type-Options: nosniff
+- [x] Referrer-Policy: strict-origin-when-cross-origin
+- [x] Permissions-Policy: camera=(), microphone=(), geolocation=()
+- [x] Strict-Transport-Security (HSTS: max-age=63072000; includeSubDomains; preload)
+
+### API Route Security & RBAC
+- [x] Rate limiting semua API routes (custom middleware)
+- [x] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
+- [x] Auth check wajib di semua route yang butuh login (tidak ada route admin/staf tanpa cek role di database profiles)
+- [x] Audit semua route sensitif: RBAC terpisah antara super admin, staf toko/marketplace, dan member
+
+### Input Validation & Sanitization
+- [x] Semua input user divalidasi dengan Zod sebelum masuk DB (auth, checkout, review, quote, forum)
+- [x] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify / sanitize-html)
+- [x] File upload: validasi MIME type whitelist (image/*) di server
+- [x] Cegah path traversal di file upload ke Supabase Storage (whitelist ekstensi, larang "../" dan "%2e%2e")
+
+### Supabase RLS & Role Isolation
+- [x] RLS aktif di seluruh 14 tabel database
+- [x] Service role key hanya diakses di server-side environment
+- [x] Proteksi akun admin: pencegahan self-ban dan penurunan role mandiri
+
+### Autentikasi & Session
+- [x] NEXTAUTH_SECRET 64-karakter acak terverifikasi
+- [x] Session cookie: httpOnly, secure di produksi, sameSite="lax"
+- [x] Brute force protection di CredentialsProvider (rate limit 5x per menit)
+- [x] Password minimum 8 karakter terverifikasi dengan Zod schema
+
+### Environment & Secrets Audit
+- [x] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit — verif 2026-08-16 (root + apps/web, .env & run_00*.py excluded)
+- [x] Vercel env: semua secret di production env (tidak ada yang hardcode) — verif 2026-08-16
+- [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
+- [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
+
+### Dependency Security
+- [ ] npm audit — fix semua critical + high vulnerability (blm jalan, butuh key registri)
+- [ ] Update dependencies ke versi aman terbaru
+- [x] Hapus package yang tidak terpakai dari package.json (03/2026)
+
+---
+
 ## FASE 8 — Testing & QA
 Status: ✅ Tuntas (100%)
 
@@ -425,4 +425,4 @@ Status: ⏳ Belum dimulai
 ## Catatan
 
 - `next.config.ts` di checklist asli → diganti `.mjs`: Next.js 14 tidak mendukung config TypeScript (fitur Next 15)
-- schema.sql saat ini 6 tabel inti (profiles, products, forum_categories, forum_threads, forum_replies, pc_builds) — akan di-expand ke 12 tabel sesuai kebutuhan Fase 3-5 (orders, order_items, addresses, component_prices, price_history, quotes, notifications, dll)
+- `schema.sql` termigrasi penuh: 19 tabel inti (profiles, products, forum_categories, forum_threads, forum_replies, pc_builds, orders, order_items, addresses, component_prices, price_history, quotes, notifications, reviews, dll) via migration 001-012
