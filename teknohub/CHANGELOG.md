@@ -15,7 +15,8 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 - **Filter & Multi-Sorting**: Sidebar filter kategori + rentang harga di katalog, sort dropdown (terpopuler/harga/terbaru), sync ke URL query (`?category&min_price&sort`). (`c08b5e9`)
 - **Quick Add-to-Cart & Wishlist**: Tombol "+ Keranjang" + Toast, wishlist icon (localStorage), badge diskon & harga coret, indikator stok. (`04b05eb`)
 - **Modul Review Terverifikasi**: Rating summary + bar breakdown per bintang, filter bintang/foto, galeri unboxing lightbox, badge "Pembeli Terverifikasi", varian produk. (`260e016`, `48be331`, `e6a74fc`)
-- **Checkout Flow**: Opsi kurir & layanan (JNE/SiCepat/GoSend) dengan estimasi hari + ongkir dinamis, metode bayar tab (QRIS/VA/E-Wallet/Kartu), simulasi QRIS & nomor VA, perhitungan Grand Total otomatis (subtotal+ongkir+biaya layanan), dan trust badges pembayaran/logistik di footer. (`c592ab0`)
+- **Checkout Flow**: Opsi kurir & layanan (JNE/SiCepat/GoSend) dengan estimasi hari + ongkir dinamis, metode bayar tab (QRIS/VA/E-Wallet/Kartu), simulasi QRIS & nomor VA, perhitungan Grand Total otomatis (subtotal+ongkir+biaya layanan), trust badges pembayaran/logistik di footer, dan form alamat terstruktur (penerima/telepon/full/provinsi/kota/kecamatan/kodepos). (`c592ab0`, `9701cba`)
+- **AI Builder → Cart**: Tombol "Beli Semua Komponen" masukkan seluruh komponen rakitan aktif ke keranjang + toast + redirect /shop/cart; sticky mobile buy bar (+ Keranjang/Beli Sekarang) di detail produk; galeri thumbnail produk; CS floating button lingkaran jempol dengan ping + tooltip Chat CS. (`9701cba`)
 
 ### Infrastructure & Data
 - **milestone**: Bucket storage `review-images` (public, image-only) + endpoint signed upload; migration `013` tambah kolom `is_verified`, `bought_variant`, `media` pada `product_reviews` (135 review reseed, 60 verified). (`48be331`, `e6a74fc`)

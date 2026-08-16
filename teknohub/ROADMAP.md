@@ -406,7 +406,7 @@ Status: ⏳ Belum dimulai
 - [x] Integrasi Payment Gateway & api ongkir (sendiri: simulasi QRIS/VA/E-wallet/Kartu, kurir JNE/SiCepat/GoSend + estimasi & ongkir dinamis, trust badges footer; sisa: RajaOngkir/Biteship & Midtrans live) (c592ab0)
 
 ### Fase 3: AI Builder & Ecosystem Integration
-- [ ] Fitur 1-Click "Beli Semua Komponen" langsung dari hasil rakitan AI/3D Builder ke keranjang belanja
+- [x] Fitur 1-Click "Beli Semua Komponen" dari hasil rakitan AI/3D Builder ke keranjang belanja (+ toast, redirect /shop/cart) (9701cba)
 - [ ] Sinkronisasi ketersediaan stok real-time di modul AI Builder beserta rekomendasi alternatif otomatis
 - [ ] Fitur side-by-side perbandingan spesifikasi hardware (Compare Specs)
 - [ ] Opsi add-on checkout: Jasa Rakit & Cable Management, Asuransi/Packing Kayu, dan Instalasi OS/Driver
