@@ -402,7 +402,7 @@ Status: ⏳ Belum dimulai
 - [x] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk (5359cdf)
 - [x] Sistem Filter & Multi-Sorting di katalog produk (kategori multi-pilih, rentang harga, sorting harga/terbaru; sisa: socket/VRAM/DDR & garansi) (c08b5e9)
 - [x] Revamp kartu produk: Quick Add-to-Cart + Toast, Wishlist (localStorage), badge diskon & harga coret, indikator stok (04b05eb)
-- [ ] Modul review & ulasan terverifikasi (Verified Buyer) beserta upload foto bukti unboxing
+- [x] Modul review & ulasan terverifikasi (rating summary, filter bintang/foto, galeri lightbox, badge Pembeli Terverifikasi, varian) (260e016)
 - [ ] Integrasi Payment Gateway (QRIS, VA Bank, E-Wallet) dan API ongkir logistik (RajaOngkir/Biteship) serta trust badges di footer
 
 ### Fase 3: AI Builder & Ecosystem Integration
