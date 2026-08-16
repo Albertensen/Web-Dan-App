@@ -68,7 +68,7 @@ export default async function Home() {
       {/* ================= TRUST BADGES (MARKETPLACE STANDARD) ================= */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {TRUST_BADGES.map((b) => (
-          <div key={b.title} className="bg-surface border border-slate-300 rounded-2xl p-4 flex items-center gap-3 shadow-sm">
+          <div key={b.title} className="bg-surface border border-border rounded-2xl p-4 flex items-center gap-3 shadow-sm">
             <span className="text-2xl sm:text-3xl shrink-0">{b.icon}</span>
             <div className="min-w-0">
               <p className="font-extrabold text-xs sm:text-sm text-foreground truncate">{b.title}</p>
@@ -94,7 +94,7 @@ export default async function Home() {
           </div>
           <Link
             href="/shop/products"
-            className="self-start sm:self-auto px-5 py-2 rounded-full border border-slate-300 bg-surface-2 hover:border-accent text-xs font-bold transition"
+            className="self-start sm:self-auto px-5 py-2 rounded-full border border-border bg-surface-2 hover:border-accent text-xs font-bold transition"
           >
             Lihat Semua Produk →
           </Link>
@@ -106,7 +106,7 @@ export default async function Home() {
             <Link
               key={c.slug}
               href={c.slug === "all" ? "/shop/products" : `/shop/products?category=${c.slug}`}
-              className="shrink-0 bg-surface border border-slate-300 hover:border-accent hover:shadow px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition"
+              className="shrink-0 bg-surface border border-border hover:border-accent hover:shadow px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition"
             >
               <span>{c.icon}</span>
               <span>{c.label}</span>
@@ -116,7 +116,7 @@ export default async function Home() {
 
         {/* Product Grid */}
         {products.length === 0 ? (
-          <div className="p-12 text-center bg-surface-2/60 border border-dashed border-slate-300 rounded-3xl">
+          <div className="p-12 text-center bg-surface-2/60 border border-dashed border-border rounded-3xl">
             <p className="text-tertiary text-sm">Produk sedang disiapkan. Silakan kunjungi kembali nanti.</p>
           </div>
         ) : (
@@ -129,7 +129,7 @@ export default async function Home() {
       </section>
 
       {/* ================= FORUM COMMUNITY SECTION ================= */}
-      <section id="forum-slide" className="bg-surface rounded-3xl border border-slate-300 p-6 sm:p-8 space-y-6 shadow-sm">
+      <section id="forum-slide" className="bg-surface rounded-3xl border border-border p-6 sm:p-8 space-y-6 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">

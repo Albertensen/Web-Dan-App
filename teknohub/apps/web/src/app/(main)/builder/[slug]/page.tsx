@@ -41,7 +41,7 @@ export default async function BuildDetailPage({ params }: BuildPageProps) {
         </Link>
       </div>
 
-      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300 mb-6">
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border mb-6">
         <h1 className="text-2xl font-bold text-foreground mb-2">{build.title}</h1>
         <div className="flex flex-wrap gap-4 text-sm text-tertiary">
           <span className="px-2 py-0.5 rounded-full bg-accent-dim text-accent border border-accent/30">
@@ -53,10 +53,10 @@ export default async function BuildDetailPage({ params }: BuildPageProps) {
         </div>
       </div>
 
-      <div className="bg-surface-2/60 rounded-xl shadow-lg border border-slate-300 overflow-hidden">
+      <div className="bg-surface-2/60 rounded-xl shadow-lg border border-border overflow-hidden">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-slate-300 bg-surface-2/70">
+            <tr className="border-b border-border bg-surface-2/70">
               <th className="text-left p-4 text-tertiary font-medium">Tipe</th>
               <th className="text-left p-4 text-tertiary font-medium">Komponen</th>
               <th className="text-left p-4 text-tertiary font-medium">Qty</th>
@@ -64,7 +64,7 @@ export default async function BuildDetailPage({ params }: BuildPageProps) {
           </thead>
           <tbody>
             {(parts as unknown as { quantity: number; component: { id: string; name: string; brand: string | null; component_type: string } }[] ?? []).map((p) => (
-              <tr key={p.component.id} className="border-b border-slate-300">
+              <tr key={p.component.id} className="border-b border-border">
                 <td className="p-4 text-tertiary whitespace-nowrap">{TYPE_LABEL[p.component.component_type] ?? p.component.component_type}</td>
                 <td className="p-4 text-foreground">
                   {p.component.brand ? <span className="text-slate-500 mr-1">{p.component.brand}</span> : null}

@@ -3,8 +3,8 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh] text-center">
-      <div className="max-w-md w-full bg-surface border border-slate-300 rounded-3xl p-8 shadow-xl">
-        <div className="w-20 h-20 rounded-full bg-surface-2 flex items-center justify-center text-4xl mx-auto mb-4 border border-slate-300">
+      <div className="max-w-md w-full bg-surface border border-border rounded-3xl p-8 shadow-xl">
+        <div className="w-20 h-20 rounded-full bg-surface-2 flex items-center justify-center text-4xl mx-auto mb-4 border border-border">
           🔍
         </div>
         <h1 className="text-4xl font-extrabold text-foreground mb-2">404</h1>
@@ -21,7 +21,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/shop/products"
-            className="px-6 py-2.5 rounded-full bg-surface-2 border border-slate-300 text-foreground font-semibold text-xs hover:border-accent transition"
+            className="px-6 py-2.5 rounded-full bg-surface-2 border border-border text-foreground font-semibold text-xs hover:border-accent transition"
           >
             Lihat Produk
           </Link>

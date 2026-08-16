@@ -22,7 +22,7 @@ export default function Builder3DPage() {
           kompatibilitas daya, dan cegah bottleneck secara visual.
         </p>
 
-        <div className="bg-surface border border-slate-300 rounded-3xl p-10 shadow-sm mb-8">
+        <div className="bg-surface border border-border rounded-3xl p-10 shadow-sm mb-8">
           <div className="w-40 h-40 mx-auto mb-6 rounded-3xl bg-surface-2 flex items-center justify-center text-5xl">
             🖥️
           </div>
@@ -40,7 +40,7 @@ export default function Builder3DPage() {
           </Link>
           <Link
             href="/"
-            className="w-full sm:w-auto bg-surface border border-slate-300 text-foreground px-6 py-3 rounded-full text-sm font-medium hover:border-accent transition"
+            className="w-full sm:w-auto bg-surface border border-border text-foreground px-6 py-3 rounded-full text-sm font-medium hover:border-accent transition"
           >
             Kembali ke Marketplace
           </Link>
