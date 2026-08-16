@@ -1,6 +1,7 @@
 import FilterSortBar from "@/components/FilterSortBar";
 import ProductFilter from "@/components/ProductFilter";
 import ProductCard from "@/components/ProductCard";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import type { Product } from "@/types/product";
 
 interface ProductsPageProps {
@@ -67,6 +68,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mt-6">
               {products.map((p) => (
                 <ProductCard key={p.slug} product={p} />
+              ))}
+            </div>
+          ) : products.length === 0 ? (
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mt-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
               ))}
             </div>
           ) : (

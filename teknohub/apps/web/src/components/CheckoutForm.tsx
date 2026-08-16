@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore, selectTotalPrice, selectTotalItems } from "@/store/cartStore";
 import { checkoutSchema, type CheckoutInput } from "@/lib/validations/checkout";
-import { Truck, QrCode, Landmark, Wallet, CreditCard, CheckCircle2, X } from "lucide-react";
+import { Truck, QrCode, Landmark, Wallet, CreditCard, CheckCircle2, X, Loader2 } from "lucide-react";
 
 // Kurir + layanan (estimasi hari & ongkir deterministik)
 const COURIER_PACKS = [
@@ -222,7 +222,7 @@ export default function CheckoutForm() {
 
       <button type="submit" disabled={submitting || items.length === 0}
         className="w-full py-3 rounded-xl bg-accent text-white font-bold hover:opacity-90 transition disabled:opacity-50">
-        {submitting ? "Memproses..." : `Bayar Sekarang · ${fmt(grandTotal)}`}
+        {submitting ? <span className="inline-flex items-center gap-2"><Loader2 size={16} className="animate-spin" /> Memproses...</span> : `Bayar Sekarang · ${fmt(grandTotal)}`}
       </button>
 
       {/* Modal pembayaran mock */}

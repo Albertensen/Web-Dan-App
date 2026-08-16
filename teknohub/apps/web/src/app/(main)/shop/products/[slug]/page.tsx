@@ -91,6 +91,9 @@ export default async function ProductPage({ params }: ProductProps) {
         )}
         <span aria-hidden="true">/</span>
         <span className="font-medium text-foreground line-clamp-1">{product.name}</span>
+        <span className={`ml-2 px-2 py-0.5 rounded-full text-[11px] font-bold ${product.stock <= 0 ? "bg-red-100 text-red-600" : product.stock <= 5 ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700"}`}>
+          {product.stock <= 0 ? "Stok Habis" : product.stock <= 5 ? `Sisa ${product.stock} unit!` : "Stok Tersedia"}
+        </span>
       </nav>
 
       {/* Main Product Grid */}

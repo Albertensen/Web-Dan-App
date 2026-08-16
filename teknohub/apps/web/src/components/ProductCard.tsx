@@ -85,6 +85,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const totalReviews = reviews.length;
 
   const outOfStock = product.stock <= 0;
+  const lowStock = !outOfStock && product.stock <= 5;
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
   const href = `/shop/products/${product.slug}`;
 
@@ -159,9 +160,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         <span className="text-tertiary font-medium whitespace-nowrap overflow-hidden text-ellipsis">
           {reviews.length ? `${displayRating} · ${totalReviews} ulasan · Garansi Resmi` : "Belum ada ulasan · Garansi Resmi"}
         </span>
-        {outOfStock && (
+        {outOfStock ? (
           <span className="ml-auto text-[10px] font-bold text-red-500">Stok Habis</span>
-        )}
+        ) : lowStock ? (
+          <span className="ml-auto text-[10px] font-bold text-amber-600 dark:text-amber-400 whitespace-nowrap">Sisa {product.stock} unit!</span>
+        ) : null}
       </div>
       </div>
     </Link>
