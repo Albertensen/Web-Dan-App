@@ -1,16 +1,16 @@
 # TeknoHub — Roadmap & Checklist
 
-Platform: E-Commerce Elektronik + Forum Tech/AI + Jasa Rakit PC dengan AI Agent
-Repo: https://github.com/Albertensen/Web-Dan-App
-Vercel: https://vercel.com/rebahan
-Stack: Next.js 14 + Expo + Supabase + Midtrans + Hermes AI + Playwright
+Platform: E-Commerce Elektronik + Forum Tech/AI + Jasa Rakit PC dengan AI Agent  
+Repo: https://github.com/Albertensen/Web-Dan-App  
+Vercel: https://teknohub-web.vercel.app  
+Stack: Next.js 14 + Expo + Supabase + Midtrans + Hermes AI + Playwright  
 
 ---
 
 ## Keputusan Teknis yang Sudah Diputuskan
 
 | Keputusan | Pilihan | Alasan |
-|-----------|---------|--------|
+|---|---|---|
 | Frontend web | Next.js 14 App Router | SSR, SEO, file-based routing |
 | Mobile | Expo React Native | 1 codebase → Android + iOS |
 | Database | Supabase PostgreSQL | Auth + Realtime + Storage built-in |
@@ -54,19 +54,19 @@ Status: ✅ Selesai
 - [x] Homepage profesional (dark theme, 3 hero card)
 - [x] Semua route placeholder dibuat
 - [x] SQL schema lengkap (19 tabel + indexes + RLS policies + seed data)
-- [x] .env.example + turbo.json + next.config.mjs (Next 14 tak dukung .ts)
+- [x] .env.example + turbo.json + next.config.mjs
 - [x] npm run dev jalan di localhost:3000
 
 ### GitHub & Deploy
 - [x] Git push fase 1 ke main
-- [x] Connect repo ke Vercel (rebahan account)
-- [x] Set env variables di Vercel (6 vars: Supabase URL/anon, APP_URL, APP_NAME, NEXTAUTH_SECRET, NEXTAUTH_URL)
+- [x] Connect repo ke Vercel
+- [x] Set env variables di Vercel (Supabase URL/anon, APP_URL, NEXTAUTH_SECRET, NEXTAUTH_URL)
 - [x] Deploy pertama berhasil (https://teknohub-web.vercel.app)
 
 ### Database & Auth
 - [x] Buat Supabase project
-- [x] Run SQL migration di Supabase (19 tabel + RLS + seed via Management API)
-- [x] Setup NextAuth + Google OAuth (credentials aktif di Vercel + dev)
+- [x] Run SQL migration di Supabase (19 tabel + RLS + seed)
+- [x] Setup NextAuth + Google OAuth
 - [x] Login/register flow berfungsi (provider google live, callback verified)
 - [x] RLS policies aktif dan ditest (6/6 PASS)
 
@@ -75,224 +75,137 @@ Status: ✅ Selesai
 ## FASE 2 — Autentikasi & Akun Pengguna
 Status: ✅ Tuntas
 
-### Halaman Login
+### Halaman Login & Register
 - [x] Halaman /login — dark premium design sesuai DESIGN.md
 - [x] Form email + password dengan validasi Zod
 - [x] Tombol "Lanjutkan dengan Google" (OAuth)
 - [x] Toggle show/hide password
 - [x] Link "Lupa password?" → /forgot-password
-- [x] Link "Belum punya akun? Daftar" → /register
-- [x] Error state (email tidak terdaftar, password salah)
-- [x] Loading state saat submit
-- [x] Redirect ke halaman sebelumnya setelah login berhasil
+- [x] Halaman /register dengan validasi Zod
+- [x] Halaman /forgot-password & /reset-password
+- [x] AuthSlider responsif 2 kolom + Logo clickable
 
-### Halaman Daftar (Register)
-- [x] Halaman /register — konsisten dengan halaman login
-- [x] Form: username, email, password, konfirmasi password
-- [x] Validasi Zod (email valid, password min 8 char, username min 3 char)
-- [x] Tombol "Daftar dengan Google" (OAuth — auto-fill profil)
-- [x] Checkbox persetujuan syarat & ketentuan
-- [x] Error state (email sudah terdaftar, username sudah dipakai)
-- [x] Loading state saat submit
-- [x] Redirect ke halaman onboarding / homepage setelah daftar berhasil
-
-### Halaman Lupa Password
-- [x] Halaman /forgot-password — form input email
-- [x] Kirim magic link reset password via Supabase Auth
-- [x] Halaman /reset-password — form password baru + konfirmasi
-- [x] Validasi token reset (expired / invalid)
-- [x] Success state setelah reset berhasil
-
-### Halaman Profil Pengguna & Pembagian Sisi User/Seller
-- [x] Halaman /user/profile — profil user dengan tab navigasi lengkap (Pesanan Saya, Ulasan Saya, Forum, Edit Profil)
-- [x] Sisi User — Riwayat Ulasan Produk Saya dengan modal edit rating bintang (1-5) dan komentar instan (`/api/user/reviews`)
-- [x] Sisi User — Tab Pesanan Saya dengan rincian item, total belanja, kurir, dan tracking nomor resi
-- [x] Sisi User — Tab Aktivitas Forum dengan daftar thread dan jumlah balasan
-- [x] Sisi Seller — Banner Seller & Store Portal langsung di halaman profil dengan tombol cepat menuju Seller Dashboard (`/admin`)
-- [x] Sisi Seller — Pembagian hak akses: modul rakit PC (komponen & quotes) dan edit user dikhususkan untuk Super Admin, sementara fitur operasional toko (pesanan, produk, ulasan, moderasi) terbuka untuk pengelola toko
-
-### Protected Routes & UX Auth
-- [x] Middleware proteksi route (cart, checkout, builder saved, forum post, profile)
-- [x] Redirect ke /login dengan pesan "Silakan login untuk melanjutkan"
-- [x] Persistent login session (NextAuth JWT strategy)
-- [x] Logout dari semua device
-- [x] User avatar + dropdown menu di Navbar setelah login
+### Halaman Profil Pengguna & Portal Seller
+- [x] Halaman /user/profile dengan tab navigasi (Pesanan, Ulasan, Forum, Edit Profil)
+- [x] Tab Pesanan Saya dengan rincian item, total belanja, kurir, dan no resi
+- [x] Tab Ulasan Saya dengan modal edit rating bintang (1-5)
+- [x] Banner Seller & Store Portal menuju Dashboard Admin (/admin)
+- [x] Protected routes middleware (cart, checkout, builder saved, profile)
 
 ---
 
-### UI Auth & Avatar (2026-08-15)
-- [x] AuthSlider — kartu split-screen 2 kolom (panel biru kiri + form putih kanan), tinggi tetap, tanpa overlap
-- [x] Responsif mobile: stack vertikal + toggle teks "Belum punya akun? Daftar"
-- [x] Logo TeknoZone clickable (Link ke /) di atas panel biru
-- [x] Skeleton tombol auth ukuran presisi (2 pill 64x30) — tanpa layout shift saat load
-- [x] Avatar profil: lingkaran 32x32 object-cover; fallback inisial 2 huruf (mis. "AE") saat foto gagal/tidak ada
-- [x] Foto Google tersimpan di JWT/session (jwt/session callback) — avatar tampil setelah login OAuth
-- [x] Google OAuth: kredensial baru (client ID/secret) di Vercel; NEXTAUTH_URL = https://teknohub-web.vercel.app
-- [x] Hapus elemen ganda "Belum/Sudah punya akun?" dari bawah form (pindah ke panel biru)
+## FASE 3 — E-Commerce Marketplace
+Status: 🟡 Dalam Penyempurnaan (Katalog, Media, Search & Payment)
 
-## FASE 3 — E-Commerce
-Status: 🟢 Hampir tuntas (sisa opsional: Algolia/OG-image; blokir: Midtrans akun)
-
-### Katalog Produk
+### 3.1. Media & Katalog Produk
 - [x] Seed 15 produk + types (migration 003, 6 kategori)
-- [x] Halaman listing produk + filter kategori + search
-- [x] Halaman detail produk
+- [x] Halaman listing produk + filter kategori
+- [x] Halaman detail produk (PDP)
 - [x] Admin panel: CRUD produk (admin/products + API admin)
-- [x] Upload gambar ke Supabase Storage (bucket product-images, signed URL)
-- [x] UI Sub-kategori expand (nested filter: Komponen PC → 8 chip, API expand parent)
-- [x] Search produk instant di navbar (NavbarSearch → /products?search=)
-- [x] SEO: dynamic OG meta (products/[slug]) + sitemap.ts (static + 15 produk)
-- [ ] Search produk (Algolia/Meilisearch) — basic ilike sudah jalan
-- [ ] SEO lanjut: OG image generator — dynamic meta + sitemap sudah live
+- [x] Upload gambar ke Supabase Storage (bucket `product-images`)
+- [ ] **Fix Data Media Produk**: Isi URL gambar asli beresolusi tinggi di database (`image_url`) agar kartu produk & PDP tidak lagi menampilkan icon placeholder SVG
+- [ ] **Fix Search Backend**: Perbaiki `/api/products?search=` agar melakukan pencarian case-insensitive pada kolom `name`, `brand`, `category`, dan `description` (agar keyword seperti "ASUS" atau "Laptop" memunculkan produk yang relevan)
+- [ ] **Filter Lanjutan**: Tambahkan filter Rentang Harga (Min-Max slider), Filter Brand (ASUS, Lenovo, Acer, Apple, Samsung, dll.), dan Filter Status Stok
+- [ ] **Sorting Produk**: Opsi pengurutan (Harga Terendah, Harga Tertinggi, Rating Tertinggi, Terpopuler, Produk Terbaru)
 
-### Cart & Checkout
-- [x] Tambah ke keranjang (Zustand persist, AddToCartButton) — terverifikasi end-to-end: klik Tambah di /shop/products/[slug] → item masuk cart (nama/harga/qty), badge navbar live
-- [x] Halaman cart (qty stepper, total)
-- [x] Checkout form (zod alamat, pilih kurir, Midtrans Snap inject)
-- [x] API checkout: create order + order_items + kurangi stock + snap token
-- [x] API webhook Midtrans: verify signature + update status paid (pending akun — mock token aktif)
-- [x] Riwayat pesanan (/orders, status badge, total IDR)
-- [x] Order confirmation (snap token flow, mock saat Midtrans pending)
-- [ ] Integrasi Midtrans asli (butuh akun + server/client key dari dashboard.sandbox.midtrans.com) — feature pending, user belum punya akun
+### 3.2. Product Detail Page (PDP) Upgrade
+- [x] Tampilan spesifikasi teknis produk & badge garansi
+- [x] Breadcrumb navigasi & rekomendasi produk terkait
+- [ ] **Quantity Selector**: Tambahkan kontrol `[ - ] [ 1 ] [ + ]` di PDP sebelum tombol Tambah ke Keranjang
+- [ ] **Varian Produk**: Selector varian RAM/Storage/Warna untuk Laptop dan Smartphone
+- [ ] **Kalkulator Estimasi Ongkir Instan**: Widget input kecamatan/kota pembeli untuk cek biaya kirim JNE/SiCepat langsung di PDP
+- [ ] **Tab Diskusi Terkait**: Link otomatis ke thread forum yang membahas produk terkait
+
+### 3.3. Cart, Kurir & Checkout
+- [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
+- [x] Halaman /shop/cart (qty stepper, subtotal)
+- [x] Form checkout (/shop/checkout)
+- [ ] **Selective Cart Items**: Checkbox pilih item tertentu di keranjang yang ingin di-checkout
+- [ ] **Kupon & Voucher Promo**: Input voucher diskon belanja dan gratis ongkir di Cart & Checkout
+- [ ] **Integrasi API Kurir Realtime (Biteship / RajaOngkir)**: Perhitungan ongkir otomatis berdasarkan berat aktual + opsi Asuransi & Packing Kayu
+- [ ] **Integrasi Midtrans Live**: Setup Server/Client Key production/sandbox, inject Snap popup payment (QRIS, VA BCA/Mandiri/BRI, GoPay), dan webhook handler status `PAID`
+- [ ] **Halaman Konfirmasi & Invoice**: Tampilan invoice resmi pesanan setelah pembayaran berhasil + link tracking resi pengiriman
 
 ---
 
-## FASE 4 — Forum Tech & AI
-Status: ✅ Tuntas (100%) — Forum Core + Komunitas
+## FASE 4 — Forum Komunitas Tech & AI
+Status: 🟡 Core Live, Pengayaan Fitur Komunitas
 
-### Forum Core
-- [x] Kategori: Hardware, AI, Mobile, Gaming, DIY, Jual Beli (seed 001)
+### 4.1. Forum Core & Diskusi
+- [x] Kategori forum: Hardware, AI, Mobile, Gaming, DIY, Jual Beli
 - [x] Listing thread + filter kategori + sort (latest/popular)
-- [x] Thread detail + reply section UI
-- [x] Upvote/downvote UI (VoteControl, reputation trigger +10)
-- [x] Reputation/karma system (trigger: +50 solved reply, kunci thread)
-- [x] Buat thread (rich text editor TipTap)
-- [x] Form buat thread (NewThreadForm, /forum/new)
-- [x] Form balasan + list (ReplySection)
-- [x] Mark as solution (API owner-only, trigger +50 reputation, lock thread)
-- [x] Tag system (tags text[] + GIN index, TagSelector maks 5, filter tag)
+- [x] Halaman thread detail + form balasan (ReplySection)
+- [x] Upvote / Downvote control + trigger reputasi
+- [x] Tag system (tags text[] + GIN index, filter tag)
+- [ ] **Rich Text & Markdown Editor**: Upgrade editor di `/forum/new` dengan dukungan upload screenshot hardware, tabel, dan code block syntax highlighting
+- [ ] **Nested / Quote Replies**: Fitur membalas komentar spesifik atau mention kutipan user lain
+- [ ] **Accepted Solution**: Tombol bagi pembuat thread untuk menandai balasan terbaik (Solusi Terverifikasi) pada topik troubleshooting
 
-### Komunitas
-- [x] Reputation/karma system (trigger +10 vote, +50 solved; UserBadge tampil)
-- [x] User badges (Member/Active/Contributor/Expert by reputation, UserBadge.tsx)
-- [x] Follow user/thread (follows table, FollowButton, trigger notif)
-- [x] Notifikasi real-time (notifications table + trigger reply/follow, NotificationBell navbar, Supabase Realtime-ready)
-- [x] Moderasi: report, ban (reports table, ReportButton, /admin/moderation, ban 30 hari)
-- [x] Search dalam forum (ilike title+content, search box /forum)
+### 4.2. Gamifikasi & Sinergi Marketplace
+- [x] User Badges (Member, Contributor, Expert)
+- [x] Follow user & thread + Realtime Notification bell
+- [x] Sistem report & moderasi konten (/admin/moderation)
+- [ ] **Marketplace Product Tagging**: Kemampuan mention `@product:[slug]` di postingan forum yang otomatis merender kartu mini produk interaktif yang bisa langsung dibeli
+- [ ] **Widget "Discussed in Forum"**: Menampilkan ulasan dan diskusi user forum pada halaman produk marketplace terkait
 
 ---
 
-## FASE 5 — PC Builder AI ⭐ (Fitur Utama)
-Status: ✅ Tuntas (100%) — core, saved, compare, SSE, chat AI, CS widget, quote+invoice, Camofox scraper
+## FASE 5 — PC Builder AI ⭐ (Fitur Unggulan)
+Status: 🟡 Core AI & Picker Live, Upgrade Kalkulator & Simulasi
 
-### Data Pipeline
-- [x] Scraper Tokopedia + Shopee via Camofox anti-detect browser (camofoxScraper.js, REST localhost:9377)
-- [x] Playwright fallback scraper (componentScraper.js, HTTP fetch)
-- [x] Database komponen dengan normalized specs (34 komponen, migration 004)
-- [x] Price history tracking (component_prices, 34 harga official seed)
-- [x] Vercel Cron update harga (Hobby: daily 06:00 UTC, vercel.json)
-- [x] API endpoint GET /api/components (filter type/socket, harga terbaru)
+### 5.1. AI Recommendation & Data Pipeline
+- [x] Scraper Tokopedia + Shopee via Camofox browser
+- [x] Database komponen dengan normalized specs (34 komponen)
+- [x] Price history tracking & daily update cron
+- [x] AI Chat Stream (POST /api/pc-builder/recommend SSE)
+- [x] Algoritma deteksi bottleneck (CPU tier vs GPU tier)
+- [x] Alokasi budget per use case (Gaming, Rendering AI, Office, Content Creation)
 
-### PC Builder UI
-- [x] Wizard: pilih use case + input budget (slider 3jt-50jt)
-- [x] Komponen selector real-time dari database (alokasi budget per use case)
-- [x] Compatibility checker (socket CPU↔mobo, RAM DDR4/DDR5↔mobo socket)
-- [x] Build comparison view (/builder/compare, 3 build side-by-side)
-- [x] Saved builds per user (/builder/saved, SaveBuildButton, detail /builder/[slug])
-
-### AI Agent
-- [x] Bottleneck algorithm (CPU tier vs GPU tier, warning imbalance)
-- [x] Budget allocation formula per use case (gaming/productivity/content-creator/budget)
-- [x] System prompt + tools untuk AI agent (chat route: Ollama + rule-based fallback)
-- [x] Endpoint POST /api/pc-builder/recommend (streaming SSE ?stream=1)
-- [x] Output 3 build recommendation + reasoning bahasa Indonesia
-- [x] Link langsung ke Tokopedia/Shopee (marketplace_url terisi 34 komponen, migration 009)
-- [x] **Interactive AI PC Builder Chat + Live Summary Sync** (di /builder) — chat konsultasi rakit PC, rekomendasi AI sync ke ringkasan build real-time
-- [x] **24/7 Global AI Customer Service (CS) Floating Widget** (seluruh web) — chatbot CS knowledge base toko, floating di pojok kanan bawah
-
-### Quote System
-- [x] Form request penawaran resmi (RequestQuoteModal, estimasi jasa rakit 150-300rb)
-- [x] AI draft penawaran otomatis (ai_draft: total komponen + jasa rakit + garansi)
-- [x] Admin review & kirim penawaran (send/accept/reject + final quote, /admin/quotes)
-- [x] Invoice otomatis (PDF download /api/admin/quotes/[id]/pdf, tombol di dashboard)
+### 5.2. Kalkulator Spesifikasi & Dimensi Fisik
+- [x] Compatibility checker (Socket CPU ↔ Motherboard, RAM DDR4/DDR5 ↔ Mobo)
+- [x] Build comparison view (/builder/compare)
+- [x] Saved builds per user (/builder/saved)
+- [ ] **Kalkulator Konsumsi Daya (Wattage Estimator)**: Kalkulasi otomatis total estimasi TDP komponen (CPU + GPU + Storage + Fans) dan rekomendasi kapasitas minimal PSU
+- [ ] **Physical Clearance Checker**: Peringatan kompatibilitas dimensi fisik (Panjang GPU vs Max Case Length, Tinggi CPU Cooler vs Max Case Height, Ukuran Radiator AIO)
+- [ ] **One-Click "Beli Semua Komponen"**: Tombol instan memasukkan seluruh part rakitan yang kompatibel ke `/shop/cart` + opsi jasa rakit teknisi
+- [ ] **Export BOM (Bill of Materials)**: Fitur cetak/unduh faktur PDF estimasi anggaran rakitan atau share URL publik ke forum
+- [ ] **Visualisasi Rakitan (Modular Canvas / Three.js)**: Preview visual interaktif penempatan komponen di dalam casing
 
 ---
 
-## FASE 6 — Responsive Design (Mobile-First)
-Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
+## FASE 6 — SEO, Branding, Performa & Legalitas 🚀
+Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 
-### Layout & Navigation
-- [x] Navbar mobile: hamburger menu + drawer slide-in
-- [x] Navbar dropdown user: touch-friendly di mobile
-- [x] Footer: stack vertical di mobile
-- [x] Semua padding/margin dikecilkan di mobile (px-4 → px-3)
+### 6.1. Critical SEO Fixes
+- [ ] **Fix Sitemap URL Mismatch**: Perbaiki `app/sitemap.ts` agar URL produk mengarah ke `/shop/products/[slug]` (bukan `/products/[slug]` yang menghasilkan 404)
+- [ ] **Buat app/robots.ts**: Generate file `robots.txt` dinamis yang mengizinkan perayapan dan menunjuk ke sitemap resmi
+- [ ] **JSON-LD Schema Structured Data**:
+  - `schema.org/Product` pada semua halaman PDP
+  - `schema.org/DiscussionForumPosting` pada halaman forum
+  - `schema.org/BreadcrumbList` pada navigasi
+- [ ] **Keseragaman Brand**: Sinkronisasi nama platform (**TeknoZone** / **TeknoHub**) pada meta title, header, hero banner, dan footer
 
-### Halaman E-Commerce
-- [x] Homepage hero: font size dikecilkan di mobile, CTA stack vertical
-- [x] Product grid: 2 kolom mobile, 3 kolom tablet, 4 kolom desktop
-- [x] Product detail: image full-width di mobile, info di bawah
-- [x] Cart: layout stack vertical di mobile
-- [x] Checkout form: single column di mobile
+### 6.2. Performa & Optimasi Aset
+- [ ] Terapkan komponen `next/image` dengan format WebP/AVIF, responsive `sizes`, dan `placeholder="blur"` untuk optimasi LCP
+- [ ] Optimasi font loading (Next.js Google Fonts display swap) untuk mencegah CLS (Cumulative Layout Shift)
 
-### Forum
-- [x] Thread listing: full-width card di mobile
-- [x] Thread detail: sidebar disembunyikan di mobile
-- [x] Reply form: full-width di mobile
-- [x] Tag selector: horizontal scroll di mobile
-
-### PC Builder
-- [x] Wizard: step 1 kolom di mobile (bukan side-by-side)
-- [x] AI Chat + Build Summary: stack vertical di mobile (chat di atas, summary di bawah)
-- [x] Slider budget: touch-friendly, label visible di mobile
-- [x] Build comparison: scroll horizontal di mobile
-
-### Admin Panel
-- [x] Admin table: horizontal scroll + sticky first column di mobile
-- [x] Admin form: single column di mobile
-
-### Assets & Performance
-- [x] Semua <img> diganti next/image dengan sizes prop yang benar
-- [x] Lazy loading gambar produk
-- [x] Font subset: hanya karakter Latin yang diload
-- [x] Viewport meta tag benar di layout.tsx
+### 6.3. Informasi Legalitas & Layanan Pelanggan
+- [x] Halaman Kebijakan Privasi (/privacy) & Syarat Ketentuan (/terms)
+- [ ] **Kebijakan Garansi & Retur Produk**: Halaman rincian prosedur klaim garansi resmi dan pengembalian barang rusak
+- [ ] **Informasi CS & Kontak Resmi**: Alamat operasional toko, nomor WhatsApp CS resmi, dan jam layanan
 
 ---
 
-## FASE 7 — UI Overhaul & Polish
-Status: ✅ Tuntas
+## FASE 7 — Mobile App (Expo React Native) 📱
+Status: ⚪ Tahap Berikutnya
 
-### Homepage
-- [x] Forum preview: tampilkan 3 thread terbaru dari DB (SSR)
-- [x] Stats section: jumlah produk, user terdaftar, thread forum (count dari DB)
-- [x] Footer copyright: perbaiki teks jadi proper
-- [x] Category filter lengkap: Semua, Laptop, GPU, Processor, Smartphone, Monitor, Storage, Peripherals
+- [ ] Setup Expo React Native di direktori `packages/mobile` / `apps/mobile`
+- [ ] Sinkronisasi auth token & Supabase client antara Web dan Mobile
+- [ ] Halaman Katalog Produk & Keranjang Belanja Mobile
+- [ ] Halaman AI PC Builder Mobile Wizard
+- [ ] Forum Diskusi & Thread Viewer Mobile
+- [ ] Integrasi Expo Push Notifications (Notifikasi Status Pesanan & Balasan Forum)
 
-### Navbar & Navigation
-- [x] Fix link /builder-3d → /builder di mobile drawer dan semua tempat
-- [x] Tambah "PC Builder" di desktop nav links
-- [x] Konsistensi semua internal link
-
-### PC Builder Page — 3D Visual Experience
-- [x] Redesign total halaman /builder dengan visual 3D futuristik
-- [x] Animated particle field (canvas/Three.js atau pure CSS)
-- [x] Neon grid perspektif sebagai background
-- [x] Floating spec bars (CPU%, GPU%, RAM%) animasi masuk dari bawah
-- [x] Glassmorphism card untuk form pilih komponen
-- [x] AI Chat tetap di sisi kanan dengan design premium
-- [x] Build summary card dengan glow effect dan animasi total harga
-
-### Product Pages
-- [x] Related products section di /products/[slug]
-- [x] Product image fallback yang menarik (gradient + ikon SVG per kategori)
-- [x] Breadcrumb navigation
-
-### Empty States
-- [x] /cart empty state: ilustrasi + CTA "Mulai Belanja"
-- [x] /orders empty state: ilustrasi + CTA
-- [x] /forum empty state yang menarik (ikon + CTA buat thread)
-
----
----
 
 ## FASE 8 — Back-Office Management & Operations
 Status: ✅ Tuntas (100%)
