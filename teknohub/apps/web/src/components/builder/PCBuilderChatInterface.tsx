@@ -129,7 +129,7 @@ export default function PCBuilderChatInterface() {
   };
 
   return (
-    <div className="relative border border-slate-300 rounded-xl bg-surface-2 overflow-hidden">
+    <div className="relative border border-border rounded-xl bg-surface-2 overflow-hidden">
       {/* Header */}
       <button
         onClick={() => setChatOpen(!chatOpen)}
@@ -152,7 +152,7 @@ export default function PCBuilderChatInterface() {
                     <button
                       key={q}
                       onClick={() => send(q)}
-                      className="px-3 py-1.5 text-xs rounded-full bg-surface-2 border border-slate-300 text-muted hover:border-accent hover:text-accent transition"
+                      className="px-3 py-1.5 text-xs rounded-full bg-surface-2 border border-border text-muted hover:border-accent hover:text-accent transition"
                     >
                       {q}
                     </button>
@@ -166,7 +166,7 @@ export default function PCBuilderChatInterface() {
                   className={`max-w-[85%] px-3 py-2 rounded-lg text-sm whitespace-pre-wrap ${
                     m.role === "user"
                       ? "bg-blue-500/20 text-blue-100 border border-blue-500/30"
-                      : "bg-surface-2 text-foreground border border-slate-300"
+                      : "bg-surface-2 text-foreground border border-border"
                   }`}
                 >
                   {m.content}
@@ -176,7 +176,7 @@ export default function PCBuilderChatInterface() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="px-3 py-2 rounded-lg text-sm bg-surface-2 text-tertiary border border-slate-300">
+                <div className="px-3 py-2 rounded-lg text-sm bg-surface-2 text-tertiary border border-border">
                   Mengetik...
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function PCBuilderChatInterface() {
 
           {/* Live summary sync */}
           {summary && (
-            <div className="border-t border-slate-300 bg-surface-2/60 px-4 py-3">
+            <div className="border-t border-border bg-surface-2/60 px-4 py-3">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-accent">📋 Ringkasan Build (Live)</span>
                 <button
@@ -204,7 +204,7 @@ export default function PCBuilderChatInterface() {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between mt-2 pt-2 border-t border-slate-300">
+              <div className="flex justify-between mt-2 pt-2 border-t border-border">
                 <span className="text-xs text-tertiary">Total</span>
                 <span className="text-xs font-bold text-accent">{fmt(summary.total)}</span>
               </div>
@@ -212,13 +212,13 @@ export default function PCBuilderChatInterface() {
           )}
 
           {/* Input */}
-          <div className="flex gap-2 p-3 border-t border-slate-300">
+          <div className="flex gap-2 p-3 border-t border-border">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && send()}
               placeholder="Tanya AI soal rakit PC..."
-              className="flex-1 px-3 py-2 text-sm bg-surface border border-slate-300 rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
+              className="flex-1 px-3 py-2 text-sm bg-surface border border-border rounded-lg text-foreground placeholder:text-tertiary focus:border-accent"
             />
             <button
               onClick={() => send()}

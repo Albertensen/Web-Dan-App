@@ -56,7 +56,7 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setOpen(false)}>
-          <div className="w-full max-w-md bg-surface border border-slate-300 rounded-2xl p-6" onClick={(e) => e.stopPropagation()}>
+          <div className="w-full max-w-md bg-surface border border-border rounded-2xl p-6" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold text-foreground mb-1">Minta Penawaran Resmi</h3>
             <p className="text-sm text-tertiary mb-4">
               {buildTitle ? `Build: ${buildTitle}` : "Jasa rakit PC TeknoHub"} — admin akan review & kirim penawaran resmi (estimasi jasa rakit Rp 150.000-300.000).
@@ -68,7 +68,7 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
               onChange={(e) => setNote(e.target.value)}
               rows={3}
               placeholder="Contoh: butuh build untuk editing 4K, prefer AMD..."
-              className="w-full p-3 text-sm bg-surface border border-slate-300 rounded-lg text-foreground resize-none mb-4 placeholder:text-tertiary"
+              className="w-full p-3 text-sm bg-surface border border-border rounded-lg text-foreground resize-none mb-4 placeholder:text-tertiary"
             />
 
             {error && <p className="text-red-600 text-sm mb-3">{error}</p>}

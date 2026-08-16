@@ -93,7 +93,7 @@ export default function CheckoutForm() {
   };
 
   const inputCls = (hasError: boolean) =>
-    `w-full p-3 border ${hasError ? "border-red-500" : "border-slate-300"} rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150`;
+    `w-full p-3 border ${hasError ? "border-red-500" : "border-border"} rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150`;
 
   const field = (
     name: keyof FormState,

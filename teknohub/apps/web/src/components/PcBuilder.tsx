@@ -149,7 +149,7 @@ export default function PcBuilder() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Rakit PC dengan AI</h2>
 
         {/* Step 1: use case */}
@@ -162,7 +162,7 @@ export default function PcBuilder() {
               className={`p-3 rounded-xl border text-left transition ${
                 useCase === uc.value
                   ? "border-accent bg-accent-dim text-accent"
-                  : "border-slate-300 bg-surface-2 hover:border-slate-300"
+                  : "border-border bg-surface-2 hover:border-border"
               }`}
             >
               <div className="font-medium">{uc.label}</div>
@@ -199,7 +199,7 @@ export default function PcBuilder() {
       {result && (
         <div className="mt-8 space-y-4">
           {/* Build summary (lokal — dari tombol Rekomendasi) */}
-          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-semibold text-foreground">Build Rekomendasi</h3>
               <span
@@ -215,7 +215,7 @@ export default function PcBuilder() {
 
             <div className="space-y-2">
               {result.parts.map((p) => (
-                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-slate-300/50 last:border-0">
+                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-border/50 last:border-0">
                   <span className="text-tertiary">{TYPE_LABEL[p.type] ?? p.type}</span>
                   <span className="text-foreground">{p.name}</span>
                   <span className="text-muted font-medium">{formatIDR(p.price)}</span>
@@ -223,7 +223,7 @@ export default function PcBuilder() {
               ))}
             </div>
 
-            <div className="flex justify-between mt-4 pt-3 border-t border-slate-300">
+            <div className="flex justify-between mt-4 pt-3 border-t border-border">
               <span className="font-semibold text-foreground">Total</span>
               <span className={`font-bold ${result.within_budget ? "text-emerald-400" : "text-amber-400"}`}>
                 {formatIDR(result.total)}
@@ -237,7 +237,7 @@ export default function PcBuilder() {
           </div>
 
           {/* AI analysis */}
-          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
             <h4 className="font-semibold text-foreground mb-3">Analisis AI</h4>
             {result.bottleneck ? (
               <div className="flex gap-2 text-sm mb-3">

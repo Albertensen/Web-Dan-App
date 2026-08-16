@@ -54,7 +54,7 @@ export default function SavedBuilds() {
       {loading ? (
         <p className="text-slate-500">Memuat...</p>
       ) : builds.length === 0 ? (
-        <div className="p-8 bg-surface-2/60 border border-dashed border-slate-300 rounded-xl text-center">
+        <div className="p-8 bg-surface-2/60 border border-dashed border-border rounded-xl text-center">
           <p className="text-tertiary">Belum ada build tersimpan.</p>
           <p className="text-sm text-slate-500 mt-1">Buat rekomendasi di PC Builder lalu simpan.</p>
         </div>
@@ -62,7 +62,7 @@ export default function SavedBuilds() {
         <div className="space-y-3">
           {builds.map((b) => (
             <Link key={b.id} href={`/builder/${b.slug}`} className="block">
-              <div className="p-4 bg-surface border border-slate-300 rounded-xl hover:border-accent transition">
+              <div className="p-4 bg-surface border border-border rounded-xl hover:border-accent transition">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-semibold text-foreground">{b.title}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-accent-dim text-accent border border-accent/30">

@@ -18,7 +18,7 @@ export default function CartPage() {
       return (
         <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
           <div className="flex flex-col items-center justify-center gap-5 text-center">
-            <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-slate-300">
+            <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-border">
               🛒
             </div>
             <h2 className="text-2xl font-bold tracking-tight">Keranjangmu kosong</h2>

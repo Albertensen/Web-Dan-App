@@ -113,7 +113,7 @@ export default async function ProductPage({ params }: ProductProps) {
             Stok: {product.stock}
           </div>
 
-          <div className="pt-4 border-t border-slate-300">
+          <div className="pt-4 border-t border-border">
             <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
             <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
           </div>
@@ -131,7 +131,7 @@ export default async function ProductPage({ params }: ProductProps) {
           </div>
 
           {/* Ulasan & diskusi produk (tier-based) */}
-          <div className="pt-6 border-t border-slate-300">
+          <div className="pt-6 border-t border-border">
             <h2 className="text-xl font-semibold mb-4 text-muted">Review &amp; Diskusi Produk</h2>
             <ProductReviews productId={product.id} />
           </div>
@@ -147,7 +147,7 @@ export default async function ProductPage({ params }: ProductProps) {
               <Link
                 key={p.id}
                 href={`/shop/products/${p.slug}`}
-                className="group bg-surface border border-slate-300 rounded-2xl p-3 hover:border-accent transition duration-300"
+                className="group bg-surface border border-border rounded-2xl p-3 hover:border-accent transition duration-300"
               >
                 <div className="aspect-square rounded-xl overflow-hidden mb-3">
                   <ProductImage

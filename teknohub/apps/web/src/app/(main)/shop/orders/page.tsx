@@ -15,7 +15,7 @@ const STATUS_STYLES: Record<string, string> = {
   shipped: "bg-accent-dim text-accent border-accent/30",
   delivered: "bg-emerald-500/20 text-emerald-700 border-emerald-700/50",
   cancelled: "bg-red-500/20 text-red-700 border-red-700/50",
-  refunded: "bg-slate-500/20 text-muted border-slate-300/50",
+  refunded: "bg-slate-500/20 text-muted border-border/50",
 };
 
 const formatIDR = (n: number) =>
@@ -43,7 +43,7 @@ export default async function OrdersPage() {
 
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 gap-5">
-          <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-slate-300">
+          <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-border">
             📦
           </div>
           <h2 className="text-2xl font-bold tracking-tight">Belum ada pesanan</h2>
@@ -62,7 +62,7 @@ export default async function OrdersPage() {
               <div className="flex items-center justify-between mb-3">
                 <span className="font-mono text-sm text-tertiary">{order.id.slice(0, 8)}</span>
                 <span
-                  className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border ${STATUS_STYLES[order.status] ?? "bg-slate-500/20 text-muted border-slate-300/50"}`}
+                  className={`inline-flex items-center px-3 py-1 text-xs font-medium rounded-full border ${STATUS_STYLES[order.status] ?? "bg-slate-500/20 text-muted border-border/50"}`}
                 >
                   {order.status.toUpperCase()}
                 </span>

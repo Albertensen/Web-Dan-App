@@ -140,7 +140,7 @@ export default function UserReviewsTab() {
           <button
             type="button"
             onClick={() => openEdit(r)}
-            className="shrink-0 px-4 py-1.5 rounded-xl border border-slate-300 bg-surface-2 hover:border-accent text-xs font-semibold transition"
+            className="shrink-0 px-4 py-1.5 rounded-xl border border-border bg-surface-2 hover:border-accent text-xs font-semibold transition"
           >
             ✏️ Ubah Ulasan
           </button>
@@ -150,8 +150,8 @@ export default function UserReviewsTab() {
       {/* Modal Edit Ulasan */}
       {editingReview && (
         <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
-          <div className="bg-surface rounded-3xl border border-slate-300 max-w-md w-full p-6 shadow-2xl">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-300">
+          <div className="bg-surface rounded-3xl border border-border max-w-md w-full p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
               <h2 className="font-bold text-foreground text-base">Ubah Ulasan Produk</h2>
               <button
                 type="button"
@@ -195,11 +195,11 @@ export default function UserReviewsTab() {
                   value={newComment}
                   onChange={(e) => setNewComment(e.target.value)}
                   placeholder="Ceritakan kepuasan dan ulasan Anda mengenai produk ini..."
-                  className="w-full p-2.5 text-xs bg-surface border border-slate-300 rounded-xl"
+                  className="w-full p-2.5 text-xs bg-surface border border-border rounded-xl"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-300">
+              <div className="flex justify-end gap-2 pt-2 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setEditingReview(null)}

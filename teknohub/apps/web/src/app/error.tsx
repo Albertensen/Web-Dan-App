@@ -16,7 +16,7 @@ export default function GlobalError({
 
   return (
     <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh] text-center">
-      <div className="max-w-md w-full bg-surface border border-slate-300 rounded-3xl p-8 shadow-xl">
+      <div className="max-w-md w-full bg-surface border border-border rounded-3xl p-8 shadow-xl">
         <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center text-4xl mx-auto mb-4 border border-red-300">
           ⚠️
         </div>
@@ -34,7 +34,7 @@ export default function GlobalError({
           </button>
           <Link
             href="/"
-            className="px-6 py-2.5 rounded-full bg-surface-2 border border-slate-300 text-foreground font-semibold text-xs hover:border-accent transition"
+            className="px-6 py-2.5 rounded-full bg-surface-2 border border-border text-foreground font-semibold text-xs hover:border-accent transition"
           >
             Ke Beranda
           </Link>
