@@ -83,10 +83,26 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                     {initials}
                   </span>
                 )}
-                <span className="text-sm font-semibold text-foreground truncate">
-                  {session?.user?.name}
-                </span>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-semibold text-foreground truncate">
+                    {session?.user?.name}
+                  </span>
+                  {["admin", "moderator", "marketplace"].includes(session?.user?.role ?? "") && (
+                    <span className="text-[10px] font-bold text-accent uppercase">
+                      {session?.user?.role === "admin" ? "Admin" : session?.user?.role === "marketplace" ? "Staff Toko" : "Moderator"}
+                    </span>
+                  )}
+                </div>
               </div>
+              {["admin", "moderator", "marketplace"].includes(session?.user?.role ?? "") && (
+                <Link
+                  href="/admin"
+                  onClick={onClose}
+                  className="px-3 py-2.5 rounded-xl text-sm font-bold bg-accent text-white hover:bg-accent-secondary transition flex items-center gap-2"
+                >
+                  <span>⚙️</span> Portal {session?.user?.role === "admin" ? "Admin" : "Back-Office"}
+                </Link>
+              )}
               <Link
                 href="/user/profile"
                 onClick={onClose}

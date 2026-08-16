@@ -10,6 +10,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      role?: string | null;
     };
   }
 }
@@ -17,6 +18,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     uid?: string;
+    role?: string | null;
   }
 }
 
@@ -86,12 +88,24 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.uid = user.id;
         if (user.image) token.picture = user.image;
+        // Ambil role dari DB saat initial login
+        try {
+          const { data: p } = await anonClient()
+            .from("profiles")
+            .select("role")
+            .eq("id", user.id)
+            .single();
+          token.role = p?.role ?? "member";
+        } catch {
+          token.role = "member";
+        }
       }
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.uid as string;
+        session.user.role = (token.role as string) ?? "member";
         if (token.picture) session.user.image = token.picture;
       }
       return session;
