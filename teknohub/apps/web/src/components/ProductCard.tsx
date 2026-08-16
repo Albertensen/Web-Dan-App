@@ -50,10 +50,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
 
   return (
-    <div className="bg-surface border border-slate-300 rounded-3xl p-4 flex flex-col justify-between hover:border-accent hover:shadow-xl transition-all duration-300 group">
+    <div className="bg-surface border border-border rounded-2xl p-4 flex flex-col justify-between hover:border-accent hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 group">
       <div>
         {/* Gambar Produk dengan Zoom Halus & Badge Diskon */}
-        <div className="aspect-square rounded-2xl mb-4 overflow-hidden flex items-center justify-center relative bg-surface-2/90 border border-slate-100">
+        <div className="aspect-square rounded-xl mb-4 overflow-hidden flex items-center justify-center relative bg-surface-2 border border-border">
           <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10 pointer-events-none" />
 
           {hasDiscount && (
@@ -111,7 +111,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-2">
           <Link
             href={`/shop/products/${product.slug}`}
-            className="flex-1 text-center bg-surface-2 hover:bg-slate-200 text-foreground py-2.5 rounded-full text-xs font-bold transition border border-slate-300"
+            className="flex-1 text-center bg-surface-2 hover:bg-slate-200 text-foreground py-2.5 rounded-full text-xs font-bold transition border border-border"
           >
             Detail
           </Link>
