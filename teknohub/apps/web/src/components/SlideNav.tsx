@@ -3,43 +3,44 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const SLIDE_LINKS = [
-  { href: "/#marketplace", label: "Marketplace & Store", anchor: "marketplace" },
-  { href: "/#forum-slide", label: "Forum Komunitas", anchor: "forum-slide" },
+const NAV_LINKS = [
+  { href: "/shop/products", label: "🛍️ Semua Produk" },
+  { href: "/builder", label: "🤖 PC Builder AI" },
+  { href: "/forum", label: "💬 Forum Komunitas" },
+  { href: "/#marketplace", label: "🔥 Promo & Kategori" },
 ];
 
 export default function SlideNav() {
   const pathname = usePathname();
 
   return (
-    <div className="sticky top-20 z-40 bg-background border-b border-border-soft">
-      <div className="max-w-7xl mx-auto px-6 flex items-center gap-10 overflow-x-auto no-scrollbar py-3 text-sm font-bold">
-        {SLIDE_LINKS.map((l) => {
-          const isHome = pathname === "/" || pathname.startsWith("/#");
-          const isActive = isHome && l.anchor === "marketplace";
-          return (
-            <Link
-              key={l.href}
-              href={l.href}
-              className={`shrink-0 pb-1.5 border-b-4 transition ${
-                isActive
-                  ? "text-accent border-accent"
-                  : "text-muted border-transparent hover:text-accent hover:border-slate-500"
-              }`}
-            >
-              {l.label}
-            </Link>
-          );
-        })}
-        {/* Tentang TeknoZone — hanya di homepage (anchor #tentang) */}
-        {pathname === "/" && (
-          <Link
-            href="/#tentang"
-            className="ml-auto shrink-0 text-sm font-semibold text-muted hover:text-accent transition"
-          >
-            Tentang TeknoZone
-          </Link>
-        )}
+    <div className="sticky top-16 sm:top-20 z-40 bg-surface/95 backdrop-blur border-b border-border-soft shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-6 overflow-x-auto no-scrollbar py-2.5 text-xs sm:text-sm font-bold">
+        <div className="flex items-center gap-6 sm:gap-8 shrink-0">
+          {NAV_LINKS.map((l) => {
+            const isActive = pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`pb-1 border-b-2 transition whitespace-nowrap ${
+                  isActive
+                    ? "text-accent border-accent font-extrabold"
+                    : "text-muted border-transparent hover:text-accent hover:border-slate-400"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Info Layanan Cepat Desktop */}
+        <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-tertiary shrink-0">
+          <span>⚡ Garansi Resmi 100%</span>
+          <span>·</span>
+          <span>🚚 Bebas Ongkir</span>
+        </div>
       </div>
     </div>
   );
