@@ -399,7 +399,7 @@ Status: ⏳ Belum dimulai
 - [x] Standardisasi tema warna, elevation shadow, dan border-radius pada komponen kartu produk (ProductCard 6d92b9d)
 
 ### Fase 2: Core E-Commerce & Checkout Experience
-- [ ] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk
+- [x] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk (5359cdf)
 - [ ] Sistem Filter & Multi-Sorting di katalog produk (rentang harga, spesifikasi teknis socket/VRAM/DDR, garansi, dan sorting popularitas/harga)
 - [ ] Revamp kartu produk: penambahan tombol cepat "+ Keranjang" (Quick Add), Wishlist icon, badge diskon & harga coret, serta indikator stok
 - [ ] Modul review & ulasan terverifikasi (Verified Buyer) beserta upload foto bukti unboxing
