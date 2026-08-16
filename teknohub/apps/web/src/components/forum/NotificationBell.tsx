@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { Bell } from "lucide-react";
 import Link from "next/link";
 
 interface Notification {
@@ -73,7 +74,7 @@ export default function NotificationBell() {
         className="relative p-2 text-muted hover:text-accent transition"
         aria-label="Notifikasi"
       >
-        🔔
+        <Bell size={16} className="inline mr-1" />
         {unread > 0 && (
           <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center">
             {unread}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { FileText } from "lucide-react";
 import { useBuilderStore } from "@/store/builderStore";
 
 interface RequestQuoteModalProps {
@@ -51,7 +52,7 @@ export default function RequestQuoteModal({ buildId, buildTitle, trigger }: Requ
         onClick={() => setOpen(true)}
         className="px-3 py-1.5 text-xs font-medium rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 hover:bg-amber-500/30 transition"
       >
-        {trigger ?? "📄 Minta Penawaran Rakit"}
+        {trigger ?? (<span className="inline-flex items-center gap-1.5"><FileText size={16} /> Minta Penawaran Rakit</span>)}
       </button>
 
       {open && (

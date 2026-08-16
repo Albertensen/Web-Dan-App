@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import TagBadge from "./TagBadge";
 import { UserBadge } from "./UserBadge";
+import { MessageSquare , Eye, Pin } from "lucide-react";
 
 interface ThreadProps {
   id: string;
@@ -55,7 +56,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
       <div className="bg-surface border border-border rounded-2xl p-5 shadow-sm hover:border-accent transition duration-300 hover:shadow-md">
         {thread.is_pinned && (
           <div className="mb-3 inline-block px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700 border border-amber-300">
-            📌 Disematkan
+            <Pin size={14} className="inline mr-1" /> Disematkan
           </div>
         )}
 
@@ -95,10 +96,10 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
           {/* Counts */}
           <div className="flex gap-4 text-xs">
             <span className="flex items-center gap-1">
-              💬 {thread.reply_count} Balasan
+              <MessageSquare size={16} className="inline mr-1" /> {thread.reply_count} Balasan
             </span>
             <span className="flex items-center gap-1">
-              👁 {thread.view_count} Dilihat
+              <Eye size={14} className="inline mr-1" /> {thread.view_count} Dilihat
             </span>
           </div>
 

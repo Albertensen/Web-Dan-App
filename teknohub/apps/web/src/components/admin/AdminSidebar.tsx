@@ -1,27 +1,29 @@
 "use client";
 
+import type React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { AdminRole } from "@/lib/admin-auth";
+import { Tag, Package, Star, Puzzle, ClipboardList, ShieldCheck, Users, LayoutDashboard } from "lucide-react";
 
 interface NavItem {
   href: string;
   label: string;
-  icon: string;
+  icon: React.ComponentType<{ size?: number | string; className?: string }>;
   adminOnly?: boolean;
 }
 
 const ALL_NAV: NavItem[] = [
-  { href: "/admin", label: "Dashboard Toko", icon: "▦" },
-  { href: "/admin/orders", label: "Pesanan", icon: "📦" },
-  { href: "/admin/products", label: "Katalog Produk", icon: "🏷️" },
-  { href: "/admin/reviews", label: "Ulasan Pembeli", icon: "⭐" },
+  { href: "/admin", label: "Dashboard Toko", icon: LayoutDashboard },
+  { href: "/admin/orders", label: "Pesanan", icon: Package },
+  { href: "/admin/products", label: "Katalog Produk", icon: Tag },
+  { href: "/admin/reviews", label: "Ulasan Pembeli", icon: Star },
   // Khusus Super Admin
-  { href: "/admin/components", label: "Komponen PC", icon: "🧩", adminOnly: true },
-  { href: "/admin/quotes", label: "Penawaran Rakit", icon: "📋", adminOnly: true },
-  { href: "/admin/moderation", label: "Moderasi Forum", icon: "🛡️", adminOnly: true },
-  { href: "/admin/users", label: "Pengguna & Role", icon: "👥", adminOnly: true },
+  { href: "/admin/components", label: "Komponen PC", icon: Puzzle, adminOnly: true },
+  { href: "/admin/quotes", label: "Penawaran Rakit", icon: ClipboardList, adminOnly: true },
+  { href: "/admin/moderation", label: "Moderasi Forum", icon: ShieldCheck, adminOnly: true },
+  { href: "/admin/users", label: "Pengguna & Role", icon: Users, adminOnly: true },
 ];
 
 export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
@@ -74,7 +76,7 @@ export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
                     : "text-muted hover:bg-surface-2 hover:text-accent"
                 }`}
               >
-                <span className="shrink-0">{item.icon}</span>
+                <span className="shrink-0 flex"><item.icon size={18} /></span>
                 {!collapsed && <span className="truncate">{item.label}</span>}
               </Link>
             );
@@ -106,7 +108,7 @@ export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
                 active ? "bg-accent text-white" : "bg-surface-2 text-muted border border-slate-300"
               }`}
             >
-              <span>{item.icon}</span>
+              <span className="flex"><item.icon size={18} /></span>
               <span>{item.label}</span>
             </Link>
           );

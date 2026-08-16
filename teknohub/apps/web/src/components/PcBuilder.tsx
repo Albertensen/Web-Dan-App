@@ -5,6 +5,7 @@ import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
 import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
+import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle } from "lucide-react";
 
 interface BuildPart {
   id: string;
@@ -24,11 +25,16 @@ interface RecommendResult {
   parts: BuildPart[];
 }
 
+
+// icon map
+const USE_CASES_ICON: Record<string, React.ReactNode> = {
+  gaming: <Gamepad2 size={16} />, productivity: <Briefcase size={16} />, "content-creator": <Clapperboard size={16} />, budget: <Banknote size={16} />,
+};
 const USE_CASES = [
-  { value: "gaming", label: "🎮 Gaming", desc: "FPS tinggi, 1440p/4K" },
-  { value: "productivity", label: "💼 Productivity", desc: "Office, coding, multitask" },
-  { value: "content-creator", label: "🎬 Content Creator", desc: "Video editing, streaming, 3D" },
-  { value: "budget", label: "💰 Budget", desc: "Hemat, value terbaik" },
+  { value: "gaming", label: "Gaming", desc: "FPS tinggi, 1440p/4K" },
+  { value: "productivity", label: "Productivity", desc: "Office, coding, multitask" },
+  { value: "content-creator", label: "Content Creator", desc: "Video editing, streaming, 3D" },
+  { value: "budget", label: "Budget", desc: "Hemat, value terbaik" },
 ];
 
 const TYPE_LABEL: Record<string, string> = {
@@ -165,7 +171,8 @@ export default function PcBuilder() {
                   : "border-border bg-surface-2 hover:border-border"
               }`}
             >
-              <div className="font-medium">{uc.label}</div>
+              <div className="font-medium">{USE_CASES_ICON[uc.value]}
+                {uc.label}</div>
               <div className="text-xs text-tertiary">{uc.desc}</div>
             </button>
           ))}
@@ -190,7 +197,7 @@ export default function PcBuilder() {
           disabled={loading}
           className="w-full px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
         >
-          {loading ? "Menghitung..." : "🚀 Buat Rekomendasi"}
+          {loading ? "Menghitung..." : <span className="inline-flex items-center gap-1.5"><Rocket size={16} /> Buat Rekomendasi</span>}
         </button>
 
         {error && <p className="mt-4 text-red-400 text-sm">{error}</p>}
@@ -209,7 +216,7 @@ export default function PcBuilder() {
                     : "bg-amber-500/20 text-amber-300"
                 }`}
               >
-                {result.within_budget ? "✓ Dalam budget" : "⚠ Melebihi budget"}
+                {result.within_budget ? "✓ Dalam budget" : <span className="inline-flex items-center gap-1"><AlertTriangle size={14} /> Melebihi budget</span>}
               </span>
             </div>
 
@@ -241,7 +248,7 @@ export default function PcBuilder() {
             <h4 className="font-semibold text-foreground mb-3">Analisis AI</h4>
             {result.bottleneck ? (
               <div className="flex gap-2 text-sm mb-3">
-                <span>⚠️</span>
+                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
                 <p className="text-amber-300">{result.bottleneck}</p>
               </div>
             ) : (
@@ -252,7 +259,7 @@ export default function PcBuilder() {
             )}
             {result.compatibility_issues.length > 0 ? (
               <div className="flex gap-2 text-sm">
-                <span>🔧</span>
+                <Wrench size={16} className="mt-1 shrink-0" />
                 <ul className="text-red-300 space-y-1">
                   {result.compatibility_issues.map((iss, i) => (
                     <li key={i}>{iss}</li>
@@ -273,7 +280,7 @@ export default function PcBuilder() {
       <div className="mt-8 bg-slate-900/70 border border-cyan-500/20 rounded-2xl p-6 shadow-[0_0_40px_rgba(0,200,255,0.05)]">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-            🤖 Build Summary
+            <span className="inline-flex items-center gap-1.5"><Bot size={16} /> Build Summary</span>
             {hasAnyComponent && (
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
                 DIREKOMENDASIKAN AI
@@ -290,7 +297,7 @@ export default function PcBuilder() {
         {!hasAnyComponent ? (
           <p className="text-sm text-slate-400">
             Mulai chat dengan AI untuk mendapat rekomendasi build — atau klik{" "}
-            <span className="text-cyan-300 font-medium">🚀 Buat Rekomendasi</span>.
+            <span className="text-cyan-300 font-medium"><span className="inline-flex items-center gap-1.5"><Rocket size={16} /> Buat Rekomendasi</span></span>.
           </p>
         ) : (
           <>

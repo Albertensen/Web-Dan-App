@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Package } from "lucide-react";
 
 interface MyReview {
   id: string;
@@ -113,7 +114,7 @@ export default function UserReviewsTab() {
               />
             ) : (
               <span className="w-12 h-12 rounded-xl bg-surface-2 flex items-center justify-center text-xl shrink-0">
-                📦
+                <Package size={16} className="inline mr-1" />
               </span>
             )}
             <div className="min-w-0">

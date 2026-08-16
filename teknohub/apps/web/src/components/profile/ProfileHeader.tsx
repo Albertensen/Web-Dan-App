@@ -1,4 +1,6 @@
 import Image from "next/image";
+import type React from "react";
+import { User , Gem, Award } from "lucide-react";
 
 interface Profile {
   username: string | null;
@@ -9,11 +11,11 @@ interface Profile {
 }
 
 /** Tier badge berdasarkan reputasi */
-function tierOf(rep: number | null): { name: string; icon: string; cls: string } {
-  if (rep === null) return { name: "Member", icon: "👤", cls: "bg-slate-500" };
-  if (rep > 50) return { name: "Diamond", icon: "💎", cls: "bg-accent" };
-  if (rep >= 10) return { name: "Gold", icon: "🥇", cls: "bg-amber-500" };
-  return { name: "Silver", icon: "🥈", cls: "bg-slate-500" };
+function tierOf(rep: number | null): { name: string; icon: React.ComponentType<{ size?: number | string }>; cls: string } {
+  if (rep === null) return { name: "Member", icon: User, cls: "bg-slate-500" };
+  if (rep > 50) return { name: "Diamond", icon: Gem, cls: "bg-accent" };
+  if (rep >= 10) return { name: "Gold", icon: Award, cls: "bg-amber-500" };
+  return { name: "Silver", icon: Award, cls: "bg-slate-500" };
 }
 
 export default function ProfileHeader({ profile }: { profile: Profile }) {
@@ -43,7 +45,7 @@ export default function ProfileHeader({ profile }: { profile: Profile }) {
             className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-white ${tier.cls}`}
             title={`Reputasi ${profile.reputation ?? 0}`}
           >
-            {tier.icon} {tier.name} Member
+            <tier.icon size={16} /> {tier.name} Member
           </span>
         </div>
         <p className="text-sm text-muted mt-1">

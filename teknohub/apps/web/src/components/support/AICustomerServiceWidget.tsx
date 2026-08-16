@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { Bot } from "lucide-react";
 
 interface ChatMsg {
   role: "user" | "assistant";
@@ -52,7 +53,7 @@ export default function AICustomerServiceWidget() {
         className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-accent text-white shadow-2xl shadow-accent/20 flex items-center justify-center hover:scale-105 transition-transform"
         aria-label="Customer Service"
       >
-        {open ? "✕" : "💬"}
+        {open ? "✕" : "MessageSquare"}
       </button>
 
       {/* Chat panel */}
@@ -60,7 +61,7 @@ export default function AICustomerServiceWidget() {
         <div className="fixed bottom-24 right-5 z-50 w-80 sm:w-96 max-h-[70vh] flex flex-col bg-surface border border-border rounded-2xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="px-4 py-3 bg-accent flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm">🤖</div>
+            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm"><Bot size={16} className="inline mr-1" /></div>
             <div>
               <div className="text-white font-semibold text-sm">TeknoHub CS</div>
               <div className="text-white/70 text-[10px] flex items-center gap-1">

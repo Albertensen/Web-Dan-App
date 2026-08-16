@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { ShoppingCart, Monitor , FileText } from "lucide-react";
 
 interface Quote {
   id: string;
@@ -131,7 +132,7 @@ export default function AdminQuotes() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-surface-2 flex items-center justify-center text-xl">
-                    🖥️
+                    <Monitor size={16} className="inline mr-1" />
                   </div>
                   <div>
                     <h3 className="font-bold text-foreground text-sm">
@@ -152,7 +153,7 @@ export default function AdminQuotes() {
                     target="_blank"
                     className="px-3 py-1 rounded-lg bg-surface-2 border border-slate-300 hover:border-accent text-xs font-semibold flex items-center gap-1"
                   >
-                    <span>📄</span> PDF Invoice
+                    <span><FileText size={16} className="inline mr-1" /></span> PDF Invoice
                   </Link>
                 </div>
               </div>
@@ -239,7 +240,7 @@ export default function AdminQuotes() {
                     onClick={() => act(q.id, "convert_to_order")}
                     className="px-4 py-1.5 text-xs rounded-xl bg-accent text-white hover:bg-accent-secondary font-semibold disabled:opacity-50 flex items-center gap-1"
                   >
-                    <span>🛒</span> Konversi ke Pesanan
+                    <span><ShoppingCart size={16} className="inline mr-1" /></span> Konversi ke Pesanan
                   </button>
                 </div>
               </div>

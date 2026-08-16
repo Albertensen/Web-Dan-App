@@ -1,3 +1,5 @@
+import { Gem, Award } from "lucide-react";
+import type React from "react";
 import { supabase } from "@/lib/supabase/client";
 
 // Paksa runtime query (jangan di-cache build)
@@ -20,11 +22,11 @@ function normProfile(p: Profile | { username: string | null; reputation: number 
 }
 
 /** Tier dari reputasi: <10 Silver, 10-50 Gold, >50 Diamond */
-function tierOf(reputation: number | null | undefined): { name: string; icon: string; cls: string; bar: string } {
+function tierOf(reputation: number | null | undefined): { name: string; icon: React.ComponentType<{ size?: number | string }>; cls: string; bar: string } {
   const r = reputation ?? 0;
-  if (r > 50) return { name: "Diamond", icon: "💎", cls: "bg-accent text-white", bar: "bg-accent" };
-  if (r >= 10) return { name: "Gold", icon: "🥇", cls: "bg-amber-700 text-white", bar: "bg-amber-700" };
-  return { name: "Silver", icon: "🥈", cls: "bg-slate-500 text-white", bar: "bg-slate-400" };
+  if (r > 50) return { name: "Diamond", icon: Gem, cls: "bg-accent text-white", bar: "bg-accent" };
+  if (r >= 10) return { name: "Gold", icon: Award, cls: "bg-amber-700 text-white", bar: "bg-amber-700" };
+  return { name: "Silver", icon: Award, cls: "bg-slate-500 text-white", bar: "bg-slate-400" };
 }
 
 export default async function ProductReviews({ productId }: { productId: string }) {
@@ -57,9 +59,9 @@ export default async function ProductReviews({ productId }: { productId: string 
 
   // Ringkasan per tier (bukan per bintang)
   const tiers = [
-    { key: "Diamond", name: "Diamond", icon: "💎", count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Diamond").length },
-    { key: "Gold", name: "Gold", icon: "🥇", count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Gold").length },
-    { key: "Silver", name: "Silver", icon: "🥈", count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Silver").length },
+    { key: "Diamond", name: "Diamond", icon: Gem, count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Diamond").length },
+    { key: "Gold", name: "Gold", icon: Award, count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Gold").length },
+    { key: "Silver", name: "Silver", icon: Award, count: list.filter((r) => tierOf(r.profiles?.reputation).name === "Silver").length },
   ];
   const total = list.length;
 
@@ -81,7 +83,7 @@ export default async function ProductReviews({ productId }: { productId: string 
           <div className="flex items-center gap-1.5">
             {tiers.map((t) => (
               <span key={t.key} title={t.name} className={`w-7 h-7 rounded-full ${tierOf(t.key === "Diamond" ? 80 : t.key === "Gold" ? 25 : 5).cls} flex items-center justify-center text-sm`}>
-                {t.icon}
+                <t.icon size={16} />
               </span>
             ))}
           </div>
@@ -92,7 +94,7 @@ export default async function ProductReviews({ productId }: { productId: string 
         <div className="space-y-2.5">
           {tiers.map((t) => (
             <div key={t.key} className="flex items-center gap-3 text-xs">
-              <span className="w-20 shrink-0 text-muted font-medium">{t.icon} {t.name}</span>
+              <span className="w-20 shrink-0 text-muted font-medium"><t.icon size={16} /> {t.name}</span>
               <div className="flex-1 h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div
                   className={`h-full ${tierOf(t.key === "Diamond" ? 80 : t.key === "Gold" ? 25 : 5).bar} rounded-full transition-all`}
@@ -119,7 +121,7 @@ export default async function ProductReviews({ productId }: { productId: string 
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold text-foreground">{r.profiles?.username || "Anonim"}</span>
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${tier.cls}`}>
-                      {tier.icon} {tier.name} Member
+                      <tier.icon size={16} /> {tier.name} Member
                     </span>
                   </div>
                   <span className="text-[11px] text-tertiary">{fmtDate(r.created_at)}</span>

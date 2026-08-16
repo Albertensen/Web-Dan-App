@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { supabase } from "@/lib/supabase/client";
+import { Package } from "lucide-react";
 
 export const metadata = {
   title: "Riwayat Pesanan — TeknoHub",
@@ -44,7 +45,7 @@ export default async function OrdersPage() {
       {!orders || orders.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 gap-5">
           <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-border">
-            📦
+            <Package size={16} className="inline mr-1" />
           </div>
           <h2 className="text-2xl font-bold tracking-tight">Belum ada pesanan</h2>
           <p className="text-muted text-sm">Pesananmu akan muncul di sini setelah checkout</p>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore, selectTotalItems, selectTotalPrice } from "@/store/cartStore";
+import { ShoppingCart } from "lucide-react";
 
 const formatIDR = (n: number) =>
   new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
@@ -19,7 +20,7 @@ export default function CartPage() {
         <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
           <div className="flex flex-col items-center justify-center gap-5 text-center">
             <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-border">
-              🛒
+              <ShoppingCart size={16} className="inline mr-1" />
             </div>
             <h2 className="text-2xl font-bold tracking-tight">Keranjangmu kosong</h2>
             <p className="text-muted text-sm">Temukan produk terbaik di katalog kami</p>
@@ -52,7 +53,7 @@ export default function CartPage() {
                                 className="w-full h-full object-cover rounded-xl"
                               />
                             ) : (
-                "🖥️"
+                ""
               )}
             </div>
 

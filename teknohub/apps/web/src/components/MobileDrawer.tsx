@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { ShoppingBag, Bot, MessageSquare, ShoppingCart, Settings, User, Package, LogOut } from "lucide-react";
 
 interface MobileDrawerProps {
   open: boolean;
@@ -60,10 +61,10 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
         {/* Nav utama */}
         <nav className="px-4 py-4 flex flex-col gap-1 border-b border-slate-200">
           {[
-            { href: "/shop/products", label: "🛍️ Semua Produk" },
-            { href: "/builder", label: "🤖 PC Builder AI" },
-            { href: "/forum", label: "💬 Forum Komunitas" },
-            { href: "/shop/cart", label: "🛒 Keranjang" },
+            { href: "/shop/products", label: "Semua Produk", icon: ShoppingBag },
+            { href: "/builder", label: "PC Builder AI", icon: Bot },
+            { href: "/forum", label: "Forum Komunitas", icon: MessageSquare },
+            { href: "/shop/cart", label: "Keranjang", icon: ShoppingCart },
           ].map((l) => (
             <Link
               key={l.href}
@@ -71,6 +72,7 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
               onClick={onClose}
               className="px-3 py-2.5 rounded-xl text-sm font-bold text-foreground hover:bg-slate-100 hover:text-accent transition"
             >
+              {l.icon && <l.icon size={16} className="mr-2 inline-block -mt-0.5" />}
               {l.label}
             </Link>
           ))}
@@ -118,27 +120,27 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                 onClick={onClose}
                 className="px-3 py-2.5 rounded-xl text-sm font-bold bg-accent text-white hover:bg-accent-secondary transition flex items-center gap-2"
               >
-                <span>⚙️</span> Portal {session?.user?.role === "admin" ? "Admin" : "Toko & Pesanan"}
+                <Settings size={16} /> Portal {session?.user?.role === "admin" ? "Admin" : "Toko & Pesanan"}
               </Link>
               <Link
                 href="/user/profile"
                 onClick={onClose}
                 className="px-3 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
               >
-                👤 Profil Saya
+                <User size={16} className="mr-2 inline-block -mt-0.5" /> Profil Saya
               </Link>
               <Link
                 href="/shop/orders"
                 onClick={onClose}
                 className="px-3 py-2.5 rounded-xl text-sm font-medium text-foreground hover:bg-slate-100 hover:text-accent transition"
               >
-                📦 Pesanan
+                <Package size={16} className="mr-2 inline-block -mt-0.5" /> Pesanan
               </Link>
               <button
                 onClick={() => signOut()}
                 className="px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 transition text-left"
               >
-                🚪 Keluar
+                <LogOut size={16} className="mr-2 inline-block -mt-0.5" /> Keluar
               </button>
             </>
           ) : (

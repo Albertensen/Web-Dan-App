@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useBuilderStore, type RecommendedBuild } from "@/store/builderStore";
+import { ClipboardList , Bot, Wrench } from "lucide-react";
 
 const CONFIRM_WORDS = ["ok", "oke", "setuju", "pakai", "terapkan", "ya", "yep", "yes", "lanjut", "gunakan"];
 
@@ -92,7 +93,7 @@ export default function PCBuilderChatInterface() {
 
     return (
       <div className="mt-2 rounded-xl border border-cyan-500/30 bg-slate-900/60 p-3">
-        <p className="text-xs font-bold text-cyan-300 mb-2">🔧 Rekomendasi Build</p>
+        <p className="text-xs font-bold text-cyan-300 mb-2"><Wrench size={16} className="inline mr-1" /> Rekomendasi Build</p>
         <div className="space-y-1">
           {items.map(([label, name]) => (
             <div key={label} className="flex justify-between text-xs gap-2">
@@ -135,7 +136,7 @@ export default function PCBuilderChatInterface() {
         onClick={() => setChatOpen(!chatOpen)}
         className="w-full flex items-center justify-between px-4 py-3 bg-surface-2/70 hover:bg-surface-2 transition"
       >
-        <span className="font-semibold text-foreground">🤖 Konsultasi Rakit PC (AI)</span>
+        <span className="font-semibold text-foreground"><Bot size={16} className="inline mr-1" /> Konsultasi Rakit PC (AI)</span>
         <span className="text-tertiary text-sm">{chatOpen ? "▲" : "▼"}</span>
       </button>
 
@@ -188,7 +189,7 @@ export default function PCBuilderChatInterface() {
           {summary && (
             <div className="border-t border-border bg-surface-2/60 px-4 py-3">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-accent">📋 Ringkasan Build (Live)</span>
+                <span className="text-xs font-semibold text-accent"><ClipboardList size={16} className="inline mr-1" /> Ringkasan Build (Live)</span>
                 <button
                   onClick={() => setSummary(null)}
                   className="text-xs text-slate-500 hover:text-red-400"

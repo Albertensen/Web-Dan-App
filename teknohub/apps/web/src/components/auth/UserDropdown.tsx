@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { Package, ShoppingCart, User, Settings } from "lucide-react";
 
 export default function UserDropdown() {
   const { data: session } = useSession();
@@ -92,7 +93,7 @@ export default function UserDropdown() {
               onClick={() => setOpen(false)}
               className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold bg-accent-dim/60 text-accent hover:bg-accent hover:text-white transition"
             >
-              <span>⚙️</span> Portal {role === "admin" ? "Admin" : "Toko & Pesanan"}
+              <span><Settings size={16} className="inline mr-1" />️</span> Portal {role === "admin" ? "Admin" : "Toko & Pesanan"}
             </Link>
 
             <Link
@@ -100,21 +101,21 @@ export default function UserDropdown() {
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >
-              👤 Profil Saya
+              <User size={16} className="inline mr-1" /> Profil Saya
             </Link>
             <Link
               href="/shop/orders"
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >
-              📦 Pesanan Saya
+              <Package size={16} className="inline mr-1" /> Pesanan Saya
             </Link>
             <Link
               href="/shop/cart"
               onClick={() => setOpen(false)}
               className="block px-4 py-2 text-sm hover:bg-surface transition"
             >
-              🛒 Keranjang Belanja
+              <ShoppingCart size={16} className="inline mr-1" /> Keranjang Belanja
             </Link>
           </div>
 

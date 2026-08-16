@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import UserReviewsTab from "./UserReviewsTab";
 import EditProfileForm from "./EditProfileForm";
+import { Package, Settings, MessageSquare, Bell } from "lucide-react";
 
 interface OrderItem {
   id: string;
@@ -119,7 +120,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
             activeTab === "orders" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
           }`}
         >
-          📦 Pesanan Saya ({orders.length})
+          <Package size={16} className="inline mr-1" /> Pesanan Saya ({orders.length})
         </button>
         <button
           type="button"
@@ -137,7 +138,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
             activeTab === "forum" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
           }`}
         >
-          💬 Riwayat Thread ({threads.length})
+          <MessageSquare size={16} className="inline mr-1" /> Riwayat Thread ({threads.length})
         </button>
         <button
           type="button"
@@ -146,7 +147,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
             activeTab === "notifications" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
           }`}
         >
-          <span>🔔 Notifikasi Forum</span>
+          <span><Bell size={16} className="inline mr-1" /> Notifikasi Forum</span>
           {unreadCount > 0 && (
             <span className="px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-red-500 text-white">
               {unreadCount}
@@ -160,7 +161,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
             activeTab === "edit" ? "bg-accent text-white" : "text-muted hover:bg-surface-2"
           }`}
         >
-          ⚙️ Edit Profil
+          <Settings size={16} className="inline mr-1" />️ Edit Profil
         </button>
       </div>
 
@@ -239,7 +240,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
                     {t.title}
                   </Link>
                   <div className="flex items-center gap-3 text-xs text-tertiary mt-1">
-                    <span>💬 {t.reply_count} balasan</span>
+                    <span><MessageSquare size={16} className="inline mr-1" /> {t.reply_count} balasan</span>
                     <span>· {(t.created_at ?? "").slice(0, 10)}</span>
                     {t.is_locked && (
                       <span className="px-1.5 py-0.2 rounded bg-amber-100 text-amber-800 text-[10px] font-bold">
@@ -291,7 +292,7 @@ export default function ProfileTabs({ profile, orders, threads }: ProfileTabsPro
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs">🔔</span>
+                    <span className="text-xs"><Bell size={16} className="inline mr-1" /></span>
                     <p className="font-bold text-foreground text-xs">{n.title}</p>
                     {!n.is_read && (
                       <span className="w-2 h-2 rounded-full bg-blue-600 shrink-0" />

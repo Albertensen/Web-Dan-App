@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShieldCheck, Truck, Zap } from "lucide-react";
 
 const COLS = [
   {
@@ -48,9 +49,9 @@ export default function Footer() {
               Pusat hardware & AI builder terpercaya. Komponen PC, laptop, dan periferal bergaransi resmi.
             </p>
             <div className="mt-4 flex flex-wrap gap-2 text-[11px] font-semibold text-tertiary">
-              <span className="px-2.5 py-1 rounded-full border border-border bg-background">🛡️ Garansi Resmi</span>
-              <span className="px-2.5 py-1 rounded-full border border-border bg-background">🚚 Bebas Ongkir</span>
-              <span className="px-2.5 py-1 rounded-full border border-border bg-background">⚡ Support 24/7</span>
+              <span className="px-2.5 py-1 rounded-full border border-border bg-background flex items-center gap-1"><ShieldCheck size={12} /> Garansi Resmi</span>
+              <span className="px-2.5 py-1 rounded-full border border-border bg-background flex items-center gap-1"><Truck size={12} /> Bebas Ongkir</span>
+              <span className="px-2.5 py-1 rounded-full border border-border bg-background flex items-center gap-1"><Zap size={12} /> Support 24/7</span>
             </div>
           </div>
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Zap } from "lucide-react";
 
 /** Hero banner AI PC Builder — seluruh area klikable ke /builder */
 export default function BuilderBanner() {
@@ -14,7 +15,7 @@ export default function BuilderBanner() {
 
         <div className="relative z-10 max-w-xl">
           <span className="inline-flex items-center gap-1.5 bg-white/10 text-emerald-300 font-bold tracking-widest text-[10px] px-3.5 py-1.5 rounded-full uppercase border border-white/15 mb-5">
-            ⚡ AI PC Builder 3D
+            <Zap size={16} className="inline mr-1" /> AI PC Builder 3D
           </span>
           <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-[1.05] mb-4">
             Rakit PC Impian dengan Bantuan AI

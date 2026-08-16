@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { Search, Menu, X } from "lucide-react";
 import NavbarSearch from "./NavbarSearch";
 import MobileDrawer from "./MobileDrawer";
 import { useCartStore, selectTotalItems } from "@/store/cartStore";
@@ -45,7 +46,7 @@ export default function Navbar() {
               className="md:hidden w-9 h-9 rounded-full bg-surface-2 border border-slate-300 flex items-center justify-center text-muted hover:text-accent transition"
               aria-label="Toggle Pencarian"
             >
-              🔍
+              <Search size={18} />
             </button>
 
             {/* Notification Bell */}
@@ -110,7 +111,7 @@ export default function Navbar() {
               className="md:hidden text-foreground hover:text-accent transition w-9 h-9 flex items-center justify-center rounded-full bg-surface-2 border border-slate-300"
               aria-label="Menu"
             >
-              {mobileOpen ? "✕" : "☰"}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>

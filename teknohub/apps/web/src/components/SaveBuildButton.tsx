@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Save } from "lucide-react";
 
 interface SaveBuildButtonProps {
   parts: { id: string }[];
@@ -54,7 +55,7 @@ export default function SaveBuildButton({ parts, buildType }: SaveBuildButtonPro
         onClick={() => setShowForm(!showForm)}
         className="px-3 py-1.5 text-xs font-medium rounded-lg bg-surface-2 text-muted border border-border hover:border-accent hover:text-accent transition"
       >
-        💾 Simpan Build
+        <Save size={16} className="inline mr-1" /> Simpan Build
       </button>
       {showForm && (
         <div className="mt-2 flex gap-2">

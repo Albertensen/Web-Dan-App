@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { getUserRole } from "@/lib/admin-auth";
+import { Tag, Package, Star, Puzzle, ClipboardList, ShoppingCart, ShieldCheck, Users } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -50,14 +51,14 @@ export default async function AdminDashboardPage() {
 
   // Modul menu toko
   const modules = [
-    { href: "/admin/orders", label: "Pesanan Toko", desc: "Kelola status & resi pengiriman", icon: "📦" },
-    { href: "/admin/products", label: "Katalog Produk", desc: "Kelola stok & harga produk", icon: "🏷️" },
-    { href: "/admin/reviews", label: "Ulasan Pembeli", desc: "Monitoring rating & ulasan", icon: "⭐" },
+    { href: "/admin/orders", label: "Pesanan Toko", desc: "Kelola status & resi pengiriman", icon: Package },
+    { href: "/admin/products", label: "Katalog Produk", desc: "Kelola stok & harga produk", icon: Tag },
+    { href: "/admin/reviews", label: "Ulasan Pembeli", desc: "Monitoring rating & ulasan", icon: Star },
     ...(isAdmin ? [
-      { href: "/admin/components", label: "Komponen PC (Admin)", desc: "Database & scraper harga", icon: "🧩" },
-      { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", desc: "Quote AI & invoice PDF", icon: "📋" },
-      { href: "/admin/moderation", label: "Moderasi Forum (Admin)", desc: "Tindak laporan komunitas", icon: "🛡️" },
-      { href: "/admin/users", label: "Pengguna & Role (Admin)", desc: "Manajemen user & ban", icon: "👥" },
+      { href: "/admin/components", label: "Komponen PC (Admin)", desc: "Database & scraper harga", icon: Puzzle },
+      { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", desc: "Quote AI & invoice PDF", icon: ClipboardList },
+      { href: "/admin/moderation", label: "Moderasi Forum (Admin)", desc: "Tindak laporan komunitas", icon: ShieldCheck },
+      { href: "/admin/users", label: "Pengguna & Role (Admin)", desc: "Manajemen user & ban", icon: Users },
     ] : []),
   ];
 
@@ -134,7 +135,7 @@ export default async function AdminDashboardPage() {
           <ul className="space-y-2 text-xs">
             {[...orders.slice(-5)].reverse().map((o) => (
               <li key={o.id} className="flex items-center gap-2 text-tertiary flex-wrap sm:flex-nowrap">
-                <span className="text-xs shrink-0">🛒</span>
+                <span className="text-xs shrink-0"><ShoppingCart size={16} className="inline mr-1" /></span>
                 <span className="truncate">Pesanan <b className="text-foreground">{formatIDR(Number(o.total_amount))}</b></span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${
                   o.status === "delivered" ? "bg-green-100 text-green-700"
@@ -152,7 +153,7 @@ export default async function AdminDashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         {modules.map((s) => (
           <Link key={s.href} href={s.href} className="bg-surface border border-slate-300 rounded-2xl p-4 hover:border-accent hover:shadow-md transition group">
-            <div className="text-2xl mb-2">{s.icon}</div>
+            <div className="text-accent mb-2 flex justify-center"><s.icon size={22} /></div>
             <p className="font-semibold text-foreground text-xs sm:text-sm group-hover:text-accent">{s.label}</p>
             <p className="text-[11px] text-tertiary mt-0.5">{s.desc}</p>
           </Link>

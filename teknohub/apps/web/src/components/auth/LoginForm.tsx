@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
@@ -88,7 +89,7 @@ export default function LoginForm() {
             aria-label={showPassword ? "Sembunyikan password" : "Tampilkan password"}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-foreground transition"
           >
-            {showPassword ? "🙈" : "👁️"}
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
         {errors.password && <p className="text-xs text-red-600 mt-1">{errors.password}</p>}

@@ -8,6 +8,7 @@ import ReplySection from "@/components/forum/ReplySection";
 import FollowButton from "@/components/forum/FollowButton";
 import ReportButton from "@/components/forum/ReportButton";
 import { UserBadge } from "@/components/forum/UserBadge";
+import { MessageSquare , Eye, Calendar } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -61,9 +62,9 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
                 Oleh: <span className="font-medium text-accent">{thread.author_username}</span>
                 <UserBadge reputation={thread.author_reputation} />
               </span>
-              <span>👁 {thread.view_count}</span>
-              <span>💬 {thread.reply_count}</span>
-              <span>📅 {formatDate(thread.created_at)}</span>
+              <span className="inline-flex items-center gap-1"><Eye size={14} /> {thread.view_count}</span>
+              <span><MessageSquare size={16} className="inline mr-1" /> {thread.reply_count}</span>
+              <span className="inline-flex items-center gap-1"><Calendar size={14} /> {formatDate(thread.created_at)}</span>
             </div>
           </header>
 

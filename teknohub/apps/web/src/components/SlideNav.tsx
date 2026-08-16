@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ShoppingBag, Bot, MessageSquare, Zap, Truck } from "lucide-react";
 
-const NAV_LINKS = [
-  { href: "/shop/products", label: "🛍️ Semua Produk" },
-  { href: "/builder", label: "🤖 PC Builder AI" },
-  { href: "/forum", label: "💬 Forum Komunitas" },
-  { href: "/#marketplace", label: "🔥 Promo & Kategori" },
+const NAV_LINKS: { href: string; label: string; icon: React.ComponentType<{ size?: number | string; className?: string }> }[] = [
+  { href: "/shop/products", label: "Semua Produk", icon: ShoppingBag },
+  { href: "/builder", label: "PC Builder AI", icon: Bot },
+  { href: "/forum", label: "Forum Komunitas", icon: MessageSquare },
+  { href: "/#marketplace", label: "Promo & Kategori", icon: Zap },
 ];
 
 export default function SlideNav() {
@@ -29,6 +30,7 @@ export default function SlideNav() {
                     : "text-muted border-transparent hover:text-accent hover:border-slate-400"
                 }`}
               >
+                {l.icon && <l.icon size={16} className="inline-block mr-1.5 -mt-0.5" />}
                 {l.label}
               </Link>
             );
@@ -37,9 +39,9 @@ export default function SlideNav() {
 
         {/* Info Layanan Cepat Desktop */}
         <div className="hidden lg:flex items-center gap-4 text-xs font-semibold text-tertiary shrink-0">
-          <span>⚡ Garansi Resmi 100%</span>
+          <span className="flex items-center gap-1.5"><Zap size={14} /> Garansi Resmi 100%</span>
           <span>·</span>
-          <span>🚚 Bebas Ongkir</span>
+          <span className="flex items-center gap-1.5"><Truck size={14} /> Bebas Ongkir</span>
         </div>
       </div>
     </div>

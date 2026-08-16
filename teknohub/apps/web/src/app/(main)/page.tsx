@@ -2,26 +2,27 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import BuilderBanner from "@/components/BuilderBanner";
 import ThreadCard, { type ThreadProps } from "@/components/forum/ThreadCard";
+import { Flame, Laptop, Gamepad2, Cpu, CircuitBoard, MemoryStick, HardDrive, Smartphone, Monitor, ShieldCheck, Zap, Bot, MessageSquare, ShoppingBag } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 const FEATURED_CATEGORIES = [
-  { slug: "all", label: "Semua Kategori", icon: "🔥" },
-  { slug: "laptop", label: "Laptop", icon: "💻" },
-  { slug: "gpu", label: "VGA / GPU", icon: "🎮" },
-  { slug: "cpu", label: "Processor", icon: "🧠" },
-  { slug: "motherboard", label: "Motherboard", icon: "🖲️" },
-  { slug: "ram", label: "RAM Memory", icon: "💾" },
-  { slug: "storage", label: "SSD & Storage", icon: "💽" },
-  { slug: "smartphone", label: "Smartphone", icon: "📱" },
-  { slug: "monitor", label: "Monitor", icon: "🖥️" },
+  { slug: "all", label: "Semua Kategori", icon: Flame },
+  { slug: "laptop", label: "Laptop", icon: Laptop },
+  { slug: "gpu", label: "VGA / GPU", icon: Gamepad2 },
+  { slug: "cpu", label: "Processor", icon: Cpu },
+  { slug: "motherboard", label: "Motherboard", icon: CircuitBoard },
+  { slug: "ram", label: "RAM Memory", icon: MemoryStick },
+  { slug: "storage", label: "SSD & Storage", icon: HardDrive },
+  { slug: "smartphone", label: "Smartphone", icon: Smartphone },
+  { slug: "monitor", label: "Monitor", icon: Monitor },
 ];
 
 const TRUST_BADGES = [
-  { icon: "🛡️", title: "100% Produk Asli", desc: "Garansi resmi distributor" },
-  { icon: "⚡", title: "Pengiriman Cepat", desc: "Asuransi & packing aman" },
-  { icon: "🤖", title: "Konsultasi AI 24/7", desc: "Racik PC bebas bottleneck" },
-  { icon: "💬", title: "Komunitas Terpercaya", desc: "Diskusi & reputasi member" },
+  { icon: ShieldCheck, title: "100% Produk Asli", desc: "Garansi resmi distributor" },
+  { icon: Zap, title: "Pengiriman Cepat", desc: "Asuransi & packing aman" },
+  { icon: Bot, title: "Konsultasi AI 24/7", desc: "Racik PC bebas bottleneck" },
+  { icon: MessageSquare, title: "Komunitas Terpercaya", desc: "Diskusi & reputasi member" },
 ];
 
 interface Product {
@@ -69,7 +70,7 @@ export default async function Home() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {TRUST_BADGES.map((b) => (
           <div key={b.title} className="bg-surface border border-border rounded-2xl p-4 flex items-center gap-3 shadow-sm">
-            <span className="text-2xl sm:text-3xl shrink-0">{b.icon}</span>
+            <span className="text-accent shrink-0 flex"><b.icon size={24} /></span>
             <div className="min-w-0">
               <p className="font-extrabold text-xs sm:text-sm text-foreground truncate">{b.title}</p>
               <p className="text-[11px] text-tertiary truncate">{b.desc}</p>
@@ -83,7 +84,7 @@ export default async function Home() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🛍️</span>
+              <ShoppingBag size={22} className="text-accent" />
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
                 Katalog Produk Resmi
               </h2>
@@ -108,7 +109,7 @@ export default async function Home() {
               href={c.slug === "all" ? "/shop/products" : `/shop/products?category=${c.slug}`}
               className="shrink-0 bg-surface border border-border hover:border-accent hover:shadow px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5 transition"
             >
-              <span>{c.icon}</span>
+              <span className="flex"><c.icon size={18} /></span>
               <span>{c.label}</span>
             </Link>
           ))}
@@ -133,7 +134,7 @@ export default async function Home() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">💬</span>
+              <MessageSquare size={20} className="text-accent" />
               <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight text-foreground">
                 Diskusi Komunitas Terbaru
               </h2>
@@ -168,7 +169,7 @@ export default async function Home() {
         <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-zone-blue/30 blur-3xl" />
         <div className="relative z-10 max-w-2xl">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold mb-4">
-            ⚡ Platform Teknologi Terintegrasi
+            <Zap size={14} className="inline-block mr-1 -mt-0.5" /> Platform Teknologi Terintegrasi
           </span>
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
             Belanja Komponen, Konsultasi AI, dan Berbagi Pengalaman di Satu Tempat.

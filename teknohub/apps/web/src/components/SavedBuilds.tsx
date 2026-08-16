@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import type { ReactNode } from "react";
+import { Gamepad2, Clapperboard, Briefcase, Banknote, Cpu, Heart } from "lucide-react";
 
 interface SavedBuild {
   id: string;
@@ -13,9 +15,8 @@ interface SavedBuild {
   created_at: string;
 }
 
-const TYPE_LABEL: Record<string, string> = {
-  gaming: "🎮 Gaming", productivity: "💼 Productivity",
-  "content-creator": "🎬 Content Creator", "mini-itx": "📦 Mini ITX", budget: "💰 Budget",
+const TYPE_LABEL: Record<string, ReactNode> = {
+  gaming: <span className="inline-flex items-center gap-1"><Gamepad2 size={14} /> Gaming</span>, productivity: <span className="inline-flex items-center gap-1"><Briefcase size={14} /> Productivity</span>, "content-creator": <span className="inline-flex items-center gap-1"><Clapperboard size={14} /> Content Creator</span>, "mini-itx": <span className="inline-flex items-center gap-1"><Cpu size={14} /> Mini ITX</span>, budget: <span className="inline-flex items-center gap-1"><Banknote size={14} /> Budget</span>,
 };
 
 export default function SavedBuilds() {
@@ -71,7 +72,7 @@ export default function SavedBuilds() {
                 </div>
                 <div className="flex gap-6 text-sm text-tertiary">
                   <span className="font-medium text-accent">{fmt(b.total_price)}</span>
-                  <span>❤️ {b.like_count}</span>
+                  <span className="inline-flex items-center gap-1"><Heart size={13} /> {b.like_count}</span>
                   <span className="text-slate-500">
                     {new Date(b.created_at).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}
                   </span>

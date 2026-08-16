@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Package } from "lucide-react";
 
 export interface ProductItem {
   id: string;
@@ -128,7 +129,7 @@ export default function AdminProductTable({ initialProducts }: { initialProducts
                         {p.image_url ? (
                           <Image src={p.image_url} alt={p.name} width={40} height={40} sizes="40px" className="w-10 h-10 object-cover rounded-lg shrink-0" />
                         ) : (
-                          <span className="w-10 h-10 bg-surface-2 rounded-lg flex items-center justify-center text-sm shrink-0">📦</span>
+                          <span className="w-10 h-10 bg-surface-2 rounded-lg flex items-center justify-center text-sm shrink-0"><Package size={16} className="inline mr-1" /></span>
                         )}
                         <div className="min-w-0">
                           <p className="font-semibold text-foreground truncate max-w-xs">{p.name}</p>

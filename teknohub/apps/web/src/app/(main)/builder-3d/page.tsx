@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Monitor } from "lucide-react";
 
 export const metadata = {
   title: "AI 3D PC Builder — Tekno Zone",
@@ -24,7 +25,7 @@ export default function Builder3DPage() {
 
         <div className="bg-surface border border-border rounded-3xl p-10 shadow-sm mb-8">
           <div className="w-40 h-40 mx-auto mb-6 rounded-3xl bg-surface-2 flex items-center justify-center text-5xl">
-            🖥️
+            <Monitor size={16} className="inline mr-1" />
           </div>
           <p className="text-xs text-tertiary">
             Visualisasi 3D (Three.js / React Three Fiber) akan ditambahkan di sini.

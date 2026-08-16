@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { Zap } from "lucide-react";
 
 interface ComponentPrice {
   id: string;
@@ -134,7 +135,7 @@ export default function AdminComponentsPage() {
             disabled={scraping}
             className="px-4 py-2 rounded-xl text-xs font-semibold bg-accent text-white hover:bg-accent-secondary transition disabled:opacity-50 flex items-center gap-2"
           >
-            <span>⚡</span>
+            <span><Zap size={16} className="inline mr-1" /></span>
             {scraping ? "Menjalankan Scraper..." : "Trigger Scraper Manual"}
           </button>
         </div>
