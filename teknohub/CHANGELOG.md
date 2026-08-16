@@ -2,6 +2,25 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — Fase 12: Modernisasi Marketplace, Trust UI/UX & AI Builder (Batch 1)
+
+### Trust, UI Cleanup & Design System
+- **Footer Resmi**: Ganti teks generator "Dibuat dengan AI Agent" menjadi link bantuan resmi (Syarat & Ketentuan, Kebijakan Privasi) plus status "Sistem Operasional 100% Aktif". (`609aca0`)
+- **Forum Seed**: Hapus thread dummy "halo testing dulu" dan inisialisasi 3 thread kurasi resmi (Panduan Komponen Rendering/AI, Tips Hindari Bottleneck, Aturan Komunitas). (`939f038`)
+- **Iconography → Lucide**: Refactor seluruh icon emoji UI (nav, kategori, trust badge, footer, admin, builder, profil) menjadi ikon vektor `lucide-react`. (`350fc99`)
+- **ProductCard Standarisasi**: Dark-mode border (`slate-200/800`), hover lift, rating bintang `Star` lucide, format Rupiah `id-ID`. (`6d92b9d`)
+
+### Core E-Commerce & Checkout
+- **Global Search Bar**: Live search dropdown di header (produk + kategori terkait, loading, empty state, Esc/klik-luar tutup). (`5359cdf`)
+- **Filter & Multi-Sorting**: Sidebar filter kategori + rentang harga di katalog, sort dropdown (terpopuler/harga/terbaru), sync ke URL query (`?category&min_price&sort`). (`c08b5e9`)
+- **Quick Add-to-Cart & Wishlist**: Tombol "+ Keranjang" + Toast, wishlist icon (localStorage), badge diskon & harga coret, indikator stok. (`04b05eb`)
+- **Modul Review Terverifikasi**: Rating summary + bar breakdown per bintang, filter bintang/foto, galeri unboxing lightbox, badge "Pembeli Terverifikasi", varian produk. (`260e016`, `48be331`, `e6a74fc`)
+
+### Infrastructure & Data
+- **milestone**: Bucket storage `review-images` (public, image-only) + endpoint signed upload; migration `013` tambah kolom `is_verified`, `bought_variant`, `media` pada `product_reviews` (135 review reseed, 60 verified). (`48be331`, `e6a74fc`)
+
+---
+
 ## [2026-08-16] — UI Overhaul Standar Marketplace Modern (Shopify & Google Design System)
 
 ### Added
