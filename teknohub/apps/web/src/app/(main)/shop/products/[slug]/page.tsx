@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase/client";
 import ProductImage from "@/components/ProductImage";
 import QuantityAddToCart from "@/components/QuantityAddToCart";
 import ProductReviews from "@/components/ProductReviews";
+import RelatedForumThreads from "@/components/forum/RelatedForumThreads";
 import ProductGallery from "@/components/ProductGallery";
 import StickyBuyBar from "@/components/StickyBuyBar";
 import ShareButton from "@/components/ShareButton";
@@ -172,6 +173,8 @@ export default async function ProductPage({ params }: ProductProps) {
             <h2 className="text-xl font-semibold mb-4 text-muted">Review &amp; Diskusi Produk</h2>
             <ProductReviews productId={product.id} />
           </div>
+
+          <RelatedForumThreads productName={product.name} brand={product.brand ?? ""} category={product.category} />
         </div>
       </div>
 

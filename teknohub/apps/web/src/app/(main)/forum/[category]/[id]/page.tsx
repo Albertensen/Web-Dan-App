@@ -9,6 +9,7 @@ import FollowButton from "@/components/forum/FollowButton";
 import ReportButton from "@/components/forum/ReportButton";
 import { UserBadge } from "@/components/forum/UserBadge";
 import { MessageSquare , Eye, Calendar } from "lucide-react";
+import ProductMention, { renderMentions } from "@/components/forum/ProductMention";
 
 export const dynamic = "force-dynamic";
 
@@ -86,9 +87,10 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
             </div>
           </header>
 
+          <ProductMention text={thread.content ?? ""} />
           <div
             className="prose max-w-none text-muted mb-8 p-4 bg-surface-2 rounded-lg border border-slate-300/50"
-            dangerouslySetInnerHTML={{ __html: thread.content }}
+            dangerouslySetInnerHTML={{ __html: renderMentions(thread.content ?? "") }}
           />
 
           <div className="mb-10 flex justify-center gap-4 items-center">

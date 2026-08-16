@@ -137,16 +137,16 @@ Status: 🟡 Core Live, Pengayaan Fitur Komunitas
 - [x] Halaman thread detail + form balasan (ReplySection)
 - [x] Upvote / Downvote control + trigger reputasi
 - [x] Tag system (tags text[] + GIN index, filter tag)
-- [ ] **Rich Text & Markdown Editor**: Upgrade editor di `/forum/new` dengan dukungan upload screenshot hardware, tabel, dan code block syntax highlighting
-- [ ] **Nested / Quote Replies**: Fitur membalas komentar spesifik atau mention kutipan user lain
-- [ ] **Accepted Solution**: Tombol bagi pembuat thread untuk menandai balasan terbaik (Solusi Terverifikasi) pada topik troubleshooting
+- [x] **Rich Text & Markdown Editor**: Upgrade editor di `/forum/new` dengan dukungan upload screenshot hardware, tabel, dan code block syntax highlighting
+- [x] **Nested / Quote Replies**: Fitur membalas komentar spesifik atau mention kutipan user lain
+- [x] **Accepted Solution**: Tombol bagi pembuat thread untuk menandai balasan terbaik (Solusi Terverifikasi) pada topik troubleshooting
 
 ### 4.2. Gamifikasi & Sinergi Marketplace
 - [x] User Badges (Member, Contributor, Expert)
 - [x] Follow user & thread + Realtime Notification bell
 - [x] Sistem report & moderasi konten (/admin/moderation)
-- [ ] **Marketplace Product Tagging**: Kemampuan mention `@product:[slug]` di postingan forum yang otomatis merender kartu mini produk interaktif yang bisa langsung dibeli
-- [ ] **Widget "Discussed in Forum"**: Menampilkan ulasan dan diskusi user forum pada halaman produk marketplace terkait
+- [x] **Marketplace Product Tagging**: Kemampuan mention `@product:[slug]` di postingan forum yang otomatis merender kartu mini produk interaktif yang bisa langsung dibeli
+- [x] **Widget "Discussed in Forum"**: Menampilkan ulasan dan diskusi user forum pada halaman produk marketplace terkait
 
 ---
 

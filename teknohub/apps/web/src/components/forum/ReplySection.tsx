@@ -1,5 +1,6 @@
 "use client"
 import { useState } from "react"
+import ProductMention, { renderMentions } from "./ProductMention"
 import SolutionButton from "./SolutionButton"
 import TipTapEditor from "./TipTapEditor"
 import ReportButton from "./ReportButton"
@@ -57,6 +58,16 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
     }
   }
 
+  // Kadang content plain-text berisi markdown; kutip otomatis utk tombol balas
+  const quoteReply = (reply: Reply) => {
+    const plain = reply.content.replace(/<[^>]*>/g, "").replace(/\n/g, " ").slice(0, 120);
+    const quote = `> @${reply.author_id.slice(-4)}: &quot;${plain}...&quot;\n\n`;
+    setContent(quote);
+    document.getElementById("reply-editor")?.focus();
+  };
+
+  const sortedReplies = [...replies].sort((a, b) => Number(b.is_solution) - Number(a.is_solution));
+
   return (
     <div className="max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold text-foreground mb-6 border-b pb-2 border-slate-300">
@@ -67,11 +78,12 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
         <p className="text-tertiary text-sm mb-6">Belum ada balasan. Jadilah yang pertama!</p>
       ) : (
         <div className="space-y-4">
-          {replies.map((reply) => (
+          {sortedReplies.map((reply) => (
             <div key={reply.id} className="glow-card p-4 mb-4 bg-surface border border-slate-300 rounded-xl shadow-lg">
+              <ProductMention text={reply.content} />
               <div
                 className="prose max-w-none text-foreground mb-1 text-sm"
-                dangerouslySetInnerHTML={{ __html: reply.content }}
+                dangerouslySetInnerHTML={{ __html: renderMentions(reply.content) }}
               />
               {reply.is_solution && (
                 <span className="inline-flex items-center px-3 py-1 text-xs font-medium bg-green-600/20 text-green-700 rounded-full border border-green-700 mb-2">
@@ -90,6 +102,15 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
                     isSolution={reply.is_solution}
                     onMarked={() => setReplies(replies.map((r) => (r.id === reply.id ? { ...r, is_solution: true } : r)))}
                   />
+                )}
+                {currentUserId && (
+                  <button
+                    type="button"
+                    onClick={() => quoteReply(reply)}
+                    className="px-2.5 py-1 rounded-full text-xs font-medium border border-slate-300 text-muted hover:text-accent hover:border-accent transition"
+                  >
+                    💬 Kutip / Balas
+                  </button>
                 )}
                 {currentUserId && (
                   <ReportButton targetType="reply" targetId={reply.id} />
