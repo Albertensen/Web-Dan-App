@@ -19,6 +19,8 @@ const CATEGORY_LABEL: Record<string, string> = {
   ram: "RAM", storage: "SSD & Storage", motherboard: "Motherboard", psu: "Power Supply",
 };
 
+const POPULAR = ["RTX 4070", "Ryzen 7", "RAM DDR5", "Monitor 144Hz"];
+
 const CATEGORY_PATH: Record<string, string> = {
   laptop: "laptop", smartphone: "smartphone", monitor: "monitor", gpu: "gpu", cpu: "cpu",
   ram: "ram", storage: "storage", motherboard: "motherboard", psu: "psu",
@@ -108,6 +110,25 @@ export default function NavbarSearch({ className = "" }: { className?: string })
           </span>
         )}
       </form>
+
+      {open && q.length < 2 && (
+        <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+          <div className="p-3">
+            <p className="text-[10px] uppercase tracking-wider text-tertiary font-bold px-2 mb-1.5">Pencarian Populer</p>
+            <div className="flex flex-wrap gap-1.5 px-2">
+              {POPULAR.map((t) => (
+                <button
+                  key={t}
+                  onClick={() => { setTerm(t); router.push(`/shop/products?search=${encodeURIComponent(t)}`); }}
+                  className="px-3 py-1.5 rounded-full text-xs font-semibold border border-slate-200 dark:border-slate-800 text-muted hover:text-accent hover:border-accent transition"
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {open && q.length >= 2 && (
         <div className="absolute top-full left-0 right-0 mt-2 z-50 bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden max-h-[70vh] overflow-y-auto">

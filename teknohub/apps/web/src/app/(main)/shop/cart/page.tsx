@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore, selectTotalItems, selectTotalPrice } from "@/store/cartStore";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 
 const formatIDR = (n: number) =>
   new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
@@ -18,17 +18,15 @@ export default function CartPage() {
   if (items.length === 0) {
       return (
         <main className="flex-1 flex items-center justify-center px-6 min-h-[60vh]">
-          <div className="flex flex-col items-center justify-center gap-5 text-center">
-            <div className="w-24 h-24 rounded-full bg-surface flex items-center justify-center text-5xl shadow-sm border border-border">
-              <ShoppingCart size={16} className="inline mr-1" />
-            </div>
-            <h2 className="text-2xl font-bold tracking-tight">Keranjangmu kosong</h2>
-            <p className="text-muted text-sm">Temukan produk terbaik di katalog kami</p>
+          <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <ShoppingBag size={48} className="text-slate-300 mx-auto mb-1" />
+            <h2 className="text-2xl font-bold tracking-tight">Keranjang Belanjamu Masih Kosong</h2>
+            <p className="text-muted text-sm max-w-sm">Racik PC impianmu lewat PC Builder AI atau jelajahi katalog komponen terbaik.</p>
             <Link
               href="/shop/products"
-              className="bg-accent hover:bg-accent-secondary text-white px-8 py-3 rounded-full font-semibold transition shadow-sm"
+              className="mt-2 bg-accent hover:bg-accent-secondary text-white px-8 py-3 rounded-full font-semibold transition shadow-sm"
             >
-              Mulai Belanja →
+              Mulai Belanja Komputer
             </Link>
           </div>
         </main>

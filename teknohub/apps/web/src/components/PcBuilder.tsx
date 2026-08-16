@@ -5,7 +5,7 @@ import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
 import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
-import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check } from "lucide-react";
+import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check, Link2, FileText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 
@@ -71,6 +71,47 @@ export default function PcBuilder() {
   const router = useRouter();
   const addItem = useCartStore((s) => s.add);
   const [buyToast, setBuyToast] = useState(false);
+  const [shareToast, setShareToast] = useState(false);
+  const [exportToast, setExportToast] = useState(false);
+
+  const toast = (fn: (v: boolean) => void) => {
+    fn(true);
+    setTimeout(() => fn(false), 2500);
+  };
+
+  const shareBuild = async () => {
+    if (!hasAnyComponent) return;
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = window.location.href;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    toast(setShareToast);
+  };
+
+  const exportSummary = async () => {
+    if (!hasAnyComponent) return;
+    const lines = COMP_TYPE_LABELS
+      .filter(([key]) => selectedComponents[key])
+      .map(([labelKey, label]) => `- ${label}: ${selectedComponents[labelKey]}`);
+    const text = ["Rakitan PC TeknoHub", ...lines, `Total Estimasi: ${formatIDR(totalEstimasi)}`].join("\n");
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    toast(setExportToast);
+  };
 
   const buyAll = () => {
     const priceOf = (type: string) => result?.parts.find((rp) => rp.type === type)?.price ?? 0;
@@ -374,6 +415,32 @@ export default function PcBuilder() {
                 <Check size={14} /> {partsFromStore.length} komponen ditambahkan ke keranjang — mengarahkan ke keranjang...
               </div>
             )}
+            {shareToast && (
+              <div className="mt-2 flex items-center gap-2 text-cyan-300 text-xs font-semibold">
+                <Check size={14} /> Link rakitan disalin!
+              </div>
+            )}
+            {exportToast && (
+              <div className="mt-2 flex items-center gap-2 text-cyan-300 text-xs font-semibold">
+                <Check size={14} /> Ringkasan build disalin.
+              </div>
+            )}
+            <div className="mt-3 flex gap-2 flex-wrap">
+              <button
+                onClick={shareBuild}
+                disabled={!hasAnyComponent}
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+              >
+                <Link2 size={14} /> Bagikan Rakitan
+              </button>
+              <button
+                onClick={exportSummary}
+                disabled={!hasAnyComponent}
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+              >
+                <FileText size={14} /> Export Ringkasan
+              </button>
+            </div>
           </>
         )}
       </div>

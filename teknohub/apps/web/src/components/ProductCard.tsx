@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductImage from "./ProductImage";
-import { Star, Heart } from "lucide-react";
+import { Star, Heart, ShieldCheck } from "lucide-react";
 
 interface Product {
   id: string;
@@ -128,18 +128,22 @@ export default function ProductCard({ product }: ProductCardProps) {
         <span className="inline-block text-[10px] text-accent font-bold uppercase tracking-wider bg-accent-dim px-2 py-0.5 rounded-full mb-1.5">
           {catLabel}
         </span>
-        <h3 className="text-sm sm:text-base font-bold tracking-tight text-foreground line-clamp-2 mb-1">
+        <h3 className="text-sm font-medium leading-snug text-foreground line-clamp-2 h-10 mb-1.5 overflow-hidden">
           {product.name}
         </h3>
+        <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/40 px-1.5 py-0.5 rounded-full mb-1">
+          <ShieldCheck size={11} /> Garansi Resmi
+        </span>
       </div>
 
-      {/* Harga */}
-      <div className="flex items-baseline gap-2 mt-2">
-        {hasDiscount && (
-          <span className="text-[11px] text-tertiary line-through">{fmt(product.original_price!)}</span>
-        )}
-        <span className="text-base sm:text-lg font-black text-foreground">{fmt(product.price)}</span>
-      </div>
+      {/* Harga + rating (rata bawah) */}
+      <div className="mt-auto pt-3">
+        <div className="flex items-baseline gap-2">
+          {hasDiscount && (
+            <span className="text-[11px] text-tertiary line-through">{fmt(product.original_price!)}</span>
+          )}
+          <span className="text-base sm:text-lg font-black text-foreground">{fmt(product.price)}</span>
+        </div>
 
       {/* Rating + garansi */}
       <div className="flex items-center gap-1 text-[11px] mt-2 border-t border-slate-100 dark:border-slate-800 pt-2">
@@ -158,6 +162,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {outOfStock && (
           <span className="ml-auto text-[10px] font-bold text-red-500">Stok Habis</span>
         )}
+      </div>
       </div>
     </Link>
   );
