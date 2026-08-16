@@ -75,9 +75,20 @@ export default function Footer() {
           <p className="text-[11px] text-tertiary">
             © {new Date().getFullYear()} TeknoZone. Seluruh hak cipta dilindungi.
           </p>
-          <p className="text-[11px] text-tertiary">
-            Dibuat dengan 🤖 AI Agent di Indonesia
-          </p>
+          <div className="flex items-center gap-3 flex-wrap justify-center">
+            <Link href="/terms" className="text-[11px] text-tertiary hover:text-accent transition">
+              Syarat &amp; Ketentuan
+            </Link>
+            <span className="text-tertiary">•</span>
+            <Link href="/privacy" className="text-[11px] text-tertiary hover:text-accent transition">
+              Kebijakan Privasi
+            </Link>
+            <span className="text-tertiary">•</span>
+            <span className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Sistem Operasional 100% Aktif
+            </span>
+          </div>
         </div>
       </div>
     </footer>
