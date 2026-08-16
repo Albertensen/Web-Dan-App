@@ -2,6 +2,29 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [Unreleased]
+
+### Produk & PDP
+- Added fallback ulasan terverifikasi (min 3) saat produk belum punya review asli.
+- Added swipe kiri/kanan + thumbnail utk ganti foto galeri produk di mobile.
+- Added sticky bottom buy bar mobile yang muncul saat scroll (+, Beli Sekarang), tak menutupi footer.
+- Added tabel Spesifikasi Teknis (zebra striping) yang render dinamis dari kolom jsonb `specs`.
+- Added tombol Bagikan / Copy Link dengan toast konfirmasi.
+- Changed breadcrumb menjadi ber-link (Beranda / Produk / Kategori / Nama).
+- Changed padding mobile PDP `pb-28 md:pb-12` agar buy bar tak menutupi konten.
+
+### Builder & Keranjang
+- Added progress bar estimasi konsumsi daya (Total Wattage vs Rekomendasi PSU) dengan status aman/peringatan.
+- Fixed tombol Beli Semua Komponen agar pakai harga real dari rekomendasi AI.
+- Added batas stok pada tombol "+" di keranjang (tak melebihi sediaan).
+
+### Checkout
+- Added layanan tambahan checkout: Jasa Rakit & Cable Management, Packing Kayu & Asuransi Ekstra (masuk ke grand total).
+- Added redirect ke /shop/orders setelah pembayaran sukses (cart dikosongkan).
+
+### Footer
+- Redesigned trust badges jadi 2 kategori terpisah: Metode Pembayaran (QRIS, BCA, Mandiri, BNI, GoPay) dan Jasa Pengiriman (JNE, SiCepat, GoSend) dengan kartu seragam.
+
 ## [2026-08-16] — Fase 12: Modernisasi Marketplace, Trust UI/UX & AI Builder (Batch 1)
 
 ### Trust, UI Cleanup & Design System
