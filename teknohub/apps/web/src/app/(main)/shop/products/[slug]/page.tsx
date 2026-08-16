@@ -71,6 +71,14 @@ export default async function ProductPage({ params }: ProductProps) {
     .neq("id", product.id)
     .limit(4);
 
+  // Spek teknis dari kolom jsonb specs (fallback kosong jika tak ada)
+  const rawSpecs = (product.specs ?? {}) as Record<string, string | number | boolean | null>;
+  const specRows = Object.fromEntries(
+    Object.entries(rawSpecs).filter(([, v]) => v !== null && v !== undefined && v !== "")
+  );
+  const labelSpec = (k: string) =>
+    k.replace(/[_-]+/g, " ").replace(/\w/g, (c) => c.toUpperCase());
+
   return (
     <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8 pb-28 md:pb-12">
       {/* Breadcrumb */}
@@ -141,12 +149,15 @@ export default async function ProductPage({ params }: ProductProps) {
                     ["ID Produk", product.id],
                     ["Stok Tersedia", String(product.stock)],
                     ["Harga", formattedPrice],
-                  ].map(([k, v], idx) => (
-                    <tr key={k} className={idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}>
-                      <td className="px-4 py-2.5 font-medium text-muted w-1/3 align-top">{k}</td>
-                      <td className="px-4 py-2.5 text-foreground">{v}</td>
-                    </tr>
-                  ))}
+                    ...Object.entries(specRows).map(([k, v]) => [labelSpec(k), String(v)] as [string, string]),
+                  ].map(([k, v], idx) =>
+                    v !== "—" ? (
+                      <tr key={k} className={idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}>
+                        <td className="px-4 py-2.5 font-medium text-muted w-1/3 align-top">{k}</td>
+                        <td className="px-4 py-2.5 text-foreground whitespace-pre-wrap">{v}</td>
+                      </tr>
+                    ) : null
+                  )}
                 </tbody>
               </table>
             </div>
