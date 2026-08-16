@@ -5,12 +5,14 @@ import { authOptions } from "@/lib/auth-options";
 import Link from "next/link";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileStats from "@/components/profile/ProfileStats";
-import EditProfileForm from "@/components/profile/EditProfileForm";
+import ProfileTabs from "@/components/profile/ProfileTabs";
 
 export const metadata = {
   title: "Profil Saya — TeknoZone",
-  description: "Profil pengguna TeknoZone.",
+  description: "Profil dan riwayat aktivitas pengguna TeknoZone.",
 };
+
+export const dynamic = "force-dynamic";
 
 function adminClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -23,62 +25,64 @@ export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) redirect("/login?callbackUrl=/user/profile");
 
-  const sb = adminClient();
-  const { data: profile } = await sb
-    .from("profiles")
-    .select("username, full_name, avatar_url, bio, reputation, role")
-    .eq("id", session.user.id)
-    .maybeSingle();
-
-  if (!profile) redirect("/");
-
-  const roleLabel = profile.role === "admin" ? "Super Admin" : profile.role === "marketplace" ? "Staff Toko & Marketplace" : "Moderator Forum";
-
-  // Statistik
   const uid = session.user.id;
-  const [{ count: orders }, { count: threads }, { count: builds }] = await Promise.all([
-    sb.from("orders").select("id", { count: "exact", head: true }).eq("user_id", uid),
-    sb.from("threads").select("id", { count: "exact", head: true }).eq("author_id", uid),
+  const sb = adminClient();
+
+  const [profileRes, ordersRes, threadsRes, buildsRes] = await Promise.all([
+    sb.from("profiles").select("username, full_name, avatar_url, bio, reputation, role").eq("id", uid).maybeSingle(),
+    sb.from("orders").select("id, status, total_amount, created_at, shipping_address, order_items(id, name, price, quantity)").eq("user_id", uid).order("created_at", { ascending: false }),
+    sb.from("threads").select("id, title, is_locked, reply_count, created_at").eq("author_id", uid).order("created_at", { ascending: false }),
     sb.from("pc_builds").select("id", { count: "exact", head: true }).eq("author_id", uid),
   ]);
 
+  const profile = profileRes.data;
+  if (!profile) redirect("/");
+
+  const userOrders = (ordersRes.data as unknown as Parameters<typeof ProfileTabs>[0]["orders"]) ?? [];
+  const userThreads = (threadsRes.data as unknown as Parameters<typeof ProfileTabs>[0]["threads"]) ?? [];
+  const buildsCount = buildsRes.count ?? 0;
+
   const stats = {
-    orders: orders ?? 0,
-    threads: threads ?? 0,
-    builds: builds ?? 0,
+    orders: userOrders.length,
+    threads: userThreads.length,
+    builds: buildsCount,
     reputation: profile.reputation ?? 0,
   };
 
+  const role = profile.role ?? "member";
+    const roleLabel = role === "admin" ? "Super Admin" : role === "marketplace" ? "Staff Toko & Marketplace" : "Moderator Forum";
+
   return (
-    <div className="flex-1 bg-background px-6 py-10">
+    <div className="flex-1 bg-background px-4 sm:px-6 py-8">
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Banner Akses Portal Toko & Back-Office */}
-        <div className="bg-gradient-to-r from-accent via-accent-secondary to-accent text-white rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Banner Akses Seller Dashboard / Portal Toko */}
+        <div className="bg-gradient-to-r from-accent via-accent-secondary to-accent text-white rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-5">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xl">⚙️</span>
-              <h2 className="font-extrabold text-base">Portal Manajemen Toko ({roleLabel})</h2>
+              <span className="text-2xl">🏪</span>
+              <h2 className="font-extrabold text-lg">Seller &amp; Store Portal ({roleLabel})</h2>
             </div>
-            <p className="text-xs text-slate-300 mt-1">
-              {profile.role === "admin"
-                ? "Kontrol penuh: pesanan, produk, komponen PC, penawaran rakit AI, dan hak akses pengguna."
-                : "Akses kelola pesanan, katalog produk toko, moderasi forum, dan ulasan produk."}
+            <p className="text-xs text-slate-200 mt-1 max-w-xl leading-relaxed">
+              {role === "admin"
+                ? "Akses pusat kendali toko: pendapatan (revenue), pesanan pembeli, kelola produk/stok, penawaran rakit PC, dan manajemen role pengguna."
+                : "Akses pusat penjualan: pantau pesanan masuk, proses pengiriman resi, kelola katalog produk, dan moderasi ulasan."}
             </p>
           </div>
           <Link
             href="/admin"
-            className="shrink-0 px-5 py-2.5 rounded-full bg-white text-accent font-bold text-xs hover:bg-slate-100 transition shadow"
+            className="shrink-0 px-6 py-3 rounded-full bg-white text-accent font-extrabold text-xs hover:bg-slate-100 transition shadow-lg text-center"
           >
-            Buka Portal {profile.role === "admin" ? "Admin" : "Toko"} →
+            Buka Seller Dashboard →
           </Link>
         </div>
 
+        {/* Info Header & Statistik Akun */}
         <ProfileHeader profile={profile} />
         <ProfileStats stats={stats} />
 
-        <div className="bg-surface-2/60 border border-border rounded-2xl p-6">
-          <h2 className="text-lg font-bold mb-4">Edit Profil</h2>
-          <EditProfileForm profile={profile} />
+        {/* Tab Navigasi Aktivitas User (Pesanan, Ulasan, Forum, Edit Profil) */}
+        <div className="mt-6">
+          <ProfileTabs profile={profile} orders={userOrders} threads={userThreads} />
         </div>
       </div>
     </div>
