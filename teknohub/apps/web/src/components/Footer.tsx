@@ -72,6 +72,23 @@ export default function Footer() {
           ))}
         </div>
 
+        {/* Trust badges — metode pembayaran & logistik */}
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2 text-[10px] font-semibold text-tertiary">
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">QRIS</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">BCA VA</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Mandiri VA</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">BNI VA</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">GoPay</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">OVO</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">DANA</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Visa</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">Mastercard</span>
+          <span className="w-px h-4 bg-slate-200 mx-1" />
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">JNE</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">SiCepat</span>
+          <span className="px-2.5 py-1 rounded-md border border-slate-200 dark:border-slate-800 bg-surface">GoSend</span>
+        </div>
+
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-[11px] text-tertiary">
             © {new Date().getFullYear()} TeknoZone. Seluruh hak cipta dilindungi.

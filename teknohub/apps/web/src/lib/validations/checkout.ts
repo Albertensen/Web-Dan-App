@@ -6,7 +6,7 @@ export const checkoutSchema = z.object({
   address: z.string().min(10, "Alamat minimal 10 karakter"),
   city: z.string().min(2, "Kota wajib diisi"),
   postal_code: z.string().regex(/^\d{5}$/, "Kode pos harus 5 digit"),
-  courier: z.enum(["jne", "jnt", "sicepat", "grab"], "Pilih kurir"),
+  courier: z.enum(["jne", "jnt", "sicepat", "grab", "gosend"], "Pilih kurir"),
   notes: z.string().optional(),
 })
 
