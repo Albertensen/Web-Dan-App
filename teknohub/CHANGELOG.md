@@ -16,6 +16,11 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 - Changed breadcrumb menjadi ber-link (Beranda / Produk / Kategori / Nama).
 - Changed padding mobile PDP `pb-28 md:pb-12` agar buy bar tak menutupi konten.
 
+### PDP & Marketplace
+- Fixed rating rata-rata ProductCard di-cap 1 desimal (`toFixed(1)`) dengan badge no-wrap (whitespace-nowrap overflow-hidden text-ellipsis).
+- Redesigned tabel Spesifikasi Teknis jadi layout Key-Value grid zebra (border rounded, even:bg), spes kosong (undefined/null/"") difilter.
+- Changed gambar utama PDP jadi aspect-square w-full object-contain p-6 di atas bg lembut agar hardware tak terdistorsi.
+
 ### Builder & Keranjang
 - Added progress bar estimasi konsumsi daya (Total Wattage vs Rekomendasi PSU) dengan status aman/peringatan.
 - Fixed tombol Beli Semua Komponen agar pakai harga real dari rekomendasi AI.
