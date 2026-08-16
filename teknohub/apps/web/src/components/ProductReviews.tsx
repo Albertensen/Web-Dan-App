@@ -2,8 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useEffect, useMemo, useState } from "react";
-import { Star, Camera, CheckCircle2, X } from "lucide-react";
-import { REVIEW_META } from "@/lib/reviewMeta";
+import { Star, CheckCircle2, X } from "lucide-react";
 
 interface Profile { username: string | null; reputation: number | null }
 interface Review {
@@ -11,6 +10,9 @@ interface Review {
   rating: number;
   comment: string;
   created_at: string;
+  is_verified?: boolean;
+  bought_variant?: string | null;
+  media?: string[];
   profiles: Profile | Profile[] | null;
 }
 
@@ -36,11 +38,11 @@ export default function ProductReviews({ productId }: { productId: string }) {
     return () => { alive = false; };
   }, [productId]);
 
-  const meta = (id: string) => (REVIEW_META as Record<string, { variant?: string; is_verified?: boolean; media?: string[]; has_video?: boolean }>)[id] ?? {};
+  const meta = (r: Review) => r;
   const filtered = useMemo(() => {
     if (filter === "all") return reviews;
     if (filter === "photo") {
-      return reviews.filter((r) => (meta(r.id).media?.length ?? 0) > 0 || meta(r.id).has_video);
+      return reviews.filter((r) => (r.media?.length ?? 0) > 0);
     }
     return reviews.filter((r) => r.rating === Number(filter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,7 +128,7 @@ export default function ProductReviews({ productId }: { productId: string }) {
         <div className="space-y-4">
           {filtered.map((r) => {
             const prof = normProfile(r.profiles);
-            const m = meta(r.id);
+            const m = meta(r);
             const verified = !!m.is_verified || (prof?.reputation ?? 0) >= 10;
             const media = (m.media ?? []) as string[];
             return (
@@ -153,24 +155,20 @@ export default function ProductReviews({ productId }: { productId: string }) {
                   </div>
                 </div>
 
-                {m.variant && (
-                  <p className="text-[11px] text-tertiary mb-1.5">Varian: {m.variant}</p>
+                {m.bought_variant && (
+                  <p className="text-[11px] text-tertiary mb-1.5">Varian: {m.bought_variant}</p>
                 )}
 
                 <p className="text-sm text-muted leading-relaxed">{r.comment}</p>
 
-                {(media.length > 0 || m.has_video) && (
+                {(media.length > 0) && (
                   <div className="flex items-center gap-2 mt-3">
                     {media.map((src, i) => (
                       <button key={i} onClick={() => setLightbox(src)} className="w-14 h-14 rounded-lg overflow-hidden border border-slate-200 hover:shadow transition">
                         <img src={src} alt={`Foto ulasan ${i + 1}`} className="w-full h-full object-cover" />
                       </button>
                     ))}
-                    {m.has_video && (
-                      <span className="w-14 h-14 rounded-lg border border-slate-200 bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-muted">
-                        <Camera size={18} />
-                      </span>
-                    )}
+
                   </div>
                 )}
               </div>

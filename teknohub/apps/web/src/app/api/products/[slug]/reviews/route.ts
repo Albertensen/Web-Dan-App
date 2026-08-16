@@ -18,7 +18,7 @@ export async function GET(_req: Request, { params }: { params: { slug: string } 
 
   const { data: reviews, error } = await supabase
     .from("product_reviews")
-    .select("id, rating, comment, created_at, profiles(id, username, reputation)")
+    .select("id, rating, comment, created_at, is_verified, bought_variant, media, profiles(id, username, reputation)")
     .eq("product_id", product.id)
     .order("created_at", { ascending: false });
 
