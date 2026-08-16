@@ -81,7 +81,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
 
   return (
     <div className="space-y-6">
-      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-slate-300">
+      <div className="bg-surface-2/60 p-6 rounded-2xl shadow-sm border border-border">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Filter Produk</h2>
 
         {/* Level 1: parent kategori */}
@@ -102,7 +102,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
               className={`px-4 py-2 rounded-full text-sm transition duration-150 ${
                 active === node.value || activeParent === node.value
                   ? "bg-accent text-white shadow-md"
-                  : "bg-surface-2 hover:bg-surface-2 text-muted"
+                  : "bg-surface-2 border border-border hover:bg-slate-200 text-muted"
               }`}
             >
               {node.label}
@@ -120,7 +120,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
                 className={`px-3 py-1.5 rounded-full text-xs transition duration-150 ${
                   active === child.value
                     ? "bg-accent-dim text-accent border border-accent/40"
-                    : "bg-surface-2 hover:bg-surface-2/60 text-tertiary border border-slate-300"
+                    : "bg-surface-2 hover:bg-slate-200 text-tertiary border border-border"
                 }`}
               >
                 {child.label}
@@ -139,7 +139,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
             placeholder="Masukkan nama produk..."
             value={term}
             onChange={handleSearch}
-            className="w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition"
+            className="w-full p-3 border border-border rounded-xl bg-surface text-foreground focus:ring-2 focus:ring-accent/25 focus:border-accent transition"
           />
         </div>
       </div>
