@@ -102,11 +102,13 @@ Status: ✅ Tuntas
 - [x] Validasi token reset (expired / invalid)
 - [x] Success state setelah reset berhasil
 
-### Halaman Profil Pengguna
-- [x] Halaman /profile — tampilkan info user (avatar, username, email, reputasi forum)
-- [x] Edit profil: upload avatar ke Supabase Storage, ubah username, bio
-- [x] Tab: Pesanan Saya, Build Tersimpan, Thread Forum, Pengaturan
-- [x] Halaman /profile/settings — ubah password, notifikasi, hapus akun
+### Halaman Profil Pengguna & Pembagian Sisi User/Seller
+- [x] Halaman /user/profile — profil user dengan tab navigasi lengkap (Pesanan Saya, Ulasan Saya, Forum, Edit Profil)
+- [x] Sisi User — Riwayat Ulasan Produk Saya dengan modal edit rating bintang (1-5) dan komentar instan (`/api/user/reviews`)
+- [x] Sisi User — Tab Pesanan Saya dengan rincian item, total belanja, kurir, dan tracking nomor resi
+- [x] Sisi User — Tab Aktivitas Forum dengan daftar thread dan jumlah balasan
+- [x] Sisi Seller — Banner Seller & Store Portal langsung di halaman profil dengan tombol cepat menuju Seller Dashboard (`/admin`)
+- [x] Sisi Seller — Pembagian hak akses: modul rakit PC (komponen & quotes) dan edit user dikhususkan untuk Super Admin, sementara fitur operasional toko (pesanan, produk, ulasan, moderasi) terbuka untuk pengelola toko
 
 ### Protected Routes & UX Auth
 - [x] Middleware proteksi route (cart, checkout, builder saved, forum post, profile)

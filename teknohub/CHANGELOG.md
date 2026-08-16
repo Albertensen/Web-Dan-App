@@ -2,6 +2,15 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — Pembagian Fitur Sisi User & Sisi Seller (Profile Tabs & Seller Portal)
+
+### Added
+- **Sisi User (`UserReviewsTab` + `/api/user/reviews`)**: Tab Ulasan Produk Saya di halaman profil dengan fitur edit rating bintang (1-5) dan ubah teks komentar ulasan secara instan.
+- **Sisi User (`ProfileTabs`)**: Tab navigasi terpadu di `/user/profile` mencakup Pesanan Saya (rincian item, total belanja, kurir, nomor resi), Ulasan Saya, Aktivitas Forum, dan Edit Profil.
+- **Sisi Seller (Seller Portal)**: Banner akses Seller Dashboard terintegrasi di halaman profil pengguna dan UserDropdown navbar.
+- **Granular RBAC**: Pembagian hak akses yang rapi antara Super Admin (kelola PC builder, quotes AI, dan hak akses user) dengan pengelola toko/member (operasional pesanan, katalog produk, ulasan, dan moderasi).
+
+
 ## [2026-08-15] — Fase Admin Portal (Back-Office Management & Operations) Tuntas
 
 ### Added
