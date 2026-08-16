@@ -29,9 +29,11 @@ export default function ProductGallery({ images, name, category }: Props) {
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className="relative aspect-square rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer select-none"
+        className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 cursor-pointer select-none"
       >
-        <ProductImage src={cur} alt={name} category={category} fill sizes="(max-width:768px) 100vw,50vw" className="object-cover" />
+        <div className="absolute inset-0 p-6">
+          <ProductImage src={cur} alt={name} category={category} fill sizes="(max-width:768px) 100vw,50vw" className="object-contain" />
+        </div>
       </div>
       {list.length > 1 && (
         <div className="flex gap-2 mt-2">

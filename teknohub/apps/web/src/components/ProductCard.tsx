@@ -79,9 +79,9 @@ export default function ProductCard({ product }: ProductCardProps) {
     : 0;
 
   const reviews = product.reviews ?? [];
-  const avgRating = reviews.length
-    ? Number((reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1))
-    : 0;
+  const displayRating = reviews.length > 0
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : "5.0";
   const totalReviews = reviews.length;
 
   const outOfStock = product.stock <= 0;
@@ -148,12 +148,12 @@ export default function ProductCard({ product }: ProductCardProps) {
             <Star
               key={i}
               size={12}
-              className={i <= Math.round(avgRating) ? "fill-amber-400 text-amber-400" : "text-slate-300"}
+              className={i <= Math.round(Number(displayRating)) ? "fill-amber-400 text-amber-400" : "text-slate-300"}
             />
           ))}
         </div>
-        <span className="text-tertiary font-medium">
-          {reviews.length ? `${avgRating} · ${totalReviews} ulasan · Garansi Resmi` : "Belum ada ulasan · Garansi Resmi"}
+        <span className="text-tertiary font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+          {reviews.length ? `${displayRating} · ${totalReviews} ulasan · Garansi Resmi` : "Belum ada ulasan · Garansi Resmi"}
         </span>
         {outOfStock && (
           <span className="ml-auto text-[10px] font-bold text-red-500">Stok Habis</span>

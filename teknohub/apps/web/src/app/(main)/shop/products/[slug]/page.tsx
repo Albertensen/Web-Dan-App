@@ -140,26 +140,25 @@ export default async function ProductPage({ params }: ProductProps) {
           </div>
           <div className="pt-4 border-t border-border">
             <h2 className="text-xl font-semibold mb-3 text-muted">Spesifikasi Teknis</h2>
-            <div className="overflow-x-auto rounded-2xl border border-border">
-              <table className="w-full text-sm">
-                <tbody>
-                  {[
-                    ["Merek / Brand", product.brand || "—"],
-                    ["Kategori", product.category ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : "—"],
-                    ["ID Produk", product.id],
-                    ["Stok Tersedia", String(product.stock)],
-                    ["Harga", formattedPrice],
-                    ...Object.entries(specRows).map(([k, v]) => [labelSpec(k), String(v)] as [string, string]),
-                  ].map(([k, v], idx) =>
-                    v !== "—" ? (
-                      <tr key={k} className={idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}>
-                        <td className="px-4 py-2.5 font-medium text-muted w-1/3 align-top">{k}</td>
-                        <td className="px-4 py-2.5 text-foreground whitespace-pre-wrap">{v}</td>
-                      </tr>
-                    ) : null
-                  )}
-                </tbody>
-              </table>
+            <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden divide-y divide-slate-200 dark:divide-slate-800">
+              {[
+                ["Merek / Brand", product.brand || "—"],
+                ["Kategori", product.category ? product.category.charAt(0).toUpperCase() + product.category.slice(1) : "—"],
+                ["ID Produk", product.id],
+                ["Stok Tersedia", String(product.stock)],
+                ["Harga", formattedPrice],
+                ...Object.entries(specRows).map(([k, v]) => [labelSpec(k), String(v)] as [string, string]),
+              ]
+                .filter(([, v]) => v && v !== "—")
+                .map(([k, v], idx) => (
+                  <div
+                    key={k}
+                    className={`p-3 grid grid-cols-3 gap-2 text-sm ${idx % 2 === 1 ? "bg-slate-50 dark:bg-slate-900/50" : ""}`}
+                  >
+                    <span className="col-span-1 font-medium text-slate-500 dark:text-slate-400">{k}</span>
+                    <span className="col-span-2 font-semibold text-slate-900 dark:text-slate-100 whitespace-pre-wrap">{v}</span>
+                  </div>
+                ))}
             </div>
           </div>
 
