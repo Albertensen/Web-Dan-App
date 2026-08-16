@@ -5,6 +5,9 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 ## [Unreleased]
 
 ### Produk & PDP
+- Added rating & jumlah ulasan di ProductCard dihitung dinamis dari `product_reviews` (bukan angka statis).
+- Added validasi stok habis di PDP: tombol AddToCart & StickyBuyBar nonaktif berlabel "Stok Habis".
+- Changed format tanggal ulasan jadi bahasa Indonesia penuh (mis. "14 Agustus 2026").
 - Added fallback ulasan terverifikasi (min 3) saat produk belum punya review asli.
 - Added swipe kiri/kanan + thumbnail utk ganti foto galeri produk di mobile.
 - Added sticky bottom buy bar mobile yang muncul saat scroll (+, Beli Sekarang), tak menutupi footer.
