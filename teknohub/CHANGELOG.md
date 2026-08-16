@@ -2,6 +2,19 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-15] — Fase Admin Portal (Back-Office Management & Operations) Tuntas
+
+### Added
+- **Admin Shell & RBAC (`lib/admin-auth.ts`, `AdminLayout`, `AdminSidebar`, `AdminHeader`)**: Server-side guard verifikasi role (`admin`/`moderator`), dedicated sidebar kolapsibel, dan top status bar.
+- **Admin Dashboard (`/admin`)**: KPI cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), grafik tren transaksi 7 hari, alert stok kritis, dan feed aktivitas terbaru.
+- **Manajemen Pesanan (`/admin/orders` + API `/api/admin/orders`)**: Tabel filter status pesanan (pending/paid/processing/shipped/delivered/cancelled), modal detail item & alamat, input kurir/nomor resi pengiriman, dan update status.
+- **Penyempurnaan Manajemen Produk (`/admin/products`)**: Modal Edit Produk, toggle status `is_active` (soft delete), quick inline stock edit (+/-), search & kategori filter.
+- **Manajemen Komponen PC & Scraper (`/admin/components` + API `/api/admin/components/scrape`)**: Database 34+ komponen, mapping URL Tokopedia/Shopee, update harga manual, dan tombol manual trigger scraper.
+- **Moderasi Ulasan Produk (`/admin/reviews` + API `/api/admin/reviews`)**: Filter rating 1-5 bintang, hapus ulasan spam/toxic, link langsung ke halaman produk.
+- **Manajemen Pengguna & Role (`/admin/users` + API `/api/admin/users`)**: Directory pengguna, ubah role inline (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (3, 7, 30 hari, permanen) dan Unban.
+- **Penyempurnaan Penawaran Rakit PC (`/admin/quotes`)**: Konversi penawaran yang diterima menjadi pesanan resmi di tabel `orders` & `order_items`, editor harga final, dan download PDF invoice.
+
+
 ## [2026-08-15] — Auth UI Overhaul & Perbaikan OAuth/Avatar
 
 ### Added

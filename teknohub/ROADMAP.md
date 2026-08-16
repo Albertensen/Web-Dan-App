@@ -256,17 +256,17 @@ Status: ✅ Tuntas (2026-08-10, commit f9a7b2c)
 ---
 
 ## FASE ADMIN PORTAL — Back-Office Management & Operations
-Status: 🟢 Dalam Pengerjaan
+Status: ✅ Tuntas (100%)
 
 ### Admin Shell & Layout
-- [ ] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
-- [ ] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
-- [ ] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
-- [ ] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
-- [ ] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
-- [ ] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
-- [ ] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
-- [ ] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
+- [x] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
+- [x] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
+- [x] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
+- [x] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
+- [x] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
+- [x] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
+- [x] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
+- [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
 
 ---
 ## FASE 7 — Security Hardening
