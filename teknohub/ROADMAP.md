@@ -396,7 +396,7 @@ Status: ⏳ Belum dimulai
 - [x] Pembersihan teks generator/footer ("Dibuat dengan AI Agent") dan menggantinya dengan informasi bantuan & layanan pelanggan resmi (609aca0)
 - [x] Penghapusan testing threads/dummy data di forum dan inisialisasi panduan komunitas resmi (3 thread kurasi live)
 - [ ] Migrasi icon emoji UI sistem (seperti 🛍️, 🤖, 💬, ⚡) ke library ikon vektor profesional (misal: Lucide Icons)
-- [ ] Standardisasi tema warna, elevation shadow, dan border-radius pada komponen kartu produk
+- [x] Standardisasi tema warna, elevation shadow, dan border-radius pada komponen kartu produk (ProductCard 6d92b9d)
 
 ### Fase 2: Core E-Commerce & Checkout Experience
 - [ ] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk
