@@ -5,7 +5,9 @@ import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
 import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
-import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle } from "lucide-react";
+import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
 
 interface BuildPart {
   id: string;
@@ -64,7 +66,19 @@ export default function PcBuilder() {
   const [result, setResult] = useState<RecommendResult | null>(null);
   const [error, setError] = useState("");
   // Store: single source of truth (sync dari AI chat / recommend button)
-  const { selectedComponents, totalEstimasi, applyRecommendation, updateBudget } = useBuilderStore();
+  const store = useBuilderStore();
+  const { selectedComponents, totalEstimasi, applyRecommendation, updateBudget } = store;
+  const router = useRouter();
+  const addItem = useCartStore((s) => s.add);
+  const [buyToast, setBuyToast] = useState(false);
+
+  const buyAll = () => {
+    const list = partsFromStore.filter((pp) => pp && pp.id);
+    if (list.length === 0) return;
+    list.forEach((pp) => addItem({ id: pp.id, name: pp.name, price: pp.price, image_url: null, slug: pp.name }));
+    setBuyToast(true);
+    setTimeout(() => router.push("/shop/cart"), 700);
+  };
 
   const hasAnyComponent = Object.values(selectedComponents).some(Boolean);
 
@@ -315,10 +329,22 @@ export default function PcBuilder() {
               <span className="font-semibold text-white">Total Estimasi</span>
               <span className="font-bold text-cyan-300">{formatIDR(totalEstimasi)}</span>
             </div>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-4 flex gap-2 flex-wrap">
               <SaveBuildButton parts={partsFromStore} buildType={useCase} />
               <RequestQuoteModal buildTitle="Build Rekomendasi AI" />
+              <button
+                onClick={buyAll}
+                disabled={partsFromStore.length === 0}
+                className="flex-1 min-w-[150px] flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+              >
+                <ShoppingCart size={14} /> Beli Semua Komponen
+              </button>
             </div>
+            {buyToast && (
+              <div className="mt-3 flex items-center gap-2 text-emerald-400 text-xs font-semibold">
+                <Check size={14} /> {partsFromStore.length} komponen ditambahkan ke keranjang — mengarahkan ke keranjang...
+              </div>
+            )}
           </>
         )}
       </div>

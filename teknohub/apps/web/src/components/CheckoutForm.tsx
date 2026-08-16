@@ -35,7 +35,9 @@ type FormState = {
   name: string;
   phone: string;
   address: string;
+  province: string;
   city: string;
+  district: string;
   postal_code: string;
   courier: CheckoutInput["courier"];
   service: string;
@@ -43,7 +45,7 @@ type FormState = {
 };
 
 const initialForm: FormState = {
-  name: "", phone: "", address: "", city: "", postal_code: "",
+  name: "", phone: "", address: "", province: "", city: "", district: "", postal_code: "",
   courier: "jne", service: "jne_reg", notes: "",
 };
 
@@ -117,12 +119,14 @@ export default function CheckoutForm() {
       {/* Alamat */}
       <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
         <h2 className="font-bold text-foreground">1. Alamat Pengiriman</h2>
-        {field("name", "Nama Lengkap", "text", "Budi Santoso")}
-        {field("phone", "Nomor Telepon", "tel", "081234567890")}
-        {field("address", "Alamat Lengkap", "text", "Jl. Merdeka No. 10, RT 01/RW 02")}
+        {field("name", "Nama Penerima", "text", "Budi Santoso")}
+        {field("phone", "No. Telepon", "tel", "081234567890")}
+        {field("address", "Alamat Lengkap", "text", "Jl. Merdeka No. 10, RT 01/RW 02, Blok C2")}
         <div className="grid grid-cols-2 gap-3">
-          {field("city", "Kota", "text", "Jakarta Selatan")}
-          {field("postal_code", "Kode Pos", "text", "12345")}
+          {field("province", "Provinsi", "text", "DKI Jakarta")}
+          {field("city", "Kota/Kabupaten", "text", "Jakarta Selatan")}
+          {field("district", "Kecamatan", "text", "Kebayoran Baru")}
+          {field("postal_code", "Kode Pos", "text", "12120")}
         </div>
       </section>
 

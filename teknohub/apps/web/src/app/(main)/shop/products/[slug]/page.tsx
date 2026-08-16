@@ -5,6 +5,8 @@ import { supabase } from "@/lib/supabase/client";
 import ProductImage from "@/components/ProductImage";
 import AddToCartButton from "@/components/AddToCartButton";
 import ProductReviews from "@/components/ProductReviews";
+import ProductGallery from "@/components/ProductGallery";
+import StickyBuyBar from "@/components/StickyBuyBar";
 
 export const dynamic = "force-dynamic";
 

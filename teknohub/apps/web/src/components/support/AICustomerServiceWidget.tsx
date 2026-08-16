@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Bot } from "lucide-react";
+import { Bot, MessageCircle } from "lucide-react";
 
 interface ChatMsg {
   role: "user" | "assistant";
@@ -50,10 +50,24 @@ export default function AICustomerServiceWidget() {
       {/* Floating button */}
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-accent text-white shadow-2xl shadow-accent/20 flex items-center justify-center hover:scale-105 transition-transform"
+        className="fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl flex items-center justify-center transition group"
         aria-label="Customer Service"
+        title="Chat CS"
       >
-        {open ? "✕" : "MessageSquare"}
+        {/* ping indicator */}
+        <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-white" />
+        </span>
+        {open ? (
+          <span className="text-xl leading-none">✕</span>
+        ) : (
+          <MessageCircle size={26} />
+        )}
+        {/* tooltip */}
+        <span className="absolute right-full mr-3 whitespace-nowrap rounded-lg bg-slate-800 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">
+          Chat CS
+        </span>
       </button>
 
       {/* Chat panel */}
