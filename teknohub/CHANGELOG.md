@@ -4,6 +4,12 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 
 ## [Unreleased]
 
+### Performa, Sticky & Proteksi
+- Added skeleton loader katalog (`ProductCardSkeleton`, animate-pulse) saat fetch/filter.
+- Added sticky purchase bar desktop (hidden mobile): thumbnail, judul, harga, '+ Keranjang'.
+- Changed checkout: spinner + tombol "Bayar Sekarang" nonaktif selama proses (anti double-submit).
+- Added badge stok menipis "Sisa [x] unit!" (amber) di card & PDP saat stock <= 5.
+
 ### Marketplace & Builder
 - Redesigned empty cart: ikon ShoppingBag besar, heading & subtext ramah, CTA "Mulai Belanja Komputer".
 - Changed ProductCard: judul clamp 2 baris (`line-clamp-2 h-10`), badge "Garansi Resmi", harga & rating rata bawah (mt-auto).

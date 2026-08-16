@@ -436,6 +436,12 @@ Status: 🟢 Aktif (Batch 1 & 2 selesai)
 - [x] Builder: Bagikan Rakitan (copy-link) + Export Ringkasan (clipboard)
 - [x] Footer trust badges: 2 kategori terpisah (Pembayaran & Pengiriman)
 
+### Batch 3: Performa, Sticky & Proteksi (Selesai)
+- [x] Skeleton loader katalog (`ProductCardSkeleton`) dengan animate-pulse saat filter/fetch
+- [x] Sticky purchase bar desktop (hidden mobile): thumbnail, judul, harga, + Keranjang
+- [x] Checkout: spinner + nonaktif tombol "Bayar Sekarang" selama proses (anti double-submit)
+- [x] Badge stok menipis "Sisa [x] unit!" (amber) di card & PDP saat stock <= 5
+
 ## FASE 13 — Launch
 Status: ⏳ Belum dimulai
 
