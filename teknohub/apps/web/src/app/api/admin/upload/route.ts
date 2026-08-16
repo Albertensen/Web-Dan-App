@@ -12,6 +12,9 @@ function getServiceClient() {
   return createClient(url, key);
 }
 
+const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".gif"];
+
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) {
@@ -24,26 +27,33 @@ export async function POST(request: NextRequest) {
     .eq("id", session.user.id)
     .single();
 
-  if (!profile || !["admin", "moderator"].includes(profile.role)) {
+  if (!profile || !["admin", "moderator", "marketplace"].includes(profile.role)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
   const { path, contentType } = (await request.json()) as { path?: string; contentType?: string };
 
-  // Validasi path: hanya di dalam products/, tanpa traversal (.. / .), tanpa leading slash
+  // Validasi path: hanya di dalam products/, tanpa traversal (.. / .), tanpa leading slash atau backslash
   if (
     !path ||
     !path.startsWith("products/") ||
     path.includes("..") ||
     path.startsWith("/") ||
-    path.includes("\\")
+    path.includes("\\") ||
+    path.includes("%2e%2e")
   ) {
-    return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
+    return NextResponse.json({ error: "Path tidak valid atau mengandung karakter dilarang" }, { status: 400 });
   }
 
-  // Validasi MIME type server-side: hanya gambar (cek prefix, bukan extension)
-  if (contentType && !contentType.startsWith("image/")) {
-    return NextResponse.json({ error: "Hanya file gambar yang diizinkan" }, { status: 400 });
+  // Validasi ekstensi file
+  const ext = path.slice(path.lastIndexOf(".")).toLowerCase();
+  if (!ALLOWED_EXTENSIONS.includes(ext)) {
+    return NextResponse.json({ error: "Ekstensi file tidak diizinkan. Hanya .jpg, .jpeg, .png, .webp, .gif" }, { status: 400 });
+  }
+
+  // Validasi MIME type server-side
+  if (contentType && !ALLOWED_MIME_TYPES.includes(contentType.toLowerCase())) {
+    return NextResponse.json({ error: "MIME type tidak diizinkan" }, { status: 400 });
   }
 
   const { data, error } = await getServiceClient().storage

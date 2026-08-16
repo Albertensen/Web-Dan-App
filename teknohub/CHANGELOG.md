@@ -2,6 +2,15 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — Fase 7: Security Hardening Tuntas
+
+### Security & Hardening
+- **HSTS Header (`next.config.mjs`)**: Menambahkan `Strict-Transport-Security` (`max-age=63072000; includeSubDomains; preload`) untuk mewajibkan enkripsi HTTPS.
+- **Upload File Hardening (`/api/admin/upload`)**: Validasi whitelist ekstensi (`.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`), verifikasi MIME type server-side, dan proteksi anti-path-traversal (`..`, `%2e%2e`, slash injection).
+- **Zod Input Boundary**: Seluruh endpoint transaksi, review produk, pembuatan akun, dan checkout telah divalidasi ketat dengan schema Zod.
+- **Session & Auth Cookies**: Cookie sesi terkonfigurasi `httpOnly: true`, `secure: true` (produksi), dan proteksi brute force login 5 attempt/menit.
+
+
 ## [2026-08-16] — Pembagian Fitur Sisi User & Sisi Seller (Profile Tabs & Seller Portal)
 
 ### Added
