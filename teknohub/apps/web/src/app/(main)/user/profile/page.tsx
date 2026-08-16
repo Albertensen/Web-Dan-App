@@ -32,7 +32,6 @@ export default async function ProfilePage() {
 
   if (!profile) redirect("/");
 
-  const isStaff = ["admin", "moderator", "marketplace"].includes(profile.role ?? "");
   const roleLabel = profile.role === "admin" ? "Super Admin" : profile.role === "marketplace" ? "Staff Toko & Marketplace" : "Moderator Forum";
 
   // Statistik
@@ -53,28 +52,26 @@ export default async function ProfilePage() {
   return (
     <div className="flex-1 bg-background px-6 py-10">
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Banner Hak Akses Khusus Staff / Admin */}
-        {isStaff && (
-          <div className="bg-gradient-to-r from-accent via-accent-secondary to-accent text-white rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">⚙️</span>
-                <h2 className="font-extrabold text-base">Hak Akses: {roleLabel}</h2>
-              </div>
-              <p className="text-xs text-slate-300 mt-1">
-                {profile.role === "admin"
-                  ? "Anda memiliki kontrol penuh atas manajemen toko, pesanan, komponen, penawaran rakit, dan hak akses pengguna."
-                  : "Anda memiliki akses staf untuk memproses pesanan, katalog produk, dan moderasi forum."}
-              </p>
+        {/* Banner Akses Portal Toko & Back-Office */}
+        <div className="bg-gradient-to-r from-accent via-accent-secondary to-accent text-white rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">⚙️</span>
+              <h2 className="font-extrabold text-base">Portal Manajemen Toko ({roleLabel})</h2>
             </div>
-            <Link
-              href="/admin"
-              className="shrink-0 px-5 py-2.5 rounded-full bg-white text-accent font-bold text-xs hover:bg-slate-100 transition shadow"
-            >
-              Buka Portal {profile.role === "admin" ? "Admin" : "Back-Office"} →
-            </Link>
+            <p className="text-xs text-slate-300 mt-1">
+              {profile.role === "admin"
+                ? "Kontrol penuh: pesanan, produk, komponen PC, penawaran rakit AI, dan hak akses pengguna."
+                : "Akses kelola pesanan, katalog produk toko, moderasi forum, dan ulasan produk."}
+            </p>
           </div>
-        )}
+          <Link
+            href="/admin"
+            className="shrink-0 px-5 py-2.5 rounded-full bg-white text-accent font-bold text-xs hover:bg-slate-100 transition shadow"
+          >
+            Buka Portal {profile.role === "admin" ? "Admin" : "Toko"} →
+          </Link>
+        </div>
 
         <ProfileHeader profile={profile} />
         <ProfileStats stats={stats} />

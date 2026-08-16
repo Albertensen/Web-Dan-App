@@ -20,27 +20,21 @@ export async function getUserRole(): Promise<AdminRole> {
     .select("role")
     .eq("id", session.user.id)
     .single();
-  return (data?.role as AdminRole) ?? null;
+  return (data?.role as AdminRole) ?? "member";
 }
 
-/** Guard RBAC: cek user punya akses staf admin portal. */
+/** Cek akses portal toko (semua user login diizinkan akses dashboard, pesanan, produk, forum). */
 export async function requireAdminRole(): Promise<{ role: AdminRole; isStaff: boolean }> {
   const role = await getUserRole();
-  const isStaff = role === "admin" || role === "moderator" || role === "marketplace";
-  return { role, isStaff };
+  return { role, isStaff: role !== null };
 }
 
-/** Cek apakah role berhak mengelola PC Builder (Komponen & Quotes) -> Hanya Admin */
+/** Cek apakah role berhak kelola PC Builder (Komponen & Quotes) -> Hanya Super Admin */
 export function canManagePCBuilder(role: AdminRole): boolean {
   return role === "admin";
 }
 
-/** Cek apakah role berhak mengelola Pengguna & Hak Akses -> Hanya Admin */
+/** Cek apakah role berhak kelola Pengguna & Hak Akses -> Hanya Super Admin */
 export function canManageUsers(role: AdminRole): boolean {
   return role === "admin";
-}
-
-/** Cek apakah role berhak mengelola Marketplace & Forum */
-export function canManageMarketplace(role: AdminRole): boolean {
-  return role === "admin" || role === "moderator" || role === "marketplace";
 }

@@ -94,15 +94,13 @@ export default function MobileDrawer({ open, onClose }: MobileDrawerProps) {
                   )}
                 </div>
               </div>
-              {["admin", "moderator", "marketplace"].includes(session?.user?.role ?? "") && (
-                <Link
-                  href="/admin"
-                  onClick={onClose}
-                  className="px-3 py-2.5 rounded-xl text-sm font-bold bg-accent text-white hover:bg-accent-secondary transition flex items-center gap-2"
-                >
-                  <span>⚙️</span> Portal {session?.user?.role === "admin" ? "Admin" : "Back-Office"}
-                </Link>
-              )}
+              <Link
+                href="/admin"
+                onClick={onClose}
+                className="px-3 py-2.5 rounded-xl text-sm font-bold bg-accent text-white hover:bg-accent-secondary transition flex items-center gap-2"
+              >
+                <span>⚙️</span> Portal {session?.user?.role === "admin" ? "Admin" : "Toko & Pesanan"}
+              </Link>
               <Link
                 href="/user/profile"
                 onClick={onClose}

@@ -10,18 +10,21 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     redirect(`/login?callbackUrl=${encodeURIComponent("/admin")}`);
   }
 
-  if (!["admin", "moderator", "marketplace"].includes(role)) {
-    redirect("/");
-  }
-
-  const roleLabel = role === "admin" ? "Super Admin" : role === "marketplace" ? "Staff Marketplace" : "Moderator Forum";
+  const roleLabel =
+    role === "admin"
+      ? "Super Admin"
+      : role === "marketplace"
+      ? "Staff Marketplace"
+      : role === "moderator"
+      ? "Moderator"
+      : "Member (Akses Toko)";
 
   return (
     <div className="flex min-h-[calc(100vh-10rem)] bg-slate-100">
       <AdminSidebar userRole={role} />
       <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader
-          title="Back-Office TeknoHub"
+          title="Portal Toko & Back-Office"
           subtitle={`Akses: ${roleLabel}`}
         />
         <div className="flex-1 overflow-y-auto">{children}</div>

@@ -22,7 +22,6 @@ export default function UserDropdown() {
   if (!session?.user) return null;
   const name = session.user.name ?? session.user.email?.split("@")[0] ?? "User";
   const role = session.user.role ?? "member";
-  const isStaff = ["admin", "moderator", "marketplace"].includes(role);
 
   const initials = name
     .split(/\s+/)
@@ -87,16 +86,14 @@ export default function UserDropdown() {
           </div>
 
           <div className="py-1.5">
-            {/* Link Back-Office / Portal Admin jika punya hak akses */}
-            {isStaff && (
-              <Link
-                href="/admin"
-                onClick={() => setOpen(false)}
-                className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold bg-accent-dim/60 text-accent hover:bg-accent hover:text-white transition"
-              >
-                <span>⚙️</span> Portal {role === "admin" ? "Admin" : "Back-Office"}
-              </Link>
-            )}
+            {/* Link Portal Toko / Admin untuk semua user login */}
+            <Link
+              href="/admin"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold bg-accent-dim/60 text-accent hover:bg-accent hover:text-white transition"
+            >
+              <span>⚙️</span> Portal {role === "admin" ? "Admin" : "Toko & Pesanan"}
+            </Link>
 
             <Link
               href="/user/profile"
