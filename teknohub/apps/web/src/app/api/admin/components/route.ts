@@ -17,7 +17,7 @@ async function checkAdmin(userId?: string) {
     .select("role")
     .eq("id", userId)
     .single();
-  return data?.role === "admin" || data?.role === "moderator";
+  return data?.role === "admin";
 }
 
 export async function GET(request: NextRequest) {

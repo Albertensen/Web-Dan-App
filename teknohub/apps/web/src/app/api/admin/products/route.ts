@@ -17,7 +17,7 @@ async function checkAdmin(userId?: string) {
     .select("role")
     .eq("id", userId)
     .single();
-  return data?.role === "admin" || data?.role === "moderator";
+  return ["admin", "moderator", "marketplace"].includes(data?.role);
 }
 
 const CATEGORIES = ["laptop", "smartphone", "monitor", "cpu", "gpu", "ram", "storage", "motherboard", "psu", "case", "cooler", "aksesoris"];

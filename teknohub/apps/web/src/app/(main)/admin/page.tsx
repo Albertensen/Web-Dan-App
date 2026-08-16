@@ -1,17 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
+import { getUserRole } from "@/lib/admin-auth";
 
 export const dynamic = "force-dynamic";
-
-const ADMIN_SECTIONS = [
-  { href: "/admin/orders", label: "Pesanan", desc: "Kelola status & resi", icon: "📦" },
-  { href: "/admin/products", label: "Produk", desc: "Katalog & stok", icon: "🏷️" },
-  { href: "/admin/components", label: "Komponen PC", desc: "Scraper & harga", icon: "🧩" },
-  { href: "/admin/quotes", label: "Penawaran Rakit", desc: "Quote & invoice", icon: "📋" },
-  { href: "/admin/moderation", label: "Moderasi Forum", desc: "Report & thread", icon: "🛡️" },
-  { href: "/admin/reviews", label: "Ulasan Produk", desc: "Rating & review", icon: "⭐" },
-  { href: "/admin/users", label: "Pengguna & Role", desc: "Role, ban, audit", icon: "👥" },
-];
 
 function getServiceClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -24,11 +15,13 @@ const formatIDR = (n: number) =>
   new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
 export default async function AdminDashboardPage() {
+  const role = await getUserRole();
+  const isAdmin = role === "admin";
   const db = getServiceClient();
 
   const [ordersRes, quotesRes, threadsRes, reportsRes, productsRes] = await Promise.all([
     db.from("orders").select("id, status, total_amount, created_at"),
-    db.from("build_quotes").select("id, status"),
+    isAdmin ? db.from("build_quotes").select("id, status") : Promise.resolve({ data: [] }),
     db.from("threads").select("id, is_locked, created_at"),
     db.from("reports").select("id, status"),
     db.from("products").select("id, name, stock, is_active").order("stock", { ascending: true }).limit(5),
@@ -60,25 +53,40 @@ export default async function AdminDashboardPage() {
   }
   const maxCount = Math.max(1, ...days.map((d) => d.count));
 
+  // Modul yang diizinkan untuk role ini
+  const modules = [
+    { href: "/admin/orders", label: "Pesanan", desc: "Kelola status & resi", icon: "📦" },
+    { href: "/admin/products", label: "Produk", desc: "Katalog & stok", icon: "🏷️" },
+    { href: "/admin/moderation", label: "Moderasi Forum", desc: "Report & thread", icon: "🛡️" },
+    { href: "/admin/reviews", label: "Ulasan Produk", desc: "Rating & review", icon: "⭐" },
+    ...(isAdmin ? [
+      { href: "/admin/components", label: "Komponen PC (Admin)", desc: "Scraper & harga", icon: "🧩" },
+      { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", desc: "Quote & invoice", icon: "📋" },
+      { href: "/admin/users", label: "Pengguna & Role (Admin)", desc: "Role, ban, audit", icon: "👥" },
+    ] : []),
+  ];
+
   return (
     <div className="p-6 max-w-7xl mx-auto w-full">
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className={`grid gap-4 mb-6 ${isAdmin ? "grid-cols-2 md:grid-cols-4" : "grid-cols-1 sm:grid-cols-3"}`}>
         <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
-          <p className="text-xs text-tertiary font-medium">Revenue</p>
+          <p className="text-xs text-tertiary font-medium">Revenue Toko</p>
           <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{formatIDR(revenue)}</p>
           <p className="text-[11px] text-tertiary mt-1">dari {orders.length} pesanan</p>
         </div>
         <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
           <p className="text-xs text-tertiary font-medium">Pesanan Aktif</p>
           <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{activeOrders}</p>
-          <Link href="/admin/orders" className="text-[11px] text-accent hover:underline">Kelola →</Link>
+          <Link href="/admin/orders" className="text-[11px] text-accent hover:underline">Kelola pesanan →</Link>
         </div>
-        <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
-          <p className="text-xs text-tertiary font-medium">Quote Pending</p>
-          <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{pendingQuotes}</p>
-          <Link href="/admin/quotes" className="text-[11px] text-accent hover:underline">Review →</Link>
-        </div>
+        {isAdmin && (
+          <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
+            <p className="text-xs text-tertiary font-medium">Quote Rakit Pending</p>
+            <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{pendingQuotes}</p>
+            <Link href="/admin/quotes" className="text-[11px] text-accent hover:underline">Review quote →</Link>
+          </div>
+        )}
         <div className="bg-surface rounded-2xl border border-slate-300 p-4 shadow-sm">
           <p className="text-xs text-tertiary font-medium">Laporan Forum</p>
           <p className="text-xl md:text-2xl font-extrabold text-foreground mt-1">{openReports}</p>
@@ -129,7 +137,7 @@ export default async function AdminDashboardPage() {
 
       {/* Feed Aktivitas Terbaru */}
       <div className="bg-surface rounded-2xl border border-slate-300 p-5 shadow-sm mb-6">
-        <h2 className="font-bold text-foreground mb-4">Aktivitas Terbaru</h2>
+        <h2 className="font-bold text-foreground mb-4">Aktivitas Toko &amp; Forum</h2>
         {orders.length === 0 && threads.length === 0 ? (
           <p className="text-sm text-tertiary">Belum ada aktivitas.</p>
         ) : (
@@ -157,9 +165,9 @@ export default async function AdminDashboardPage() {
         )}
       </div>
 
-      {/* Quick links */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {ADMIN_SECTIONS.map((s) => (
+      {/* Quick links menu */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        {modules.map((s) => (
           <Link key={s.href} href={s.href} className="bg-surface border border-slate-300 rounded-2xl p-4 hover:border-accent hover:shadow-md transition group">
             <div className="text-2xl mb-2">{s.icon}</div>
             <p className="font-semibold text-foreground text-sm group-hover:text-accent">{s.label}</p>

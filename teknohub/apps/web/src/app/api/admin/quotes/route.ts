@@ -19,7 +19,7 @@ async function checkAdmin(userId?: string) {
     .select("role")
     .eq("id", userId)
     .single();
-  return data?.role === "admin" || data?.role === "moderator";
+  return data?.role === "admin";
 }
 
 // GET /api/admin/quotes?status=requested

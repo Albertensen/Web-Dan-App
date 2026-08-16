@@ -3,21 +3,37 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import type { AdminRole } from "@/lib/admin-auth";
 
-const NAV = [
+interface NavItem {
+  href: string;
+  label: string;
+  icon: string;
+  adminOnly?: boolean;
+}
+
+const ALL_NAV: NavItem[] = [
   { href: "/admin", label: "Dashboard", icon: "▦" },
   { href: "/admin/orders", label: "Pesanan", icon: "📦" },
   { href: "/admin/products", label: "Produk", icon: "🏷️" },
-  { href: "/admin/components", label: "Komponen PC", icon: "🧩" },
-  { href: "/admin/quotes", label: "Penawaran Rakit", icon: "📋" },
   { href: "/admin/moderation", label: "Moderasi Forum", icon: "🛡️" },
   { href: "/admin/reviews", label: "Ulasan Produk", icon: "⭐" },
-  { href: "/admin/users", label: "Pengguna & Role", icon: "👥" },
+  // Khusus Admin (PC Builder & User Management)
+  { href: "/admin/components", label: "Komponen PC (Admin)", icon: "🧩", adminOnly: true },
+  { href: "/admin/quotes", label: "Penawaran Rakit (Admin)", icon: "📋", adminOnly: true },
+  { href: "/admin/users", label: "Pengguna & Role", icon: "👥", adminOnly: true },
 ];
 
-export default function AdminSidebar() {
+export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+
+  const nav = ALL_NAV.filter((item) => {
+    if (item.adminOnly) {
+      return userRole === "admin";
+    }
+    return true;
+  });
 
   return (
     <aside
@@ -32,14 +48,16 @@ export default function AdminSidebar() {
             <span>
               <span className="text-accent">Tekno</span>
               <span className="text-zone-blue">Zone</span>
-              <span className="text-[10px] block font-semibold text-tertiary">ADMIN</span>
+              <span className="text-[10px] block font-semibold text-tertiary">
+                {userRole === "admin" ? "PORTAL ADMIN" : "STAFF PORTAL"}
+              </span>
             </span>
           )}
         </Link>
       </div>
 
       <nav className="flex-1 py-3 overflow-y-auto">
-        {NAV.map((item) => {
+        {nav.map((item) => {
           const active = pathname === item.href;
           return (
             <Link
