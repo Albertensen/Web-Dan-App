@@ -400,7 +400,7 @@ Status: ⏳ Belum dimulai
 
 ### Fase 2: Core E-Commerce & Checkout Experience
 - [x] Implementasi Global Search Bar di header lengkap dengan live search & auto-complete kategori/produk (5359cdf)
-- [ ] Sistem Filter & Multi-Sorting di katalog produk (rentang harga, spesifikasi teknis socket/VRAM/DDR, garansi, dan sorting popularitas/harga)
+- [x] Sistem Filter & Multi-Sorting di katalog produk (kategori multi-pilih, rentang harga, sorting harga/terbaru; sisa: socket/VRAM/DDR & garansi) (c08b5e9)
 - [ ] Revamp kartu produk: penambahan tombol cepat "+ Keranjang" (Quick Add), Wishlist icon, badge diskon & harga coret, serta indikator stok
 - [ ] Modul review & ulasan terverifikasi (Verified Buyer) beserta upload foto bukti unboxing
 - [ ] Integrasi Payment Gateway (QRIS, VA Bank, E-Wallet) dan API ongkir logistik (RajaOngkir/Biteship) serta trust badges di footer
