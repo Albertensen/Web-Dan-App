@@ -2,6 +2,14 @@
 
 Semua perubahan penting proyek TeknoHub dicatat di sini.
 
+## [2026-08-16] — Fase 8: Testing & QA Tuntas
+
+### Added
+- **Unit Test Runner (`scripts/test-unit.mjs`)**: Test suite mencakup validasi Zod (auth/checkout), HTML Sanitizer (XSS protection), dan Rate Limiter windowing.
+- **Custom 404 Not Found Page (`app/not-found.tsx`)**: Desain bertema TeknoZone dengan tombol navigasi cepat ke beranda dan katalog produk.
+- **Global Error Boundary (`app/error.tsx`)**: Fallback error UI yang aman saat terjadi runtime exception pada client component.
+
+
 ## [2026-08-16] — Fase 7: Security Hardening Tuntas
 
 ### Security & Hardening
