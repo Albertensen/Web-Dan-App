@@ -8,8 +8,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, lastModified: new Date(), changeFrequency: "daily", priority: 1 },
-    { url: `${base}/products`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
+    { url: `${base}/shop/products`, lastModified: new Date(), changeFrequency: "daily", priority: 0.9 },
+    { url: `${base}/builder`, lastModified: new Date(), changeFrequency: "weekly", priority: 0.8 },
     { url: `${base}/forum`, lastModified: new Date(), changeFrequency: "daily", priority: 0.8 },
+    { url: `${base}/terms`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
+    { url: `${base}/privacy`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.3 },
   ];
 
   const { data: products } = await supabase
@@ -18,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .eq("is_active", true);
 
   const productRoutes: MetadataRoute.Sitemap = (products ?? []).map((p) => ({
-    url: `${base}/products/${p.slug}`,
+    url: `${base}/shop/products/${p.slug}`,
     lastModified: p.updated_at ? new Date(p.updated_at) : new Date(),
     changeFrequency: "weekly",
     priority: 0.7,

@@ -104,14 +104,14 @@ Status: 🟡 Dalam Penyempurnaan (Katalog, Media, Search & Payment)
 - [x] Admin panel: CRUD produk (admin/products + API admin)
 - [x] Upload gambar ke Supabase Storage (bucket `product-images`)
 - [ ] **Fix Data Media Produk**: Isi URL gambar asli beresolusi tinggi di database (`image_url`) agar kartu produk & PDP tidak lagi menampilkan icon placeholder SVG
-- [ ] **Fix Search Backend**: Perbaiki `/api/products?search=` agar melakukan pencarian case-insensitive pada kolom `name`, `brand`, `category`, dan `description` (agar keyword seperti "ASUS" atau "Laptop" memunculkan produk yang relevan)
+- [x] **Fix Search Backend**: Perbaiki `/api/products?search=` agar melakukan pencarian case-insensitive pada kolom `name`, `brand`, `category`, dan `description` (agar keyword seperti "ASUS" atau "Laptop" memunculkan produk yang relevan)
 - [ ] **Filter Lanjutan**: Tambahkan filter Rentang Harga (Min-Max slider), Filter Brand (ASUS, Lenovo, Acer, Apple, Samsung, dll.), dan Filter Status Stok
 - [ ] **Sorting Produk**: Opsi pengurutan (Harga Terendah, Harga Tertinggi, Rating Tertinggi, Terpopuler, Produk Terbaru)
 
 ### 3.2. Product Detail Page (PDP) Upgrade
 - [x] Tampilan spesifikasi teknis produk & badge garansi
 - [x] Breadcrumb navigasi & rekomendasi produk terkait
-- [ ] **Quantity Selector**: Tambahkan kontrol `[ - ] [ 1 ] [ + ]` di PDP sebelum tombol Tambah ke Keranjang
+- [x] **Quantity Selector**: Tambahkan kontrol `[ - ] [ 1 ] [ + ]` di PDP sebelum tombol Tambah ke Keranjang
 - [ ] **Varian Produk**: Selector varian RAM/Storage/Warna untuk Laptop dan Smartphone
 - [ ] **Kalkulator Estimasi Ongkir Instan**: Widget input kecamatan/kota pembeli untuk cek biaya kirim JNE/SiCepat langsung di PDP
 - [ ] **Tab Diskusi Terkait**: Link otomatis ke thread forum yang membahas produk terkait
@@ -177,8 +177,8 @@ Status: 🟡 Core AI & Picker Live, Upgrade Kalkulator & Simulasi
 Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 
 ### 6.1. Critical SEO Fixes
-- [ ] **Fix Sitemap URL Mismatch**: Perbaiki `app/sitemap.ts` agar URL produk mengarah ke `/shop/products/[slug]` (bukan `/products/[slug]` yang menghasilkan 404)
-- [ ] **Buat app/robots.ts**: Generate file `robots.txt` dinamis yang mengizinkan perayapan dan menunjuk ke sitemap resmi
+- [x] **Fix Sitemap URL Mismatch**: Perbaiki `app/sitemap.ts` agar URL produk mengarah ke `/shop/products/[slug]` (bukan `/products/[slug]` yang menghasilkan 404)
+- [x] **Buat app/robots.ts**: Generate file `robots.txt` dinamis yang mengizinkan perayapan dan menunjuk ke sitemap resmi
 - [ ] **JSON-LD Schema Structured Data**:
   - `schema.org/Product` pada semua halaman PDP
   - `schema.org/DiscussionForumPosting` pada halaman forum

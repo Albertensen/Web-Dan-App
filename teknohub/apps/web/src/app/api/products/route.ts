@@ -28,7 +28,9 @@ export async function GET(request: NextRequest) {
     const cats = category === "komponen" ? COMPONENT_CHILDREN : [category];
     query = query.in("category", cats);
   }
-  if (search) query = query.ilike("name", `%${search}%`);
+  if (search) {
+    query = query.or(`name.ilike.%${search}%,brand.ilike.%${search}%,category.ilike.%${search}%,description.ilike.%${search}%`);
+  }
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
 
