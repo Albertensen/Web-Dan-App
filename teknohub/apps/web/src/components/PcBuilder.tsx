@@ -5,9 +5,10 @@ import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
 import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
-import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check, Link2, FileText } from "lucide-react";
+import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check, Link2, FileText, Printer } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
+import { parsePsuWatt, checkClearances } from "@/lib/builderEstimator";
 
 interface BuildPart {
   id: string;
@@ -59,6 +60,10 @@ function formatIDR(n: number) {
   return new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 }
 
+function priceOf(result: RecommendResult | null, type: string): number {
+  return result?.parts.find((rp) => rp.type === type)?.price ?? 0;
+}
+
 export default function PcBuilder() {
   const [useCase, setUseCase] = useState("gaming");
   const [budget, setBudget] = useState(15000000);
@@ -73,6 +78,8 @@ export default function PcBuilder() {
   const [buyToast, setBuyToast] = useState(false);
   const [shareToast, setShareToast] = useState(false);
   const [exportToast, setExportToast] = useState(false);
+  const [addonRakit, setAddonRakit] = useState(true);
+  const [bomOpen, setBomOpen] = useState(false);
 
   const toast = (fn: (v: boolean) => void) => {
     fn(true);
@@ -113,17 +120,19 @@ export default function PcBuilder() {
     toast(setExportToast);
   };
 
+  const RAKIT_FEE = 150000;
   const buyAll = () => {
-    const priceOf = (type: string) => result?.parts.find((rp) => rp.type === type)?.price ?? 0;
     const list = partsFromStore.filter((pp) => pp && pp.id);
     if (list.length === 0) return;
-    list.forEach((pp) => addItem({ id: pp.id, name: pp.name, price: priceOf(pp.type), image_url: null, slug: pp.name, stock: 99 }));
+    list.forEach((pp) => addItem({ id: pp.id, name: pp.name, price: priceOf(result, pp.type), image_url: null, slug: pp.name, stock: 99 }));
+    if (addonRakit) {
+      addItem({ id: "ai-jasa-rakit", name: "Jasa Rakit & Cable Management", price: RAKIT_FEE, image_url: null, slug: "jasa-rakit-cable-management", stock: 999 });
+    }
     setBuyToast(true);
     setTimeout(() => router.push("/shop/cart"), 700);
   };
 
   const hasAnyComponent = Object.values(selectedComponents).some(Boolean);
-
   // Estimasi daya per tipe komponen (approksimasi umum)
   const TYPE_WATT: Record<string, number> = { cpu: 105, gpu: 250, ram: 15, storage: 8, motherboard: 60, psu: 0, casing: 0, cooler: 10 };
   const estWattage = COMP_TYPE_LABELS.reduce((acc, [key]) => (selectedComponents[key] ? acc + (TYPE_WATT[key] ?? 0) : acc), 0);
@@ -135,6 +144,17 @@ export default function PcBuilder() {
     if (estWattage < 650) return { pct, bar: "bg-amber-500", dot: "text-amber-400", label: "Perhatian", psu };
     return { pct, bar: "bg-red-500", dot: "text-red-400", label: "Butuh PSU besar", psu };
   })();
+  const psuWatt = selectedComponents.psu ? parsePsuWatt(selectedComponents.psu) : null;
+  const psuWarn = psuWatt ? parseInt(String(psuWatt)) < estWattage * 1.2 : false;
+  const clearance = checkClearances(
+    selectedComponents.motherboard,
+    selectedComponents.gpu,
+    selectedComponents.cooler,
+    selectedComponents.casing
+  );
+  const calcGrand = totalEstimasi + (addonRakit ? RAKIT_FEE : 0);
+
+
 
   // parts utk SaveBuildButton dari store
   const partsFromStore = COMP_TYPE_LABELS
@@ -383,31 +403,58 @@ export default function PcBuilder() {
               <span className="font-semibold text-white">Total Estimasi</span>
               <span className="font-bold text-cyan-300">{formatIDR(totalEstimasi)}</span>
             </div>
-            {/* Wattage estimator */}
-            <div className="mt-3">
+            {/* Wattage estimator + PSU warning */}
+            <div className="mt-3 rounded-xl border border-slate-800 bg-slate-900/50 p-3">
               <div className="flex items-center justify-between text-xs mb-1">
-                <span className="text-slate-400">Estimasi Konsumsi Daya</span>
+                <span className="text-slate-400">⚡ Estimasi Konsumsi Daya (TDP)</span>
                 <span className="font-bold text-white">{estWattage}W</span>
               </div>
               <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all ${wattStatus.bar}`}
-                  style={{ width: `${wattStatus.pct}%` }}
-                />
+                <div className={`h-full rounded-full transition-all ${wattStatus.bar}`} style={{ width: `${wattStatus.pct}%` }} />
               </div>
               <div className="flex items-center gap-1.5 mt-1 text-[11px]">
-                <span className={wattStatus.dot} /> {wattStatus.label} (PSU rekomendasi {wattStatus.psu}W)
+                <span className={wattStatus.dot} /> {wattStatus.label} · Disarankan PSU: Minimal {wattStatus.psu}W 80+
               </div>
+              {psuWarn && (
+                <div className="mt-2 flex items-start gap-1.5 text-[11px] font-semibold text-orange-400">
+                  <AlertTriangle size={12} className="mt-0.5 shrink-0" />
+                  <span>Kapasitas PSU Kurang — total TDP + 20% headroom melebihi PSU terpilih ({psuWatt}W). Naikkan PSU ke ≥{wattStatus.psu}W.</span>
+                </div>
+              )}
             </div>
+
+            {/* Physical clearance & form factor */}
+            {clearance && (
+              <div className="mt-2 space-y-1 text-[11px]">
+                {clearance.formFactor && (
+                  <p className={clearance.formFactor.ok ? "text-emerald-400" : "text-orange-400"}>{clearance.formFactor.msg}</p>
+                )}
+                {clearance.gpuLength && (
+                  <p className={clearance.gpuLength.ok ? "text-emerald-400" : "text-orange-400"}>{clearance.gpuLength.msg}</p>
+                )}
+                {clearance.coolerHeight && (
+                  <p className={clearance.coolerHeight.ok ? "text-emerald-400" : "text-orange-400"}>{clearance.coolerHeight.msg}</p>
+                )}
+                {clearance.all && partsFromStore.length > 0 && (
+                  <p className="text-emerald-400">✅ Dimensi Fisik Pas & form factor kompatibel.</p>
+                )}
+              </div>
+            )}
             <div className="mt-4 flex gap-2 flex-wrap">
               <SaveBuildButton parts={partsFromStore} buildType={useCase} />
               <RequestQuoteModal buildTitle="Build Rekomendasi AI" />
+            </div>
+            <div className="mt-3 space-y-3">
+              <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                <input type="checkbox" checked={addonRakit} onChange={(e) => setAddonRakit(e.target.checked)} className="accent-emerald-500" />
+                Tambahkan Jasa Rakit &amp; Cable Management (+{formatIDR(RAKIT_FEE)})
+              </label>
               <button
                 onClick={buyAll}
                 disabled={partsFromStore.length === 0}
-                className="flex-1 min-w-[150px] flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition disabled:opacity-50"
               >
-                <ShoppingCart size={14} /> Beli Semua Komponen
+                <ShoppingCart size={16} /> Beli Semua Komponen ({partsFromStore.length} Item) — {formatIDR(calcGrand)}
               </button>
             </div>
             {buyToast && (
@@ -440,10 +487,63 @@ export default function PcBuilder() {
               >
                 <FileText size={14} /> Export Ringkasan
               </button>
+              <button
+                onClick={() => setBomOpen(true)}
+                disabled={!hasAnyComponent}
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+              >
+                <Printer size={14} /> Cetak / BOM
+              </button>
             </div>
           </>
         )}
       </div>
+
+      {/* BOM / Cetak modal */}
+      {bomOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-start justify-center p-4 overflow-y-auto" onClick={() => setBomOpen(false)}>
+          <div className="w-full max-w-2xl bg-white text-slate-900 rounded-2xl p-6 my-8 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-bold text-lg text-slate-900">Bill of Materials — Estimasi Rakitan</h3>
+              <button onClick={() => setBomOpen(false)} className="text-slate-500 hover:text-slate-800 font-bold">✕</button>
+            </div>
+            <table className="w-full text-sm border border-slate-300">
+              <thead>
+                <tr className="bg-slate-100 text-left">
+                  <th className="p-2 border border-slate-300">Komponen</th>
+                  <th className="p-2 border border-slate-300">Produk</th>
+                  <th className="p-2 border border-slate-300 text-right">Harga</th>
+                </tr>
+              </thead>
+              <tbody>
+                {partsFromStore.map((pp) => (
+                  <tr key={pp.type} className="border-t border-slate-200">
+                    <td className="p-2 border border-slate-300 font-medium">{TYPE_LABEL[pp.type] ?? pp.type}</td>
+                    <td className="p-2 border border-slate-300">{pp.name}</td>
+                    <td className="p-2 border border-slate-300 text-right">{formatIDR(priceOf(result, pp.type))}</td>
+                  </tr>
+                ))}
+                <tr className="border-t-2 border-slate-400 font-bold">
+                  <td className="p-2" colSpan={2}>Total Estimasi</td>
+                  <td className="p-2 text-right">{formatIDR(totalEstimasi)}</td>
+                </tr>
+                <tr className="border-t border-slate-200">
+                  <td className="p-2" colSpan={2}>Estimasi Konsumsi Daya</td>
+                  <td className="p-2 text-right">{estWattage}W</td>
+                </tr>
+                <tr className="border-t border-slate-200">
+                  <td className="p-2" colSpan={2}>Budget Target</td>
+                  <td className="p-2 text-right">{formatIDR(budget)}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="mt-4 flex gap-2 justify-end">
+              <button onClick={() => setBomOpen(false)} className="px-4 py-2 rounded-xl border border-slate-300 text-sm font-semibold">Tutup</button>
+              <button onClick={() => window.print()} className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold">Cetak / PDF</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

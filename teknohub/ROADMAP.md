@@ -165,10 +165,10 @@ Status: 🟡 Core AI & Picker Live, Upgrade Kalkulator & Simulasi
 - [x] Compatibility checker (Socket CPU ↔ Motherboard, RAM DDR4/DDR5 ↔ Mobo)
 - [x] Build comparison view (/builder/compare)
 - [x] Saved builds per user (/builder/saved)
-- [ ] **Kalkulator Konsumsi Daya (Wattage Estimator)**: Kalkulasi otomatis total estimasi TDP komponen (CPU + GPU + Storage + Fans) dan rekomendasi kapasitas minimal PSU
-- [ ] **Physical Clearance Checker**: Peringatan kompatibilitas dimensi fisik (Panjang GPU vs Max Case Length, Tinggi CPU Cooler vs Max Case Height, Ukuran Radiator AIO)
-- [ ] **One-Click "Beli Semua Komponen"**: Tombol instan memasukkan seluruh part rakitan yang kompatibel ke `/shop/cart` + opsi jasa rakit teknisi
-- [ ] **Export BOM (Bill of Materials)**: Fitur cetak/unduh faktur PDF estimasi anggaran rakitan atau share URL publik ke forum
+- [x] **Kalkulator Konsumsi Daya (Wattage Estimator)**: Kalkulasi otomatis total estimasi TDP komponen (CPU + GPU + Storage + Fans) dan rekomendasi kapasitas minimal PSU
+- [x] **Physical Clearance Checker**: Peringatan kompatibilitas dimensi fisik (Panjang GPU vs Max Case Length, Tinggi CPU Cooler vs Max Case Height, Ukuran Radiator AIO)
+- [x] **One-Click "Beli Semua Komponen"**: Tombol instan memasukkan seluruh part rakitan yang kompatibel ke `/shop/cart` + opsi jasa rakit teknisi
+- [x] **Export BOM (Bill of Materials)**: Fitur cetak/unduh faktur PDF estimasi anggaran rakitan atau share URL publik ke forum
 - [ ] **Visualisasi Rakitan (Modular Canvas / Three.js)**: Preview visual interaktif penempatan komponen di dalam casing
 
 ---
