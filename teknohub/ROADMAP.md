@@ -196,113 +196,37 @@ Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 
 ---
 
-## FASE 7 — Mobile App (Expo React Native) 📱
-Status: ⚪ Tahap Berikutnya
+## FASE 7 — UI/UX Polish Marketplace Tier-1 (Tokopedia, Shopee & Newegg Standard)
+Status: ⏳ Siap Dikerjakan
 
-- [ ] Setup Expo React Native di direktori `packages/mobile` / `apps/mobile`
-- [ ] Sinkronisasi auth token & Supabase client antara Web dan Mobile
-- [ ] Halaman Katalog Produk & Keranjang Belanja Mobile
-- [ ] Halaman AI PC Builder Mobile Wizard
-- [ ] Forum Diskusi & Thread Viewer Mobile
-- [ ] Integrasi Expo Push Notifications (Notifikasi Status Pesanan & Balasan Forum)
+### 1. Header & Top Announcement Bar
+- [ ] Top Announcement Ticker Bar di atas navbar (Promo Kupon `TEKNOHUB10`, Info Bebas Ongkir se-Indonesia, dan Link Lacak Pesanan / Bantuan Cepat)
+- [ ] Enhanced Navbar Search: Autocomplete dropdown dengan pencarian populer, riwayat pencarian, dan tag kategori terkait
 
+### 2. Homepage High-Converting Sections
+- [ ] Section Flash Sale / Promo Terbatas dengan Realtime Countdown Timer (Jam : Menit : Detik) dan Progress Bar Stok Terjual (misal: "🔥 Terjual 85% — Sisa 3 unit!")
+- [ ] Carousel Brand Partners Resmi (Official Authorized Store: ASUS ROG, NVIDIA, Intel, AMD, Lenovo Legion, MSI, Corsair, Kingston, Samsung, Acer Predator)
+- [ ] Tab Filter Rekomendasi Produk di Homepage ("🔥 Paling Laris", "⚡ Diskon Spesial", "⭐ Rating Tertinggi", "🆕 Baru Rilis")
 
-## FASE 8 — Back-Office Management & Operations
-Status: ✅ Tuntas (100%)
+### 3. Product Card Enhancement (Marketplace Standard)
+- [ ] Badge Lokasi Pengiriman Toko (misal: "📍 Jakarta Pusat") di setiap kartu produk
+- [ ] Social Proof Transaksi: Tampilan rating bintang + total terjual (misal: "⭐ 4.9 | Terjual 150+ unit")
+- [ ] Badge "⚡ Bebas Ongkir" (hijau) dan "🛡️ Official Store" (ungu/emas) pada kartu produk
+- [ ] Hover Quick Action "+ Keranjang Cepat" langsung dari kartu katalog tanpa harus membuka PDP
 
-### Admin Shell & Layout
-- [x] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
-- [x] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
-- [x] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
-- [x] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
-- [x] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
-- [x] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
-- [x] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
-- [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
+### 4. Product Detail Page (PDP) Sticky Buying Box & Seller Profile
+- [ ] Desktop Sticky Buying Box di sisi kanan: Subtotal harga dinamis, pilihan varian ringkas, dan tombol CTA ganda (Tambah Keranjang & Beli Sekarang)
+- [ ] Seller / Store Profile Card: "TeknoHub Official Flagship Store" (Rating Toko 4.9/5.0, 100% Pesanan Sukses, Respon Chat < 5 Menit)
+- [ ] Estimasi Pengiriman & Simulator Paylater / Cicilan ringkas di PDP
 
----
-## FASE 9 — Security Hardening
-Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update deps, rotate key)
-
-### HTTP Security Headers
-- [x] next.config.mjs: Content-Security-Policy (CSP)
-- [x] X-Frame-Options: DENY
-- [x] X-Content-Type-Options: nosniff
-- [x] Referrer-Policy: strict-origin-when-cross-origin
-- [x] Permissions-Policy: camera=(), microphone=(), geolocation=()
-- [x] Strict-Transport-Security (HSTS: max-age=63072000; includeSubDomains; preload)
-
-### API Route Security & RBAC
-- [x] Rate limiting semua API routes (custom middleware)
-- [x] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
-- [x] Auth check wajib di semua route yang butuh login (tidak ada route admin/staf tanpa cek role di database profiles)
-- [x] Audit semua route sensitif: RBAC terpisah antara super admin, staf toko/marketplace, dan member
-
-### Input Validation & Sanitization
-- [x] Semua input user divalidasi dengan Zod sebelum masuk DB (auth, checkout, review, quote, forum)
-- [x] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify / sanitize-html)
-- [x] File upload: validasi MIME type whitelist (image/*) di server
-- [x] Cegah path traversal di file upload ke Supabase Storage (whitelist ekstensi, larang "../" dan "%2e%2e")
-
-### Supabase RLS & Role Isolation
-- [x] RLS aktif di seluruh 14 tabel database
-- [x] Service role key hanya diakses di server-side environment
-- [x] Proteksi akun admin: pencegahan self-ban dan penurunan role mandiri
-
-### Autentikasi & Session
-- [x] NEXTAUTH_SECRET 64-karakter acak terverifikasi
-- [x] Session cookie: httpOnly, secure di produksi, sameSite="lax"
-- [x] Brute force protection di CredentialsProvider (rate limit 5x per menit)
-- [x] Password minimum 8 karakter terverifikasi dengan Zod schema
-
-### Audit Secrets & Lingkungan
-- [x] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit — verif 2026-08-16 (root + apps/web, .env & run_00*.py excluded)
-- [x] Vercel env: semua secret di production env (tidak ada yang hardcode) — verif 2026-08-16
-- [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
-- [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
-
-### Dependency Security
-- [ ] npm audit — fix semua critical + high vulnerability (blm jalan, butuh key registri)
-- [ ] Update dependencies ke versi aman terbaru
-- [x] Hapus package yang tidak terpakai dari package.json (03/2026)
+### 5. Trust & Payment Logistics Footer
+- [ ] Visual Logo Mitra Pembayaran Resmi (BCA, Mandiri, BNI, BRI, QRIS, GoPay, OVO, ShopeePay, Visa, Mastercard)
+- [ ] Visual Logo Mitra Ekspedisi & Logistik (JNE Express, SiCepat, J&T, Anteraja, GoSend, GrabExpress)
+- [ ] Badge Keamanan Transaksi (SSL 256-bit Encryption, 100% Garansi Uang Kembali, Jaminan Produk Original)
 
 ---
 
-## FASE 10 — Testing & QA
-Status: ✅ Tuntas (100%)
-
-### Unit & Security Test
-- [x] Unit test suite: runnable test runner (`scripts/test-unit.mjs`)
-- [x] Unit test: validasi Zod (login, register, checkout, review)
-- [x] Unit test: sanitizer HTML (strip script, onclick, javascript: protocol)
-- [x] Unit test: rate limiter in-memory (window reset, limit blocking)
-
-### Performance & Reliability
-- [x] Custom 404 Page (`app/not-found.tsx`) dengan tema TeknoZone
-- [x] Global Error Boundary (`app/error.tsx`) dengan fallback UI dan tombol Coba Lagi
-- [x] Responsive layout audit pada mobile viewport (390px) seluruh halaman
-
-### Launch Readiness
-- [x] SEO: dynamic meta description & OpenGraph tiap halaman
-- [x] Dynamic sitemap generator (`app/(main)/sitemap.ts`)
-- [x] TypeScript & Build Verification: 50/50 routes lolos kompilasi tanpa error
-
----
-
-## FASE 11 — Mobile App
-Status: ✅ Tuntas (Inisialisasi & Core App)
-
-- [x] Init Expo React Native di apps/mobile (`package.json`, `app.json`, `tsconfig.json`)
-- [x] Shared types package (`packages/shared`) untuk sinkronisasi antarmuka web dan mobile
-- [x] Custom Bottom Tab Navigation (Home, Shop, Builder, Forum, Profile) dengan tema TeknoZone
-- [x] Screen Views: Katalog E-Commerce, Asisten PC Builder AI, Forum Komunitas, dan Profil Pengguna
-- [ ] Push notification (Expo Notifications) — Setup di fase rilis store
-- [ ] Deep linking web ↔ mobile — Setup di fase rilis store
-- [ ] Submit Google Play Store & Apple App Store
-
----
-
-## FASE 12 — Modernisasi Marketplace, Trust UI/UX & AI Builder
+## FASE 8 — Modernisasi Marketplace, Trust UI/UX & AI Builder
 Status: 🟢 Aktif (Batch 1 & 2 selesai)
 
 ### Fase 1: Trust, UI Cleanup & Design System
@@ -355,33 +279,102 @@ Status: 🟢 Aktif (Batch 1 & 2 selesai)
 - [x] Checkout: spinner + nonaktif tombol "Bayar Sekarang" selama proses (anti double-submit)
 - [x] Badge stok menipis "Sisa [x] unit!" (amber) di card & PDP saat stock <= 5
 
-## FASE 6E — UI/UX Polish Marketplace Tier-1 (Tokopedia, Shopee & Newegg Standard)
-Status: ⏳ Siap Dikerjakan
+## FASE 9 — Back-Office Management & Operations
+Status: ✅ Tuntas (100%)
 
-### 1. Header & Top Announcement Bar
-- [ ] Top Announcement Ticker Bar di atas navbar (Promo Kupon `TEKNOHUB10`, Info Bebas Ongkir se-Indonesia, dan Link Lacak Pesanan / Bantuan Cepat)
-- [ ] Enhanced Navbar Search: Autocomplete dropdown dengan pencarian populer, riwayat pencarian, dan tag kategori terkait
+### Admin Shell & Layout
+- [x] Admin Shell & Layout: Dedicated sidebar kolapsibel, Top Header status (DB/AI/Cron), dan Server-side RBAC Guard (role in ('admin', 'moderator'))
+- [x] Admin Dashboard Overview (/admin): KPI Cards (Revenue, Pesanan Aktif, Quote Pending, Laporan Forum), Grafik Tren Transaksi, Alert Stok Kritis, dan Feed Aktivitas Terbaru
+- [x] Manajemen Pesanan (/admin/orders): Tabel filter status pesanan, modal detail pengiriman & item, input nomor resi kurir, dan update status transaksi
+- [x] Penyempurnaan Manajemen Produk (/admin/products): Form Edit Produk, Soft Delete / status toggle (is_active), quick inline stock edit, dan upload gambar ke Supabase Storage
+- [x] Manajemen Komponen PC & Scraper (/admin/components): Database 34+ komponen, mapping URL Tokopedia/Shopee, riwayat harga, dan tombol manual trigger Vercel Cron scraper /api/cron/update-prices
+- [x] Penyempurnaan Penawaran Rakit PC (/admin/quotes): Editor penawaran interaktif, generator AI draft, PDF invoice, dan konversi quote ke order
+- [x] Moderasi Forum & Ulasan (/admin/moderation & /admin/reviews): Quick moderation report (hapus/kunci thread, tegur user), serta moderasi rating/review produk
+- [x] Manajemen Pengguna & Role (/admin/users): Directory user, ubah role (Member ↔ Moderator ↔ Admin), modal sanksi Ban/Suspend (is_banned, banned_until), dan audit aktivitas
 
-### 2. Homepage High-Converting Sections
-- [ ] Section Flash Sale / Promo Terbatas dengan Realtime Countdown Timer (Jam : Menit : Detik) dan Progress Bar Stok Terjual (misal: "🔥 Terjual 85% — Sisa 3 unit!")
-- [ ] Carousel Brand Partners Resmi (Official Authorized Store: ASUS ROG, NVIDIA, Intel, AMD, Lenovo Legion, MSI, Corsair, Kingston, Samsung, Acer Predator)
-- [ ] Tab Filter Rekomendasi Produk di Homepage ("🔥 Paling Laris", "⚡ Diskon Spesial", "⭐ Rating Tertinggi", "🆕 Baru Rilis")
+---
+## FASE 10 — Security Hardening
+Status: 🟡 Sebagian (headers/RBAC/validasi/RLS ✅; sisa: npm audit, update deps, rotate key)
 
-### 3. Product Card Enhancement (Marketplace Standard)
-- [ ] Badge Lokasi Pengiriman Toko (misal: "📍 Jakarta Pusat") di setiap kartu produk
-- [ ] Social Proof Transaksi: Tampilan rating bintang + total terjual (misal: "⭐ 4.9 | Terjual 150+ unit")
-- [ ] Badge "⚡ Bebas Ongkir" (hijau) dan "🛡️ Official Store" (ungu/emas) pada kartu produk
-- [ ] Hover Quick Action "+ Keranjang Cepat" langsung dari kartu katalog tanpa harus membuka PDP
+### HTTP Security Headers
+- [x] next.config.mjs: Content-Security-Policy (CSP)
+- [x] X-Frame-Options: DENY
+- [x] X-Content-Type-Options: nosniff
+- [x] Referrer-Policy: strict-origin-when-cross-origin
+- [x] Permissions-Policy: camera=(), microphone=(), geolocation=()
+- [x] Strict-Transport-Security (HSTS: max-age=63072000; includeSubDomains; preload)
 
-### 4. Product Detail Page (PDP) Sticky Buying Box & Seller Profile
-- [ ] Desktop Sticky Buying Box di sisi kanan: Subtotal harga dinamis, pilihan varian ringkas, dan tombol CTA ganda (Tambah Keranjang & Beli Sekarang)
-- [ ] Seller / Store Profile Card: "TeknoHub Official Flagship Store" (Rating Toko 4.9/5.0, 100% Pesanan Sukses, Respon Chat < 5 Menit)
-- [ ] Estimasi Pengiriman & Simulator Paylater / Cicilan ringkas di PDP
+### API Route Security & RBAC
+- [x] Rate limiting semua API routes (custom middleware)
+- [x] Rate limit ketat di: POST /api/auth, POST /api/forum/threads, POST /api/support/chat
+- [x] Auth check wajib di semua route yang butuh login (tidak ada route admin/staf tanpa cek role di database profiles)
+- [x] Audit semua route sensitif: RBAC terpisah antara super admin, staf toko/marketplace, dan member
 
-### 5. Trust & Payment Logistics Footer
-- [ ] Visual Logo Mitra Pembayaran Resmi (BCA, Mandiri, BNI, BRI, QRIS, GoPay, OVO, ShopeePay, Visa, Mastercard)
-- [ ] Visual Logo Mitra Ekspedisi & Logistik (JNE Express, SiCepat, J&T, Anteraja, GoSend, GrabExpress)
-- [ ] Badge Keamanan Transaksi (SSL 256-bit Encryption, 100% Garansi Uang Kembali, Jaminan Produk Original)
+### Input Validation & Sanitization
+- [x] Semua input user divalidasi dengan Zod sebelum masuk DB (auth, checkout, review, quote, forum)
+- [x] HTML sanitizer di TipTap output sebelum disimpan (DOMPurify / sanitize-html)
+- [x] File upload: validasi MIME type whitelist (image/*) di server
+- [x] Cegah path traversal di file upload ke Supabase Storage (whitelist ekstensi, larang "../" dan "%2e%2e")
+
+### Supabase RLS & Role Isolation
+- [x] RLS aktif di seluruh 14 tabel database
+- [x] Service role key hanya diakses di server-side environment
+- [x] Proteksi akun admin: pencegahan self-ban dan penurunan role mandiri
+
+### Autentikasi & Session
+- [x] NEXTAUTH_SECRET 64-karakter acak terverifikasi
+- [x] Session cookie: httpOnly, secure di produksi, sameSite="lax"
+- [x] Brute force protection di CredentialsProvider (rate limit 5x per menit)
+- [x] Password minimum 8 karakter terverifikasi dengan Zod schema
+
+### Audit Secrets & Lingkungan
+- [x] Audit .gitignore: semua .env, run_*.py, *.key tidak ter-commit — verif 2026-08-16 (root + apps/web, .env & run_00*.py excluded)
+- [x] Vercel env: semua secret di production env (tidak ada yang hardcode) — verif 2026-08-16
+- [x] NEXT_PUBLIC_ hanya untuk nilai yang aman di client
+- [ ] Rotate semua key yang pernah ter-commit (Supabase PAT, service role)
+
+### Dependency Security
+- [ ] npm audit — fix semua critical + high vulnerability (blm jalan, butuh key registri)
+- [ ] Update dependencies ke versi aman terbaru
+- [x] Hapus package yang tidak terpakai dari package.json (03/2026)
+
+---
+
+## FASE 11 — Testing & QA
+Status: ✅ Tuntas (100%)
+
+### Unit & Security Test
+- [x] Unit test suite: runnable test runner (`scripts/test-unit.mjs`)
+- [x] Unit test: validasi Zod (login, register, checkout, review)
+- [x] Unit test: sanitizer HTML (strip script, onclick, javascript: protocol)
+- [x] Unit test: rate limiter in-memory (window reset, limit blocking)
+
+### Performance & Reliability
+- [x] Custom 404 Page (`app/not-found.tsx`) dengan tema TeknoZone
+- [x] Global Error Boundary (`app/error.tsx`) dengan fallback UI dan tombol Coba Lagi
+- [x] Responsive layout audit pada mobile viewport (390px) seluruh halaman
+
+### Launch Readiness
+- [x] SEO: dynamic meta description & OpenGraph tiap halaman
+- [x] Dynamic sitemap generator (`app/(main)/sitemap.ts`)
+- [x] TypeScript & Build Verification: 50/50 routes lolos kompilasi tanpa error
+
+---
+
+## FASE 12 — Mobile App (Expo React Native) 📱
+Status: 🟡 Sebagian (Inisialisasi & Core App Selesai)
+
+- [x] Init Expo React Native di `apps/mobile` (`package.json`, `app.json`, `tsconfig.json`)
+- [x] Shared types package (`packages/shared`) untuk sinkronisasi antarmuka web dan mobile
+- [x] Custom Bottom Tab Navigation (Home, Shop, Builder, Forum, Profile) dengan tema TeknoZone
+- [x] Screen Views: Katalog E-Commerce, Asisten PC Builder AI, Forum Komunitas, dan Profil Pengguna
+- [ ] Sinkronisasi auth token & Supabase client antara Web dan Mobile
+- [ ] Halaman Katalog Produk & Keranjang Belanja Mobile
+- [ ] Halaman AI PC Builder Mobile Wizard
+- [ ] Forum Diskusi & Thread Viewer Mobile
+- [ ] Integrasi Expo Push Notifications (Notifikasi Status Pesanan & Balasan Forum)
+- [ ] Deep linking web ↔ mobile — Setup di fase rilis store
+- [ ] Submit Google Play Store & Apple App Store
 
 ---
 
@@ -395,6 +388,8 @@ Status: ⏳ Belum dimulai
 - [ ] Monitoring: Sentry + Vercel Analytics
 - [ ] Seed konten: 20 produk, 10 thread forum, 5 build showcase
 - [ ] Public launch
+
+---
 
 ---
 
