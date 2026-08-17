@@ -16,12 +16,13 @@ export function getBadgeForReputation(reputation: number): BadgeInfo {
 
 export function UserBadge({ reputation }: { reputation: number | null | undefined }) {
   const badge = getBadgeForReputation(reputation ?? 0);
+  const Icon = badge.icon;
   return (
     <span
       className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium border ${badge.color}`}
       title={`Reputasi: ${reputation ?? 0}`}
     >
-      <badge.icon size={14} /> {badge.label}
+      <Icon size={14} /> {badge.label}
     </span>
   );
 }
