@@ -92,7 +92,7 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
     tags?: string[];
   };
 
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions).catch(() => null);
   const currentUserId = session?.user?.id ?? undefined;
   const threadAuthorId = (data.author_id as string) ?? undefined;
 

@@ -22,7 +22,7 @@ function adminClient() {
 }
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions).catch(() => null);
   if (!session?.user?.id) redirect("/login?callbackUrl=/user/profile");
 
   const uid = session.user.id;
