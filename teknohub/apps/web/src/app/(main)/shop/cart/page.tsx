@@ -39,6 +39,21 @@ export default function CartPage() {
   const discount = coupon ? coupon.discount : 0;
   const grand = Math.max(0, subtotal + shipping - discount);
 
+
+  const quickApply = (c: string) => {
+    setCode(c);
+    setCouponErr("");
+    const key = c;
+    if (COUPONS[key]?.type === "percent") {
+      const dis = Math.round(subtotal * COUPONS[key].value / 100);
+      setCoupon({ label: `Diskon ${COUPONS[key].value}% (${key})`, discount: dis });
+    } else if (key === "GRATISONGKIR") {
+      setCoupon({ label: "Gratis Ongkir (GRATISONGKIR)", discount: shipping });
+    } else {
+      setCouponErr("Kode promo tidak valid");
+    }
+  };
+
   const applyCoupon = () => {
     setCouponErr("");
     const c = code.trim().toUpperCase();
@@ -114,6 +129,27 @@ export default function CartPage() {
         </div>
         {couponErr && <p className="text-xs text-red-600 mt-1">{couponErr}</p>}
         {coupon && <p className="text-xs text-emerald-600 mt-1 flex items-center gap-1"><Check size={12} /> {coupon.label}</p>}
+
+        {/* 1-Klik Rekomendasi Kupon */}
+        <div className="mt-3 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-500/30">
+          <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300 mb-2">🎟️ Kupon Tersedia: Klik untuk pasang</p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => quickApply("TEKNOHUB10")}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold border transition ${code === "TEKNOHUB10" && coupon ? "bg-emerald-600 text-white border-emerald-600" : "bg-surface border-amber-400 text-amber-800 dark:text-amber-300 hover:bg-amber-100"}`}
+            >
+              TEKNOHUB10 (Diskon 10%)
+            </button>
+            <button
+              type="button"
+              onClick={() => quickApply("GRATISONGKIR")}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold border transition ${code === "GRATISONGKIR" && coupon ? "bg-emerald-600 text-white border-emerald-600" : "bg-surface border-amber-400 text-amber-800 dark:text-amber-300 hover:bg-amber-100"}`}
+            >
+              GRATISONGKIR
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Ringkasan */}

@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { Copy, Check, Zap } from "lucide-react";
 
 interface OrderItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
+  is_digital?: boolean;
+  digital_code?: string | null;
 }
 
 interface Order {
@@ -45,6 +48,31 @@ const STATUS_COLOR: Record<string, string> = {
 const formatIDR = (n: number) =>
   new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
 
+function DigitalCodeRow({ code }: { code: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try { await navigator.clipboard.writeText(code); } catch {
+      const ta = document.createElement("textarea");
+      ta.value = code; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+  return (
+    <div className="flex items-center gap-2 mt-1">
+      <code className="flex-1 font-mono text-xs bg-white border border-cyan-300 rounded px-2 py-1 break-all select-all">{code}</code>
+      <button
+        type="button"
+        onClick={copy}
+        className={`shrink-0 px-2 py-1 rounded text-[10px] font-bold ${copied ? "bg-emerald-600 text-white" : "bg-cyan-600 text-white hover:bg-cyan-700"}`}
+      >
+        {copied ? <><Check size={11} className="inline mr-0.5" />Tersalin</> : <><Copy size={11} className="inline mr-0.5" />Salin</>}
+      </button>
+    </div>
+  );
+}
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,6 +98,11 @@ export default function AdminOrdersPage() {
     fetchOrders();
   }, [fetchOrders]);
 
+  function isDigitalOrder(o: Order): boolean {
+    return Boolean(o.shipping_address?.courier === "digital") ||
+      (o.order_items ?? []).some((i) => i.is_digital);
+  }
+
   function openDetail(order: Order) {
     setSelectedOrder(order);
     setStatusInput(order.status);
@@ -82,15 +115,18 @@ export default function AdminOrdersPage() {
     if (!selectedOrder) return;
     setSaving(true);
     try {
+      const payload: Record<string, unknown> = {
+        orderId: selectedOrder.id,
+        status: statusInput,
+      };
+      if (!isDigitalOrder(selectedOrder)) {
+        payload.trackingNumber = trackingInput;
+        payload.courier = courierInput;
+      }
       const res = await fetch("/api/admin/orders", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          orderId: selectedOrder.id,
-          status: statusInput,
-          trackingNumber: trackingInput,
-          courier: courierInput,
-        }),
+        body: JSON.stringify(payload),
       });
       if (res.ok) {
         setSelectedOrder(null);
@@ -106,7 +142,7 @@ export default function AdminOrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Manajemen Pesanan</h1>
-          <p className="text-xs text-tertiary">Kelola status transaksi, pengiriman &amp; nomor resi</p>
+          <p className="text-xs text-tertiary">Kelola status transaksi, pengiriman fisik &amp; lisensi digital</p>
         </div>
         {/* Status Filter */}
         <div className="flex items-center gap-1 overflow-x-auto pb-1 max-w-full">
@@ -145,56 +181,63 @@ export default function AdminOrdersPage() {
                   <th className="p-3">Item</th>
                   <th className="p-3 text-right">Total</th>
                   <th className="p-3">Status</th>
-                  <th className="p-3">Resi</th>
+                  <th className="p-3">Resi / Lisensi</th>
                   <th className="p-3 text-center">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
-                {orders.map((o) => (
-                  <tr key={o.id} className="hover:bg-slate-50 transition">
-                    <td className="p-3">
-                      <p className="font-mono text-xs font-semibold text-foreground">{o.id.slice(0, 8)}...</p>
-                      <p className="text-[11px] text-tertiary">
-                        {(o.created_at ?? "").slice(0, 10)}
-                      </p>
-                    </td>
-                    <td className="p-3">
-                      <p className="font-medium text-foreground">{o.shipping_address?.name || o.profiles?.username || "—"}</p>
-                      <p className="text-[11px] text-tertiary">{o.shipping_address?.phone || "—"}</p>
-                    </td>
-                    <td className="p-3 text-xs text-tertiary">
-                      {o.order_items?.map((item) => (
-                        <p key={item.id} className="truncate max-w-xs">
-                          {item.quantity}x {item.name}
-                        </p>
-                      ))}
-                    </td>
-                    <td className="p-3 text-right font-bold text-foreground">
-                      {formatIDR(Number(o.total_amount))}
-                    </td>
-                    <td className="p-3">
-                      <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${STATUS_COLOR[o.status] ?? "bg-slate-100"}`}>
-                        {o.status}
-                      </span>
-                    </td>
-                    <td className="p-3 font-mono text-xs text-tertiary">
-                      {o.shipping_address?.tracking_number ? (
-                        <span>{o.shipping_address.courier}: {o.shipping_address.tracking_number}</span>
-                      ) : (
-                        <span className="text-slate-400 italic">Belum ada</span>
-                      )}
-                    </td>
-                    <td className="p-3 text-center">
-                      <button
-                        type="button"
-                        onClick={() => openDetail(o)}
-                        className="px-3 py-1.5 rounded-lg bg-surface-2 border border-slate-300 hover:border-accent hover:text-accent text-xs font-semibold transition"
-                      >
-                        Detail / Edit
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {orders.map((o) => {
+                  const isDig = isDigitalOrder(o);
+                  return (
+                    <tr key={o.id} className="hover:bg-slate-50 transition">
+                      <td className="p-3">
+                        <p className="font-mono text-xs font-semibold text-foreground">{o.id.slice(0, 8)}...</p>
+                        <p className="text-[11px] text-tertiary">{(o.created_at ?? "").slice(0, 10)}</p>
+                      </td>
+                      <td className="p-3">
+                        <p className="font-medium text-foreground">{o.shipping_address?.name || o.profiles?.username || "—"}</p>
+                        <p className="text-[11px] text-tertiary">{o.shipping_address?.phone || "—"}</p>
+                      </td>
+                      <td className="p-3 text-xs text-tertiary">
+                        {o.order_items?.map((item) => (
+                          <p key={item.id} className="truncate max-w-xs">
+                            {item.quantity}x {item.name}
+                          </p>
+                        ))}
+                      </td>
+                      <td className="p-3 text-right font-bold text-foreground">{formatIDR(Number(o.total_amount))}</td>
+                      <td className="p-3">
+                        {isDig ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold border bg-cyan-100 text-cyan-800 border-cyan-300">
+                            <Zap size={11} /> Terkirim Otomatis (Digital)
+                          </span>
+                        ) : (
+                          <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${STATUS_COLOR[o.status] ?? "bg-slate-100"}`}>
+                            {o.status}
+                          </span>
+                        )}
+                      </td>
+                      <td className="p-3 font-mono text-xs text-tertiary">
+                        {isDig ? (
+                          <span className="text-cyan-700 font-semibold flex items-center gap-1"><Zap size={11} /> Lisensi Digital</span>
+                        ) : o.shipping_address?.tracking_number ? (
+                          <span>{o.shipping_address.courier}: {o.shipping_address.tracking_number}</span>
+                        ) : (
+                          <span className="text-slate-400 italic">Belum ada</span>
+                        )}
+                      </td>
+                      <td className="p-3 text-center">
+                        <button
+                          type="button"
+                          onClick={() => openDetail(o)}
+                          className="px-3 py-1.5 rounded-lg bg-surface-2 border border-slate-300 hover:border-accent hover:text-accent text-xs font-semibold transition"
+                        >
+                          Detail / Edit
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -221,9 +264,18 @@ export default function AdminOrdersPage() {
 
             {/* Info Alamat */}
             <div className="bg-surface-2 rounded-xl p-3 mb-4 text-xs space-y-1">
-              <p className="font-bold text-foreground">Alamat Pengiriman:</p>
-              <p className="text-tertiary">{selectedOrder.shipping_address?.name} ({selectedOrder.shipping_address?.phone})</p>
-              <p className="text-tertiary">{selectedOrder.shipping_address?.address}, {selectedOrder.shipping_address?.city} {selectedOrder.shipping_address?.postal_code}</p>
+              {isDigitalOrder(selectedOrder) ? (
+                <>
+                  <p className="font-bold text-foreground flex items-center gap-1"><Zap size={12} className="text-cyan-600" /> Pengiriman Digital Instan</p>
+                  <p className="text-tertiary">{selectedOrder.shipping_address?.name} ({selectedOrder.shipping_address?.phone})</p>
+                </>
+              ) : (
+                <>
+                  <p className="font-bold text-foreground">Alamat Pengiriman:</p>
+                  <p className="text-tertiary">{selectedOrder.shipping_address?.name} ({selectedOrder.shipping_address?.phone})</p>
+                  <p className="text-tertiary">{selectedOrder.shipping_address?.address}, {selectedOrder.shipping_address?.city} {selectedOrder.shipping_address?.postal_code}</p>
+                </>
+              )}
             </div>
 
             {/* Item List */}
@@ -231,9 +283,21 @@ export default function AdminOrdersPage() {
               <p className="text-xs font-bold text-foreground mb-2">Item ({selectedOrder.order_items?.length ?? 0}):</p>
               <ul className="space-y-1.5 text-xs">
                 {selectedOrder.order_items?.map((item) => (
-                  <li key={item.id} className="flex justify-between border-b border-slate-100 pb-1">
-                    <span>{item.quantity}x {item.name}</span>
-                    <span className="font-semibold">{formatIDR(Number(item.price) * item.quantity)}</span>
+                  <li key={item.id} className="border-b border-slate-100 pb-1.5">
+                    <div className="flex justify-between">
+                      <span>
+                        {item.quantity}x {item.name}
+                        {item.is_digital && (
+                          <span className="ml-1.5 inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-cyan-100 text-cyan-700 border border-cyan-300 text-[9px] font-bold">
+                            <Zap size={9} /> DIGITAL
+                          </span>
+                        )}
+                      </span>
+                      <span className="font-semibold">{formatIDR(Number(item.price) * item.quantity)}</span>
+                    </div>
+                    {item.is_digital && item.digital_code && (
+                      <DigitalCodeRow code={item.digital_code} />
+                    )}
                   </li>
                 ))}
               </ul>
@@ -254,35 +318,38 @@ export default function AdminOrdersPage() {
                 >
                   <option value="pending">Pending (Belum Bayar)</option>
                   <option value="paid">Paid (Sudah Bayar)</option>
-                  <option value="processing">Processing (Sedang Dikemas)</option>
+                  <option value="processing">Processing (Sedang Diproses)</option>
                   <option value="shipped">Shipped (Dalam Pengiriman)</option>
-                  <option value="delivered">Delivered (Selesai/Sampai)</option>
+                  <option value="delivered">Delivered (Selesai)</option>
                   <option value="cancelled">Cancelled (Dibatalkan)</option>
                 </select>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label className="block text-xs font-medium text-muted mb-1">Kurir</label>
-                  <input
-                    type="text"
-                    value={courierInput}
-                    onChange={(e) => setCourierInput(e.target.value)}
-                    placeholder="JNE / J&T"
-                    className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg"
-                  />
+              {/* Kurir & Resi fisik disembunyikan untuk pesanan digital */}
+              {!isDigitalOrder(selectedOrder) && (
+                <div className="grid grid-cols-3 gap-2">
+                  <div>
+                    <label className="block text-xs font-medium text-muted mb-1">Kurir</label>
+                    <input
+                      type="text"
+                      value={courierInput}
+                      onChange={(e) => setCourierInput(e.target.value)}
+                      placeholder="JNE / J&T"
+                      className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <label className="block text-xs font-medium text-muted mb-1">Nomor Resi</label>
+                    <input
+                      type="text"
+                      value={trackingInput}
+                      onChange={(e) => setTrackingInput(e.target.value)}
+                      placeholder="Contoh: JNE123456789"
+                      className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg"
+                    />
+                  </div>
                 </div>
-                <div className="col-span-2">
-                  <label className="block text-xs font-medium text-muted mb-1">Nomor Resi</label>
-                  <input
-                    type="text"
-                    value={trackingInput}
-                    onChange={(e) => setTrackingInput(e.target.value)}
-                    placeholder="Contoh: JNE123456789"
-                    className="w-full p-2 text-sm bg-surface border border-slate-300 rounded-lg"
-                  />
-                </div>
-              </div>
+              )}
 
               <div className="flex justify-end gap-2 pt-2">
                 <button

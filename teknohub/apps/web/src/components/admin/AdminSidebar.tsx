@@ -19,9 +19,9 @@ const ALL_NAV: NavItem[] = [
   { href: "/admin/orders", label: "Pesanan", icon: Package },
   { href: "/admin/products", label: "Katalog Produk", icon: Tag },
   { href: "/admin/reviews", label: "Ulasan Pembeli", icon: Star },
-  // Khusus Super Admin
+  // Khusus Super Admin / Official
   { href: "/admin/components", label: "Komponen PC", icon: Puzzle, adminOnly: true },
-  { href: "/admin/quotes", label: "Penawaran Rakit", icon: ClipboardList, adminOnly: true },
+  { href: "/admin/quotes", label: "🛠️ Pesanan Rakit PC", icon: ClipboardList, adminOnly: true },
   { href: "/admin/moderation", label: "Moderasi Forum", icon: ShieldCheck, adminOnly: true },
   { href: "/admin/users", label: "Pengguna & Role", icon: Users, adminOnly: true },
 ];
@@ -53,7 +53,7 @@ export default function AdminSidebar({ userRole }: { userRole?: AdminRole }) {
                 <span className="text-accent">Tekno</span>
                 <span className="text-zone-blue">Hub</span>
                 <span className="text-[10px] block font-semibold text-tertiary">
-                  {userRole === "admin" ? "SUPER ADMIN" : "PORTAL TOKO"}
+                  {userRole === "admin" ? "SUPER ADMIN" : "PORTAL SELLER"}
                 </span>
               </span>
             )}

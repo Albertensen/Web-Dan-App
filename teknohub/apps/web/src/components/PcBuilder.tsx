@@ -168,14 +168,30 @@ export default function PcBuilder() {
       price: 0,
     }));
 
-  const recommend = async () => {
+
+  // Preset Budget Tier: set use case, budget, lalu langsung rekomendasi
+  const presets = [
+    { label: "💰 Budget Hemat (Rp 8-10 Juta)", useCase: "budget", budget: 9000000 },
+    { label: "🎮 Gaming 1440p (Rp 15-18 Juta)", useCase: "gaming", budget: 17000000 },
+    { label: "🚀 AI & 4K Creator (Rp 25-30 Juta)", useCase: "content-creator", budget: 28000000 },
+  ];
+  const applyPreset = async (p: { useCase: string; budget: number }) => {
+    setUseCase(p.useCase);
+    setBudget(p.budget);
+    updateBudget(p.budget);
+    recommend(p.useCase, p.budget);
+  };
+
+  const recommend = async (overrideUc?: string, overrideBg?: number) => {
+    const activeUc = overrideUc ?? useCase;
+    const activeBg = overrideBg ?? budget;
     setLoading(true);
     setError("");
     try {
       const res = await fetch("/api/pc-builder/recommend?stream=1", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ useCase, budget }),
+        body: JSON.stringify({ useCase: activeUc, budget: activeBg }),
       });
       if (!res.ok || !res.body) {
         const data = await res.json().catch(() => ({}));
@@ -224,13 +240,13 @@ export default function PcBuilder() {
         rec.totalEstimasi = partsData.total;
         // Sync ke store — single source of truth
         applyRecommendation(rec);
-        updateBudget(budget);
+        updateBudget(activeBg);
         setResult({
-          useCase,
-          budget,
+          useCase: activeUc,
+          budget: activeBg,
           build: {},
           total: partsData.total,
-          within_budget: partsData.total <= budget,
+          within_budget: partsData.total <= activeBg,
           bottleneck: analysisData?.bottleneck ?? null,
           compatibility_issues: analysisData?.compatibility_issues ?? [],
           parts: partsData.parts,
@@ -249,6 +265,30 @@ export default function PcBuilder() {
       <PCBuilderCanvas />
       <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Rakit PC dengan AI</h2>
+
+        {/* Preset Budget Tier Instan */}
+        <div className="mb-6">
+          <p className="text-xs font-semibold text-muted mb-2 uppercase tracking-wider">Preset Cepat</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {presets.map((p) => (
+              <button
+                key={p.label}
+                type="button"
+                onClick={() => applyPreset(p)}
+                disabled={loading}
+                className={`p-3 rounded-xl border text-left transition ${
+                  budget === p.budget
+                    ? "border-accent bg-accent-dim text-accent"
+                    : "border-border bg-surface-2 hover:border-accent"
+                }`}
+              >
+                <div className="text-sm font-bold">{p.label}</div>
+                <div className="text-[11px] text-tertiary mt-0.5">{p.useCase === "budget" ? "Komponen gaming hemat" : p.useCase === "gaming" ? "Target performa tinggi" : "Komponen enthusiast"}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
 
         {/* Step 1: use case */}
         <label className="block text-sm font-medium mb-2 text-muted">Pilih kebutuhan</label>
@@ -285,7 +325,7 @@ export default function PcBuilder() {
         />
 
         <button
-          onClick={recommend}
+          onClick={() => recommend()}
           disabled={loading}
           className="w-full px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
         >

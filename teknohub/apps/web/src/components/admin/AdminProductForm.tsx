@@ -15,6 +15,9 @@ const CATEGORIES = [
   "case",
   "cooler",
   "aksesoris",
+  "software",
+  "game-voucher",
+  "course",
 ];
 
 const inputCls = "w-full p-3 border border-slate-300 rounded-lg bg-surface text-foreground focus:ring-accent/40 focus:border-accent transition duration-150";
@@ -31,6 +34,12 @@ export default function AdminProductForm() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  // Produk Digital
+  const [isDigital, setIsDigital] = useState(false);
+  const [licenseType, setLicenseType] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState("");
+  const [digitalInstructions, setDigitalInstructions] = useState("");
 
   const handleUpload = async (): Promise<string | null> => {
     if (!image) return null;
@@ -77,12 +86,17 @@ export default function AdminProductForm() {
         stock: Number(stock),
         description,
         image_url: imageUrl,
+        is_digital: isDigital,
+        license_type: isDigital ? (licenseType || null) : null,
+        download_url: isDigital ? (downloadUrl || null) : null,
+        digital_instructions: isDigital ? (digitalInstructions || null) : null,
       }),
     });
 
     if (res.ok) {
       setSuccess("Produk berhasil ditambahkan!");
       setName(""); setSlug(""); setBrand(""); setPrice(""); setStock("0"); setDescription(""); setImage(null);
+      setIsDigital(false); setLicenseType(""); setDownloadUrl(""); setDigitalInstructions("");
       window.location.reload();
     } else {
       const j = await res.json().catch(() => ({}));
@@ -94,15 +108,60 @@ export default function AdminProductForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-muted mb-1">Nama Produk</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} placeholder="RTX 5090 Gaming OC" />
+        <input value={name} onChange={(e) => setName(e.target.value)} required className={inputCls} placeholder="RTX 5090 Gaming OC / Windows 11 Pro Key" />
       </div>
       <div>
         <label className="block text-sm font-medium text-muted mb-1">Slug (kosongkan = auto)</label>
         <input value={slug} onChange={(e) => setSlug(e.target.value)} className={inputCls} placeholder="rtx-5090-gaming-oc" />
       </div>
+
+      {/* Produk Digital */}
+      <label className="flex items-center gap-2 text-sm font-semibold text-foreground cursor-pointer">
+        <input
+          type="checkbox"
+          checked={isDigital}
+          onChange={(e) => setIsDigital(e.target.checked)}
+          className="accent-accent w-4 h-4"
+        />
+        ⚡ Produk Digital (Software / Voucher / E-Book)
+      </label>
+
+      {isDigital && (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-muted mb-1">Tipe Lisensi</label>
+            <input
+              value={licenseType}
+              onChange={(e) => setLicenseType(e.target.value)}
+              className={inputCls}
+              placeholder="Contoh: Retail Key 1 PC / 1 Year Sub"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-muted mb-1">URL Download File (Opsional)</label>
+            <input
+              value={downloadUrl}
+              onChange={(e) => setDownloadUrl(e.target.value)}
+              className={inputCls}
+              placeholder="https://teknohub-web.vercel.app/downloads/..."
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-muted mb-1">Instruksi Aktivasi Digital</label>
+            <textarea
+              value={digitalInstructions}
+              onChange={(e) => setDigitalInstructions(e.target.value)}
+              rows={3}
+              className={inputCls}
+              placeholder="Langkah-langkah aktivasi kode untuk pembeli..."
+            />
+          </div>
+        </>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-muted mb-1">Kategori</label>
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">Kategori</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputCls}>
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -111,16 +170,16 @@ export default function AdminProductForm() {
         </div>
         <div>
           <label className="block text-sm font-medium text-muted mb-1">Brand</label>
-          <input value={brand} onChange={(e) => setBrand(e.target.value)} className={inputCls} placeholder="ASUS" />
+          <input value={brand} onChange={(e) => setBrand(e.target.value)} className={inputCls} placeholder="ASUS / Microsoft" />
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-muted mb-1">Harga (IDR)</label>
+        <div>
+          <label className="block text-sm font-medium text-muted mb-1">{isDigital ? "Harga (IDR)" : "Harga (IDR)"}</label>
           <input value={price} onChange={(e) => setPrice(e.target.value)} type="number" required className={inputCls} placeholder="15000000" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-muted mb-1">Stok</label>
+          <label className="block text-sm font-medium text-muted mb-1">{isDigital ? "Stok (Lisensi)" : "Stok"}</label>
           <input value={stock} onChange={(e) => setStock(e.target.value)} type="number" className={inputCls} />
         </div>
       </div>
