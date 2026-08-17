@@ -6,9 +6,9 @@ import { ShoppingBag, Bot, MessageSquare, Zap, Truck } from "lucide-react";
 
 const NAV_LINKS: { href: string; label: string; icon: React.ComponentType<{ size?: number | string; className?: string }> }[] = [
   { href: "/shop/products", label: "Semua Produk", icon: ShoppingBag },
+  { href: "/shop/products?type=digital", label: "Produk Digital", icon: Zap },
   { href: "/builder", label: "PC Builder AI", icon: Bot },
   { href: "/forum", label: "Forum Komunitas", icon: MessageSquare },
-  { href: "/#marketplace", label: "Promo & Kategori", icon: Zap },
 ];
 
 export default function SlideNav() {

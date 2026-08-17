@@ -22,7 +22,7 @@ interface FlashProduct {
 const FLASH_PRODUCTS: FlashProduct[] = [
   {
     id: "fs-1",
-    name: "ROG Strix G16 (2026) RTX 4070",
+    name: "ROG Strix G16 RTX 4070 Gaming",
     slug: "rog-strix-g16",
     price: 26999000,
     originalPrice: 31999000,
@@ -73,9 +73,7 @@ const FLASH_PRODUCTS: FlashProduct[] = [
 export default function FlashSaleSection() {
   const addItem = useCartStore((s) => s.add);
   const [addedId, setAddedId] = useState<string | null>(null);
-
-  // Realtime Countdown Timer (Hitung mundur s/d 23:59:59 malam ini)
-  const [timeLeft, setTimeLeft] = useState({ hours: 8, minutes: 42, seconds: 15 });
+  const [timeLeft, setTimeLeft] = useState({ hours: 7, minutes: 28, seconds: 40 });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -83,11 +81,9 @@ export default function FlashSaleSection() {
       const endOfDay = new Date();
       endOfDay.setHours(23, 59, 59, 999);
       const diff = Math.max(0, endOfDay.getTime() - now.getTime());
-
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / 1000 / 60) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
-
       setTimeLeft({ hours, minutes, seconds });
     }, 1000);
     return () => clearInterval(timer);
@@ -107,36 +103,33 @@ export default function FlashSaleSection() {
   const pad = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <section className="bg-gradient-to-br from-red-600 via-rose-700 to-amber-700 rounded-3xl p-6 sm:p-8 text-white shadow-2xl space-y-6">
-      {/* Header Flash Sale */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <section className="bg-slate-900/90 border border-amber-500/30 rounded-3xl p-6 sm:p-8 text-foreground shadow-[0_0_35px_rgba(245,158,11,0.12)] space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div className="flex items-center gap-3">
-          <span className="w-10 h-10 rounded-2xl bg-white text-red-600 flex items-center justify-center font-black shadow-lg">
-            <Zap size={22} className="fill-current" />
+          <span className="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-black shadow-inner">
+            <Zap size={20} className="fill-current" />
           </span>
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white flex items-center gap-2">
-              FLASH SALE <span className="text-yellow-300 font-extrabold text-sm uppercase px-2 py-0.5 bg-black/30 rounded-lg">Hari Ini</span>
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
+              FLASH SALE <span className="text-amber-400 font-bold text-xs uppercase px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">Hari Ini</span>
             </h2>
-            <p className="text-xs text-rose-100 mt-0.5">Diskon terbatas produk hardware pilihan bergaransi resmi.</p>
+            <p className="text-xs text-slate-400 mt-0.5">Penawaran diskon terbatas hardware resmi distributor.</p>
           </div>
         </div>
 
-        {/* Countdown Box */}
-        <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 self-start sm:self-auto">
-          <Timer size={16} className="text-yellow-300 animate-pulse" />
-          <span className="text-xs font-bold text-rose-200">Berakhir dalam:</span>
-          <div className="flex items-center gap-1 font-mono text-sm font-black">
-            <span className="bg-white text-black px-2 py-1 rounded-lg">{pad(timeLeft.hours)}</span>
+        <div className="flex items-center gap-2 bg-slate-950/80 border border-slate-800 px-3.5 py-1.5 rounded-2xl self-start sm:self-auto">
+          <Timer size={15} className="text-amber-400 animate-pulse" />
+          <span className="text-xs font-semibold text-slate-400">Berakhir:</span>
+          <div className="flex items-center gap-1 font-mono text-xs font-black text-amber-400">
+            <span className="bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-md text-white">{pad(timeLeft.hours)}</span>
             <span>:</span>
-            <span className="bg-white text-black px-2 py-1 rounded-lg">{pad(timeLeft.minutes)}</span>
+            <span className="bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-md text-white">{pad(timeLeft.minutes)}</span>
             <span>:</span>
-            <span className="bg-white text-black px-2 py-1 rounded-lg">{pad(timeLeft.seconds)}</span>
+            <span className="bg-slate-900 border border-slate-800 px-2 py-0.5 rounded-md text-white">{pad(timeLeft.seconds)}</span>
           </div>
         </div>
       </div>
 
-      {/* Grid Produk Flash Sale */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {FLASH_PRODUCTS.map((p) => {
           const isAdded = addedId === p.id;
@@ -144,14 +137,12 @@ export default function FlashSaleSection() {
             <Link
               key={p.id}
               href={`/shop/products/${p.slug}`}
-              className="group relative bg-surface text-foreground rounded-2xl p-3 sm:p-4 flex flex-col justify-between hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300"
+              className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between hover:border-amber-500/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Diskon Badge */}
-              <span className="absolute top-3 left-3 z-10 px-2 py-1 rounded-lg bg-red-600 text-white text-[11px] font-black shadow-md flex items-center gap-1">
-                <Flame size={12} className="fill-current" /> -{p.discountPercent}%
+              <span className="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-black shadow flex items-center gap-1">
+                <Flame size={11} className="fill-current" /> -{p.discountPercent}%
               </span>
 
-              {/* Foto Produk */}
               <div className="relative aspect-square rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-900 mb-3">
                 <ProductImage
                   src={p.image_url}
@@ -163,24 +154,22 @@ export default function FlashSaleSection() {
                 />
               </div>
 
-              {/* Info Produk */}
               <div>
-                <h3 className="text-xs sm:text-sm font-bold text-foreground line-clamp-2 mb-1.5 group-hover:text-accent transition">
+                <h3 className="text-xs sm:text-sm font-semibold text-foreground line-clamp-2 mb-1.5 group-hover:text-accent transition">
                   {p.name}
                 </h3>
                 <div className="flex items-baseline gap-1.5 flex-wrap">
-                  <span className="text-sm sm:text-base font-black text-red-600">{fmt(p.price)}</span>
+                  <span className="text-sm sm:text-base font-black text-amber-500">{fmt(p.price)}</span>
                   <span className="text-[10px] text-tertiary line-through">{fmt(p.originalPrice)}</span>
                 </div>
               </div>
 
-              {/* Progress Bar Stok Terjual */}
               <div className="mt-3 space-y-1.5">
-                <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-gradient-to-r from-amber-500 to-red-600 h-full rounded-full transition-all duration-1000" style={{ width: `${p.soldPercent}%` }} />
+                <div className="w-full bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div className="bg-gradient-to-r from-amber-500 to-red-500 h-full rounded-full transition-all duration-1000" style={{ width: `${p.soldPercent}%` }} />
                 </div>
                 <div className="flex justify-between items-center text-[10px] font-bold text-tertiary">
-                  <span className="text-red-600 flex items-center gap-0.5">🔥 Terjual {p.soldPercent}%</span>
+                  <span className="text-amber-500">Terjual {p.soldPercent}%</span>
                   <span>Sisa {p.stock} unit</span>
                 </div>
 
