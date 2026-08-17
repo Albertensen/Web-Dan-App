@@ -65,7 +65,17 @@ export async function POST(request: NextRequest) {
     return sum + product.price * item.quantity;
   }, 0);
 
-  // Insert order
+  const COURIER_LABEL: Record<string, string> = {
+    jne: "JNE Reguler",
+    jnt: "J&T Express",
+    sicepat: "SiCepat BEST",
+    grab: "GrabExpress",
+    gosend: "GoSend SameDay",
+  };
+  const shippingCourier = COURIER_LABEL[courier] ?? courier;
+  const trackingNumber = `TKNHUB-${Date.now().toString().slice(-8)}`;
+
+  // Insert order (sertakan kolom top-level shipping_courier & tracking_number)
   const { data: order, error: orderErr } = await supabase
     .from("orders")
     .insert({
@@ -82,6 +92,8 @@ export async function POST(request: NextRequest) {
         courier,
         notes: notes ?? "",
       },
+      shipping_courier: shippingCourier,
+      tracking_number: trackingNumber,
     })
     .select()
     .single();

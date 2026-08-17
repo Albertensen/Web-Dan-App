@@ -40,41 +40,35 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
 
     // 1) Coba view thread_details
     const q = await admin.from("thread_details").select("*").eq("id", id).maybeSingle();
-    if (q.error || !q.data) {
-      // Fallback: query langsung tabel threads + join manual
-      const direct = await getServiceClient()
+    if (q.data) {
+      thread = q.data;
+    } else {
+      // Fallback: query threads + relasi join (profiles, forum_categories)
+      const res = await admin
         .from("threads")
-        .select("id, title, content, category_id, author_id, is_pinned, is_locked, view_count, reply_count, last_reply_at, created_at, updated_at, tags")
+        .select("*, profiles(username, avatar_url, reputation), forum_categories(name, slug)")
         .eq("id", id)
         .maybeSingle();
-      if (direct.data) {
-        // resolve category + author
-        const cat = await getServiceClient().from("forum_categories").select("name, slug").eq("id", direct.data.category_id).maybeSingle();
-        const prof = await getServiceClient().from("profiles").select("username, avatar_url, reputation").eq("id", direct.data.author_id).maybeSingle();
+      if (res.data) {
         thread = {
-          ...direct.data,
-          category_name: cat.data?.name ?? category,
-          category_slug: cat.data?.slug ?? category,
-          author_username: prof.data?.username ?? "Anon",
-          author_reputation: prof.data?.reputation ?? 0,
-          content: direct.data.content,
+          ...res.data,
+          category_name: (res.data as Record<string, unknown>).forum_categories?.name ?? category,
+          category_slug: (res.data as Record<string, unknown>).forum_categories?.slug ?? category,
+          author_username: (res.data as Record<string, unknown>).profiles?.username ?? "Member",
+          author_reputation: (res.data as Record<string, unknown>).profiles?.reputation ?? 0,
         };
-      } else {
-        notFound();
       }
-    } else {
-      thread = q.data;
     }
 
-    // 2) Ambil balasan (replies/forum_replies)
-    const rr = await getServiceClient().from("replies").select("id, content, is_solution, created_at, author_id").eq("thread_id", id).order("created_at", { ascending: true });
+    // 2) Ambil balasan (selalu fallback [])
+    const rr = await admin.from("replies").select("id, content, is_solution, created_at, author_id").eq("thread_id", id).order("created_at", { ascending: true });
     if (!rr.error && rr.data) replies = rr.data;
-  } catch {
-    notFound();
+  } catch (e) {
+    console.error("Error fetching forum thread:", e);
   }
 
   if (!thread) {
-    notFound();
+    notFound(); // dipanggil di luar try/catch agar sinyal NEXT_NOT_FOUND tak rusak
   }
 
   const data = thread as {
