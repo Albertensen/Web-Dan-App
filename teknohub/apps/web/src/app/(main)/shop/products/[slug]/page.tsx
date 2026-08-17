@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import ProductImage from "@/components/ProductImage";
-import QuantityAddToCart from "@/components/QuantityAddToCart";
+import ProductPurchaseOptions from "@/components/ProductPurchaseOptions";
 import ProductReviews from "@/components/ProductReviews";
 import RelatedForumThreads from "@/components/forum/RelatedForumThreads";
 import ProductGallery from "@/components/ProductGallery";
@@ -156,7 +156,7 @@ export default async function ProductPage({ params }: ProductProps) {
             <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
           </div>
 <div className="pt-6">
-            <QuantityAddToCart
+            <ProductPurchaseOptions
               product={{
                 id: product.id,
                 name: product.name,
@@ -164,6 +164,7 @@ export default async function ProductPage({ params }: ProductProps) {
                 price: Number(product.price),
                 image_url: product.image_url,
                 stock: Number(product.stock),
+                brand: product.brand,
               }}
             />
           </div>

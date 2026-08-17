@@ -50,12 +50,15 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
         .eq("id", id)
         .maybeSingle();
       if (res.data) {
+        const raw = res.data as Record<string, unknown>;
+        const fc = (raw.forum_categories ?? {}) as Record<string, unknown>;
+        const prof = (raw.profiles ?? {}) as Record<string, unknown>;
         thread = {
-          ...res.data,
-          category_name: (res.data as Record<string, unknown>).forum_categories?.name ?? category,
-          category_slug: (res.data as Record<string, unknown>).forum_categories?.slug ?? category,
-          author_username: (res.data as Record<string, unknown>).profiles?.username ?? "Member",
-          author_reputation: (res.data as Record<string, unknown>).profiles?.reputation ?? 0,
+          ...raw,
+          category_name: (fc.name as string) ?? category,
+          category_slug: (fc.slug as string) ?? category,
+          author_username: (prof.username as string) ?? "Member",
+          author_reputation: (prof.reputation as number) ?? 0,
         };
       }
     }
