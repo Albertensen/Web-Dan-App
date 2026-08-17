@@ -18,28 +18,38 @@ const BRANDS = [
 
 export default function BrandPartners() {
   return (
-    <div className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
-      <div className="flex items-center gap-2 shrink-0">
-        <Award size={18} className="text-accent" />
-        <span className="text-xs sm:text-sm font-black text-foreground uppercase tracking-wider">
-          Official Brand Partners
-        </span>
-        <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-500/20">
-          <ShieldCheck size={11} /> 100% Original
+    <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
+        <div className="flex items-center gap-2.5">
+          <span className="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center font-bold">
+            <Award size={20} />
+          </span>
+          <div>
+            <h3 className="text-base sm:text-lg font-black text-foreground tracking-tight">
+              Official Authorized Brand Partners
+            </h3>
+            <p className="text-xs text-tertiary">Distributor resmi hardware &amp; software bergaransi Indonesia.</p>
+          </div>
+        </div>
+        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/20 px-3 py-1 rounded-full self-start sm:self-auto">
+          <ShieldCheck size={13} /> 100% Original Guaranteed
         </span>
       </div>
 
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto py-1">
+      {/* Grid 10 Brand Utuh Tanpa Terpotong */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
         {BRANDS.map((b) => (
           <Link
             key={b.name}
             href={`/shop/products?brands=${encodeURIComponent(b.query)}`}
-            className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-surface-2/60 text-xs font-bold text-muted hover:text-accent hover:border-accent whitespace-nowrap transition"
+            className="group p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-surface-2/40 hover:border-accent hover:bg-surface-2 hover:shadow-md transition text-center flex items-center justify-center cursor-pointer"
           >
-            {b.name}
+            <span className="text-xs sm:text-sm font-black text-foreground group-hover:text-accent transition">
+              {b.name}
+            </span>
           </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
