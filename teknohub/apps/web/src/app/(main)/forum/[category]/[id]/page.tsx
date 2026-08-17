@@ -2,25 +2,13 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
-import { supabase } from "@/lib/supabase/client";
 import { createClient } from "@supabase/supabase-js";
-
-// Server-side admin client utk baca thread & replies (hindari blokir RLS saat SSR)
-function getServiceClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key) return supabase;
-  return createClient(url, key, {
-    auth: { autoRefreshToken: false, persistSession: false },
-  });
-}
-
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
 import FollowButton from "@/components/forum/FollowButton";
 import ReportButton from "@/components/forum/ReportButton";
 import { UserBadge } from "@/components/forum/UserBadge";
-import { MessageSquare , Eye, Calendar } from "lucide-react";
+import { MessageSquare, Eye, Calendar, ArrowLeft } from "lucide-react";
 import ProductMention, { renderMentions } from "@/components/forum/ProductMention";
 
 export const dynamic = "force-dynamic";
@@ -29,144 +17,176 @@ interface ThreadDetailProps {
   params: { category: string; id: string };
 }
 
-const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
+  return createClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
+}
+
+const formatDate = (iso?: string) => {
+  if (!iso) return "-";
+  try {
+    return new Date(iso).toLocaleDateString("id-ID", { year: "numeric", month: "long", day: "numeric" });
+  } catch {
+    return "-";
+  }
+};
 
 export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
   const { category, id } = params;
+  const sb = getSupabase();
 
-  let thread: Record<string, unknown> | null = null;
-  let replies: Record<string, unknown>[] = [];
+  let threadData: Record<string, unknown> | null = null;
+  let repliesData: Record<string, unknown>[] = [];
 
   try {
-    const admin = getServiceClient();
+    // 1. Query langsung tabel threads dengan relasi join aman
+    const { data: t, error: tErr } = await sb
+      .from("threads")
+      .select("*, profiles(username, avatar_url, reputation), forum_categories(name, slug)")
+      .eq("id", id)
+      .maybeSingle();
 
-    // 1) Coba view thread_details
-    const q = await admin.from("thread_details").select("*").eq("id", id).maybeSingle();
-    if (q.data) {
-      thread = q.data;
+    if (!tErr && t) {
+      const raw = t as Record<string, unknown>;
+      const fc = (raw.forum_categories ?? {}) as Record<string, unknown>;
+      const prof = (raw.profiles ?? {}) as Record<string, unknown>;
+      threadData = {
+        ...raw,
+        category_name: (fc.name as string) ?? category,
+        category_slug: (fc.slug as string) ?? category,
+        author_username: (prof.username as string) ?? "Member TeknoHub",
+        author_reputation: (prof.reputation as number) ?? 0,
+      };
     } else {
-      // Fallback: query threads + relasi join (profiles, forum_categories)
-      const res = await admin
-        .from("threads")
-        .select("*, profiles(username, avatar_url, reputation), forum_categories(name, slug)")
-        .eq("id", id)
-        .maybeSingle();
-      if (res.data) {
-        const raw = res.data as Record<string, unknown>;
-        const fc = (raw.forum_categories ?? {}) as Record<string, unknown>;
-        const prof = (raw.profiles ?? {}) as Record<string, unknown>;
-        thread = {
-          ...raw,
-          category_name: (fc.name as string) ?? category,
-          category_slug: (fc.slug as string) ?? category,
-          author_username: (prof.username as string) ?? "Member",
-          author_reputation: (prof.reputation as number) ?? 0,
-        };
-      }
+      // Fallback coba query view thread_details jika ada
+      const { data: td } = await sb.from("thread_details").select("*").eq("id", id).maybeSingle();
+      if (td) threadData = td;
     }
 
-    // 2) Ambil balasan (selalu fallback [])
-    const rr = await admin.from("replies").select("id, content, is_solution, created_at, author_id").eq("thread_id", id).order("created_at", { ascending: true });
-    if (!rr.error && rr.data) replies = rr.data;
+    // 2. Query replies
+    const { data: r } = await sb
+      .from("replies")
+      .select("id, content, is_solution, created_at, author_id, profiles(username, avatar_url, reputation)")
+      .eq("thread_id", id)
+      .order("created_at", { ascending: true });
+
+    if (r) repliesData = r;
   } catch (e) {
-    console.error("Error fetching forum thread:", e);
+    console.error("Error loading forum thread:", e);
   }
 
-  if (!thread) {
-    notFound(); // dipanggil di luar try/catch agar sinyal NEXT_NOT_FOUND tak rusak
+  if (!threadData) {
+    notFound();
   }
 
-  const data = thread as {
-    id: string;
-    title: string;
-    content: string;
-    category_name: string;
-    category_slug: string;
-    author_id?: string | null;
-    author_username?: string;
-    author_reputation?: number;
-    view_count?: number;
-    reply_count?: number;
-    created_at?: string;
-    tags?: string[];
-  };
+  // Ambil user session dengan aman tanpa crash jika auth offline
+  let currentUserId: string | undefined = undefined;
+  try {
+    const session = await getServerSession(authOptions).catch(() => null);
+    currentUserId = session?.user?.id;
+  } catch {
+    currentUserId = undefined;
+  }
 
-  const session = await getServerSession(authOptions).catch(() => null);
-  const currentUserId = session?.user?.id ?? undefined;
-  const threadAuthorId = (data.author_id as string) ?? undefined;
+  const title = (threadData.title as string) || "Diskusi Komunitas";
+  const content = (threadData.content as string) || "";
+  const authorName = (threadData.author_username as string) || "Member TeknoHub";
+  const authorReputation = Number(threadData.author_reputation || 0);
+  const viewCount = Number(threadData.view_count || 0);
+  const replyCount = repliesData.length || Number(threadData.reply_count || 0);
+  const createdAt = (threadData.created_at as string) || "";
+  const categoryName = (threadData.category_name as string) || category;
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://teknohub-web.vercel.app";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DiscussionForumPosting",
-    headline: data.title ?? "Diskusi Forum",
-    author: { "@type": "Person", name: "TeknoHub Member" },
-    datePublished: data.created_at ? new Date(data.created_at).toISOString() : new Date().toISOString(),
-    text: data.content ?? "",
-    discussionUrl: `${baseUrl}/forum/${category}/${id}`,
+    headline: title,
+    author: { "@type": "Person", name: authorName },
+    datePublished: createdAt ? new Date(createdAt).toISOString() : new Date().toISOString(),
+    text: content,
     interactionStatistic: {
       "@type": "InteractionCounter",
       interactionType: "https://schema.org/CommentAction",
-      userInteractionCount: replies?.length ?? 0,
+      userInteractionCount: replyCount,
     },
   };
 
   return (
     <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-    <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
-      {/* Breadcrumb */}
-      <div className="text-sm text-tertiary mb-6 flex items-center gap-2">
-        <Link href="/forum" className="hover:text-accent">
-          Forum
-        </Link>
-        <span>/</span>
-        <span className="font-medium text-foreground">{data.category_name || category}</span>
-      </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <div className="min-h-screen bg-surface text-foreground p-4 sm:p-8">
+        {/* Breadcrumb & Back */}
+        <div className="max-w-4xl mx-auto mb-6 flex items-center justify-between">
+          <div className="text-xs sm:text-sm text-tertiary flex items-center gap-2">
+            <Link href="/forum" className="hover:text-accent flex items-center gap-1 font-semibold">
+              <ArrowLeft size={14} /> Forum
+            </Link>
+            <span>/</span>
+            <span className="font-bold text-foreground capitalize">{categoryName}</span>
+          </div>
+          <Link
+            href="/forum/new"
+            className="text-xs font-bold text-accent hover:underline"
+          >
+            + Buat Thread Baru
+          </Link>
+        </div>
 
-      <div className="max-w-3xl mx-auto">
-        <div className="glow-card p-6 sm:p-8">
-          <header className="mb-8 pb-4 border-b border-slate-300">
-            <h1 className="text-3xl font-bold text-foreground mb-2">{data.title}</h1>
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-tertiary">
-              <span>
-                Oleh: <span className="font-medium text-accent">{data.author_username}</span>
-                <UserBadge reputation={data.author_reputation} />
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Main Thread Card */}
+          <div className="bg-surface border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+            <header className="border-b border-slate-200 dark:border-slate-800 pb-5">
+              <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-accent-dim text-accent mb-3">
+                {categoryName}
               </span>
-              <span className="inline-flex items-center gap-1"><Eye size={14} /> {data.view_count}</span>
-              <span><MessageSquare size={16} className="inline mr-1" /> {data.reply_count}</span>
-              <span className="inline-flex items-center gap-1"><Calendar size={14} /> {data.created_at ? formatDate(data.created_at) : "-"}</span>
+              <h1 className="text-2xl sm:text-3xl font-black text-foreground leading-tight tracking-tight mb-3">
+                {title}
+              </h1>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-tertiary">
+                <div className="flex items-center gap-1.5">
+                  <span>Oleh:</span>
+                  <span className="font-bold text-accent">{authorName}</span>
+                  <UserBadge reputation={authorReputation} />
+                </div>
+                <span className="flex items-center gap-1"><Eye size={14} /> {viewCount} tayangan</span>
+                <span className="flex items-center gap-1"><MessageSquare size={14} /> {replyCount} balasan</span>
+                <span className="flex items-center gap-1"><Calendar size={14} /> {formatDate(createdAt)}</span>
+              </div>
+            </header>
+
+            {/* Render Mentions & Content */}
+            <ProductMention text={content} />
+            <div
+              className="prose dark:prose-invert max-w-none text-tertiary leading-relaxed text-sm sm:text-base whitespace-pre-line"
+              dangerouslySetInnerHTML={{ __html: renderMentions(content) }}
+            />
+
+            {/* Thread Actions */}
+            <div className="pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 flex-wrap">
+              <VoteControl threadId={id} />
+              {currentUserId && (
+                <div className="flex items-center gap-2">
+                  <FollowButton targetType="thread" targetId={id} />
+                  <ReportButton targetType="thread" targetId={id} />
+                </div>
+              )}
             </div>
-          </header>
+          </div>
 
-          <ProductMention text={data.content ?? ""} />
-          <div
-            className="prose max-w-none text-muted mb-8 p-4 bg-surface-2 rounded-lg border border-slate-300/50"
-            dangerouslySetInnerHTML={{ __html: renderMentions(data.content ?? "") }}
-          />
-
-          <div className="mb-10 flex justify-center gap-4 items-center">
-            <VoteControl threadId={data.id} />
-            {currentUserId && (
-              <>
-                <FollowButton targetType="thread" targetId={data.id} />
-                <ReportButton targetType="thread" targetId={data.id} />
-              </>
-            )}
+          {/* Section Replies */}
+          <div className="bg-surface border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+            <ReplySection
+              threadId={id}
+              initialReplies={repliesData as unknown as Parameters<typeof ReplySection>[0]["initialReplies"]}
+              currentUserId={currentUserId}
+              threadAuthorId={threadData.author_id as string | undefined}
+            />
           </div>
         </div>
-
-        <div className="mt-8">
-          <ReplySection
-            threadId={data.id}
-            initialReplies={(replies as unknown as { id: string; content: string; is_solution: boolean; created_at: string; author_id: string }[]) ?? []}
-            currentUserId={currentUserId}
-            threadAuthorId={threadAuthorId}
-          />
-        </div>
       </div>
-    </div>
     </>
   );
 }
