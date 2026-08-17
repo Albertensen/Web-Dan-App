@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import BuilderBanner from "@/components/BuilderBanner";
+import FlashSaleSection from "@/components/home/FlashSaleSection";
+import BrandPartners from "@/components/home/BrandPartners";
 import ThreadCard, { type ThreadProps } from "@/components/forum/ThreadCard";
 import { Flame, Laptop, Gamepad2, Cpu, CircuitBoard, MemoryStick, HardDrive, Smartphone, Monitor, ShieldCheck, Zap, Bot, MessageSquare, ShoppingBag } from "lucide-react";
 
@@ -78,6 +80,12 @@ export default async function Home() {
           </div>
         ))}
       </div>
+
+      {/* ================= FLASH SALE HARIAN ================= */}
+      <FlashSaleSection />
+
+      {/* ================= OFFICIAL BRAND PARTNERS ================= */}
+      <BrandPartners />
 
       {/* ================= MARKETPLACE CATALOG SECTION ================= */}
       <section id="marketplace" className="space-y-6">
