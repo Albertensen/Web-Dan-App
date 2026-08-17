@@ -4,6 +4,17 @@ Semua perubahan penting proyek TeknoHub dicatat di sini.
 
 ## [Unreleased]
 
+### Marketplace Tier-1 UI/UX, Tab PDP & PC Builder Canvas
+- **Tab Terpadu PDP (`ProductDetailsTabs.tsx`)**: Integrasi 3 tab aktif (Deskripsi & Spesifikasi teknis dinamis + 3 Trust Badges, Ulasan `ProductReviews`, dan Forum Komunitas `RelatedForumThreads` + CTA Buat Thread).
+- **Visualisasi Interaktif Chassis PC (`PCBuilderCanvas.tsx`)**: Simulasi tempered glass case dengan realtime part snapping (Motherboard, RAM stick, CPU cooler animation, GPU PCIe slot, M.2 storage, exhaust/intake fan, PSU basement) dan 5 tema lampu RGB dinamis (Cyan, Violet, Emerald, Crimson, Rainbow).
+- **Top Announcement Bar (`TopAnnouncementBar.tsx`)**: Ticker promo kupon `TEKNOHUB10`, info bebas ongkir se-Indonesia, garansi resmi distributor, dan link cepat lacak pesanan / bantuan.
+- **Flash Sale Harian (`FlashSaleSection.tsx`)**: Realtime countdown timer (Jam : Menit : Detik), progress bar stok terjual (Social Proof), diskon badge, dan quick add to cart.
+- **Official Brand Partners (`BrandPartners.tsx`)**: Showcase 10 mitra resmi (ASUS ROG, NVIDIA, Intel, AMD, Lenovo Legion, MSI, Corsair, Kingston, Samsung, Acer Predator) yang terhubung ke filter produk.
+- **Marketplace Standard `ProductCard.tsx`**: Penambahan badge "Official Store", "Bebas Ongkir", lokasi toko ("Jakarta Pusat"), rating bintang + total terjual ("Terjual 150+ unit"), dan hover quick-add cart button.
+- **Footer Trust Upgrade (`Footer.tsx`)**: 4 pilar layanan, logo mitra pembayaran resmi (BCA, Mandiri, BNI, BRI, QRIS, GoPay, OVO, ShopeePay, Visa, Mastercard) & logistik (JNE, SiCepat, J&T, Anteraja, GoSend, GrabExpress), serta badge enkripsi SSL 256-bit.
+- **SSR Resiliency & Prerender Fixes**: Penambahan fallback `.catch(() => null)` pada `getServerSession(authOptions)` di seluruh halaman SSR dan wrapper `<Suspense>` pada `AuthSlider` di halaman login & register.
+- **Roadmap Reorganization**: Perapihan penomoran linier Fase 1 s/d 13 pada `ROADMAP.md`.
+
 ### Performa, Sticky & Proteksi
 - Added skeleton loader katalog (`ProductCardSkeleton`, animate-pulse) saat fetch/filter.
 - Added sticky purchase bar desktop (hidden mobile): thumbnail, judul, harga, '+ Keranjang'.
