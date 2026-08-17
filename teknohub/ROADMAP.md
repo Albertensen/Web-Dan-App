@@ -196,6 +196,29 @@ Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 
 ---
 
+## FASE 6F — Marketplace Produk Digital (Software, License & Vouchers) ⚡
+Status: ⏳ Siap Dikerjakan
+
+### 1. Database Schema & Seed Data
+- [ ] Migrasi SQL `016_digital_products.sql`: kolom `is_digital`, `license_type`, `download_url` di `products` & `digital_code` di `order_items`
+- [ ] Perbarui tipe data TypeScript di `@/types/product.ts` (`is_digital?: boolean`)
+- [ ] Seed 6 produk digital resmi (Windows 11 Pro, Office 365, Steam Wallet, Xbox Game Pass, Bitdefender, E-Book AI Builder)
+
+### 2. Katalog & Filter Produk Digital
+- [ ] Tab filter cepat di `/shop/products`: [ Semua ] • [ 🖥️ Hardware Fisik ] • [ ⚡ Produk Digital ]
+- [ ] Kategori digital baru: Software & OS, Game Voucher, Security, E-Book Tech
+- [ ] Badge khusus di ProductCard: `⚡ Instant Delivery (0 Detik)` & `🌐 Pengiriman Digital`
+
+### 3. Halaman Detail Produk Digital (PDP)
+- [ ] Sembunyikan widget ongkir fisik pada produk digital, gantikan dengan widget Pengiriman Instan Otomatis
+- [ ] Tab Panduan Aktivasi Lisensi & Syarat Redeem di `ProductDetailsTabs.tsx`
+
+### 4. Checkout Bebas Ongkir & Serial Key di Invoice
+- [ ] Checkout otomatis Rp 0 ongkir jika pesanan adalah produk digital (tanpa kurir fisik)
+- [ ] Penyerahan Serial Key / Redeem Code otomatis di Invoice & Akun Pengguna dengan tombol `📋 Salin Kode`
+
+---
+
 ## FASE 7 — UI/UX Polish Marketplace Tier-1 (Tokopedia, Shopee & Newegg Standard)
 Status: ⏳ Siap Dikerjakan
 
