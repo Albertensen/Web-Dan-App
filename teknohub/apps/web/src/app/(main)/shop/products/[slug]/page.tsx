@@ -172,9 +172,9 @@ export default async function ProductPage({ params }: ProductProps) {
               <Link
                 key={p.id}
                 href={`/shop/products/${p.slug}`}
-                className="group bg-surface border border-border rounded-2xl p-3 hover:border-accent transition duration-300"
+                className="group relative bg-surface border border-border rounded-2xl p-3 hover:border-accent transition duration-300 block"
               >
-                <div className="aspect-square rounded-xl overflow-hidden mb-3">
+                <div className="relative aspect-square rounded-xl overflow-hidden mb-3">
                   <ProductImage
                     src={p.image_url}
                     alt={p.name}

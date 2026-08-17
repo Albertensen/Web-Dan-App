@@ -55,7 +55,7 @@ export default function ProductMention({ text }: { text: string }) {
     <div className="flex flex-col gap-2 my-3">
       {products.map((p) => (
         <div key={p.slug} className="flex items-center gap-3 p-2 border border-accent/40 rounded-xl bg-surface">
-          <div className="w-10 h-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
+          <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0">
             <ProductImage src={p.image_url} alt={p.name} category={p.category} fill sizes="40px" className="object-cover" />
           </div>
           <div className="flex-1 min-w-0">
