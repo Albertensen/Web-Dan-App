@@ -30,6 +30,14 @@ export interface Product {
   category_id: string;
   /** Status apakah produk aktif atau tidak */
   is_active: boolean;
+  /** Apakah produk digital (software, license, voucher) */
+  is_digital?: boolean;
+  /** Tipe lisensi produk digital */
+  license_type?: string | null;
+  /** URL download produk digital */
+  download_url?: string | null;
+  /** Instruksi aktivasi / redeem produk digital */
+  digital_instructions?: string | null;
   /** Waktu pembuatan catatan ini */
   created_at: string;
 }

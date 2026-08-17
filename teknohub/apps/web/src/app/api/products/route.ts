@@ -17,14 +17,21 @@ export async function GET(request: NextRequest) {
   const brandsParam = searchParams.get("brands");
   const inStock = searchParams.get("in_stock");
   const sort = searchParams.get("sort") || "relevance";
+  const type = searchParams.get("type");
   const limit = Number(searchParams.get("limit")) || 50;
 
   const COMPONENT_CHILDREN = ["cpu", "gpu", "ram", "storage", "motherboard", "psu", "case", "cooler"];
 
   let query = supabase
     .from("products")
-    .select("id, name, slug, price, stock, image_url, category, brand, description, created_at")
+    .select("*")
     .eq("is_active", true);
+
+  if (type === "digital") {
+    query = query.eq("is_digital", true);
+  } else if (type === "physical") {
+    query = query.eq("is_digital", false);
+  }
 
   if (category) {
     const cats = category === "komponen" ? COMPONENT_CHILDREN : [category];

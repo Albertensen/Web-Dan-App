@@ -200,9 +200,9 @@ Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 Status: ⏳ Siap Dikerjakan
 
 ### 1. Database Schema & Seed Data
-- [ ] Migrasi SQL `016_digital_products.sql`: kolom `is_digital`, `license_type`, `download_url` di `products` & `digital_code` di `order_items`
-- [ ] Perbarui tipe data TypeScript di `@/types/product.ts` (`is_digital?: boolean`)
-- [ ] Seed 6 produk digital resmi (Windows 11 Pro, Office 365, Steam Wallet, Xbox Game Pass, Bitdefender, E-Book AI Builder)
+- [x] Migrasi SQL `016_digital_products.sql`: kolom `is_digital`, `license_type`, `download_url` di `products` & `digital_code` di `order_items`
+- [x] Perbarui tipe data TypeScript di `@/types/product.ts` (`is_digital?: boolean`)
+- [x] Seed 6 produk digital resmi (Windows 11 Pro, Office 365, Steam Wallet, Xbox Game Pass, Bitdefender, E-Book AI Builder)
 
 ### 2. Katalog & Filter Produk Digital
 - [ ] Tab filter cepat di `/shop/products`: [ Semua ] • [ 🖥️ Hardware Fisik ] • [ ⚡ Produk Digital ]
