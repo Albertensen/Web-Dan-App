@@ -355,6 +355,36 @@ Status: 🟢 Aktif (Batch 1 & 2 selesai)
 - [x] Checkout: spinner + nonaktif tombol "Bayar Sekarang" selama proses (anti double-submit)
 - [x] Badge stok menipis "Sisa [x] unit!" (amber) di card & PDP saat stock <= 5
 
+## FASE 6E — UI/UX Polish Marketplace Tier-1 (Tokopedia, Shopee & Newegg Standard)
+Status: ⏳ Siap Dikerjakan
+
+### 1. Header & Top Announcement Bar
+- [ ] Top Announcement Ticker Bar di atas navbar (Promo Kupon `TEKNOHUB10`, Info Bebas Ongkir se-Indonesia, dan Link Lacak Pesanan / Bantuan Cepat)
+- [ ] Enhanced Navbar Search: Autocomplete dropdown dengan pencarian populer, riwayat pencarian, dan tag kategori terkait
+
+### 2. Homepage High-Converting Sections
+- [ ] Section Flash Sale / Promo Terbatas dengan Realtime Countdown Timer (Jam : Menit : Detik) dan Progress Bar Stok Terjual (misal: "🔥 Terjual 85% — Sisa 3 unit!")
+- [ ] Carousel Brand Partners Resmi (Official Authorized Store: ASUS ROG, NVIDIA, Intel, AMD, Lenovo Legion, MSI, Corsair, Kingston, Samsung, Acer Predator)
+- [ ] Tab Filter Rekomendasi Produk di Homepage ("🔥 Paling Laris", "⚡ Diskon Spesial", "⭐ Rating Tertinggi", "🆕 Baru Rilis")
+
+### 3. Product Card Enhancement (Marketplace Standard)
+- [ ] Badge Lokasi Pengiriman Toko (misal: "📍 Jakarta Pusat") di setiap kartu produk
+- [ ] Social Proof Transaksi: Tampilan rating bintang + total terjual (misal: "⭐ 4.9 | Terjual 150+ unit")
+- [ ] Badge "⚡ Bebas Ongkir" (hijau) dan "🛡️ Official Store" (ungu/emas) pada kartu produk
+- [ ] Hover Quick Action "+ Keranjang Cepat" langsung dari kartu katalog tanpa harus membuka PDP
+
+### 4. Product Detail Page (PDP) Sticky Buying Box & Seller Profile
+- [ ] Desktop Sticky Buying Box di sisi kanan: Subtotal harga dinamis, pilihan varian ringkas, dan tombol CTA ganda (Tambah Keranjang & Beli Sekarang)
+- [ ] Seller / Store Profile Card: "TeknoHub Official Flagship Store" (Rating Toko 4.9/5.0, 100% Pesanan Sukses, Respon Chat < 5 Menit)
+- [ ] Estimasi Pengiriman & Simulator Paylater / Cicilan ringkas di PDP
+
+### 5. Trust & Payment Logistics Footer
+- [ ] Visual Logo Mitra Pembayaran Resmi (BCA, Mandiri, BNI, BRI, QRIS, GoPay, OVO, ShopeePay, Visa, Mastercard)
+- [ ] Visual Logo Mitra Ekspedisi & Logistik (JNE Express, SiCepat, J&T, Anteraja, GoSend, GrabExpress)
+- [ ] Badge Keamanan Transaksi (SSL 256-bit Encryption, 100% Garansi Uang Kembali, Jaminan Produk Original)
+
+---
+
 ## FASE 13 — Launch
 Status: ⏳ Belum dimulai
 
