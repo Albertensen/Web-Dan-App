@@ -2,7 +2,19 @@
 import { useState } from "react"
 import ProductMention, { renderMentions } from "./ProductMention"
 import SolutionButton from "./SolutionButton"
-import TipTapEditor from "./TipTapEditor"
+import dynamic from "next/dynamic";
+
+const TipTapEditor = dynamic(() => import("./TipTapEditor"), {
+  ssr: false,
+  loading: () => (
+    <textarea
+      placeholder="Tulis balasan Anda di sini..."
+      rows={4}
+      className="w-full p-4 rounded-2xl bg-surface border border-slate-300 dark:border-slate-800 text-foreground resize-none"
+      disabled
+    />
+  ),
+});
 import ReportButton from "./ReportButton"
 
 interface Reply {
