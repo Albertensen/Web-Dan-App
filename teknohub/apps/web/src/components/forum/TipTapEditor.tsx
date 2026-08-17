@@ -4,8 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Underline from "@tiptap/extension-underline";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface TipTapEditorProps {
   value: string;
@@ -14,14 +13,20 @@ interface TipTapEditorProps {
 }
 
 export default function TipTapEditor({ value, onChange, placeholder = "Tulis konten..." }: TipTapEditorProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [StarterKit, Underline, Image.configure({ inline: true, allowBase64: false })],
     content: value,
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
-        class:
-          "prose max-w-none focus:outline-none min-h-[180px] px-4 py-3 text-foreground",
+        class: "prose dark:prose-invert max-w-none focus:outline-none min-h-[140px] px-4 py-3 text-foreground",
         placeholder: placeholder,
       },
     },
@@ -30,8 +35,18 @@ export default function TipTapEditor({ value, onChange, placeholder = "Tulis kon
   const [uploading, setUploading] = useState(false);
   const [uploadErr, setUploadErr] = useState("");
 
+  if (!mounted) {
+    return (
+      <div className="min-h-[140px] p-4 rounded-2xl bg-surface-2/60 border border-slate-200 dark:border-slate-800 animate-pulse text-xs text-muted flex items-center justify-center">
+        Memuat editor teks...
+      </div>
+    );
+  }
+
   const insertImage = (url: string, alt = "gambar") => {
-    editor.chain().focus().setImage({ src: url, alt }).run();
+    if (editor) {
+      editor.chain().focus().setImage({ src: url, alt }).run();
+    }
   };
 
   const handleUpload = async (file?: File) => {
@@ -78,8 +93,8 @@ export default function TipTapEditor({ value, onChange, placeholder = "Tulis kon
   );
 
   return (
-    <div className="border border-slate-300 rounded-lg bg-surface overflow-hidden">
-      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-slate-300 bg-surface-2">
+    <div className="border border-slate-300 dark:border-slate-800 rounded-2xl bg-surface overflow-hidden shadow-sm">
+      <div className="flex items-center gap-1 px-2 py-1.5 border-b border-slate-300 dark:border-slate-800 bg-surface-2/60 flex-wrap">
         <ToolbarButton label="Bold" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}>
           <b>B</b>
         </ToolbarButton>
@@ -122,7 +137,7 @@ export default function TipTapEditor({ value, onChange, placeholder = "Tulis kon
           />
         </label>
       </div>
-      <div className="px-3 py-1.5 border-t border-slate-300 bg-surface-2/60 flex items-center gap-2">
+      <div className="px-3 py-1.5 border-t border-slate-300 dark:border-slate-800 bg-surface-2/40 flex items-center gap-2">
         {uploading ? <span className="text-xs text-accent">Mengunggah gambar...</span> : null}
         {uploadErr && <span className="text-xs text-red-600">{uploadErr}</span>}
         <span className="text-[10px] text-tertiary ml-auto">@product:slug utk sematkan kartu produk</span>
