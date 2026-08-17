@@ -165,6 +165,7 @@ export default async function ProductPage({ params }: ProductProps) {
                 image_url: product.image_url,
                 stock: Number(product.stock),
                 brand: product.brand,
+                category: product.category,
               }}
             />
           </div>
