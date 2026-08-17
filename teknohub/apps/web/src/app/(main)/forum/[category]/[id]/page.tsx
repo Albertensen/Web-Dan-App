@@ -100,7 +100,7 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "DiscussionForumPosting",
-    headline: data.title ?? data.subject ?? "Diskusi Forum",
+    headline: data.title ?? "Diskusi Forum",
     author: { "@type": "Person", name: "TeknoHub Member" },
     datePublished: data.created_at ? new Date(data.created_at).toISOString() : new Date().toISOString(),
     text: data.content ?? "",
@@ -136,7 +136,7 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
               </span>
               <span className="inline-flex items-center gap-1"><Eye size={14} /> {data.view_count}</span>
               <span><MessageSquare size={16} className="inline mr-1" /> {data.reply_count}</span>
-              <span className="inline-flex items-center gap-1"><Calendar size={14} /> {formatDate(data.created_at)}</span>
+              <span className="inline-flex items-center gap-1"><Calendar size={14} /> {data.created_at ? formatDate(data.created_at) : "-"}</span>
             </div>
           </header>
 
@@ -147,11 +147,11 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
           />
 
           <div className="mb-10 flex justify-center gap-4 items-center">
-            <VoteControl threadId={thread.id} />
+            <VoteControl threadId={data.id} />
             {currentUserId && (
               <>
-                <FollowButton targetType="thread" targetId={thread.id} />
-                <ReportButton targetType="thread" targetId={thread.id} />
+                <FollowButton targetType="thread" targetId={data.id} />
+                <ReportButton targetType="thread" targetId={data.id} />
               </>
             )}
           </div>
@@ -159,8 +159,8 @@ export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
 
         <div className="mt-8">
           <ReplySection
-            threadId={thread.id}
-            initialReplies={replies ?? []}
+            threadId={data.id}
+            initialReplies={(replies as unknown as { id: string; content: string; is_solution: boolean; created_at: string; author_id: string }[]) ?? []}
             currentUserId={currentUserId}
             threadAuthorId={threadAuthorId}
           />
