@@ -74,6 +74,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       price: product.price,
       stock: product.stock,
       image_url: product.image_url,
+      is_digital: product.is_digital,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);

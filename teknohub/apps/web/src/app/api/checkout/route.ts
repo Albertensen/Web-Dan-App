@@ -8,6 +8,38 @@ import { requestSnapToken } from "@/lib/midtrans";
 interface CartItemInput {
   product_id: string;
   quantity: number;
+  is_digital?: boolean;
+}
+
+function randSegment(len: number): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let out = "";
+  for (let i = 0; i < len; i++) out += chars[Math.floor(Math.random() * chars.length)];
+  return out;
+}
+
+function generateDigitalCode(product: { name: string; category: string }): string {
+  const n = (product.name || "").toLowerCase();
+  const c = (product.category || "").toLowerCase();
+  if (n.includes("windows") || c.includes("os") || c.includes("software")) {
+    return `W11P-${randSegment(5)}-${randSegment(5)}-${randSegment(5)}`;
+  }
+  if (n.includes("steam")) {
+    return `STM-IDR${randSegment(4)}-${randSegment(4)}-${randSegment(4)}`;
+  }
+  if (n.includes("xbox")) {
+    return `XBOX-3M-${randSegment(5)}-${randSegment(5)}`;
+  }
+  if (n.includes("365") || n.includes("office")) {
+    return `M365-1YR-${randSegment(5)}-${randSegment(5)}`;
+  }
+  if (n.includes("bitdefender")) {
+    return `BDTS-1YR-${randSegment(5)}-${randSegment(5)}`;
+  }
+  if (c.includes("course") || n.includes("ebook") || n.includes("e-book")) {
+    return `TKN-EBOOK-${randSegment(4)}-${randSegment(4)}`;
+  }
+  return `TKNDIG-${randSegment(5)}-${randSegment(5)}`;
 }
 
 export async function POST(request: NextRequest) {
@@ -31,18 +63,22 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { name, phone, address, city, postal_code, courier, notes } = parsed.data;
+  const { name, phone, email, address, city, postal_code, courier, notes } = parsed.data;
   const items = (body as { items?: CartItemInput[] }).items ?? [];
 
   if (items.length === 0) {
     return NextResponse.json({ error: "Keranjang kosong" }, { status: 400 });
   }
 
+  const isAllDigital = Boolean(
+    items.length > 0 && items.every((i) => i.is_digital)
+  );
+
   // Fetch produk berdasarkan id
   const productIds = items.map((i) => i.product_id);
   const { data: products, error: prodErr } = await supabase
     .from("products")
-    .select("id, name, price, stock, slug")
+    .select("id, name, price, stock, slug, category, is_digital, license_type, download_url, digital_instructions")
     .in("id", productIds);
 
   if (prodErr || !products || products.length !== productIds.length) {
@@ -71,9 +107,14 @@ export async function POST(request: NextRequest) {
     sicepat: "SiCepat BEST",
     grab: "GrabExpress",
     gosend: "GoSend SameDay",
+    digital: "⚡ Pengiriman Digital Instan (Email & Akun)",
   };
-  const shippingCourier = COURIER_LABEL[courier] ?? courier;
-  const trackingNumber = `TKNHUB-${Date.now().toString().slice(-8)}`;
+  const shippingCourier = isAllDigital
+    ? COURIER_LABEL.digital
+    : (COURIER_LABEL[courier] ?? courier);
+  const trackingNumber = isAllDigital
+    ? `DIG-${Date.now().toString().slice(-8)}`
+    : `TKNHUB-${Date.now().toString().slice(-8)}`;
 
   // Insert order (sertakan kolom top-level shipping_courier & tracking_number)
   const { data: order, error: orderErr } = await supabase
@@ -86,11 +127,13 @@ export async function POST(request: NextRequest) {
       shipping_address: {
         name,
         phone,
-        address,
-        city,
-        postal_code,
-        courier,
+        email: email || "",
+        address: isAllDigital ? "" : (address || ""),
+        city: isAllDigital ? "Digital" : (city || ""),
+        postal_code: postal_code || "",
+        courier: isAllDigital ? "digital" : courier,
         notes: notes ?? "",
+        is_all_digital: isAllDigital,
       },
       shipping_courier: shippingCourier,
       tracking_number: trackingNumber,
@@ -105,12 +148,15 @@ export async function POST(request: NextRequest) {
   // Insert order items + kurangi stock
   const orderItems = items.map((item) => {
     const product = products.find((p) => p.id === item.product_id)!;
+    const digital = Boolean(product.is_digital);
     return {
       order_id: order.id,
       product_id: product.id,
       name: product.name,
       price: product.price,
       quantity: item.quantity,
+      is_digital: digital,
+      digital_code: digital ? generateDigitalCode({ name: product.name, category: product.category }) : null,
     };
   });
 

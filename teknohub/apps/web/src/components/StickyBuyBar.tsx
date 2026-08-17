@@ -7,6 +7,7 @@ import { ShoppingCart, Zap, Check } from "lucide-react";
 
 export interface StickyProduct {
   id: string; name: string; slug: string; price: number; stock: number; image_url: string | null;
+  is_digital?: boolean;
 }
 
 export default function StickyBuyBar({ product }: { product: StickyProduct }) {

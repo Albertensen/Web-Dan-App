@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore, selectTotalPrice, selectTotalItems } from "@/store/cartStore";
-import { checkoutSchema, type CheckoutInput } from "@/lib/validations/checkout";
-import { Truck, QrCode, Landmark, Wallet, CreditCard, CheckCircle2, X, Loader2 } from "lucide-react";
+import { checkoutSchema } from "@/lib/validations/checkout";
+import { Truck, QrCode, Landmark, Wallet, CreditCard, CheckCircle2, X, Loader2, Zap, Globe } from "lucide-react";
 
 // Kurir + layanan (estimasi hari & ongkir deterministik)
 const COURIER_PACKS = [
@@ -37,18 +37,19 @@ const PACKING_FEE = 35000;
 type FormState = {
   name: string;
   phone: string;
+  email: string;
   address: string;
   province: string;
   city: string;
   district: string;
   postal_code: string;
-  courier: CheckoutInput["courier"];
+  courier: string;
   service: string;
   notes: string;
 };
 
 const initialForm: FormState = {
-  name: "", phone: "", address: "", province: "", city: "", district: "", postal_code: "",
+  name: "", phone: "", email: "", address: "", province: "", city: "", district: "", postal_code: "",
   courier: "jne", service: "jne_reg", notes: "",
 };
 
@@ -58,6 +59,8 @@ export default function CheckoutForm() {
   const subtotal = useCartStore(selectTotalPrice);
   const totalItems = useCartStore(selectTotalItems);
   const clearCart = useCartStore((s) => s.clear);
+
+  const isAllDigital = items.length > 0 && items.every((i) => i.is_digital);
 
   const [form, setForm] = useState<FormState>(initialForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -70,8 +73,8 @@ export default function CheckoutForm() {
   const pack = COURIER_PACKS.find((p) => p.courier === form.courier)!;
   const service = pack.services.find((s) => s.id === form.service) ?? pack.services[0];
 
-  const shipping = service.cost;
-  const addonsCost = (addonRakit ? RAKIT_FEE : 0) + (addonPacking ? PACKING_FEE : 0);
+  const shipping = isAllDigital ? 0 : service.cost;
+  const addonsCost = isAllDigital ? 0 : (addonRakit ? RAKIT_FEE : 0) + (addonPacking ? PACKING_FEE : 0);
   const grandTotal = subtotal + shipping + SERVICE_FEE + addonsCost;
 
   const fmt = (n: number) =>
@@ -79,13 +82,15 @@ export default function CheckoutForm() {
 
   const handleSetCourier = (c: string) => {
     const p = COURIER_PACKS.find((x) => x.courier === c)!;
-    setForm((prev) => ({ ...prev, courier: c as FormState["courier"], service: p.services[0].id }));
+    setForm((prev) => ({ ...prev, courier: c, service: p.services[0].id }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
-    const result = checkoutSchema.safeParse({ ...form, courier: form.courier });
+    const courier = isAllDigital ? "digital" : form.courier;
+    const payload = { ...form, courier };
+    const result = checkoutSchema.safeParse(payload);
     if (!result.success) {
       const ne: Record<string, string> = {};
       result.error.issues.forEach((i) => { ne[String(i.path[0])] = i.message; });
@@ -102,9 +107,8 @@ export default function CheckoutForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...form,
-          courier: form.courier,
-          items: items.map((i) => ({ product_id: i.id, quantity: i.quantity })),
+          ...payload,
+          items: items.map((i) => ({ product_id: i.id, quantity: i.quantity, is_digital: i.is_digital })),
         }),
       });
       const json = await res.json().catch(() => ({}));
@@ -114,7 +118,6 @@ export default function CheckoutForm() {
         return;
       }
       setSubmitting(false);
-      // gunakan snap token jika ada, fallback simulasi VA
       const va = ["8888 0123 4567 8901", "8808 1122 3344 5566", "1 2345 6789 0123", "9001 2233 4455 6677"][
         ["qris","va","ewallet","cc"].indexOf(payMethod) % 4
       ];
@@ -147,69 +150,93 @@ export default function CheckoutForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Alamat */}
+      {/* Alamat / Penerima */}
       <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold text-foreground">1. Alamat Pengiriman</h2>
+        <h2 className="font-bold text-foreground">
+          {isAllDigital ? "1. Data Penerima Lisensi" : "1. Alamat Pengiriman"}
+        </h2>
+        {isAllDigital && (
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-xs font-semibold text-cyan-700 dark:text-cyan-300">
+            <Zap size={14} /> Semua item di keranjang digital. Kode lisensi &amp; link unduhan dikirim ke email + akun Anda seketika.
+          </div>
+        )}
         {field("name", "Nama Penerima", "text", "Budi Santoso")}
-        {field("phone", "No. Telepon", "tel", "081234567890")}
-        {field("address", "Alamat Lengkap", "text", "Jl. Merdeka No. 10, RT 01/RW 02, Blok C2")}
-        <div className="grid grid-cols-2 gap-3">
-          {field("province", "Provinsi", "text", "DKI Jakarta")}
-          {field("city", "Kota/Kabupaten", "text", "Jakarta Selatan")}
-          {field("district", "Kecamatan", "text", "Kebayoran Baru")}
-          {field("postal_code", "Kode Pos", "text", "12120")}
-        </div>
+        {isAllDigital && field("email", "Email Penerima Lisensi", "email", "budi@email.com")}
+        {field("phone", "Nomor WhatsApp / HP", "tel", "081234567890")}
+        {!isAllDigital && field("address", "Alamat Lengkap", "text", "Jl. Merdeka No. 10, RT 01/RW 02, Blok C2")}
+        {!isAllDigital && (
+          <div className="grid grid-cols-2 gap-3">
+            {field("province", "Provinsi", "text", "DKI Jakarta")}
+            {field("city", "Kota/Kabupaten", "text", "Jakarta Selatan")}
+            {field("district", "Kecamatan", "text", "Kebayoran Baru")}
+            {field("postal_code", "Kode Pos", "text", "12120")}
+          </div>
+        )}
       </section>
 
       {/* Kurir */}
       <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold text-foreground">2. Kurir & Logistik</h2>
-        <div className="flex gap-2 flex-wrap">
-          {COURIER_PACKS.map((p) => (
-            <button type="button" key={p.courier} onClick={() => handleSetCourier(p.courier)}
-              className={`px-4 py-2 rounded-full text-sm font-bold border transition ${
-                form.courier === p.courier ? "bg-accent text-white border-accent" : "bg-surface border-slate-200 text-muted hover:text-accent"
-              }`}>
-              {p.label}
-            </button>
-          ))}
-        </div>
-        <div className="space-y-2">
-          {pack.services.map((s) => (
-            <label key={s.id} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${
-              form.service === s.id ? "border-accent bg-accent-dim" : "border-slate-200 dark:border-slate-800"
-            }`}>
-              <input type="radio" name="service" checked={form.service === s.id}
-                onChange={() => setForm((pr) => ({ ...pr, service: s.id }))} className="accent-accent" />
-              <s.icon size={18} className="text-accent" />
-              <span className="flex-1">
-                <span className="block text-sm font-semibold text-foreground">{s.label}</span>
-                <span className="text-[11px] text-tertiary">Estimasi {s.days}</span>
-              </span>
-              <span className="text-sm font-bold text-foreground">{fmt(s.cost)}</span>
-            </label>
-          ))}
-        </div>
+        <h2 className="font-bold text-foreground">2. Metode Pengiriman</h2>
+        {isAllDigital ? (
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/30">
+            <Globe size={22} className="text-cyan-600 dark:text-cyan-400 shrink-0" />
+            <div>
+              <p className="text-sm font-bold text-foreground">⚡ Pengiriman Digital Instan (Email &amp; Akun)</p>
+              <p className="text-xs text-tertiary">Bebas ongkir Rp 0 · Serial key diterbitkan otomatis setelah pembayaran terkonfirmasi</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex gap-2 flex-wrap">
+              {COURIER_PACKS.map((p) => (
+                <button type="button" key={p.courier} onClick={() => handleSetCourier(p.courier)}
+                  className={`px-4 py-2 rounded-full text-sm font-bold border transition ${
+                    form.courier === p.courier ? "bg-accent text-white border-accent" : "bg-surface border-slate-200 text-muted hover:text-accent"
+                  }`}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+            <div className="space-y-2">
+              {pack.services.map((s) => (
+                <label key={s.id} className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition ${
+                  form.service === s.id ? "border-accent bg-accent-dim" : "border-slate-200 dark:border-slate-800"
+                }`}>
+                  <input type="radio" name="service" checked={form.service === s.id}
+                    onChange={() => setForm((pr) => ({ ...pr, service: s.id }))} className="accent-accent" />
+                  <s.icon size={18} className="text-accent" />
+                  <span className="flex-1">
+                    <span className="block text-sm font-semibold text-foreground">{s.label}</span>
+                    <span className="text-[11px] text-tertiary">Estimasi {s.days}</span>
+                  </span>
+                  <span className="text-sm font-bold text-foreground">{fmt(s.cost)}</span>
+                </label>
+              ))}
+            </div>
+          </>
+        )}
       </section>
 
-      {/* Layanan Tambahan */}
-      <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
-        <h2 className="font-bold text-foreground">Layanan Tambahan (Opsional)</h2>
-        <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
-          <span className="flex items-center gap-2">
-            <input type="checkbox" checked={addonRakit} onChange={(e) => setAddonRakit(e.target.checked)} className="accent-accent" />
-            <span className="text-sm font-semibold text-foreground">Jasa Rakit &amp; Cable Management</span>
-          </span>
-          <span className="text-sm font-bold text-foreground">{fmt(RAKIT_FEE)}</span>
-        </label>
-        <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
-          <span className="flex items-center gap-2">
-            <input type="checkbox" checked={addonPacking} onChange={(e) => setAddonPacking(e.target.checked)} className="accent-accent" />
-            <span className="text-sm font-semibold text-foreground">Packing Kayu &amp; Asuransi Ekstra</span>
-          </span>
-          <span className="text-sm font-bold text-foreground">{fmt(PACKING_FEE)}</span>
-        </label>
-      </section>
+      {/* Layanan Tambahan (fisik) */}
+      {!isAllDigital && (
+        <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
+          <h2 className="font-bold text-foreground">Layanan Tambahan (Opsional)</h2>
+          <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+            <span className="flex items-center gap-2">
+              <input type="checkbox" checked={addonRakit} onChange={(e) => setAddonRakit(e.target.checked)} className="accent-accent" />
+              <span className="text-sm font-semibold text-foreground">Jasa Rakit &amp; Cable Management</span>
+            </span>
+            <span className="text-sm font-bold text-foreground">{fmt(RAKIT_FEE)}</span>
+          </label>
+          <label className="flex items-center justify-between gap-3 p-3 rounded-xl border border-slate-200 dark:border-slate-800 cursor-pointer">
+            <span className="flex items-center gap-2">
+              <input type="checkbox" checked={addonPacking} onChange={(e) => setAddonPacking(e.target.checked)} className="accent-accent" />
+              <span className="text-sm font-semibold text-foreground">Packing Kayu &amp; Asuransi Ekstra</span>
+            </span>
+            <span className="text-sm font-bold text-foreground">{fmt(PACKING_FEE)}</span>
+          </label>
+        </section>
+      )}
 
       {/* Pembayaran */}
       <section className="bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-5 space-y-3">
@@ -234,7 +261,7 @@ export default function CheckoutForm() {
         <h2 className="font-bold text-foreground mb-3">Ringkasan Pembayaran</h2>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between text-muted"><span>Subtotal Produk ({totalItems} item)</span><span className="font-semibold text-foreground">{fmt(subtotal)}</span></div>
-          <div className="flex justify-between text-muted"><span>Ongkir ({service.label})</span><span className="font-semibold text-foreground">{fmt(shipping)}</span></div>
+          <div className="flex justify-between text-muted"><span>Ongkir ({isAllDigital ? "Digital Instan" : service.label})</span><span className="font-semibold text-foreground">{isAllDigital ? "Rp 0 (Gratis)" : fmt(shipping)}</span></div>
           <div className="flex justify-between text-muted"><span>Biaya Layanan</span><span className="font-semibold text-foreground">{fmt(SERVICE_FEE)}</span></div>
           {addonsCost > 0 && <div className="flex justify-between text-muted"><span>Layanan Tambahan</span><span className="font-semibold text-foreground">{fmt(addonsCost)}</span></div>}
           <div className="border-t border-slate-200 dark:border-slate-800 pt-2 flex justify-between font-bold text-foreground"><span>Grand Total</span><span className="text-lg">{fmt(grandTotal)}</span></div>

@@ -90,6 +90,7 @@ export default function ProductPurchaseOptions({ product }: Props) {
       price,
       stock,
       image_url: product.image_url,
+      is_digital: product.is_digital,
     };
 
     addItem(itemToAdd, qty);

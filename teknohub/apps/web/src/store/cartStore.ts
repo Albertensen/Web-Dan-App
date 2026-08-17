@@ -9,6 +9,7 @@ export interface CartItem {
   slug: string;
   quantity: number;
   stock: number;
+  is_digital?: boolean;
 }
 
 interface CartState {

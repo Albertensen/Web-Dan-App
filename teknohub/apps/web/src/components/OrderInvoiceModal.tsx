@@ -1,9 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Printer, Loader2, Truck } from "lucide-react";
+import { X, Printer, Loader2, Truck, Copy, Check, Download, KeyRound } from "lucide-react";
 
-interface OrderItem { id: string; name: string; price: number; quantity: number; }
+interface OrderItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  is_digital?: boolean;
+  digital_code?: string | null;
+  download_url?: string | null;
+  digital_instructions?: string | null;
+  license_type?: string | null;
+}
 interface OrderDetail {
   id: string;
   status: string;
@@ -27,6 +37,62 @@ const fmtDate = (iso: string) => new Date(iso).toLocaleDateString("id-ID", { day
 function invoiceNumber(id: string): string {
   if (!id) return `#TKN-202608-${Math.floor(1000 + Math.random() * 9000)}`;
   return `#TKN-202608-${id.slice(0, 4).toUpperCase()}`;
+}
+
+function LicenseCodeBox({ code, downloadUrl, instructions, licenseType }: { code: string; downloadUrl?: string | null; instructions?: string | null; licenseType?: string | null }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div className="mt-2 rounded-xl border border-cyan-500/50 bg-cyan-50 p-3">
+      <p className="text-[11px] font-bold text-cyan-700 flex items-center gap-1.5 mb-1.5">
+        <KeyRound size={13} /> 🔑 Kode Lisensi / Serial Key{licenseType ? ` · ${licenseType}` : ""}
+      </p>
+      <div className="flex items-center gap-2">
+        <code className="flex-1 font-mono text-sm font-bold text-slate-900 bg-white border border-cyan-300 rounded-lg px-3 py-2 break-all select-all">
+          {code}
+        </code>
+        <button
+          onClick={copy}
+          className={`shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold transition ${
+            copied ? "bg-emerald-600 text-white" : "bg-cyan-600 text-white hover:bg-cyan-700"
+          }`}
+        >
+          {copied ? <><Check size={14} /> Tersalin!</> : <><Copy size={14} /> Salin Kode</>}
+        </button>
+      </div>
+      {downloadUrl && (
+        <a
+          href={downloadUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-blue-600 text-white text-xs font-bold hover:bg-blue-700 transition"
+        >
+          <Download size={14} /> Unduh File Digital
+        </a>
+      )}
+      {instructions && (
+        <p className="text-[11px] text-slate-600 mt-2 leading-relaxed">
+          <span className="font-semibold">Panduan aktivasi: </span>
+          {instructions}
+        </p>
+      )}
+    </div>
+  );
 }
 
 export default function OrderInvoiceModal({ orderId, onClose }: Props) {
@@ -77,14 +143,15 @@ export default function OrderInvoiceModal({ orderId, onClose }: Props) {
             {/* Alamat */}
             <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
               <div>
-                <p className="font-bold text-slate-900 mb-1">Alamat Pengiriman</p>
+                <p className="font-bold text-slate-900 mb-1">{addr.is_all_digital ? "Data Penerima Lisensi" : "Alamat Pengiriman"}</p>
                 <p>{addr.name || "-"}</p>
+                {addr.email && <p>{addr.email}</p>}
                 <p>{addr.phone || ""}</p>
-                <p className="text-slate-500">{addr.address || ""}, {addr.city || ""} {addr.province || ""}</p>
-                <p className="text-slate-500">Kode Pos: {addr.postal_code || "-"}</p>
+                {!addr.is_all_digital && <p className="text-slate-500">{addr.address || ""}, {addr.city || ""} {addr.province || ""}</p>}
+                {!addr.is_all_digital && <p className="text-slate-500">Kode Pos: {addr.postal_code || "-"}</p>}
               </div>
               <div className="text-right">
-                <p className="font-bold text-slate-900 mb-1">Pembayaran & Kurir</p>
+                <p className="font-bold text-slate-900 mb-1">Pembayaran & Pengiriman</p>
                 <p>Metode: {detail.payment_method || "-"}</p>
                 <p>Status: <span className="font-semibold uppercase">{detail.status}</span></p>
                 <p className="flex items-center justify-end gap-1"><Truck size={12} /> {detail.shipping_courier || "Regular"} · Resi: {detail.tracking_number || "-"}</p>
@@ -105,11 +172,21 @@ export default function OrderInvoiceModal({ orderId, onClose }: Props) {
                 {storeItems.length === 0 ? (
                   <tr><td className="p-3 text-slate-500" colSpan={4}>Tidak ada rincian item (pesanan mungkin dari jasa rakit).</td></tr>
                 ) : storeItems.map((it) => (
-                  <tr key={it.id} className="border-t border-slate-200">
-                    <td className="p-2 border border-slate-300">{it.name}</td>
-                    <td className="p-2 border border-slate-300 text-center">{it.quantity}</td>
-                    <td className="p-2 border border-slate-300 text-right">{fmt(Number(it.price))}</td>
-                    <td className="p-2 border border-slate-300 text-right font-semibold">{fmt(Number(it.price) * it.quantity)}</td>
+                  <tr key={it.id}>
+                    <td className="p-2 border border-slate-300 align-top">
+                      <p>{it.name}</p>
+                      {it.is_digital && it.digital_code && (
+                        <LicenseCodeBox
+                          code={it.digital_code}
+                          downloadUrl={it.download_url}
+                          instructions={it.digital_instructions}
+                          licenseType={it.license_type}
+                        />
+                      )}
+                    </td>
+                    <td className="p-2 border border-slate-300 text-center align-top">{it.quantity}</td>
+                    <td className="p-2 border border-slate-300 text-right align-top">{fmt(Number(it.price))}</td>
+                    <td className="p-2 border border-slate-300 text-right font-semibold align-top">{fmt(Number(it.price) * it.quantity)}</td>
                   </tr>
                 ))}
               </tbody>

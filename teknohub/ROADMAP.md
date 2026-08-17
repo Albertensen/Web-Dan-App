@@ -197,7 +197,7 @@ Status: 🔴 Prioritas Segera (Krusial untuk Google Indexing)
 ---
 
 ## FASE 6F — Marketplace Produk Digital (Software, License & Vouchers) ⚡
-Status: ⏳ Siap Dikerjakan
+Status: 🟢 Selesai
 
 ### 1. Database Schema & Seed Data
 - [x] Migrasi SQL `016_digital_products.sql`: kolom `is_digital`, `license_type`, `download_url` di `products` & `digital_code` di `order_items`
@@ -214,8 +214,8 @@ Status: ⏳ Siap Dikerjakan
 - [x] Tab Panduan Aktivasi Lisensi & Syarat Redeem di `ProductDetailsTabs.tsx`
 
 ### 4. Checkout Bebas Ongkir & Serial Key di Invoice
-- [ ] Checkout otomatis Rp 0 ongkir jika pesanan adalah produk digital (tanpa kurir fisik)
-- [ ] Penyerahan Serial Key / Redeem Code otomatis di Invoice & Akun Pengguna dengan tombol `📋 Salin Kode`
+- [x] Checkout otomatis Rp 0 ongkir jika pesanan adalah produk digital (tanpa kurir fisik)
+- [x] Penyerahan Serial Key / Redeem Code otomatis di Invoice & Akun Pengguna dengan tombol `📋 Salin Kode`
 
 ---
 
