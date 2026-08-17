@@ -61,7 +61,8 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
   // Kadang content plain-text berisi markdown; kutip otomatis utk tombol balas
   const quoteReply = (reply: Reply) => {
     const plain = reply.content.replace(/<[^>]*>/g, "").replace(/\n/g, " ").slice(0, 120);
-    const quote = `> @${reply.author_id.slice(-4)}: &quot;${plain}...&quot;\n\n`;
+    const author = reply.author_id ? reply.author_id.slice(-4) : "Anon";
+    const quote = `> @${author}: &quot;${plain}...&quot;\n\n`;
     setContent(quote);
     document.getElementById("reply-editor")?.focus();
   };
@@ -92,7 +93,7 @@ export default function ReplySection({ threadId, initialReplies, currentUserId, 
               )}
               <div className="flex justify-between items-center text-sm mt-3 pt-3 border-t border-slate-300">
                 <span className="text-tertiary">
-                  <span className="font-medium text-accent">User {reply.author_id.slice(-4)}</span>
+                  <span className="font-medium text-accent">{(reply.author_id ? `User ${reply.author_id.slice(-4)}` : "Anon")}</span>
                   <span className="mx-2">•</span>
                   {formatDate(reply.created_at)}
                 </span>

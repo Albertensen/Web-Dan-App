@@ -3,6 +3,15 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@supabase/supabase-js";
+
+// Server-side admin client utk baca thread & replies (hindari blokir RLS saat SSR)
+function getServiceClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return supabase;
+  return createClient(url, key);
+}
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
 import FollowButton from "@/components/forum/FollowButton";
@@ -23,17 +32,18 @@ const formatDate = (iso: string) =>
 export default async function ThreadDetailPage({ params }: ThreadDetailProps) {
   const { category, id } = params;
 
-  const { data: thread, error } = await supabase
+  const admin = getServiceClient();
+  const { data: thread, error } = await admin
     .from("thread_details")
     .select("*")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (error || !thread) {
     notFound();
   }
 
-  const { data: replies } = await supabase
+  const { data: replies } = await admin
     .from("replies")
     .select("id, content, is_solution, created_at, author_id")
     .eq("thread_id", id)

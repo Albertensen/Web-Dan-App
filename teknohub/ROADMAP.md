@@ -112,19 +112,19 @@ Status: 🟡 Dalam Penyempurnaan (Katalog, Media, Search & Payment)
 - [x] Tampilan spesifikasi teknis produk & badge garansi
 - [x] Breadcrumb navigasi & rekomendasi produk terkait
 - [x] **Quantity Selector**: Tambahkan kontrol `[ - ] [ 1 ] [ + ]` di PDP sebelum tombol Tambah ke Keranjang
-- [ ] **Varian Produk**: Selector varian RAM/Storage/Warna untuk Laptop dan Smartphone
-- [ ] **Kalkulator Estimasi Ongkir Instan**: Widget input kecamatan/kota pembeli untuk cek biaya kirim JNE/SiCepat langsung di PDP
+- [x] **Varian Produk**: Selector varian RAM/Storage/Warna untuk Laptop dan Smartphone
+- [x] **Kalkulator Estimasi Ongkir Instan**: Widget input kecamatan/kota pembeli untuk cek biaya kirim JNE/SiCepat langsung di PDP
 - [ ] **Tab Diskusi Terkait**: Link otomatis ke thread forum yang membahas produk terkait
 
 ### 3.3. Cart, Kurir & Checkout
 - [x] Tambah ke keranjang (Zustand persist, AddToCartButton)
 - [x] Halaman /shop/cart (qty stepper, subtotal)
 - [x] Form checkout (/shop/checkout)
-- [ ] **Selective Cart Items**: Checkbox pilih item tertentu di keranjang yang ingin di-checkout
-- [ ] **Kupon & Voucher Promo**: Input voucher diskon belanja dan gratis ongkir di Cart & Checkout
+- [x] **Selective Cart Items**: Checkbox pilih item tertentu di keranjang yang ingin di-checkout
+- [x] **Kupon & Voucher Promo**: Input voucher diskon belanja dan gratis ongkir di Cart & Checkout
 - [ ] **Integrasi API Kurir Realtime (Biteship / RajaOngkir)**: Perhitungan ongkir otomatis berdasarkan berat aktual + opsi Asuransi & Packing Kayu
 - [ ] **Integrasi Midtrans Live**: Setup Server/Client Key production/sandbox, inject Snap popup payment (QRIS, VA BCA/Mandiri/BRI, GoPay), dan webhook handler status `PAID`
-- [ ] **Halaman Konfirmasi & Invoice**: Tampilan invoice resmi pesanan setelah pembayaran berhasil + link tracking resi pengiriman
+- [x] **Halaman Konfirmasi & Invoice**: Tampilan invoice resmi pesanan setelah pembayaran berhasil + link tracking resi pengiriman
 
 ---
 
