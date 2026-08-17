@@ -4,21 +4,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductImage from "./ProductImage";
 import { useCartStore } from "@/store/cartStore";
-import { Star, Heart, Truck, MapPin, ShoppingCart, Check, Award } from "lucide-react";
-
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  stock: number;
-  image_url: string | null;
-  category: string;
-  brand: string | null;
-  description?: string | null;
-  original_price?: number | null;
-  reviews?: { rating: number }[];
-}
+import { Star, Heart, Truck, MapPin, ShoppingCart, Check, Award, Zap, Globe, KeyRound } from "lucide-react";
+import type { Product } from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -37,6 +24,9 @@ const CATEGORY_LABEL: Record<string, string> = {
   case: "Casing",
   cooler: "Cooler",
   aksesoris: "Aksesoris",
+  software: "Software & OS",
+  "game-voucher": "Game Voucher",
+  course: "E-Book & Kursus",
 };
 
 const WISHLIST_KEY = "teknohub-wishlist";
@@ -107,12 +97,15 @@ export default function ProductCard({ product }: ProductCardProps) {
   const outOfStock = product.stock <= 0;
   const lowStock = !outOfStock && product.stock <= 5;
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
+  const isDigital = Boolean(product.is_digital);
   const href = `/shop/products/${product.slug}`;
 
   return (
     <Link
       href={href}
-      className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-accent hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 h-full"
+      className={`group relative bg-surface border rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-accent hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 h-full ${
+        isDigital ? "border-cyan-500/30 dark:border-cyan-500/20" : "border-slate-200 dark:border-slate-800"
+      }`}
     >
       {/* Gambar & Badges */}
       <div className="relative aspect-square rounded-xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
@@ -125,10 +118,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         )}
 
-        {/* Badge Official Store */}
-        <span className="absolute bottom-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-indigo-600/90 backdrop-blur-xs text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
-          <Award size={10} /> Official Store
-        </span>
+        {/* Badge Official Store / Lisensi Resmi */}
+        {isDigital ? (
+          <span className="absolute bottom-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-cyan-600/90 backdrop-blur-xs text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
+            <KeyRound size={10} /> Lisensi Resmi
+          </span>
+        ) : (
+          <span className="absolute bottom-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-indigo-600/90 backdrop-blur-xs text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
+            <Award size={10} /> Official Store
+          </span>
+        )}
 
         {/* Wishlist Button */}
         <button
@@ -174,18 +173,39 @@ export default function ProductCard({ product }: ProductCardProps) {
           <span className="text-[9px] text-accent font-bold uppercase tracking-wider bg-accent-dim px-2 py-0.5 rounded-md">
             {catLabel}
           </span>
-          <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded-md">
-            <Truck size={10} /> Bebas Ongkir
-          </span>
+          {isDigital ? (
+            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-cyan-600 bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-500/20 px-1.5 py-0.5 rounded-md">
+              <Zap size={10} /> Instan 0 Detik
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded-md">
+              <Truck size={10} /> Bebas Ongkir
+            </span>
+          )}
         </div>
 
-        <h3 className="text-xs sm:text-sm font-semibold leading-snug text-foreground line-clamp-2 h-9 mb-2 group-hover:text-accent transition">
+        <h3 className="text-xs sm:text-sm font-semibold leading-snug text-foreground line-clamp-2 h-9 mb-1.5 group-hover:text-accent transition">
           {product.name}
         </h3>
 
-        {/* Lokasi Toko */}
+        {/* License Type (jika ada) */}
+        {isDigital && product.license_type && (
+          <p className="text-[10px] text-cyan-600 dark:text-cyan-400 font-medium truncate mb-1">
+            📦 {product.license_type}
+          </p>
+        )}
+
+        {/* Lokasi Toko / Pengiriman */}
         <p className="text-[10px] text-tertiary flex items-center gap-1 mb-1">
-          <MapPin size={10} className="text-slate-400 shrink-0" /> Jakarta Pusat
+          {isDigital ? (
+            <>
+              <Globe size={10} className="text-cyan-500 shrink-0" /> Pengiriman Digital / Email
+            </>
+          ) : (
+            <>
+              <MapPin size={10} className="text-slate-400 shrink-0" /> Jakarta Pusat
+            </>
+          )}
         </p>
       </div>
 

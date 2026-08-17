@@ -1,3 +1,4 @@
+import type { Product } from "@/types/product";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import BuilderBanner from "@/components/BuilderBanner";
@@ -27,16 +28,7 @@ const TRUST_BADGES = [
   { icon: MessageSquare, title: "Komunitas Terpercaya", desc: "Diskusi & reputasi member" },
 ];
 
-interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  price: number;
-  stock: number;
-  image_url: string | null;
-  category: string;
-  brand: string | null;
-}
+
 
 export default async function Home() {
   let products: Product[] = [];

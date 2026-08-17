@@ -11,12 +11,7 @@ interface Props {
   initialMaxPrice?: string;
   initialBrands?: string;
   initialInStock?: string;
-}
-
-interface CategoryNode {
-  value: string;
-  label: string;
-  children?: CategoryNode[];
+  initialType?: string;
 }
 
 const BRANDS = ["ASUS","Lenovo","Acer","Apple","Samsung","MSI","Corsair","AMD","Intel","Kingston","NVIDIA","Xiaomi","LG"];
@@ -32,9 +27,18 @@ const CATEGORY_TREE: CategoryNode[] = [
   { value: "storage", label: "Storage" },
   { value: "motherboard", label: "Motherboard" },
   { value: "psu", label: "PSU" },
+  { value: "software", label: "Software & OS" },
+  { value: "game-voucher", label: "Game Voucher" },
+  { value: "course", label: "E-Book & Kursus" },
 ];
 
-export default function ProductFilter({ initialCategory = "", initialSearch = "", initialMinPrice = "", initialMaxPrice = "", initialBrands = "", initialInStock = "" }: Props) {
+interface CategoryNode {
+  value: string;
+  label: string;
+  children?: CategoryNode[];
+}
+
+export default function ProductFilter({ initialCategory = "", initialSearch = "", initialMinPrice = "", initialMaxPrice = "", initialBrands = "", initialInStock = "", initialType = "all" }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -44,6 +48,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
   const [max, setMax] = useState(initialMaxPrice);
   const [readyStock, setReadyStock] = useState(initialInStock === "1");
   const [brands, setBrands] = useState<string[]>(initialBrands ? initialBrands.split(",") : []);
+  const [type, setType] = useState(initialType);
 
   // sync URL -> state
   useEffect(() => {
@@ -53,12 +58,13 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
     setMax(searchParams.get("max_price") || "");
     setBrands(searchParams.get("brands") ? searchParams.get("brands")!.split(",") : []);
     setReadyStock(searchParams.get("in_stock") === "1");
+    setType(searchParams.get("type") || "all");
   }, [searchParams]);
 
-  const buildParams = (cat: string[] = cats, search: string = term, mn: string = min, mx: string = max, br: string[] = brands, st: boolean = readyStock) => {
+  const buildParams = (cat: string[] = cats, search: string = term, mn: string = min, mx: string = max, br: string[] = brands, st: boolean = readyStock, tp: string = type) => {
     const p = new URLSearchParams(searchParams.toString());
     p.delete("category"); p.delete("search"); p.delete("min_price"); p.delete("max_price");
-    p.delete("brands"); p.delete("in_stock");
+    p.delete("brands"); p.delete("in_stock"); p.delete("type");
     const c = cat.join(",");
     if (c) p.set("category", c);
     if (search) p.set("search", search);
@@ -66,6 +72,7 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
     if (mx) p.set("max_price", mx);
     if (br.length) p.set("brands", br.join(","));
     if (st) p.set("in_stock", "1");
+    if (tp && tp !== "all") p.set("type", tp);
     return p.toString();
   };
 
@@ -73,17 +80,21 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
 
   const toggleCat = (v: string) => {
     const next = v === "" ? [] : (ids.includes(v) ? ids.filter((x) => x !== v) : [...ids, v]);
-    // hanya 1 kategori akif kotak centang? multi-select
-    push(buildParams(next, term, min, max, brands, readyStock));
+    // hanya 1 kategori aktif kotak centang? multi-select
+    push(buildParams(next, term, min, max, brands, readyStock, type));
   };
 
   const toggleBrand = (b: string) => {
     const next = brands.includes(b) ? brands.filter((x) => x !== b) : [...brands, b];
-    push(buildParams(cats, term, min, max, next, readyStock));
+    push(buildParams(cats, term, min, max, next, readyStock, type));
   };
 
-  const aply = () => push(buildParams(cats, term, min, max, brands, readyStock));
-  const rset = () => { push(buildParams([], "", "", "", [], false)); };
+  const changeType = (v: string) => {
+    push(buildParams(cats, term, min, max, brands, readyStock, v));
+  };
+
+  const aply = () => push(buildParams(cats, term, min, max, brands, readyStock, type));
+  const rset = () => { push(buildParams([], "", "", "", [], false, "all")); };
 
   // multi-select state: pakai cats yg mungkin comma-separated
   const ids = cats.join(",").split(",").filter(Boolean);
@@ -94,6 +105,29 @@ export default function ProductFilter({ initialCategory = "", initialSearch = ""
         <h2 className="flex items-center gap-2 text-base font-semibold text-foreground">
           <SlidersHorizontal size={16} className="text-accent" /> Filter Produk
         </h2>
+      </div>
+
+      {/* Tipe Produk */}
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wider text-tertiary mb-2">Tipe Produk</p>
+        <div className="flex flex-col gap-1.5">
+          {[
+            { v: "all", l: "Semua" },
+            { v: "physical", l: "🖥️ Hardware Fisik" },
+            { v: "digital", l: "⚡ Produk Digital" },
+          ].map((t) => (
+            <label key={t.v} className="flex items-center gap-2 text-sm text-muted cursor-pointer">
+              <input
+                type="radio"
+                name="product-type"
+                checked={type === t.v}
+                onChange={() => changeType(t.v)}
+                className="accent-accent"
+              />
+              {t.l}
+            </label>
+          ))}
+        </div>
       </div>
 
       {/* Kategori */}

@@ -2,6 +2,7 @@ import FilterSortBar from "@/components/FilterSortBar";
 import ProductFilter from "@/components/ProductFilter";
 import ProductCard from "@/components/ProductCard";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import Link from "next/link";
 import type { Product } from "@/types/product";
 
 interface ProductsPageProps {
@@ -13,8 +14,15 @@ interface ProductsPageProps {
     brands?: string;
     in_stock?: string;
     sort?: string;
+    type?: string;
   };
 }
+
+const TYPE_TABS: { value: string; label: string }[] = [
+  { value: "all", label: "🔥 Semua Produk" },
+  { value: "physical", label: "🖥️ Hardware Fisik" },
+  { value: "digital", label: "⚡ Produk Digital" },
+];
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const category = searchParams.category || "";
@@ -24,10 +32,12 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   const brands = searchParams.brands || "";
   const inStock = searchParams.in_stock || "";
   const sort = searchParams.sort || "relevance";
+  const type = searchParams.type || "all";
 
   const params = new URLSearchParams({
     category, search, min_price: minPrice, max_price: maxPrice, brands, in_stock: inStock, sort,
   });
+  if (type !== "all") params.set("type", type);
   const apiUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/api/products?${params.toString()}`;
 
   let products: Product[] = [];
@@ -50,10 +60,37 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <p className="text-sm text-muted mt-1">{products.length} produk ditemukan</p>
       </header>
 
+      {/* Tab Filter Cepat: Semua / Hardware Fisik / Produk Digital */}
+      <div className="flex gap-2 mb-6 flex-wrap">
+        {TYPE_TABS.map((t) => {
+          const p = new URLSearchParams(searchParams);
+          if (t.value === "all") p.delete("type");
+          else p.set("type", t.value);
+          const active = type === t.value;
+          return (
+            <Link
+              key={t.value}
+              href={`?${p.toString()}`}
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-bold border transition ${
+                active
+                  ? t.value === "digital"
+                    ? "bg-cyan-500 text-white border-cyan-500 shadow-md shadow-cyan-500/25"
+                    : t.value === "physical"
+                      ? "bg-indigo-500 text-white border-indigo-500 shadow-md shadow-indigo-500/25"
+                      : "bg-accent text-white border-accent shadow-md shadow-accent/25"
+                  : "border-slate-300 dark:border-slate-700 text-muted hover:border-accent hover:text-accent bg-surface"
+              }`}
+            >
+              {t.label}
+            </Link>
+          );
+        })}
+      </div>
+
       <div className="flex gap-6 items-start">
         {/* Sidebar Filter (desktop) */}
         <div className="hidden lg:block w-64 shrink-0 sticky top-20">
-          <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} />
+          <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} initialType={type} />
         </div>
 
         <div className="flex-1 min-w-0">
@@ -65,7 +102,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             initialMaxPrice={maxPrice}
             initialSort={sort}
           >
-            <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} />
+            <ProductFilter initialCategory={category} initialSearch={search} initialMinPrice={minPrice} initialMaxPrice={maxPrice} initialBrands={brands} initialInStock={inStock} initialType={type} />
           </FilterSortBar>
 
           {products.length > 0 ? (

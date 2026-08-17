@@ -205,9 +205,9 @@ Status: ⏳ Siap Dikerjakan
 - [x] Seed 6 produk digital resmi (Windows 11 Pro, Office 365, Steam Wallet, Xbox Game Pass, Bitdefender, E-Book AI Builder)
 
 ### 2. Katalog & Filter Produk Digital
-- [ ] Tab filter cepat di `/shop/products`: [ Semua ] • [ 🖥️ Hardware Fisik ] • [ ⚡ Produk Digital ]
-- [ ] Kategori digital baru: Software & OS, Game Voucher, Security, E-Book Tech
-- [ ] Badge khusus di ProductCard: `⚡ Instant Delivery (0 Detik)` & `🌐 Pengiriman Digital`
+- [x] Tab filter cepat di `/shop/products`: [ Semua ] • [ 🖥️ Hardware Fisik ] • [ ⚡ Produk Digital ]
+- [x] Kategori digital baru: Software & OS, Game Voucher, Security, E-Book Tech
+- [x] Badge khusus di ProductCard: `⚡ Instant Delivery (0 Detik)` & `🌐 Pengiriman Digital`
 
 ### 3. Halaman Detail Produk Digital (PDP)
 - [ ] Sembunyikan widget ongkir fisik pada produk digital, gantikan dengan widget Pengiriman Instan Otomatis
