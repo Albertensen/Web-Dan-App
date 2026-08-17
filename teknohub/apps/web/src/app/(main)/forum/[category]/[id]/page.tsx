@@ -14,6 +14,7 @@ function getServiceClient() {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
+
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
 import FollowButton from "@/components/forum/FollowButton";
