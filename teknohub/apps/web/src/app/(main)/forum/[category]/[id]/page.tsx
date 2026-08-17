@@ -8,9 +8,11 @@ import { createClient } from "@supabase/supabase-js";
 // Server-side admin client utk baca thread & replies (hindari blokir RLS saat SSR)
 function getServiceClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) return supabase;
-  return createClient(url, key);
+  return createClient(url, key, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  });
 }
 import VoteControl from "@/components/forum/VoteControl";
 import ReplySection from "@/components/forum/ReplySection";
