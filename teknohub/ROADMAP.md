@@ -122,7 +122,7 @@ Status: 🟡 Dalam Penyempurnaan (Katalog, Media, Search & Payment)
 - [x] Form checkout (/shop/checkout)
 - [x] **Selective Cart Items**: Checkbox pilih item tertentu di keranjang yang ingin di-checkout
 - [x] **Kupon & Voucher Promo**: Input voucher diskon belanja dan gratis ongkir di Cart & Checkout
-- [ ] **Integrasi API Kurir Realtime (Biteship / RajaOngkir)**: Perhitungan ongkir otomatis berdasarkan berat aktual + opsi Asuransi & Packing Kayu
+- [x] **Integrasi API Kurir Realtime (Biteship / RajaOngkir)**: Perhitungan ongkir otomatis berdasarkan berat aktual + opsi Asuransi & Packing Kayu
 - [ ] **Integrasi Midtrans Live**: Setup Server/Client Key production/sandbox, inject Snap popup payment (QRIS, VA BCA/Mandiri/BRI, GoPay), dan webhook handler status `PAID`
 - [x] **Halaman Konfirmasi & Invoice**: Tampilan invoice resmi pesanan setelah pembayaran berhasil + link tracking resi pengiriman
 

@@ -65,7 +65,7 @@ export default function CheckoutForm() {
   const [payMethod, setPayMethod] = useState("qris");
   const [addonRakit, setAddonRakit] = useState(false);
   const [addonPacking, setAddonPacking] = useState(false);
-  const [modal, setModal] = useState<null | { method: string; va: string }>(null);
+  const [modal, setModal] = useState<null | { method: string; va: string; orderId?: string }>(null);
 
   const pack = COURIER_PACKS.find((p) => p.courier === form.courier)!;
   const service = pack.services.find((s) => s.id === form.service) ?? pack.services[0];
@@ -92,21 +92,44 @@ export default function CheckoutForm() {
       setErrors(ne);
       return;
     }
+    if (items.length === 0) {
+      setErrors({ general: "Keranjang kosong" });
+      return;
+    }
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 700));
-    // Simulasi payment intent
-    const va = ["8888 0123 4567 8901", "8808 1122 3344 5566", "1 2345 6789 0123", "9001 2233 4455 6677"][
-      ["qris","va","ewallet","cc"].indexOf(payMethod) % 4
-    ];
-    setSubmitting(false);
-    setModal({ method: payMethod, va });
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          courier: form.courier,
+          items: items.map((i) => ({ product_id: i.id, quantity: i.quantity })),
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setErrors({ general: json.error || "Gagal membuat pesanan" });
+        setSubmitting(false);
+        return;
+      }
+      setSubmitting(false);
+      // gunakan snap token jika ada, fallback simulasi VA
+      const va = ["8888 0123 4567 8901", "8808 1122 3344 5566", "1 2345 6789 0123", "9001 2233 4455 6677"][
+        ["qris","va","ewallet","cc"].indexOf(payMethod) % 4
+      ];
+      setModal({ method: payMethod, va, orderId: json.order_id });
+    } catch {
+      setErrors({ general: "Terjadi kesalahan jaringan. Coba lagi." });
+      setSubmitting(false);
+    }
   };
 
   const finishMockPayment = () => {
+    const oid = modal?.orderId ? `#${modal.orderId.slice(0, 8).toUpperCase()}` : "Pesanan baru";
     setModal(null);
     clearCart();
-    alert("Pembayaran berhasil (simulasi). Pesanan Anda sedang diproses.");
-    router.push("/shop/orders");
+    router.push(`/shop/orders?success=${oid}`);
   };
 
   const inputCls = (hasError: boolean) =>
@@ -230,7 +253,7 @@ export default function CheckoutForm() {
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setModal(null)}>
           <div className="w-full max-w-sm bg-surface rounded-2xl p-6" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-foreground">Simulasi Pembayaran</h3>
+              <h3 className="font-bold text-foreground">Simulasi Pembayaran{modal.orderId ? ` · ${modal.orderId.slice(0,8).toUpperCase()}` : ""}</h3>
               <button onClick={() => setModal(null)} aria-label="Tutup"><X size={18} /></button>
             </div>
             {modal.method === "qris" ? (
