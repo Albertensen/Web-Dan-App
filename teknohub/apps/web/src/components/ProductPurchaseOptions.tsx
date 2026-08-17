@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
-import { Minus, Plus, Truck, ShieldCheck, Loader2, ShoppingCart, Zap, Check } from "lucide-react";
+import { Minus, Plus, Truck, ShieldCheck, Loader2, ShoppingCart, Zap, Check, KeyRound, Globe } from "lucide-react";
 
 interface PurchaseProduct {
   id: string;
@@ -14,6 +14,9 @@ interface PurchaseProduct {
   stock?: number;
   brand?: string | null;
   category?: string | null;
+  is_digital?: boolean;
+  license_type?: string | null;
+  digital_instructions?: string | null;
 }
 
 interface Variant {
@@ -42,12 +45,13 @@ export default function ProductPurchaseOptions({ product }: Props) {
   const router = useRouter();
   const addItem = useCartStore((s) => s.add);
 
+  const isDigital = Boolean(product.is_digital);
   const baseStock = product.stock ?? 0;
   const [qty, setQty] = useState(1);
   const [variantIdx, setVariantIdx] = useState(0);
   const [added, setAdded] = useState(false);
 
-  // State Ongkir
+  // State Ongkir (hanya untuk fisik)
   const [city, setCity] = useState("");
   const [insur, setInsur] = useState(false);
   const [ongkir, setOngkir] = useState<{ label: string; cost: number } | null>(null);
@@ -55,13 +59,14 @@ export default function ProductPurchaseOptions({ product }: Props) {
   const [error, setError] = useState("");
 
   const cat = (product.category ?? "").toLowerCase();
-  const effectiveVariants =
-    DEFAULT_VARIANTS[cat] ??
-    (cat.includes("laptop")
-      ? DEFAULT_VARIANTS.laptop
-      : cat.includes("smart") || cat.includes("phone")
-      ? DEFAULT_VARIANTS.smartphone
-      : undefined);
+  const effectiveVariants = !isDigital
+    ? (DEFAULT_VARIANTS[cat] ??
+      (cat.includes("laptop")
+        ? DEFAULT_VARIANTS.laptop
+        : cat.includes("smart") || cat.includes("phone")
+        ? DEFAULT_VARIANTS.smartphone
+        : undefined))
+    : undefined;
 
   const variant = effectiveVariants?.[variantIdx];
   const base = Number(product.price);
@@ -116,17 +121,30 @@ export default function ProductPurchaseOptions({ product }: Props) {
     <div className="space-y-6">
       {/* Harga Utama Dinamis */}
       <div>
-        <span className="text-3xl sm:text-5xl font-black text-foreground tracking-tight">
-          {fmt(price)}
-        </span>
+        <div className="flex items-center gap-2 flex-wrap mb-1">
+          <span className="text-3xl sm:text-5xl font-black text-foreground tracking-tight">
+            {fmt(price)}
+          </span>
+          {isDigital && (
+            <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 text-xs font-bold flex items-center gap-1.5">
+              <Zap size={14} /> Lisensi Digital Instan
+            </span>
+          )}
+        </div>
         {variant && variant.priceDelta > 0 && (
           <p className="text-xs text-accent font-semibold mt-1">
             Termasuk penyesuaian varian: +{fmt(variant.priceDelta)}
           </p>
         )}
+        {isDigital && product.license_type && (
+          <p className="text-xs font-semibold text-tertiary mt-1 flex items-center gap-1">
+            <KeyRound size={12} className="text-cyan-500" /> Tipe Lisensi:{" "}
+            <span className="text-foreground font-bold">{product.license_type}</span>
+          </p>
+        )}
       </div>
 
-      {/* Pilihan Varian Produk */}
+      {/* Pilihan Varian Produk (Fisik) */}
       {effectiveVariants && effectiveVariants.length > 0 && (
         <div>
           <p className="text-sm font-bold text-foreground mb-2.5">Pilih Varian</p>
@@ -219,57 +237,71 @@ export default function ProductPurchaseOptions({ product }: Props) {
         </button>
       </div>
 
-      {/* Widget Estimasi Ongkir */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 bg-surface-2/40">
-        <p className="text-xs font-bold text-foreground flex items-center gap-2">
-          <Truck size={16} className="text-accent" /> Estimasi Ongkos Kirim
-        </p>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleCheckOngkir();
-              }
-            }}
-            placeholder="Ketik nama kota / kecamatan..."
-            className="flex-1 px-3.5 py-2.5 border border-slate-300 dark:border-slate-800 rounded-xl bg-surface text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40"
-          />
-          <button
-            type="button"
-            onClick={() => handleCheckOngkir()}
-            disabled={checking}
-            className="px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-bold hover:bg-accent-secondary transition disabled:opacity-50 flex items-center gap-1.5 shrink-0 cursor-pointer"
-          >
-            {checking ? <Loader2 size={14} className="animate-spin" /> : "Cek Ongkir"}
-          </button>
-        </div>
-        {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
-        {ongkir && (
-          <div className="text-xs space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
-            <p className="font-semibold text-foreground">
-              {ongkir.label}: <span className="text-accent font-black text-sm">{fmt(ongkir.cost)}</span>
-            </p>
-            <label className="flex items-center gap-2 text-muted cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={insur}
-                onChange={(e) => setInsur(e.target.checked)}
-                className="accent-accent w-4 h-4 rounded"
-              />
-              <ShieldCheck size={14} className="text-accent" /> Asuransi Pengiriman (+Rp 10.000)
-            </label>
-            {insur && (
-              <p className="text-tertiary">
-                Total Estimasi: <span className="font-bold text-foreground">{fmt(ongkir.cost + 10000)}</span>
-              </p>
-            )}
+      {/* Widget Pengiriman: Digital vs Ongkir Fisik */}
+      {isDigital ? (
+        <div className="rounded-2xl border border-cyan-500/30 dark:border-cyan-500/20 p-4 space-y-2 bg-gradient-to-r from-cyan-500/5 to-blue-500/5 dark:from-cyan-950/30 dark:to-blue-950/20">
+          <p className="text-xs font-bold text-cyan-600 dark:text-cyan-400 flex items-center gap-2">
+            <Zap size={16} /> Pengiriman Digital Instan (0 Detik)
+          </p>
+          <p className="text-xs text-tertiary leading-relaxed">
+            Kode lisensi serial key, voucher, atau link unduhan akan langsung diterbitkan di halaman invoice pesanan dan dikirim ke email akun Anda setelah pembayaran terkonfirmasi.
+          </p>
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 pt-1">
+            <Globe size={13} /> Bebas Ongkos Kirim 100% (Non-Fisik)
           </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 bg-surface-2/40">
+          <p className="text-xs font-bold text-foreground flex items-center gap-2">
+            <Truck size={16} className="text-accent" /> Estimasi Ongkos Kirim
+          </p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  handleCheckOngkir();
+                }
+              }}
+              placeholder="Ketik nama kota / kecamatan..."
+              className="flex-1 px-3.5 py-2.5 border border-slate-300 dark:border-slate-800 rounded-xl bg-surface text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40"
+            />
+            <button
+              type="button"
+              onClick={() => handleCheckOngkir()}
+              disabled={checking}
+              className="px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-bold hover:bg-accent-secondary transition disabled:opacity-50 flex items-center gap-1.5 shrink-0 cursor-pointer"
+            >
+              {checking ? <Loader2 size={14} className="animate-spin" /> : "Cek Ongkir"}
+            </button>
+          </div>
+          {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
+          {ongkir && (
+            <div className="text-xs space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+              <p className="font-semibold text-foreground">
+                {ongkir.label}: <span className="text-accent font-black text-sm">{fmt(ongkir.cost)}</span>
+              </p>
+              <label className="flex items-center gap-2 text-muted cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={insur}
+                  onChange={(e) => setInsur(e.target.checked)}
+                  className="accent-accent w-4 h-4 rounded"
+                />
+                <ShieldCheck size={14} className="text-accent" /> Asuransi Pengiriman (+Rp 10.000)
+              </label>
+              {insur && (
+                <p className="text-tertiary">
+                  Total Estimasi: <span className="font-bold text-foreground">{fmt(ongkir.cost + 10000)}</span>
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -210,8 +210,8 @@ Status: ⏳ Siap Dikerjakan
 - [x] Badge khusus di ProductCard: `⚡ Instant Delivery (0 Detik)` & `🌐 Pengiriman Digital`
 
 ### 3. Halaman Detail Produk Digital (PDP)
-- [ ] Sembunyikan widget ongkir fisik pada produk digital, gantikan dengan widget Pengiriman Instan Otomatis
-- [ ] Tab Panduan Aktivasi Lisensi & Syarat Redeem di `ProductDetailsTabs.tsx`
+- [x] Sembunyikan widget ongkir fisik pada produk digital, gantikan dengan widget Pengiriman Instan Otomatis
+- [x] Tab Panduan Aktivasi Lisensi & Syarat Redeem di `ProductDetailsTabs.tsx`
 
 ### 4. Checkout Bebas Ongkir & Serial Key di Invoice
 - [ ] Checkout otomatis Rp 0 ongkir jika pesanan adalah produk digital (tanpa kurir fisik)

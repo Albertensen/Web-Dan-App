@@ -59,7 +59,7 @@ export default async function ProductPage({ params }: ProductProps) {
 
   const { data: related } = await supabase
     .from("products")
-    .select("id, name, slug, price, image_url, category, brand, stock")
+    .select("id, name, slug, price, image_url, category, brand, stock, is_digital, license_type")
     .eq("category", product.category)
     .eq("is_active", true)
     .neq("id", product.id)
@@ -106,8 +106,22 @@ export default async function ProductPage({ params }: ProductProps) {
         )}
         <span aria-hidden="true">/</span>
         <span className="font-medium text-foreground line-clamp-1">{product.name}</span>
-        <span className={`ml-2 px-2 py-0.5 rounded-full text-[11px] font-bold ${product.stock <= 0 ? "bg-red-100 text-red-600" : product.stock <= 5 ? "bg-amber-100 text-amber-700" : "bg-emerald-100 text-emerald-700"}`}>
-          {product.stock <= 0 ? "Stok Habis" : product.stock <= 5 ? `Sisa ${product.stock} unit!` : "Stok Tersedia"}
+        <span className={`ml-2 px-2 py-0.5 rounded-full text-[11px] font-bold ${
+          product.is_digital
+            ? "bg-cyan-100 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300"
+            : product.stock <= 0
+              ? "bg-red-100 text-red-600"
+              : product.stock <= 5
+                ? "bg-amber-100 text-amber-700"
+                : "bg-emerald-100 text-emerald-700"
+        }`}>
+          {product.is_digital
+            ? "⚡ Produk Digital"
+            : product.stock <= 0
+              ? "Stok Habis"
+              : product.stock <= 5
+                ? `Sisa ${product.stock} unit!`
+                : "Stok Tersedia"}
         </span>
       </nav>
 
@@ -122,7 +136,7 @@ export default async function ProductPage({ params }: ProductProps) {
           />
         </div>
 
-{/* Right Column: Details and CTA */}
+        {/* Right Column: Details and CTA */}
         <div className="col-span-1 space-y-6">
           <div className="flex items-start justify-between gap-3">
             <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground">{product.name}</h1>
@@ -143,6 +157,9 @@ export default async function ProductPage({ params }: ProductProps) {
                 stock: Number(product.stock),
                 brand: product.brand,
                 category: product.category,
+                is_digital: product.is_digital,
+                license_type: product.license_type,
+                digital_instructions: product.digital_instructions,
               }}
             />
           </div>
@@ -158,6 +175,10 @@ export default async function ProductPage({ params }: ProductProps) {
               brand: product.brand,
               price: Number(product.price),
               stock: Number(product.stock),
+              is_digital: product.is_digital,
+              license_type: product.license_type,
+              digital_instructions: product.digital_instructions,
+              download_url: product.download_url,
             }}
           />
         </div>
