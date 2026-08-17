@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import AddToCartButton from "./AddToCartButton";
-import { Minus, Plus, Truck, ShieldCheck, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/cartStore";
+import { Minus, Plus, Truck, ShieldCheck, Loader2, ShoppingCart, Zap, Check } from "lucide-react";
 
 interface PurchaseProduct {
   id: string;
@@ -38,9 +39,13 @@ const DEFAULT_VARIANTS: Record<string, Variant[]> = {
 };
 
 export default function ProductPurchaseOptions({ product }: Props) {
+  const router = useRouter();
+  const addItem = useCartStore((s) => s.add);
+
   const baseStock = product.stock ?? 0;
   const [qty, setQty] = useState(1);
   const [variantIdx, setVariantIdx] = useState(0);
+  const [added, setAdded] = useState(false);
 
   // State Ongkir
   const [city, setCity] = useState("");
@@ -50,104 +55,221 @@ export default function ProductPurchaseOptions({ product }: Props) {
   const [error, setError] = useState("");
 
   const cat = (product.category ?? "").toLowerCase();
-  const effectiveVariants = DEFAULT_VARIANTS[cat] ?? (cat.includes("laptop") ? DEFAULT_VARIANTS.laptop : cat.includes("smart") || cat.includes("phone") ? DEFAULT_VARIANTS.smartphone : undefined);
+  const effectiveVariants =
+    DEFAULT_VARIANTS[cat] ??
+    (cat.includes("laptop")
+      ? DEFAULT_VARIANTS.laptop
+      : cat.includes("smart") || cat.includes("phone")
+      ? DEFAULT_VARIANTS.smartphone
+      : undefined);
+
   const variant = effectiveVariants?.[variantIdx];
   const base = Number(product.price);
   const price = variant ? base + variant.priceDelta : base;
   const stock = variant?.stock ?? baseStock;
+  const out = stock <= 0;
 
-  const dec = (e: React.MouseEvent) => { e.preventDefault(); setQty((q) => Math.max(1, q - 1)); };
-  const inc = (e: React.MouseEvent) => { e.preventDefault(); setQty((q) => Math.min(stock, q + 1)); };
+  const fmt = (n: number) =>
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    }).format(n);
 
-  const checkOngkir = (e?: React.MouseEvent | React.KeyboardEvent) => {
+  const handleAddToCart = (buyNow: boolean = false) => {
+    if (out) return;
+    const itemToAdd = {
+      id: product.id,
+      name: variant ? `${product.name} (${variant.label})` : product.name,
+      slug: product.slug,
+      price,
+      stock,
+      image_url: product.image_url,
+    };
+
+    addItem(itemToAdd, qty);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+
+    if (buyNow) {
+      router.push("/shop/checkout");
+    }
+  };
+
+  const handleCheckOngkir = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!city.trim()) { setError("Masukkan kota/kecamatan dahulu"); return; }
-    setError(""); setChecking(true); setOngkir(null);
+    if (!city.trim()) {
+      setError("Masukkan kota/kecamatan dahulu");
+      return;
+    }
+    setError("");
+    setChecking(true);
+    setOngkir(null);
     setTimeout(() => {
       const tariff = Math.round(22000 + (city.length % 5) * 5000);
       setOngkir({ label: "Reguler (JNE/SiCepat) 2-3 hari", cost: tariff });
       setChecking(false);
-    }, 500);
+    }, 400);
   };
 
-  const fmt = (n: number) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
-  const out = stock <= 0;
-
   return (
-    <div className="space-y-4">
-      {/* Varian Produk */}
+    <div className="space-y-6">
+      {/* Harga Utama Dinamis */}
+      <div>
+        <span className="text-3xl sm:text-5xl font-black text-foreground tracking-tight">
+          {fmt(price)}
+        </span>
+        {variant && variant.priceDelta > 0 && (
+          <p className="text-xs text-accent font-semibold mt-1">
+            Termasuk penyesuaian varian: +{fmt(variant.priceDelta)}
+          </p>
+        )}
+      </div>
+
+      {/* Pilihan Varian Produk */}
       {effectiveVariants && effectiveVariants.length > 0 && (
         <div>
-          <p className="text-sm font-medium text-muted mb-2">Pilih Varian Produk</p>
-          <div className="flex flex-wrap gap-2">
-            {effectiveVariants.map((v, i) => (
-              <button
-                key={v.label}
-                type="button"
-                onClick={(e) => { e.preventDefault(); setVariantIdx(i); setQty(1); }}
-                className={`px-3.5 py-2 rounded-xl border text-xs font-semibold transition ${variantIdx === i ? "border-accent bg-accent-dim text-accent shadow-sm" : "border-slate-300 dark:border-slate-800 text-muted hover:border-accent"}`}
-              >
-                {v.label}
-                {v.priceDelta > 0 && <span className="ml-1.5 text-accent font-bold">+{fmt(v.priceDelta)}</span>}
-              </button>
-            ))}
+          <p className="text-sm font-bold text-foreground mb-2.5">Pilih Varian</p>
+          <div className="flex flex-wrap gap-2.5">
+            {effectiveVariants.map((v, i) => {
+              const isSelected = variantIdx === i;
+              return (
+                <button
+                  key={v.label}
+                  type="button"
+                  onClick={() => {
+                    setVariantIdx(i);
+                    setQty(1);
+                  }}
+                  className={`px-4 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer select-none ${
+                    isSelected
+                      ? "border-accent bg-accent text-white shadow-md shadow-accent/20 scale-[1.02]"
+                      : "border-slate-300 dark:border-slate-800 bg-surface text-muted hover:border-accent hover:text-foreground"
+                  }`}
+                >
+                  {isSelected && <Check size={14} className="stroke-[3]" />}
+                  <span>{v.label}</span>
+                  {v.priceDelta > 0 && (
+                    <span className={isSelected ? "text-white/90" : "text-accent font-bold"}>
+                      (+{fmt(v.priceDelta)})
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
 
-      {/* Harga Dinamis + Qty Selector */}
-      <div className="flex items-baseline justify-between pt-2">
-        <span className="text-3xl sm:text-4xl font-black text-foreground">{fmt(price)}</span>
+      {/* Jumlah / Kuantitas */}
+      <div className="flex items-center gap-4">
+        <span className="text-sm font-bold text-foreground">Jumlah</span>
+        <div className="flex items-center gap-2 border border-slate-300 dark:border-slate-800 rounded-full p-1 bg-surface shadow-sm">
+          <button
+            type="button"
+            onClick={() => setQty((q) => Math.max(1, q - 1))}
+            disabled={qty <= 1 || out}
+            aria-label="Kurangi Jumlah"
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-surface-2 hover:bg-slate-200 dark:hover:bg-slate-700 text-foreground font-bold disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition"
+          >
+            <Minus size={14} />
+          </button>
+          <span className="w-8 text-center font-bold text-sm text-foreground select-none">{qty}</span>
+          <button
+            type="button"
+            onClick={() => setQty((q) => Math.min(stock, q + 1))}
+            disabled={qty >= stock || out}
+            aria-label="Tambah Jumlah"
+            className="w-8 h-8 rounded-full flex items-center justify-center bg-surface-2 hover:bg-slate-200 dark:hover:bg-slate-700 text-foreground font-bold disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
+        <span className="text-xs text-tertiary">
+          {out ? "Stok Habis" : `Tersedia ${stock} unit`}
+        </span>
       </div>
 
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-medium text-muted">Jumlah</span>
-        <div className="flex items-center gap-2 border border-slate-300 dark:border-slate-800 rounded-full p-1 bg-surface">
-          <button type="button" onClick={dec} aria-label="Kurangi" disabled={qty <= 1 || out} className="w-8 h-8 rounded-full flex items-center justify-center bg-surface-2 hover:bg-surface-2/80 font-bold disabled:opacity-40"><Minus size={14} /></button>
-          <span className="w-8 text-center font-bold">{qty}</span>
-          <button type="button" onClick={inc} aria-label="Tambah" disabled={qty >= stock || out} className="w-8 h-8 rounded-full flex items-center justify-center bg-surface-2 hover:bg-surface-2/80 font-bold disabled:opacity-40"><Plus size={14} /></button>
-        </div>
-        <span className="text-xs text-tertiary">Maks. {stock} unit</span>
+      {/* Tombol Aksi Tambah ke Keranjang & Beli Sekarang */}
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <button
+          type="button"
+          onClick={() => handleAddToCart(false)}
+          disabled={out}
+          className="flex-1 py-3.5 px-6 text-sm font-bold rounded-full transition-all border-2 border-accent text-accent hover:bg-accent hover:text-white flex items-center justify-center gap-2 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          {added ? (
+            <>
+              <Check size={16} /> Berhasil Ditambahkan
+            </>
+          ) : (
+            <>
+              <ShoppingCart size={16} /> Tambah ke Keranjang
+            </>
+          )}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleAddToCart(true)}
+          disabled={out}
+          className="flex-1 py-3.5 px-6 text-sm font-bold rounded-full transition-all bg-accent hover:bg-accent-secondary text-white flex items-center justify-center gap-2 shadow-md shadow-accent/20 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        >
+          <Zap size={16} /> Beli Sekarang
+        </button>
       </div>
 
       {/* Widget Estimasi Ongkir */}
-      <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3.5 space-y-2.5 bg-surface-2/40">
-        <p className="text-xs font-bold text-muted flex items-center gap-1.5"><Truck size={15} className="text-accent" /> Estimasi Ongkos Kirim</p>
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 p-4 space-y-3 bg-surface-2/40">
+        <p className="text-xs font-bold text-foreground flex items-center gap-2">
+          <Truck size={16} className="text-accent" /> Estimasi Ongkos Kirim
+        </p>
         <div className="flex gap-2">
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); checkOngkir(e); } }}
-            placeholder="Contoh: Jakarta Selatan, Surabaya..."
-            className="flex-1 px-3 py-2 border border-slate-300 dark:border-slate-800 rounded-lg bg-surface text-sm text-foreground focus:outline-none focus:border-accent"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleCheckOngkir();
+              }
+            }}
+            placeholder="Ketik nama kota / kecamatan..."
+            className="flex-1 px-3.5 py-2.5 border border-slate-300 dark:border-slate-800 rounded-xl bg-surface text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent/40"
           />
           <button
             type="button"
-            onClick={(e) => checkOngkir(e)}
+            onClick={() => handleCheckOngkir()}
             disabled={checking}
-            className="px-4 py-2 rounded-lg bg-accent text-white text-xs font-bold hover:bg-accent-secondary transition disabled:opacity-50 flex items-center gap-1 shrink-0"
+            className="px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-bold hover:bg-accent-secondary transition disabled:opacity-50 flex items-center gap-1.5 shrink-0 cursor-pointer"
           >
             {checking ? <Loader2 size={14} className="animate-spin" /> : "Cek Ongkir"}
           </button>
         </div>
         {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
         {ongkir && (
-          <div className="text-xs space-y-1.5 pt-1 border-t border-slate-200 dark:border-slate-800">
-            <p className="font-semibold text-foreground">{ongkir.label}: <span className="text-accent font-bold">{fmt(ongkir.cost)}</span></p>
+          <div className="text-xs space-y-2 pt-2 border-t border-slate-200 dark:border-slate-800">
+            <p className="font-semibold text-foreground">
+              {ongkir.label}: <span className="text-accent font-black text-sm">{fmt(ongkir.cost)}</span>
+            </p>
             <label className="flex items-center gap-2 text-muted cursor-pointer select-none">
-              <input type="checkbox" checked={insur} onChange={(e) => setInsur(e.target.checked)} className="accent-accent" />
-              <ShieldCheck size={13} className="text-accent" /> Asuransi Pengiriman (+Rp 10.000)
+              <input
+                type="checkbox"
+                checked={insur}
+                onChange={(e) => setInsur(e.target.checked)}
+                className="accent-accent w-4 h-4 rounded"
+              />
+              <ShieldCheck size={14} className="text-accent" /> Asuransi Pengiriman (+Rp 10.000)
             </label>
-            {insur && <p className="text-tertiary">Total Ongkir + Asuransi: <span className="font-bold text-foreground">{fmt(ongkir.cost + 10000)}</span></p>}
+            {insur && (
+              <p className="text-tertiary">
+                Total Estimasi: <span className="font-bold text-foreground">{fmt(ongkir.cost + 10000)}</span>
+              </p>
+            )}
           </div>
         )}
       </div>
-
-      <AddToCartButton
-        product={{ ...product, price, stock }}
-        qty={qty}
-      />
     </div>
   );
 }

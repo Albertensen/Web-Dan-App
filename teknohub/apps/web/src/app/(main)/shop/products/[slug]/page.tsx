@@ -58,12 +58,6 @@ export default async function ProductPage({ params }: ProductProps) {
     notFound();
   }
 
-  const formattedPrice = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  }).format(Number(product.price));
-
   const { data: related } = await supabase
     .from("products")
     .select("id, name, slug, price, image_url, category, brand, stock")
@@ -136,26 +130,10 @@ export default async function ProductPage({ params }: ProductProps) {
             <div className="shrink-0 mt-1"><ShareButton /></div>
           </div>
 
-                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                      <p className="text-sm sm:text-lg text-accent font-medium">Brand: {product.brand || "Unknown"}</p>
-                      <span className="text-3xl sm:text-5xl font-extrabold text-foreground">{formattedPrice}</span>
-                    </div>
+          <p className="text-sm sm:text-base text-accent font-bold">Brand: {product.brand || "TeknoHub Official"}</p>
 
-          <div
-            className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-bold border-2 ${
-              product.stock > 5
-                ? "bg-green-200 text-green-900 border-green-800"
-                : "bg-yellow-200 text-yellow-900 border-yellow-800"
-            }`}
-          >
-            Stok: {product.stock}
-          </div>
-
-          <div className="pt-4 border-t border-border">
-            <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
-            <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
-          </div>
-<div className="pt-6">
+          {/* Pilihan Pembelian: Harga Dinamis, Varian, Qty, Ongkir, dan Tombol Beli */}
+          <div className="pt-2">
             <ProductPurchaseOptions
               product={{
                 id: product.id,
@@ -170,7 +148,12 @@ export default async function ProductPage({ params }: ProductProps) {
             />
           </div>
 
-          {/* Ulasan & diskusi produk (tier-based) */}
+          <div className="pt-6 border-t border-border">
+            <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
+            <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
+          </div>
+
+          {/* Ulasan & diskusi produk */}
           <div className="pt-6 border-t border-border">
             <h2 className="text-xl font-semibold mb-4 text-muted">Review &amp; Diskusi Produk</h2>
             <ProductReviews productId={product.id} />
