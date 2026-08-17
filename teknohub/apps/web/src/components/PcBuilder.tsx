@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import SaveBuildButton from "./SaveBuildButton";
 import RequestQuoteModal from "./builder/RequestQuoteModal";
+import PCBuilderCanvas from "./builder/PCBuilderCanvas";
+
 import { useBuilderStore, type SelectedComponents, type RecommendedBuild } from "@/store/builderStore";
 import { Bot, Gamepad2, Rocket, Wrench, Clapperboard, Briefcase, Banknote, AlertTriangle, ShoppingCart, Check, Link2, FileText, Printer } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -242,7 +244,9 @@ export default function PcBuilder() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* Visualisasi Chassis PC Interaktif */}
+      <PCBuilderCanvas />
       <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Rakit PC dengan AI</h2>
 

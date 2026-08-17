@@ -4,8 +4,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase/client";
 import ProductImage from "@/components/ProductImage";
 import ProductPurchaseOptions from "@/components/ProductPurchaseOptions";
-import ProductReviews from "@/components/ProductReviews";
-import RelatedForumThreads from "@/components/forum/RelatedForumThreads";
+import ProductDetailsTabs from "@/components/shop/ProductDetailsTabs";
 import ProductGallery from "@/components/ProductGallery";
 import StickyBuyBar from "@/components/StickyBuyBar";
 import ShareButton from "@/components/ShareButton";
@@ -148,18 +147,19 @@ export default async function ProductPage({ params }: ProductProps) {
             />
           </div>
 
-          <div className="pt-6 border-t border-border">
-            <h2 className="text-xl font-semibold mb-3 text-muted">Deskripsi Produk</h2>
-            <p className="text-tertiary leading-relaxed">{product.description || "Tidak ada deskripsi tersedia."}</p>
-          </div>
-
-          {/* Ulasan & diskusi produk */}
-          <div className="pt-6 border-t border-border">
-            <h2 className="text-xl font-semibold mb-4 text-muted">Review &amp; Diskusi Produk</h2>
-            <ProductReviews productId={product.id} />
-          </div>
-
-          <RelatedForumThreads productName={product.name} brand={product.brand ?? ""} category={product.category} />
+          {/* Tab Terpadu (Deskripsi, Ulasan, dan Forum) */}
+          <ProductDetailsTabs
+            product={{
+              id: product.id,
+              name: product.name,
+              slug: product.slug,
+              description: product.description,
+              category: product.category,
+              brand: product.brand,
+              price: Number(product.price),
+              stock: Number(product.stock),
+            }}
+          />
         </div>
       </div>
 
