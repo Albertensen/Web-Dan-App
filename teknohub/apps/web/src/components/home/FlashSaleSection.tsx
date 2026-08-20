@@ -103,29 +103,29 @@ export default function FlashSaleSection() {
   const pad = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <section className="bg-white border border-[#CBD5E1] rounded-3xl p-6 sm:p-8 text-[#0F172A] shadow-sm space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#CBD5E1] pb-4">
+    <section className="bg-gradient-to-br from-[#0F2A4A] via-[#1E3A8A] to-[#1D4ED8] rounded-3xl p-6 sm:p-8 text-white shadow-xl border border-blue-400/20 space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/15 pb-4">
         <div className="flex items-center gap-3">
-          <span className="w-10 h-10 rounded-2xl bg-[#0F2A4A] text-white flex items-center justify-center font-black shadow-inner">
+          <span className="w-10 h-10 rounded-2xl bg-white/10 border border-white/20 text-amber-300 flex items-center justify-center font-black shadow-inner">
             <Zap size={20} className="fill-current" />
           </span>
           <div>
-            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-[#0F2A4A] flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2">
               FLASH SALE <span className="text-amber-400 font-bold text-xs uppercase px-2 py-0.5 bg-amber-500/10 border border-amber-500/30 rounded-lg">Hari Ini</span>
             </h2>
-            <p className="text-xs text-[#475569] mt-0.5">Penawaran diskon terbatas hardware resmi distributor.</p>
+            <p className="text-xs text-blue-100/80 mt-0.5">Penawaran diskon terbatas hardware resmi distributor.</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 bg-[#0F2A4A] text-white px-3.5 py-1.5 rounded-2xl self-start sm:self-auto shadow-xs">
+        <div className="flex items-center gap-2 bg-black/40 border border-white/20 px-3.5 py-1.5 rounded-2xl self-start sm:self-auto shadow-sm">
           <Timer size={15} className="text-amber-400 animate-pulse" />
           <span className="text-xs font-semibold text-slate-200">Berakhir:</span>
           <div className="flex items-center gap-1 font-mono text-xs font-black text-amber-400">
-            <span className="bg-[#1E3A8A] px-2 py-0.5 rounded-md text-white font-mono font-bold">{pad(timeLeft.hours)}</span>
+            <span className="bg-black/50 border border-white/15 px-2 py-0.5 rounded-md text-amber-300 font-mono font-bold">{pad(timeLeft.hours)}</span>
             <span>:</span>
-            <span className="bg-[#1E3A8A] px-2 py-0.5 rounded-md text-white font-mono font-bold">{pad(timeLeft.minutes)}</span>
+            <span className="bg-black/50 border border-white/15 px-2 py-0.5 rounded-md text-amber-300 font-mono font-bold">{pad(timeLeft.minutes)}</span>
             <span>:</span>
-            <span className="bg-[#1E3A8A] px-2 py-0.5 rounded-md text-white font-mono font-bold">{pad(timeLeft.seconds)}</span>
+            <span className="bg-black/50 border border-white/15 px-2 py-0.5 rounded-md text-amber-300 font-mono font-bold">{pad(timeLeft.seconds)}</span>
           </div>
         </div>
       </div>
@@ -137,7 +137,7 @@ export default function FlashSaleSection() {
             <Link
               key={p.id}
               href={`/shop/products/${p.slug}`}
-              className="group relative bg-[#F8FAFC] border border-[#CBD5E1] rounded-2xl p-3 sm:p-4 flex flex-col justify-between hover:border-[#1D4ED8] hover:shadow-md hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-white text-slate-900 border border-slate-100 rounded-2xl p-3 sm:p-4 flex flex-col justify-between shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               <span className="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-black shadow flex items-center gap-1">
                 <Flame size={11} className="fill-current" /> -{p.discountPercent}%

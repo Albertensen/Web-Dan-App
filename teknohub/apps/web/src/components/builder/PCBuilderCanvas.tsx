@@ -34,7 +34,7 @@ export default function PCBuilderCanvas() {
   const partCount = Object.values(selected).filter(Boolean).length;
 
   return (
-    <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 text-white shadow-2xl space-y-6">
+    <div className="bg-gradient-to-br from-[#0F2A4A] via-[#162F56] to-[#1E3A8A] rounded-3xl p-6 shadow-xl border border-blue-400/20 text-white space-y-6">
       {/* Top Bar: Info Rakitan + RGB Selector */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800/80">
         <div>
