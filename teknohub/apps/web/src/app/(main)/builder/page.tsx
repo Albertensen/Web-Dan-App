@@ -1,6 +1,5 @@
 import PcBuilder from "@/components/PcBuilder";
 import PCBuilderChatInterface from "@/components/builder/PCBuilderChatInterface";
-import BuilderHero3D from "@/components/builder/BuilderHero3D";
 
 export const metadata = {
   title: "PC Builder AI — TeknoHub",
@@ -9,11 +8,8 @@ export const metadata = {
 
 export default function BuilderPage() {
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
-      {/* SECTION A — Hero 3D ambience */}
-      <BuilderHero3D />
-
-      {/* SECTION B — Wizard + AI Chat */}
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
+      {/* Wizard + AI Chat */}
       <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
         <div>
           <PcBuilder />

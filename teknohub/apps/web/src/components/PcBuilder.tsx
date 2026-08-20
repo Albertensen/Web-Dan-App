@@ -337,44 +337,6 @@ export default function PcBuilder() {
 
       {result && (
         <div className="mt-8 space-y-4">
-          {/* Build summary (lokal — dari tombol Rekomendasi) */}
-          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-foreground">Build Rekomendasi</h3>
-              <span
-                className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  result.within_budget
-                    ? "bg-emerald-500/20 text-emerald-300"
-                    : "bg-amber-500/20 text-amber-300"
-                }`}
-              >
-                {result.within_budget ? "✓ Dalam budget" : <span className="inline-flex items-center gap-1"><AlertTriangle size={14} /> Melebihi budget</span>}
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {result.parts.map((p) => (
-                <div key={p.id} className="flex justify-between text-sm py-1.5 border-b border-border/50 last:border-0">
-                  <span className="text-tertiary">{TYPE_LABEL[p.type] ?? p.type}</span>
-                  <span className="text-foreground">{p.name}</span>
-                  <span className="text-muted font-medium">{formatIDR(p.price)}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex justify-between mt-4 pt-3 border-t border-border">
-              <span className="font-semibold text-foreground">Total</span>
-              <span className={`font-bold ${result.within_budget ? "text-emerald-400" : "text-amber-400"}`}>
-                {formatIDR(result.total)}
-              </span>
-            </div>
-
-            <div className="mt-4 flex justify-end gap-2">
-              <SaveBuildButton parts={result.parts} buildType={result.useCase} />
-              <RequestQuoteModal />
-            </div>
-          </div>
-
           {/* AI analysis */}
           <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
             <h4 className="font-semibold text-foreground mb-3">Analisis AI</h4>
