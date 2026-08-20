@@ -44,9 +44,9 @@ const COURIERS = [
 
 export default function Footer() {
   return (
-    <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 bg-surface">
+    <footer className="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white">
       {/* 4 Keunggulan Utama Belanja */}
-      <div className="border-b border-slate-200 dark:border-slate-800 bg-surface-2/40 py-8 px-4 sm:px-6">
+      <div className="border-b border-slate-200 dark:border-slate-800 bg-white-2/40 py-8 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-2xl bg-accent/10 text-accent flex items-center justify-center shrink-0">
@@ -137,7 +137,7 @@ export default function Footer() {
               {PAYMENTS.map((p) => (
                 <span
                   key={p}
-                  className="px-3 py-1.5 bg-surface border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-foreground shadow-2xs hover:border-accent transition"
+                  className="px-3 py-1.5 bg-white border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-foreground shadow-2xs hover:border-accent transition"
                 >
                   {p}
                 </span>
@@ -154,7 +154,7 @@ export default function Footer() {
               {COURIERS.map((c) => (
                 <span
                   key={c}
-                  className="px-3 py-1.5 bg-surface border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-foreground shadow-2xs hover:border-accent transition"
+                  className="px-3 py-1.5 bg-white border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-foreground shadow-2xs hover:border-accent transition"
                 >
                   {c}
                 </span>

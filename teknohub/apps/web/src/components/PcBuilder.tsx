@@ -141,7 +141,7 @@ export default function PcBuilder() {
   const wattStatus = (() => {
     const psu = estWattage <= 0 ? 0 : Math.ceil((estWattage * 1.35) / 50) * 50;
     const pct = estWattage <= 0 ? 0 : Math.min(100, (estWattage / 650) * 100);
-    if (estWattage <= 0) return { pct: 0, bar: "bg-slate-600", dot: "text-slate-400", label: "Belum ada komponen", psu: 0 };
+    if (estWattage <= 0) return { pct: 0, bar: "bg-slate-600", dot: "text-[#64748B]", label: "Belum ada komponen", psu: 0 };
     if (estWattage < 500) return { pct, bar: "bg-emerald-500", dot: "text-emerald-400", label: "Aman", psu };
     if (estWattage < 650) return { pct, bar: "bg-amber-500", dot: "text-amber-400", label: "Perhatian", psu };
     return { pct, bar: "bg-red-500", dot: "text-red-400", label: "Butuh PSU besar", psu };
@@ -263,7 +263,7 @@ export default function PcBuilder() {
     <div className="max-w-4xl mx-auto space-y-8">
       {/* Visualisasi Chassis PC Interaktif */}
       <PCBuilderCanvas />
-      <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
+      <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#CBD5E1]">
         <h2 className="text-xl font-semibold mb-4 text-foreground">Rakit PC dengan AI</h2>
 
         {/* Preset Budget Tier Instan */}
@@ -327,7 +327,7 @@ export default function PcBuilder() {
         <button
           onClick={() => recommend()}
           disabled={loading}
-          className="w-full px-6 py-3 rounded-xl bg-accent text-white font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
+          className="w-full px-6 py-3 rounded-xl bg-accent text-[#0F172A] font-semibold hover:opacity-90 transition-opacity disabled:opacity-50"
         >
           {loading ? "Menghitung..." : <span className="inline-flex items-center gap-1.5"><Rocket size={16} /> Buat Rekomendasi</span>}
         </button>
@@ -338,7 +338,7 @@ export default function PcBuilder() {
       {result && (
         <div className="mt-8 space-y-4">
           {/* AI analysis */}
-          <div className="bg-surface-2/60 p-6 rounded-xl shadow-lg border border-border">
+          <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#CBD5E1]">
             <h4 className="font-semibold text-foreground mb-3">Analisis AI</h4>
             {result.bottleneck ? (
               <div className="flex gap-2 text-sm mb-3">
@@ -371,49 +371,49 @@ export default function PcBuilder() {
       )}
 
       {/* ===== Build Summary — single source of truth (store, sync dari AI chat) ===== */}
-      <div className="mt-8 bg-slate-900/70 border border-cyan-500/20 rounded-2xl p-6 shadow-[0_0_40px_rgba(0,200,255,0.05)]">
+      <div className="mt-8 bg-white border border-[#CBD5E1] rounded-2xl p-6 shadow-sm text-[#0F172A]">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-[#0F2A4A] flex items-center gap-2 font-black">
             <span className="inline-flex items-center gap-1.5"><Bot size={16} /> Build Summary</span>
             {hasAnyComponent && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#EFF6FF] text-[#1D4ED8] border border-[#BFDBFE]">
                 DIREKOMENDASIKAN AI
               </span>
             )}
           </h3>
           {hasAnyComponent && (
-            <Link href="/admin/quotes" className="text-xs text-cyan-300 hover:text-cyan-200 underline underline-offset-2">
+            <Link href="/admin/quotes" className="text-xs text-[#1D4ED8] hover:underline underline underline-offset-2">
               Minta Penawaran →
             </Link>
           )}
         </div>
 
         {!hasAnyComponent ? (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[#64748B]">
             Mulai chat dengan AI untuk mendapat rekomendasi build — atau klik{" "}
-            <span className="text-cyan-300 font-medium"><span className="inline-flex items-center gap-1.5"><Rocket size={16} /> Buat Rekomendasi</span></span>.
+            <span className="text-[#1D4ED8] font-bold"><span className="inline-flex items-center gap-1.5"><Rocket size={16} /> Buat Rekomendasi</span></span>.
           </p>
         ) : (
           <>
             <div className="space-y-2">
               {COMP_TYPE_LABELS.map(([key, label]) =>
                 selectedComponents[key] ? (
-                  <div key={key} className="flex justify-between text-sm py-1.5 border-b border-slate-800 last:border-0">
-                    <span className="text-slate-400">{label}</span>
-                    <span className="text-slate-200">{selectedComponents[key]}</span>
+                  <div key={key} className="flex justify-between text-sm py-1.5 border-b border-[#CBD5E1] last:border-0">
+                    <span className="text-[#64748B]">{label}</span>
+                    <span className="text-[#0F172A]">{selectedComponents[key]}</span>
                   </div>
                 ) : null
               )}
             </div>
-            <div className="flex justify-between mt-4 pt-3 border-t border-slate-800">
-              <span className="font-semibold text-white">Total Estimasi</span>
-              <span className="font-bold text-cyan-300">{formatIDR(totalEstimasi)}</span>
+            <div className="flex justify-between mt-4 pt-3 border-t border-[#CBD5E1]">
+              <span className="font-semibold text-[#0F172A]">Total Estimasi</span>
+              <span className="font-bold text-[#1D4ED8]">{formatIDR(totalEstimasi)}</span>
             </div>
             {/* Wattage estimator + PSU warning */}
-            <div className="mt-3 rounded-xl border border-slate-800 bg-slate-900/50 p-3">
+            <div className="mt-3 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] p-3">
               <div className="flex items-center justify-between text-xs mb-1">
-                <span className="text-slate-400">⚡ Estimasi Konsumsi Daya (TDP)</span>
-                <span className="font-bold text-white">{estWattage}W</span>
+                <span className="text-[#64748B]">⚡ Estimasi Konsumsi Daya (TDP)</span>
+                <span className="font-bold text-[#0F172A]">{estWattage}W</span>
               </div>
               <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                 <div className={`h-full rounded-full transition-all ${wattStatus.bar}`} style={{ width: `${wattStatus.pct}%` }} />
@@ -458,7 +458,7 @@ export default function PcBuilder() {
               <button
                 onClick={buyAll}
                 disabled={partsFromStore.length === 0}
-                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-xl text-sm font-bold transition disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-[#0F172A] px-4 py-3 rounded-xl text-sm font-bold transition disabled:opacity-50"
               >
                 <ShoppingCart size={16} /> Beli Semua Komponen ({partsFromStore.length} Item) — {formatIDR(calcGrand)}
               </button>
@@ -469,12 +469,12 @@ export default function PcBuilder() {
               </div>
             )}
             {shareToast && (
-              <div className="mt-2 flex items-center gap-2 text-cyan-300 text-xs font-semibold">
+              <div className="mt-2 flex items-center gap-2 text-[#1D4ED8] text-xs font-semibold">
                 <Check size={14} /> Link rakitan disalin!
               </div>
             )}
             {exportToast && (
-              <div className="mt-2 flex items-center gap-2 text-cyan-300 text-xs font-semibold">
+              <div className="mt-2 flex items-center gap-2 text-[#1D4ED8] text-xs font-semibold">
                 <Check size={14} /> Ringkasan build disalin.
               </div>
             )}
@@ -482,21 +482,21 @@ export default function PcBuilder() {
               <button
                 onClick={shareBuild}
                 disabled={!hasAnyComponent}
-                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-[#1D4ED8] hover:bg-[#1E40AF] text-[#0F172A] px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
               >
                 <Link2 size={14} /> Bagikan Rakitan
               </button>
               <button
                 onClick={exportSummary}
                 disabled={!hasAnyComponent}
-                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-slate-700 hover:bg-slate-800 text-[#0F172A] px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
               >
                 <FileText size={14} /> Export Ringkasan
               </button>
               <button
                 onClick={() => setBomOpen(true)}
                 disabled={!hasAnyComponent}
-                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
+                className="flex-1 min-w-[130px] flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-[#0F172A] px-4 py-2.5 rounded-xl text-xs font-bold transition disabled:opacity-50"
               >
                 <Printer size={14} /> Cetak / BOM
               </button>
@@ -545,7 +545,7 @@ export default function PcBuilder() {
             </table>
             <div className="mt-4 flex gap-2 justify-end">
               <button onClick={() => setBomOpen(false)} className="px-4 py-2 rounded-xl border border-slate-300 text-sm font-semibold">Tutup</button>
-              <button onClick={() => window.print()} className="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold">Cetak / PDF</button>
+              <button onClick={() => window.print()} className="px-4 py-2 rounded-xl bg-blue-600 text-[#0F172A] text-sm font-semibold">Cetak / PDF</button>
             </div>
           </div>
         </div>

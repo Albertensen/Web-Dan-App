@@ -18,15 +18,15 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur-md border-b border-border-soft transition-all">
+      <header className="sticky top-0 z-50 bg-white border-b border-[#CBD5E1] transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-6">
           {/* Logo 2 warna + tagline */}
           <div className="flex flex-col shrink-0">
             <Link href="/" className="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-2">
-              <span className="w-3.5 h-3.5 bg-zone-blue rounded-full shrink-0 shadow-sm" />
+              <span className="w-3.5 h-3.5 bg-[#1D4ED8] rounded-full shrink-0 shadow-sm" />
               <span>
-                <span className="text-accent">Tekno</span>
-                <span className="text-zone-blue">Hub</span>
+                <span className="text-[#0F2A4A]">Tekno</span>
+                <span className="text-[#1D4ED8]">Hub</span>
               </span>
             </Link>
             <span className="hidden md:block text-[10px] font-bold text-muted tracking-wide mt-0.5">

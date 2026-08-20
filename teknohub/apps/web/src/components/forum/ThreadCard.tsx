@@ -53,7 +53,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
 
   return (
     <Link href={`/forum/${thread.category_slug}/${thread.id}`} className="block">
-      <div className="bg-surface border border-border rounded-2xl p-5 shadow-sm hover:border-accent transition duration-300 hover:shadow-md">
+      <div className="bg-white border border-[#CBD5E1] rounded-2xl p-5 shadow-sm hover:border-accent transition duration-300 hover:shadow-md">
         {thread.is_pinned && (
           <div className="mb-3 inline-block px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700 border border-amber-300">
             <Pin size={14} className="inline mr-1" /> Disematkan
@@ -72,7 +72,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
           </div>
         )}
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted pt-2 border-t border-border">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-muted pt-2 border-t border-[#CBD5E1]">
           {/* Category Badge */}
           {thread.category_name && thread.category_slug ? (
             <span className={`flex items-center gap-1 text-xs font-medium px-2.5 py-0.5 rounded-full border ${catClass}`}>
@@ -85,7 +85,7 @@ export default function ThreadCard({ thread }: ThreadCardProps) {
             {thread.author_avatar ? (
               <Image src={thread.author_avatar} alt={`${thread.author_username}'s avatar`} width={24} height={24} sizes="24px" className="w-6 h-6 object-cover rounded-full" />
             ) : (
-              <span className="w-6 h-6 bg-surface-2 rounded-full flex items-center justify-center text-xs text-accent">
+              <span className="w-6 h-6 bg-white-2 rounded-full flex items-center justify-center text-xs text-accent">
                 {thread.author_username?.[0]?.toUpperCase() || "?"}
               </span>
             )}

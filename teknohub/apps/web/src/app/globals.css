@@ -3,57 +3,53 @@
 @tailwind utilities;
 
 /* ============================================================
-   TEKNO ZONE DESIGN TOKENS — Apple-inspired Ice Slate & Midnight Navy
-   Light-first. Clean surfaces. Tight tracking typography.
-   ============================================================ */
-
-
-/* ============================================================
-   TEKNOHUB DESIGN TOKENS — Shopify Inspired (awesome-design-md)
-   Dual-track: canvas-night (marketing) & canvas-cream (transactional)
+   TEKNOHUB DESIGN TOKENS — Solid Gray (#E2E8F0), White & Navy (#0F2A4A)
+   Clean, highly structured enterprise tech marketplace theme
    ============================================================ */
 :root {
   color-scheme: light;
 
   /* Canvas */
-  --color-background: #ffffff; /* canvas-light */
-  --color-surface: #fbfbf5; /* canvas-cream */
-  --color-surface-2: #fbfbf5; /* same as surface-2? using cream */
-  --color-surface-glass: rgba(251, 251, 245, 0.8);
+  --color-background: #E2E8F0; /* Abu-abu solid bersih */
+  --color-surface: #FFFFFF; /* Putih bersih */
+  --color-surface-2: #F8FAFC; /* Sub-surface / input */
+  --color-surface-glass: rgba(255, 255, 255, 0.95);
 
-  /* Accent (use pistachio-10 as accent green) */
-  --color-accent: #2563eb; /* navy — kontras dgn putih 12.6:1 (WCAG AAA) */
-  --color-accent-secondary: #1d4ed8; /* navy terang utk hover */
-  --color-accent-dim: rgba(37, 99, 235, 0.08);
-  --color-zone-blue: #2563eb; /* biru aksen sekunder (logo, highlight) */
+  /* Navy & Blue Brand Tokens */
+  --color-navy-dark: #0F2A4A;
+  --color-navy-light: #1E3A8A;
+  --color-accent: #1D4ED8; /* Brand Blue */
+  --color-accent-secondary: #1E40AF; /* Brand Blue Hover */
+  --color-accent-dim: rgba(29, 78, 216, 0.08);
+  --color-zone-blue: #1D4ED8;
 
-  /* Text */
-  --color-text-primary: #000000; /* ink */
-  --color-text-muted: #64748b; /* slate-500 as fallback, maybe shade-50? */
-  --color-text-tertiary: #71717a; /* shade-50 */
+  /* Text Tokens */
+  --color-text-primary: #0F172A; /* Hitam pekat / Navy */
+  --color-text-muted: #475569; /* Slate-600 */
+  --color-text-tertiary: #64748B; /* Slate-500 */
 
   /* Borders */
-  --color-border: #e4e4e7; /* hairline-light */
-  --color-border-soft: rgba(228, 228, 231, 0.25);
+  --color-border: #CBD5E1; /* Slate-300 */
+  --color-border-soft: rgba(203, 213, 225, 0.7);
 
-  /* Glow — using pistachio-10 tint */
-  --color-glow: rgba(212, 249, 224, 0.12);
-  --color-glow-wide: rgba(212, 249, 224, 0.06);
+  /* Glow */
+  --color-glow: rgba(29, 78, 216, 0.12);
+  --color-glow-wide: rgba(29, 78, 216, 0.06);
 
-  /* Typography — keep Inter as body, Neue Haas Grotesk Display for display */
+  /* Typography */
   --font-display: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
-  --radius-sm: 4px; /* xs */
-  --radius-md: 5px; /* sm */
-  --radius-lg: 8px; /* md */
-  --radius-xl: 12px; /* lg */
-  --radius-xl2: 20px; /* xl */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-xl2: 20px;
   --radius-pill: 9999px;
 
   /* Spacing base */
-  --space-unit: 4px; /* xxs */
+  --space-unit: 4px;
   --space-xxs: 2px;
   --space-xs: 4px;
   --space-sm: 8px;
@@ -64,190 +60,48 @@
   --space-huge: 64px;
 }
 
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light;
-  }
-}
-
 /* ============================================================
-   BASE
+   BASE STYLES
    ============================================================ */
-
 html {
   scroll-behavior: smooth;
 }
 
-/* Hide scrollbar (slide nav horizontal) */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection {
+  background-color: #1D4ED8;
+  color: #ffffff;
+}
+
+/* Scrollbar Minimal */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #E2E8F0;
+}
+::-webkit-scrollbar-thumb {
+  background: #94A3B8;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
+}
+
+/* Utility Class Helper */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-body {
-  font-family: var(--font-body);
-  letter-spacing: -0.015em;
-  background-color: var(--color-background);
-  color: var(--color-text-primary);
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection {
-  background: var(--color-accent);
-  color: #ffffff;
-}
-
-/* Scrollbar (WebKit) */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-background);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-text-tertiary);
-  border-radius: var(--radius-pill);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent);
-}
-
-/* ============================================================
-   UTILITY CLASSES — light-adapted
-   ============================================================ */
-
-/* Glow card — clean surface + soft navy shadow */
-.glow-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 2.5rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.25s ease,
-    border-color 0.25s ease,
-    box-shadow 0.3s ease;
-}
-
-.glow-card:hover {
-  border-color: var(--color-accent);
-  box-shadow: 0 8px 24px -8px var(--color-glow);
-  transform: translateY(-4px);
-}
-
-/* Glass surface — navbar blur */
-.glass-surface {
-  background: rgba(203, 213, 225, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(100, 116, 139, 0.25);
-}
-
-/* Gradient accent text — navy gradient */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-secondary));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-}
-
-/* Neon border — navy */
-.neon-border {
-  border: 1px solid var(--color-accent);
-  box-shadow: 0 0 8px var(--color-glow);
-}
-
-/* Shimmer skeleton */
-.shimmer {
-  background: linear-gradient(
-    90deg,
-    var(--color-surface) 25%,
-    var(--color-border-soft) 50%,
-    var(--color-surface) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* ============================================================
-   KEYFRAMES
-   ============================================================ */
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes glowPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 20px var(--color-glow);
-  }
-  50% {
-    box-shadow:
-      0 0 40px var(--color-glow),
-      0 0 80px var(--color-glow-wide);
-  }
-}
-
-@keyframes cardLift {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-4px);
-  }
-}
-
-@keyframes particleFloat {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-120px) translateX(20px);
-    opacity: 0;
-  }
-}
-
-@keyframes barFill {
-  to {
-    width: var(--target-width);
-  }
-}
-
-/* Utility animation classes */
-.animate-fade-in-up {
-  animation: fadeInUp 0.5s ease forwards;
-}
-.animate-glow-pulse {
-  animation: glowPulse 2s infinite;
-}
-.animate-card-lift:hover {
-  animation: cardLift 0.2s ease forwards;
 }

@@ -103,7 +103,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={href}
-      className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-accent hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
+      className="group relative bg-white border border-[#CBD5E1] rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-[#1D4ED8] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full"
     >
       {/* Gambar & Badges */}
       <div className="relative aspect-square rounded-xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
@@ -156,23 +156,23 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="grow">
         <div className="flex items-center gap-1.5 mb-2 flex-wrap">
           {/* Badge Kategori Kontras Tinggi */}
-          <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-md">
+          <span className="text-[10px] font-black uppercase tracking-wider bg-[#F1F5F9] text-[#334155] border border-[#CBD5E1] px-2 py-0.5 rounded-md">
             {catLabel}
           </span>
 
           {/* Badge Pengiriman Kontras Tinggi */}
           {product.is_digital ? (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-800 bg-blue-100 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-500/30 px-2 py-0.5 rounded-md">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#1D4ED8] bg-[#EFF6FF] border border-[#BFDBFE] px-2 py-0.5 rounded-md">
               ⚡ Instan 0 Detik
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-md">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#047857] bg-[#ECFDF5] border border-[#A7F3D0] px-2 py-0.5 rounded-md">
               <Truck size={12} className="stroke-[2.5]" /> Bebas Ongkir
             </span>
           )}
         </div>
 
-        <h3 className="text-xs sm:text-sm font-bold leading-snug text-foreground line-clamp-2 h-9 mb-1.5 group-hover:text-accent transition">
+        <h3 className="text-xs sm:text-sm font-bold leading-snug text-[#0F172A] line-clamp-2 h-9 mb-1.5 group-hover:text-[#1D4ED8] transition">
           {product.name}
         </h3>
 
@@ -185,9 +185,9 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Harga & Social Proof */}
       <div className="mt-auto pt-2 border-t border-slate-100 dark:border-slate-800">
         <div className="flex items-baseline gap-1.5">
-          <span className="text-sm sm:text-base font-black text-foreground">{fmt(product.price)}</span>
+          <span className="text-sm sm:text-base font-black text-[#0F2A4A]">{fmt(product.price)}</span>
           {hasDiscount && (
-            <span className="text-[10px] text-tertiary line-through">{fmt(product.original_price!)}</span>
+            <span className="text-[10px] text-[#94A3B8] line-through">{fmt(product.original_price!)}</span>
           )}
         </div>
 
