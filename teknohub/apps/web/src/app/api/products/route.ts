@@ -8,6 +8,12 @@ const SORT_MAP: Record<string, { col: string; asc: boolean }> = {
   latest: { col: "created_at", asc: false },
 };
 
+const DIGITAL_CATEGORIES = ["software", "game-voucher", "course", "license"];
+const PHYSICAL_CATEGORIES = [
+  "laptop", "gpu", "cpu", "ram", "storage", "motherboard",
+  "psu", "case", "cooler", "smartphone", "monitor", "aksesoris"
+];
+
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const category = searchParams.get("category") || undefined;
@@ -27,31 +33,39 @@ export async function GET(request: NextRequest) {
     .select("*")
     .eq("is_active", true);
 
+  // Filter Tipe Produk (Digital vs Fisik) yang aman & kompatibel
   if (type === "digital") {
-    query = query.eq("is_digital", true);
+    query = query.in("category", DIGITAL_CATEGORIES);
   } else if (type === "physical") {
-    query = query.eq("is_digital", false);
+    query = query.in("category", PHYSICAL_CATEGORIES);
   }
 
+  // Filter Kategori Spesifik
   if (category) {
     const cats = category === "komponen" ? COMPONENT_CHILDREN : [category];
     query = query.in("category", cats);
   }
+
+  // Filter Pencarian
   if (search) {
     query = query.or(`name.ilike.%${search}%,brand.ilike.%${search}%,category.ilike.%${search}%,description.ilike.%${search}%`);
   }
+
+  // Filter Harga
   if (minPrice && !isNaN(Number(minPrice))) query = query.gte("price", Number(minPrice));
   if (maxPrice && !isNaN(Number(maxPrice))) query = query.lte("price", Number(maxPrice));
+
+  // Filter Brand
   if (brandsParam) {
     const brands = brandsParam.split(",").map((b) => b.trim()).filter(Boolean);
     if (brands.length) query = query.in("brand", brands);
   }
+
+  // Filter Stok Tersedia
   if (inStock === "1") query = query.gt("stock", 0);
 
   const s = SORT_MAP[sort] ?? { col: "created_at", asc: false };
 
-  // rating_desc: fetch all then sort applied post-hoc (rating computed after)
-  // handled below; intermediate order harmless.
   const { data, error } = await query.order(s.col, { ascending: s.asc }).limit(limit);
 
   if (error) {
@@ -60,7 +74,7 @@ export async function GET(request: NextRequest) {
 
   const prods = data ?? [];
 
-  // Bawa rating + jumlah ulasan per produk dari product_reviews
+  // Bawa rating & ulasan dari product_reviews
   let reviewsByProduct: Record<string, { rating: number }[]> = {};
   if (prods.length > 0) {
     const ids = prods.map((p) => p.id);
@@ -77,9 +91,11 @@ export async function GET(request: NextRequest) {
   }
 
   const enriched = prods.map((p) => {
+    const isDig = DIGITAL_CATEGORIES.includes(p.category) || Boolean(p.is_digital);
     const rs = reviewsByProduct[p.id] ?? [];
     return {
       ...p,
+      is_digital: isDig,
       reviews: rs,
       avg_rating: rs.length ? Number((rs.reduce((sum, r) => sum + r.rating, 0) / rs.length).toFixed(1)) : 0,
     };
