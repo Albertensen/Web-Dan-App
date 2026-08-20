@@ -162,11 +162,11 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Badge Pengiriman Kontras Tinggi */}
           {product.is_digital ? (
-            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-cyan-800 dark:text-cyan-300 bg-cyan-500/15 border border-cyan-500/40 px-2 py-0.5 rounded-md shadow-2xs">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-800 bg-blue-100 dark:text-blue-300 dark:bg-blue-950/70 border border-blue-500/30 px-2 py-0.5 rounded-md">
               ⚡ Instan 0 Detik
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-800 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-500/40 px-2 py-0.5 rounded-md shadow-2xs">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-950/70 border border-emerald-500/30 px-2 py-0.5 rounded-md">
               <Truck size={12} className="stroke-[2.5]" /> Bebas Ongkir
             </span>
           )}

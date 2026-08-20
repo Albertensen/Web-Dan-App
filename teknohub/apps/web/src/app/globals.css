@@ -22,9 +22,9 @@
   --color-surface-glass: rgba(251, 251, 245, 0.8);
 
   /* Accent (use pistachio-10 as accent green) */
-  --color-accent: #0B1F45; /* navy — kontras dgn putih 12.6:1 (WCAG AAA) */
-  --color-accent-secondary: #1E3A6E; /* navy terang utk hover */
-  --color-accent-dim: rgba(11, 31, 69, 0.08);
+  --color-accent: #2563eb; /* navy — kontras dgn putih 12.6:1 (WCAG AAA) */
+  --color-accent-secondary: #1d4ed8; /* navy terang utk hover */
+  --color-accent-dim: rgba(37, 99, 235, 0.08);
   --color-zone-blue: #2563eb; /* biru aksen sekunder (logo, highlight) */
 
   /* Text */
@@ -41,8 +41,8 @@
   --color-glow-wide: rgba(212, 249, 224, 0.06);
 
   /* Typography — keep Inter as body, Neue Haas Grotesk Display for display */
-  --font-display: "Neue Haas Grotesk Display", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter Variable", Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
 
   /* Radius */
   --radius-sm: 4px; /* xs */

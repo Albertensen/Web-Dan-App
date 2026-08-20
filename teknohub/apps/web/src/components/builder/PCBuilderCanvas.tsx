@@ -8,7 +8,7 @@ import { Cpu, HardDrive, Disc, Zap, Fan, Sparkles, Check, Layers } from "lucide-
 type RgbTheme = "cyan" | "violet" | "emerald" | "crimson" | "rainbow";
 
 const RGB_THEMES: { id: RgbTheme; label: string; glow: string; color: string }[] = [
-  { id: "cyan", label: "Neon Cyan", glow: "shadow-[0_0_25px_rgba(6,182,212,0.4)] border-cyan-400/60", color: "#06b6d4" },
+  { id: "cyan", label: "Royal Blue", glow: "shadow-[0_0_25px_rgba(37,99,235,0.4)] border-blue-500/60", color: "#2563eb" },
   { id: "violet", label: "Cyber Violet", glow: "shadow-[0_0_25px_rgba(139,92,246,0.4)] border-purple-400/60", color: "#8b5cf6" },
   { id: "emerald", label: "Matrix Green", glow: "shadow-[0_0_25px_rgba(16,185,129,0.4)] border-emerald-400/60", color: "#10b981" },
   { id: "crimson", label: "Rogue Red", glow: "shadow-[0_0_25px_rgba(239,68,68,0.4)] border-red-400/60", color: "#ef4444" },
@@ -72,10 +72,10 @@ export default function PCBuilderCanvas() {
         {/* Top Exhaust Fans */}
         <div className="flex justify-around items-center opacity-60">
           <div className="flex items-center gap-2 text-[10px] text-slate-400">
-            <Fan size={16} className="animate-spin text-cyan-400 duration-1000" /> Exhaust Top 1
+            <Fan size={16} className="animate-spin text-blue-400 duration-1000" /> Exhaust Top 1
           </div>
           <div className="flex items-center gap-2 text-[10px] text-slate-400">
-            <Fan size={16} className="animate-spin text-cyan-400 duration-1000" /> Exhaust Top 2
+            <Fan size={16} className="animate-spin text-blue-400 duration-1000" /> Exhaust Top 2
           </div>
         </div>
 
@@ -98,10 +98,10 @@ export default function PCBuilderCanvas() {
               {/* RAM Slots */}
               <div className="flex gap-1.5">
                 <div className={`w-2.5 h-12 rounded-sm border transition-all ${
-                  selected.ram ? "bg-accent border-cyan-300 shadow-[0_0_8px_#06b6d4]" : "bg-slate-800 border-slate-700"
+                  selected.ram ? "bg-accent border-blue-400 shadow-[0_0_8px_#2563eb]" : "bg-slate-800 border-slate-700"
                 }`} title={selected.ram || "Slot RAM 1"} />
                 <div className={`w-2.5 h-12 rounded-sm border transition-all ${
-                  selected.ram ? "bg-accent border-cyan-300 shadow-[0_0_8px_#06b6d4]" : "bg-slate-800 border-slate-700"
+                  selected.ram ? "bg-accent border-blue-400 shadow-[0_0_8px_#2563eb]" : "bg-slate-800 border-slate-700"
                 }`} title={selected.ram || "Slot RAM 2"} />
               </div>
             </div>
@@ -109,10 +109,10 @@ export default function PCBuilderCanvas() {
             {/* CPU Socket & Cooler Fan */}
             <div className="my-2 flex items-center gap-3">
               <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-xl border flex flex-col items-center justify-center transition-all ${
-                selected.cooler ? "bg-gradient-to-tr from-cyan-950 to-slate-900 border-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.5)]" : selected.cpu ? "bg-slate-800 border-slate-600" : "border-dashed border-slate-800 bg-slate-900/20"
+                selected.cooler ? "bg-gradient-to-tr from-blue-950 to-slate-900 border-blue-500 shadow-[0_0_12px_rgba(37,99,235,0.5)]" : selected.cpu ? "bg-slate-800 border-slate-600" : "border-dashed border-slate-800 bg-slate-900/20"
               }`}>
                 {selected.cooler ? (
-                  <Fan size={24} className="animate-spin text-cyan-300 duration-700" />
+                  <Fan size={24} className="animate-spin text-blue-300 duration-700" />
                 ) : (
                   <Cpu size={20} className={selected.cpu ? "text-accent" : "text-slate-600"} />
                 )}
@@ -128,10 +128,10 @@ export default function PCBuilderCanvas() {
 
             {/* GPU / VGA PCIe Slot */}
             <div className={`rounded-xl p-2.5 border transition-all flex items-center justify-between ${
-              selected.gpu ? "bg-slate-800/90 border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]" : "bg-slate-900/30 border-dashed border-slate-800"
+              selected.gpu ? "bg-slate-800/90 border-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.3)]" : "bg-slate-900/30 border-dashed border-slate-800"
             }`}>
               <div className="flex items-center gap-2 min-w-0">
-                <Disc size={18} className={selected.gpu ? "text-cyan-400" : "text-slate-600"} />
+                <Disc size={18} className={selected.gpu ? "text-blue-400" : "text-slate-600"} />
                 <div className="min-w-0">
                   <span className="text-[9px] uppercase tracking-wider text-slate-400 font-bold">PCIe Slot (GPU)</span>
                   <p className="text-xs font-bold text-white truncate">{selected.gpu || "Belum Ada GPU Terpasang"}</p>
@@ -155,10 +155,10 @@ export default function PCBuilderCanvas() {
             {/* Front Intake Fans */}
             <div className="space-y-1.5 opacity-70">
               <div className="flex items-center gap-1.5 text-[9px] text-slate-400">
-                <Fan size={14} className="animate-spin text-cyan-400 duration-1000" /> Front Intake 1
+                <Fan size={14} className="animate-spin text-blue-400 duration-1000" /> Front Intake 1
               </div>
               <div className="flex items-center gap-1.5 text-[9px] text-slate-400">
-                <Fan size={14} className="animate-spin text-cyan-400 duration-1000" /> Front Intake 2
+                <Fan size={14} className="animate-spin text-blue-400 duration-1000" /> Front Intake 2
               </div>
             </div>
           </div>

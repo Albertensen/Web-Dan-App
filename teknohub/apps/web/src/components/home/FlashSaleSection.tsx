@@ -103,7 +103,7 @@ export default function FlashSaleSection() {
   const pad = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <section className="bg-slate-900/90 border border-amber-500/30 rounded-3xl p-6 sm:p-8 text-foreground shadow-[0_0_35px_rgba(245,158,11,0.12)] space-y-6">
+    <section className="bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950/60 border border-blue-500/30 rounded-3xl p-6 sm:p-8 text-foreground shadow-[0_0_35px_rgba(37,99,235,0.15)] space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
         <div className="flex items-center gap-3">
           <span className="w-10 h-10 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center font-black shadow-inner">
@@ -137,7 +137,7 @@ export default function FlashSaleSection() {
             <Link
               key={p.id}
               href={`/shop/products/${p.slug}`}
-              className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between hover:border-amber-500/60 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between hover:border-blue-500 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               <span className="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-black shadow flex items-center gap-1">
                 <Flame size={11} className="fill-current" /> -{p.discountPercent}%
@@ -176,7 +176,7 @@ export default function FlashSaleSection() {
                 <button
                   type="button"
                   onClick={(e) => handleQuickAdd(p, e)}
-                  className="w-full mt-2 py-2 rounded-xl bg-accent text-white text-xs font-bold hover:bg-accent-secondary transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+                  className="w-full mt-2 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-md shadow-blue-500/20 cursor-pointer"
                 >
                   {isAdded ? <><Check size={14} /> Ditambahkan</> : <><ShoppingCart size={14} /> + Keranjang</>}
                 </button>
