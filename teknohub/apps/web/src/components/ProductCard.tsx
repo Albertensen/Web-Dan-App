@@ -98,7 +98,6 @@ export default function ProductCard({ product }: ProductCardProps) {
   const outOfStock = product.stock <= 0;
   const lowStock = !outOfStock && product.stock <= 5;
   const catLabel = CATEGORY_LABEL[product.category] ?? product.category;
-  const isDigital = Boolean(product.is_digital);
   const href = `/shop/products/${product.slug}`;
 
   return (
