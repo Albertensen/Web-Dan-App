@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Bot, MessageCircle } from "lucide-react";
 
 interface ChatMsg {
@@ -11,6 +12,12 @@ interface ChatMsg {
 const SUGGESTED = ["Berapa lama rakit PC?", "Apa saja metode pembayaran?", "Cek status pesanan saya", "Garansi komponen berapa lama?"];
 
 export default function AICustomerServiceWidget() {
+  const pathname = usePathname();
+
+  // Sembunyikan floating CS widget jika berada di halaman builder (karena builder sudah memiliki AI dedicated)
+  if (pathname?.startsWith("/builder")) {
+    return null;
+  }
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState("");
