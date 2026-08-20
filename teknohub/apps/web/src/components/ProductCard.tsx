@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductImage from "./ProductImage";
 import { useCartStore } from "@/store/cartStore";
-import { Star, Heart, Truck, MapPin, ShoppingCart, Check, Award, Zap, Globe, KeyRound } from "lucide-react";
+import { Star, Heart, Truck, MapPin, ShoppingCart, Check } from "lucide-react";
 import type { Product } from "@/types/product";
 
 interface ProductCardProps {
@@ -104,29 +104,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       href={href}
-      className={`group relative bg-surface border rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-accent hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 h-full ${
-        isDigital ? "border-cyan-500/30 dark:border-cyan-500/20" : "border-slate-200 dark:border-slate-800"
-      }`}
+      className="group relative bg-surface border border-slate-200 dark:border-slate-800 rounded-2xl p-3 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-accent hover:shadow-xl hover:-translate-y-1 transition-all duration-300 h-full"
     >
       {/* Gambar & Badges */}
       <div className="relative aspect-square rounded-xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent z-10 pointer-events-none" />
-
-        {/* Badge Diskon */}
+        {/* Badge Diskon Minimalis */}
         {hasDiscount && (
-          <span className="absolute top-2.5 left-2.5 z-20 px-2 py-0.5 rounded-lg bg-red-600 text-white text-[10px] font-black shadow-md">
+          <span className="absolute top-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-black shadow-md">
             -{discountPercent}%
-          </span>
-        )}
-
-        {/* Badge Official Store / Lisensi Resmi */}
-        {isDigital ? (
-          <span className="absolute bottom-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-cyan-600/90 backdrop-blur-xs text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
-            <KeyRound size={10} /> Lisensi Resmi
-          </span>
-        ) : (
-          <span className="absolute bottom-2.5 left-2.5 z-20 px-2 py-0.5 rounded-md bg-indigo-600/90 backdrop-blur-xs text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
-            <Award size={10} /> Official Store
           </span>
         )}
 
@@ -151,7 +136,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className="z-0 group-hover:scale-110 transition duration-500 ease-out"
         />
 
-        {/* Quick Add Button Hover Overlay */}
+        {/* Quick Add Button */}
         {!outOfStock && (
           <button
             type="button"
@@ -168,7 +153,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      {/* Info Tengah */}
+      {/* Info Produk */}
       <div className="grow">
         <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
           <span className="text-[9px] text-accent font-bold uppercase tracking-wider bg-accent-dim px-2 py-0.5 rounded-md">
@@ -176,7 +161,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
           {isDigital ? (
             <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-cyan-600 bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-500/20 px-1.5 py-0.5 rounded-md">
-              <Zap size={10} /> Instan 0 Detik
+              ⚡ Instan 0 Detik
             </span>
           ) : (
             <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded-md">
@@ -189,28 +174,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.name}
         </h3>
 
-        {/* License Type (jika ada) */}
-        {isDigital && product.license_type && (
-          <p className="text-[10px] text-cyan-600 dark:text-cyan-400 font-medium truncate mb-1">
-            📦 {product.license_type}
-          </p>
-        )}
-
-        {/* Lokasi Toko / Pengiriman */}
         <p className="text-[10px] text-tertiary flex items-center gap-1 mb-1">
-          {isDigital ? (
-            <>
-              <Globe size={10} className="text-cyan-500 shrink-0" /> Pengiriman Digital / Email
-            </>
-          ) : (
-            <>
-              <MapPin size={10} className="text-slate-400 shrink-0" /> Jakarta Pusat
-            </>
-          )}
+          <MapPin size={10} className="text-slate-400 shrink-0" />
+          {isDigital ? "Pengiriman Digital / Email" : "Jakarta Pusat"}
         </p>
       </div>
 
-      {/* Harga & Social Proof Terjual */}
+      {/* Harga & Social Proof */}
       <div className="mt-auto pt-2 border-t border-slate-100 dark:border-slate-800">
         <div className="flex items-baseline gap-1.5">
           <span className="text-sm sm:text-base font-black text-foreground">{fmt(product.price)}</span>
@@ -219,7 +189,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
 
-        {/* Rating + Terjual */}
         <div className="flex items-center justify-between text-[10px] mt-1.5 pt-1.5 text-tertiary">
           <div className="flex items-center gap-1">
             <Star size={11} className="fill-amber-400 text-amber-400" />
