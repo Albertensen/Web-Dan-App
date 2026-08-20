@@ -153,30 +153,33 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      {/* Info Produk */}
+      {/* Info Produk & Badges */}
       <div className="grow">
-        <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
-          <span className="text-[9px] text-accent font-bold uppercase tracking-wider bg-accent-dim px-2 py-0.5 rounded-md">
+        <div className="flex items-center gap-1.5 mb-2 flex-wrap">
+          {/* Badge Kategori Kontras Tinggi */}
+          <span className="text-[10px] font-black uppercase tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-md">
             {catLabel}
           </span>
-          {isDigital ? (
-            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-cyan-600 bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-500/20 px-1.5 py-0.5 rounded-md">
+
+          {/* Badge Pengiriman Kontras Tinggi */}
+          {product.is_digital ? (
+            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-cyan-800 dark:text-cyan-300 bg-cyan-500/15 border border-cyan-500/40 px-2 py-0.5 rounded-md shadow-2xs">
               ⚡ Instan 0 Detik
             </span>
           ) : (
-            <span className="inline-flex items-center gap-0.5 text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500/20 px-1.5 py-0.5 rounded-md">
-              <Truck size={10} /> Bebas Ongkir
+            <span className="inline-flex items-center gap-1 text-[10px] font-extrabold text-emerald-800 dark:text-emerald-300 bg-emerald-500/15 border border-emerald-500/40 px-2 py-0.5 rounded-md shadow-2xs">
+              <Truck size={12} className="stroke-[2.5]" /> Bebas Ongkir
             </span>
           )}
         </div>
 
-        <h3 className="text-xs sm:text-sm font-semibold leading-snug text-foreground line-clamp-2 h-9 mb-1.5 group-hover:text-accent transition">
+        <h3 className="text-xs sm:text-sm font-bold leading-snug text-foreground line-clamp-2 h-9 mb-1.5 group-hover:text-accent transition">
           {product.name}
         </h3>
 
-        <p className="text-[10px] text-tertiary flex items-center gap-1 mb-1">
-          <MapPin size={10} className="text-slate-400 shrink-0" />
-          {isDigital ? "Pengiriman Digital / Email" : "Jakarta Pusat"}
+        <p className="text-[11px] text-tertiary flex items-center gap-1 mb-1 font-medium">
+          <MapPin size={11} className="text-slate-400 shrink-0" />
+          {product.is_digital ? "Pengiriman Digital / Email" : "Jakarta Pusat"}
         </p>
       </div>
 
