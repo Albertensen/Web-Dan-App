@@ -14,10 +14,6 @@ const SUGGESTED = ["Berapa lama rakit PC?", "Apa saja metode pembayaran?", "Cek 
 export default function AICustomerServiceWidget() {
   const pathname = usePathname();
 
-  // Sembunyikan floating CS widget jika berada di halaman builder (karena builder sudah memiliki AI dedicated)
-  if (pathname?.startsWith("/builder")) {
-    return null;
-  }
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState("");
@@ -29,6 +25,11 @@ export default function AICustomerServiceWidget() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
+
+  // Sembunyikan floating CS widget jika berada di halaman builder (karena builder sudah memiliki AI dedicated)
+  if (pathname?.startsWith("/builder")) {
+    return null;
+  }
 
   const send = async (text?: string) => {
     const msg = (text ?? input).trim();
